@@ -1,0 +1,2 @@
+Link al tablero kanban el cual contendrá las tareas a desarrollar del Backlog de producto
+  https://trello.com/b/8Y4g4Xkb/lorem-ipsum-ids
