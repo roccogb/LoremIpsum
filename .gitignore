@@ -1,0 +1,43 @@
+# Bytecode de Python
+
+**pycache**/
+\*.py\[cod]
+\*.pyo
+
+# Entornos virtuales
+
+venv/
+env/
+.venv/
+.env/
+
+# Archivos de configuración
+
+\*.env \*.secret instance/ config.py &#x20;
+
+# Logs y archivos temporales
+
+\*.log
+\*.tmp
+
+# Archivos del sistema operativo
+
+.DS\_Store
+Thumbs.db
+
+# VS Code settings
+
+.vscode/
+
+# (Por si usamos docker)
+
+\*.pid
+
+# Archivos comprimidos o generados
+
+\*.zip
+\*.tar.gz
+
+# Cache de Jinja
+
+**jinja2\_cache**/
