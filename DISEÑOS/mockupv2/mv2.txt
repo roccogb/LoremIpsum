@@ -1,3 +1,2 @@
-Link del MOCKUP en CANVA -> https://www.canva.com/design/DAGoGxXeDzw/xtzvNuYN-nMPleho0dA5Mg/edit
-  En el archivo 'zip' se encuentran los templates que podemos reutilizar para el front-end.
-  El MOCKUP fue realizado usando de referencia los templates mencionados
+En el archivo 'zip' se encuentran los templates que podemos reutilizar para el front-end.
+El MOCKUP fue realizado usando de referencia los templates mencionados
