@@ -14,6 +14,7 @@ CREATE TABLE Restaurantes (
     tipo_de_cocina VARCHAR(100),
     telefono VARCHAR(20),
     ubicacion VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );
 
@@ -29,8 +30,9 @@ CREATE TABLE Calificaciones (
     id_calificacion INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT,
     id_restaurante INT,
-    puntaje INT,
+    puntaje INT CHECK (puntaje BETWEEN 1 AND 5),
     comentario TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario),
     FOREIGN KEY (id_restaurante) REFERENCES Restaurantes(id_restaurante)
 );
