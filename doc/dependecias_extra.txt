@@ -1,0 +1,7 @@
+Este archivo contiene referencias a la documentación de las dependecias adicionales a las previamente mencionadas.
+  - QRCode(Libreria que nos permite generar y trabajar con códigos QR)
+    https://pypi.org/project/qrcode/
+    https://github.com/lincolnloop/python-qrcode#usage
+  - Leaflet(Liberia que nos va a permitir crear mapas interactivos)
+    https://leafletjs.com/index.html
+    https://github.com/Leaflet/Leaflet
