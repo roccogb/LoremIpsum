@@ -1,0 +1,9 @@
+Negro (#000000)
+
+Blanco (#FFFFFF)
+
+Dorado (#D4AF37)
+
+Gris oscuro (#333333)
+
+Vino (#800020)
