@@ -1,0 +1,80 @@
+# EJEMPLO DE PDF #
+
+ENTRADAS
+Empanadas de carne - $5.00
+Bruschetta - $4.00
+
+PLATOS PRINCIPALES
+Milanesa con papas - $10.00
+Ravioles de ricota - $9.50
+
+POSTRES
+Helado artesanal - $3.50
+Tarta de manzana - $4.00
+
+
+# Python #
+
+import pdfplumber
+
+def extraer_menu_desde_pdf(pdf_path):
+    contenido = ""
+    with pdfplumber.open(pdf_path) as pdf:
+        for pagina in pdf.pages:
+            texto = pagina.extract_text()
+            if texto:
+                contenido += texto + "\n"
+    return contenido
+
+def texto_a_html(texto):
+    html = "<html><head><title>Menú</title></head><body>\n"
+    lineas = texto.splitlines()
+
+    for linea in lineas:
+        linea = linea.strip()
+        if not linea:
+            continue
+
+        if linea.isupper():  # Sección (ej: ENTRADAS)
+            html += f"<h2>{linea.title()}</h2>\n<ul>\n"
+        elif " - $" in linea:
+            html += f"  <li>{linea}</li>\n"
+        elif html.endswith("</ul>\n") is False:
+            html += "</ul>\n"
+
+    if not html.endswith("</ul>\n"):
+        html += "</ul>\n"
+
+    html += "</body></html>"
+    return html
+
+# Ejecutar
+pdf_path = "menu.pdf"  # Asegúrate de tener este archivo en el mismo directorio
+texto_menu = extraer_menu_desde_pdf(pdf_path)
+html_generado = texto_a_html(texto_menu)
+
+# Guardar resultado
+with open("menu.html", "w", encoding="utf-8") as f:
+    f.write(html_generado)
+
+print("HTML generado y guardado como 'menu.html'")
+
+# Resultado esperado en menu.html #
+
+<html><head><title>Menú</title></head><body>
+<h2>Entradas</h2>
+<ul>
+  <li>Empanadas de carne - $5.00</li>
+  <li>Bruschetta - $4.00</li>
+</ul>
+<h2>Platos Principales</h2>
+<ul>
+  <li>Milanesa con papas - $10.00</li>
+  <li>Ravioles de ricota - $9.50</li>
+</ul>
+<h2>Postres</h2>
+<ul>
+  <li>Helado artesanal - $3.50</li>
+  <li>Tarta de manzana - $4.00</li>
+</ul>
+</body></html>
