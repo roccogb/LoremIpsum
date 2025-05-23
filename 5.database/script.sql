@@ -1,3 +1,8 @@
+-- Crear base de datos
+CREATE DATABASE IF NOT EXISTS sistema_reservas;
+USE sistema_reservas;
+
+-- Tabla: usuario_comercio
 CREATE TABLE usuario_comercio (
     id_usr_comercio INT PRIMARY KEY AUTO_INCREMENT,
     nombre_usuario VARCHAR(100),
@@ -5,6 +10,7 @@ CREATE TABLE usuario_comercio (
     contrasena VARCHAR(100)
 );
 
+-- Tabla: usuario_final
 CREATE TABLE usuario_final (
     id_usr INT PRIMARY KEY AUTO_INCREMENT,
     nombre_usuario VARCHAR(100),
@@ -12,6 +18,7 @@ CREATE TABLE usuario_final (
     contrasena VARCHAR(100)
 );
 
+-- Tabla: restaurantes
 CREATE TABLE restaurantes (
     id_restaurante INT PRIMARY KEY AUTO_INCREMENT,
     id_usr_comercio INT,
@@ -25,6 +32,7 @@ CREATE TABLE restaurantes (
     FOREIGN KEY (id_usr_comercio) REFERENCES usuario_comercio(id_usr_comercio)
 );
 
+-- Tabla: calificaciones
 CREATE TABLE calificaciones (
     id_restaurante INT,
     id_usr INT,
@@ -36,6 +44,7 @@ CREATE TABLE calificaciones (
     FOREIGN KEY (id_usr) REFERENCES usuario_final(id_usr)
 );
 
+-- Tabla: reservas
 CREATE TABLE reservas (
     id_reserva INT PRIMARY KEY AUTO_INCREMENT,
     id_usr INT,
