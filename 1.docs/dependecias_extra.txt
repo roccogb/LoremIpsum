@@ -5,6 +5,9 @@ Este archivo contiene referencias a la documentación de las dependecias adicion
   - Leaflet(Liberia que nos va a permitir crear mapas interactivos)
     https://leafletjs.com/index.html
     https://github.com/Leaflet/Leaflet
-  - PyMuPPDF(Librería que permite la lectura del pdf para pasarlo a un HTML)
+  - PyMuPDF(Librería que permite trabajar con PDF)
     https://pymupdf.readthedocs.io/en/latest/
     https://github.com/pymupdf/PyMuPDF
+  - PIL(Libreria que permite trabajar con imagenes)
+    https://www.geeksforgeeks.org/python-pillow-a-fork-of-pil/
+    https://pillow.readthedocs.io/en/stable/
