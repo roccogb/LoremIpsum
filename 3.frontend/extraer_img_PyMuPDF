@@ -1,6 +1,6 @@
 import pymupdf
 
-doc = pymupdf.open("docuemento/MenuCompleto-2025.pdf")
+doc = pymupdf.open("documento/MenuCompleto-2025.pdf")
 ruta_destino = "static/images/"
 
 for page_index in range(len(doc)):
