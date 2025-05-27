@@ -6,6 +6,8 @@
 
 # Entornos virtuales
 
+Pipfile
+Pipfile.lock
 venv/
 env/
 .venv/
