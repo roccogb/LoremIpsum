@@ -190,7 +190,7 @@ ul.tm-home-list:not(.browser-default) {
 }
 
 .tm-bg-black {
-  background-color: rgba(128, 0, 32, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Creo una nueva clase que va a contener el color del fondo de la pestaña del login derecha(la que contiene el icono) -> #800020(Vino)*/
