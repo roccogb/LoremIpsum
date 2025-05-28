@@ -159,6 +159,14 @@ ul.tm-home-list:not(.browser-default) {
   margin-top: 238px;
 }
 
+/* Estilo de la imagen que se encuentra en el contenedor derecho del login*/
+#icon-img-r{
+  width: 250px;
+  height: auto;
+  display: block;
+  margin: auto;
+}
+
 .tm-signup-form {
   max-width: 350px;
   margin-right: 0;
@@ -182,7 +190,16 @@ ul.tm-home-list:not(.browser-default) {
 }
 
 .tm-bg-black {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(128, 0, 32, 0.5);
+}
+
+/* Creo una nueva clase que va a contener el color del fondo de la pestaña del login derecha(la que contiene el icono) -> #800020(Vino)*/
+.tm-bg-wine{
+  background-color: rgba(128, 0, 32);
+}
+/* Creo una nueva clase que va a contener el color del fondo de la pestaña del login derecha(la que contiene el icono) -> #D4AF37(Dorado)*/
+.tm-bg-gold{
+  background-color: rgba(212, 175, 55);
 }
 
 .tm-form-block {
@@ -308,11 +325,19 @@ textarea:focus {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
+/* Esta clase va a ser utilizada para los botones del logil -> 'Iniciar sesion'*/
+.btn-large-wine{
+  background-color:  rgba(128, 0, 32);
+  color: white;
+  font-size: 1.1rem;
+}
+
 .btn-large-white {
   background-color: white;
   color: black;
   font-size: 1.1rem;
 }
+
 .btn-large-white:hover,
 .btn-large-white:focus {
   background-color: #ccc;
