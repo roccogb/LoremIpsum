@@ -4,4 +4,3 @@ python-dotenv
 pillow
 pymupdf
 qrcode
-wekzeug
