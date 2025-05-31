@@ -6,7 +6,6 @@ http://www.tooplate.com/view/2105-input
 	
 */
 
-
 html {
   font-size: 17px;
 }
@@ -140,10 +139,25 @@ ul.tm-home-list:not(.browser-default) {
 }
 
 #login {
-  background-image: url(../img/input-bg-04.jpg);
+  overflow: hidden;                             /*Oculta los elementos que se desborden de los limites del elemento*/
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  z-index: 0;                                   /* Defino la profundidad del elemento.Este mismo se mostrará por abajo de cualquiera >0*/
+}
+
+/* Este elemento será aquel al cual JS le aplicará todas las modificaciones para asi realizar la animación*/
+#bg-fade {
+  position: absolute;
+  top: 0;left: 0;right: 0;bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  z-index: 1;                                   /* Defino la profundidad del elemento. Este mismo se mostrará por abajo de cualquiera >1*/
+  transition: opacity 1s;                       /* Me va a permitir agregar un efecto de transicion de 1s cuando la propiedad opacidad sufra un cambio*/
 }
 
 #register .container {
@@ -155,8 +169,10 @@ ul.tm-home-list:not(.browser-default) {
 }
 
 #login .container {
+  position: relative;
   max-width: 1000px;
   margin-top: 238px;
+  z-index: 2;                                 /* Defino la profundidad del elemento. Este mismo se mostrará por abajo de cualquiera >2*/
 }
 
 /* Estilo de la imagen que se encuentra en el contenedor derecho del login*/
@@ -195,11 +211,13 @@ ul.tm-home-list:not(.browser-default) {
 
 /* Creo una nueva clase que va a contener el color del fondo de la pestaña del login derecha(la que contiene el icono) -> #800020(Vino)*/
 .tm-bg-wine{
-  background-color: rgba(128, 0, 32);
+  background-color: rgba(128, 0, 32, 0.9);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /*Se aplica doble sombra al fondo derecho del login*/
 }
 /* Creo una nueva clase que va a contener el color del fondo de la pestaña del login derecha(la que contiene el icono) -> #D4AF37(Dorado)*/
 .tm-bg-gold{
-  background-color: rgba(212, 175, 55);
+  background-color: rgba(212, 175, 55,0.9);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /*Se aplica doble sombra al fondo izquierdo del login*/
 }
 
 .tm-form-block {
@@ -308,8 +326,24 @@ textarea:focus {
   height: 30px;
 }
 
-.input-field {
+/*Personalizo aquellos las entradas de texto que comparten las clases '.tm-bg-gold' y '.input-field'*/
+/*Login y contraseña*/
+.tm-bg-gold .input-field input{
+  text-align: center;
   margin-top: 0;
+  color: white;
+  background-color: rgba(128, 0, 32);
+  border: none;
+}
+
+.tm-bg-gold .input-field input::placeholder{
+  text-align: center;
+  color: white;
+}
+
+.tm-bg-gold .input-field input:focus{
+  border-bottom: none !important;             /*Utilizo el !important en este atributo asi pisa cualquier tipo de cambio que se realice en cualquier otro archivo css, como por ejemplo en "materalize"*/
+  box-shadow: none !important;                /*"               "*/
 }
 
 /*Le agregue un atributo a los botones que hace que se desplieguen en bloque y que el margen se decia automaticamente para centrarlo*/
@@ -340,6 +374,12 @@ textarea:focus {
 .btn-large-wine:focus{
   background-color: rgba(51, 51, 51);
   color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btn-large-wine:active{
+  transform: translateY(3px);
 }
 
 .btn-large-white {
@@ -627,4 +667,9 @@ input[type="email"]:not(.browser-default).tm-input-white-bg {
   .tm-mt-big {
     margin-top: 80px;
   }
+}
+
+@keyframes slideout{
+  from{ margin-left: 0%;}
+  to{margin-left: 100%;}
 }

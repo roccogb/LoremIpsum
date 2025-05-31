@@ -11,12 +11,15 @@
 	http://www.tooplate.com/view/2105-input
 	-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/materialize.min.css">
-    <link rel="stylesheet" href="css/tooplate.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/materialize.min.css">
+    <link rel="stylesheet" href="../static/css/tooplate.css">
 </head>
 
 <body id="login">
+    <!--Agrego el 'div' con la id 'bg-fade' para asi poder realizar la animación de la transicion de fondo-->
+    <!--En este elemento voy a cambiar la imagen como tambien agregar un 'fade' cuando ocurra el cambio de imagen-->
+    <div id="bg-fade"></div>
     <div class="container">
         <div class="row tm-register-row tm-mb-35">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-login-l">
@@ -36,7 +39,7 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-login-r">
                 <header class="font-weight-light tm-bg-wine p-5 h-100">
                     <!--Agrego el icono en el contenedor derecho del login-->
-                    <img id="icon-img-r" src="img/WEBIDS(transparent).png" alt="Icon FoodyBA"> <!--La imagen no se encuentra en esa ruta-->
+                    <img id="icon-img-r" src="../static/media/img/icon-FoodyBA-blanco.png" alt="Icon FoodyBA"> <!--La imagen no se encuentra en esa ruta-->
                 </header>
             </div>
         </div>
@@ -47,15 +50,15 @@
         </div>
         <footer class="row tm-mt-big mb-3">
             <div class="col-xl-12 text-center">
-                <p class="d-inline-block tm-bg-black white-text py-2 tm-px-5">
+                <p class="d-inline-block tm-bg-wine white-text py-2 tm-px-5">
                     Copyright &copy; 2025 FoodyBA 
                 </p>
             </div>
         </footer>
     </div>
-
-    <script src="js/jquery-3.2.1.slim.min.js"></script>
-    <script src="js/materialize.min.js"></script>
+    <script src="../static/js/bg-animation.js"></script>
+    <script src="../static/js/jquery-3.2.1.slim.min.js"></script>
+    <script src="../static/js/materialize.min.js"></script>
     <script>
         $(document).ready(function () {
             $('select').formSelect();
