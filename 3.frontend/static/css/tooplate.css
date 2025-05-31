@@ -6,6 +6,13 @@ http://www.tooplate.com/view/2105-input
 	
 */
 
+/* Defino variables globales que van a representar la paleta de colores de la página web. Las mismas van a poder ser llamadas desde cualquier lado*/
+:root{
+  --gold:#D4AF37;
+  --wine:#800020;
+  --sgray:#333333
+}
+
 html {
   font-size: 17px;
 }
@@ -166,6 +173,37 @@ ul.tm-home-list:not(.browser-default) {
   padding: 5px;
 }
 
+/* Configuro la columna, utilizando 'Flexbox', para que el icono y el texto se encuentren centrados*/
+#register header{
+  display: flex;                /* Convierto el header en un contenedor flex para asi poder alinear y distribuir mejor los elementos en el*/
+  flex-direction: column;       /* Hago que los elementos en el se coloquen verticalmente, uno abajo de otro*/
+  margin-right: 15%;
+  align-items: center;          /* Centro horizontalmente los items*/
+  text-align: center;
+}
+/* Estilo del icono de la página a utilizar en el template que contenga un elemento con el id 'register'*/
+#register #icon-img{
+  width: 300px;
+  margin-top: 40%;
+}
+
+/* Texto introducción de registro*/
+#register h4{
+  display: block;
+  margin: auto;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/*Personalizo las entradas de texto que perteneces al registro y tienen el fondo de color vino*/
+/*Registro*/
+#register .input-field{
+  display: block;
+  margin: 5%;
+  border: none;
+}
+
 #application .container {
   max-width: 800px;
 }
@@ -185,21 +223,23 @@ ul.tm-home-list:not(.browser-default) {
   margin: auto;
 }
 
-/* Estilo del icono de la página a utilizar en el template que contenga un elemento con el id 'register'*/
-#register #icon-img{
-  width: 300px;
-  margin-right: 20%;
-  margin-top: 40%;
-}
-
 .tm-signup-form {
   max-width: 350px;
   margin-right: 0;
   margin-left: auto;
 }
 
+/* Personalizo la columa izqueirda del registro que va a contener las entradas de texto,checkbox y boton*/
 .tm-register-col-l {
+  display: flex;                      /* Convierto el div que esta vinculado a la clase '.tm-register-col-l' en un contenedor flex para asi poder alinear y distribuir mejor los elementos en el*/
+  flex-direction: column;             /* Hago que los elementos en el se coloquen verticalmente, uno abajo de otro*/
+  flex-wrap: wrap;                    /* Si se colocan muchos elementos se van a ajustar al contenedor. MOMENTANEO, PUEDE CAMBIAR*/
+  justify-content: space-evenly;      /* Muestra los elementos con el mismo espacio entre ellos*/
+  align-content: space-evenly;        /* Acomoda los elementos a traves de lineas y estas mismas se van a distribuir dejando el mismo espacio entre la parte superior, inferior y entre*/
   max-width: 350px;
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-bottom: 5%;
 }
 
 .tm-register-col-r {
@@ -254,13 +294,13 @@ ul.tm-home-list:not(.browser-default) {
 [type="radio"]:checked + span:after,
 [type="radio"].with-gap:checked + span:before,
 [type="radio"].with-gap:checked + span:after {
-  border: 2px solid rgb(212, 175, 55);
+  border: 2px solid var(--gold);
 }
 
 /*Color del checkbox luego de ser tildado*/
 [type="radio"]:checked + span:after,
 [type="radio"].with-gap:checked + span:after {
-  background-color: rgb(212, 175, 55);
+  background-color: var(--gold);
 }
 [type="radio"]:not(:checked) + span,
 [type="radio"]:checked + span {
@@ -340,21 +380,13 @@ textarea:focus {
   height: 30px;
 }
 
-/*Personalizo las entradas de texto que perteneces al registro y tienen el fondo de color vino*/
-/*Registro*/
-#register .input-field{
-  display: block;
-  margin: 5%;
-  border: none;
-}
-
 /*Personalizo aquellos las entradas de texto que comparten las clases '.tm-bg-gold' y '.input-field'*/
 /*Login*/
 .tm-bg-gold .input-field input{
   text-align: center;
   margin-top: 0;
   color: white;
-  background-color: rgba(128, 0, 32);
+  background-color: var(--wine);
   border: none;
 }
 
@@ -363,9 +395,10 @@ textarea:focus {
   color: white;
 }
 
+/* Personalizo la pseudoclase 'focus' de los 'input' utilizados. Cuando una entrada de texto este activa se va a colocar un subrayado de 2px color dorado*/
 .input-field input:focus{
-  border-bottom: none !important;             /*Utilizo el !important en este atributo asi pisa cualquier tipo de cambio que se realice en cualquier otro archivo css, como por ejemplo en "materalize"*/
-  box-shadow: none !important;                /*"               "*/
+  border-bottom: 2px solid var(--gold) !important;     /*Utilizo el !important en este atributo asi pisa cualquier tipo de cambio que se realice en cualquier otro archivo css, como por ejemplo en "materalize"*/
+  box-shadow: none !important;                                /*"               "*/
 }
 
 /*Le agregue un atributo a los botones que hace que se desplieguen en bloque y que el margen se decia automaticamente para centrarlo*/
@@ -381,8 +414,9 @@ textarea:focus {
 
 .btn-large:hover,
 .btn-large:focus {
-  background-color: rgba(51, 51, 51);
+  background-color: var(--sgray);
   color: white;
+  font-weight: bold;
   transform: translateY(-3px);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
 }
@@ -394,14 +428,13 @@ textarea:focus {
 /* Esta clase va a ser utilziara para los botones del registro*/
 .btn-large-gold{
   display: block;
-  margin-bottom: 5%;
-  background-color: rgb(212, 175, 55);
+  background-color: var(--gold);
   color: white;
 }
 
 /* Esta clase va a ser utilizada para los botones del inicio de sesión */
 .btn-large-wine{
-  background-color:  rgb(128, 0, 32);
+  background-color:  var(--wine);
   color: white;
   font-size: 1.1rem;
 }
