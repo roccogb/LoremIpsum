@@ -121,9 +121,10 @@ ul.tm-home-list:not(.browser-default) {
   background-position: center top;
 }
 
+/* Actualizo la imagen de fondo en el template de registro*/
 #register {
   padding-top: 180px;
-  background-image: url(../img/input-bg-01.jpg);
+  background-image: url("../../static/media/img/obelisco_recortado.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 30%;
@@ -162,6 +163,7 @@ ul.tm-home-list:not(.browser-default) {
 
 #register .container {
   max-width: 900px;
+  padding: 5px;
 }
 
 #application .container {
@@ -175,12 +177,19 @@ ul.tm-home-list:not(.browser-default) {
   z-index: 2;                                 /* Defino la profundidad del elemento. Este mismo se mostrará por abajo de cualquiera >2*/
 }
 
-/* Estilo de la imagen que se encuentra en el contenedor derecho del login*/
-#icon-img-r{
+/* Estilo del icono de la página*/
+#icon-img{
   width: 250px;
   height: auto;
   display: block;
   margin: auto;
+}
+
+/* Estilo del icono de la página a utilizar en el template que contenga un elemento con el id 'register'*/
+#register #icon-img{
+  width: 300px;
+  margin-right: 20%;
+  margin-top: 40%;
 }
 
 .tm-signup-form {
@@ -234,20 +243,24 @@ ul.tm-home-list:not(.browser-default) {
   padding: 60px 100px;
 }
 
+/*Modifico los colores de los checkbox que le permitirán al usuario elegir que tipo de cuenta desea*/
+
 [type="radio"]:not(:checked) + span:before,
 [type="radio"]:not(:checked) + span:after {
-  border: 2px solid #dee2e6;
-}
-
-[type="radio"]:checked + span:after,
-[type="radio"].with-gap:checked + span:before,
-[type="radio"].with-gap:checked + span:after {
   border: 2px solid white;
 }
 
+/* Borde del checkbox al ser tildado*/
+[type="radio"]:checked + span:after,
+[type="radio"].with-gap:checked + span:before,
+[type="radio"].with-gap:checked + span:after {
+  border: 2px solid rgb(212, 175, 55);
+}
+
+/*Color del checkbox luego de ser tildado*/
 [type="radio"]:checked + span:after,
 [type="radio"].with-gap:checked + span:after {
-  background-color: #dee2e6;
+  background-color: rgb(212, 175, 55);
 }
 [type="radio"]:not(:checked) + span,
 [type="radio"]:checked + span {
@@ -283,8 +296,9 @@ textarea {
   height: 8rem;
 }
 
+/*Cuando se ingrese un texto va a sobresalir una linea marcado gris*/
 textarea:focus {
-  outline-color: #26a69a;
+  outline-color: #ccc;
 }
 
 [type="checkbox"].filled-in:checked + span:not(.lever):after {
@@ -326,8 +340,16 @@ textarea:focus {
   height: 30px;
 }
 
+/*Personalizo las entradas de texto que perteneces al registro y tienen el fondo de color vino*/
+/*Registro*/
+#register .input-field{
+  display: block;
+  margin: 5%;
+  border: none;
+}
+
 /*Personalizo aquellos las entradas de texto que comparten las clases '.tm-bg-gold' y '.input-field'*/
-/*Login y contraseña*/
+/*Login*/
 .tm-bg-gold .input-field input{
   text-align: center;
   margin-top: 0;
@@ -336,12 +358,12 @@ textarea:focus {
   border: none;
 }
 
-.tm-bg-gold .input-field input::placeholder{
-  text-align: center;
+/*Los efectos aplicados, utilizando pseudoclases, se verán aplicados en las entradas de texto de Login como tambien de registro*/
+.input-field input::placeholder{
   color: white;
 }
 
-.tm-bg-gold .input-field input:focus{
+.input-field input:focus{
   border-bottom: none !important;             /*Utilizo el !important en este atributo asi pisa cualquier tipo de cambio que se realice en cualquier otro archivo css, como por ejemplo en "materalize"*/
   box-shadow: none !important;                /*"               "*/
 }
@@ -361,25 +383,27 @@ textarea:focus {
 .btn-large:focus {
   background-color: rgba(51, 51, 51);
   color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
 }
 
-/* Esta clase va a ser utilizada para los botones del logil -> 'Iniciar sesion'*/
+.btn-large:active{
+  transform: translateY(3px);
+}
+
+/* Esta clase va a ser utilziara para los botones del registro*/
+.btn-large-gold{
+  display: block;
+  margin-bottom: 5%;
+  background-color: rgb(212, 175, 55);
+  color: white;
+}
+
+/* Esta clase va a ser utilizada para los botones del inicio de sesión */
 .btn-large-wine{
-  background-color:  rgba(128, 0, 32);
+  background-color:  rgb(128, 0, 32);
   color: white;
   font-size: 1.1rem;
-}
-
-.btn-large-wine:hover,
-.btn-large-wine:focus{
-  background-color: rgba(51, 51, 51);
-  color: white;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.btn-large-wine:active{
-  transform: translateY(3px);
 }
 
 .btn-large-white {
@@ -667,9 +691,4 @@ input[type="email"]:not(.browser-default).tm-input-white-bg {
   .tm-mt-big {
     margin-top: 80px;
   }
-}
-
-@keyframes slideout{
-  from{ margin-left: 0%;}
-  to{margin-left: 100%;}
 }
