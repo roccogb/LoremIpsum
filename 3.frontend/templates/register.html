@@ -23,37 +23,43 @@
                 <form action="" method="post">
                     <div class="mb-2">
                         <label class="mr-4">
-                            <input class="with-gap" name="title" type="radio" value="consumidor" checked/>
+                            <input class="with-gap" id="check-usr-consumidor" name="title" type="radio" value="consumidor" checked/>
                             <span>Consumidor</span>
                         </label>
                         <label>
-                            <input class="with-gap" name="title" type="radio" value="comercio" />
+                            <input class="with-gap" id="check-usr-comercio" name="title" type="radio" value="comercio" />
                             <span>Comercio</span>
                         </label>
                     </div>
-
-                    <div class="input-field">
-                        <input placeholder="Nombre" id="first_name" name="first_name" type="text" class="validate">
+                    <!-- Aquellos 'div' que contengan la clase 'usr-consumidor' van a ser utilizados para ingresar la información de un usuario del tipo consumidor-->
+                    <!--"                                    " 'usr-comercio' "                                                                         " comercio-->
+                    <div class="input-field usr-consumidor">
+                        <input placeholder="Nombre" id="first_name" name="first_name" type="text" class="validate" required>
                     </div>
-                    <div class="input-field">
-                        <input placeholder="Apellido" id="last_name" name="last_name" type="text" class="validate">
+                    <div class="input-field usr-consumidor">
+                        <input placeholder="Apellido" id="last_name" name="last_name" type="text" class="validate" required>
                     </div>
-                    <div class="input-field">
-                        <input placeholder="Usuario" id="usr" name="usr" type="text" class="validate">
+                    <div class="input-field usr-consumidor">
+                        <input placeholder="Usuario" id="usr" name="usr" type="text" class="validate" required>
                     </div>
-                    <div class="input-field">
-                        <input placeholder="Email" id="email" name="email" type="text" class="validate">
+                    <div class="input-field usr-consumidor">
+                        <input placeholder="Email" id="email" name="email" type="text" class="validate" required>
                     </div>
-                    <div class="input-field">
-                        <input placeholder="Numero de teléfono" id="mobile" name="mobile" type="text" class="validate">
+                    <div class="input-field usr-consumidor">
+                        <input placeholder="Numero de teléfono" id="mobile" name="mobile" type="number" class="validate" required>
                     </div>
-                    <div class="input-field">
-                        <input placeholder="Contraseña" id="password" name="password" type="password" class="validate">
+                    <div class="input-field usr-consumidor">
+                        <input placeholder="Contraseña" id="password" name="password" type="password" class="validate" required>
                     </div>
-                    <div class="input-field">
-                        <input placeholder="Confirmar contraseña" id="password" name="password" type="password" class="validate">
+                    <div class="input-field usr-consumidor">
+                        <input placeholder="Confirmar contraseña" id="password" name="password" type="password" class="validate" required>
                     </div>
-                    <!--
+                    <div class="text-right mt-4">
+                        <button type="submit" class="waves-effect btn-large btn-large-gold px-4">Crear cuenta</button>
+                    </div>
+                </form>
+            </div>
+            <!--Probar agregar acá los input utilizados para registrar un usuario del tipo comercio. Hacerlo utilizando la clase '.tm-register-col-r'
                     Este bloque de código me puede servir para la otra sección del registro
                     <div class="row">
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 pl-0 tm-pr-xs-0">
@@ -71,16 +77,11 @@
                             </div>
                         </div>
                     </div>
-                    -->
-                    <div class="text-right mt-4">
-                        <button type="submit" class="waves-effect btn-large btn-large-gold px-4">Crear cuenta</button>
-                    </div>
-                </form>
-            </div>
+            -->
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-register-col-r">
                 <header class="mb-5">
                     <img id="icon-img" src="../static/media/img/icon-FoodyBA-blanco-dorado.png" alt="Icono FoodyBA">
-                    <h4 class="mt-0 text-white">Registrate en FoodyBA</h4>
+                    <h4 class="mt-0">Registrarse en FoodyBA</h4>
                 </header>
 
             </div>
@@ -94,6 +95,7 @@
         </footer>
     </div>
 
+    <script src="../static/js/r-usr-comercio.js"></script>
     <script src="../static/js/jquery-3.2.1.slim.min.js"></script>
     <script src="../static/js/materialize.min.js"></script>
     <script>

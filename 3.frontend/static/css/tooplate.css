@@ -390,6 +390,12 @@ textarea:focus {
   border: none;
 }
 
+/*Aquellas entradas de texto que compartan la clase '.usr-consumidor' van a tener un efecto de transicion de 2s cuando su atributo 'left'/'right' sufra algun cambio*/
+/*Este estilo va a ser necesario para realizar un efecto de translado cuando el usuario tilda o destilda cualquiera de las checkbox*/
+.input-field.usr-consumidor{
+  transition: transform 0.5s;
+}
+
 /*Los efectos aplicados, utilizando pseudoclases, se verán aplicados en las entradas de texto de Login como tambien de registro*/
 .input-field input::placeholder{
   color: white;
