@@ -13,12 +13,13 @@ const list_img=[
 let i = 0;
 
 function cambiarFondo(){
-    div_fade.style.backgroundImage=`url('${list_img[i]}')`;             // Cargo la aquella imagen que se encuentren en la posición i de 'list_img' en el objeto div_fade
-    div_fade.style.opacity=0.5                                          // Simulo el efecto de un fadein con la opacidad de la imagen
-    div_fade.style.opacity=0.75
+    div_fade.style.backgroundImage=`url('${list_img[i]}')`;              // Cargo la aquella imagen que se encuentren en la posición i de 'list_img' en el objeto div_fade
+    div_fade.style.opacity=0.5;                                          // Simulo el efecto de un fadein con la opacidad de la imagen
+    div_fade.style.opacity=0.75;
     div_fade.style.opacity=1;                                           
 
-    // Agrego una demora de 5s antes de la siguiente imagen para asi el cliente puede ver la imagen mejor
+    // La funcion 'setTimeout' lo que hace es ejecutar una función cada determinado periodo. 'setTimeout(funcion,periodo)
+    // Agrego una demora de 5s antes de la siguiente imagen para asi el cliente puede verla mejor
     setTimeout(()=>{
         div_fade.style.opacity=0.75;                                    // Simulo el efecto de un fadeout con la opacidad de la imagen
         div_fade.style.opacity=0.5;                                       

@@ -24,15 +24,6 @@ body {
   background-color: #000;
 }
 
-.tm-site-title {
-  font-size: 4rem;
-  text-align: center;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
-  padding-top: 35px;
-  padding-bottom: 35px;
-}
-
 a {
   color: #FFF;
   transition: all 0.3s ease;
@@ -41,20 +32,6 @@ a:hover,
 a:focus {
   color: #9CF;
   text-decoration: none;
-}
-
-.tm-white-text {
-  color: white;
-}
-
-.tm-white-text:hover,
-.tm-white-text:focus {
-  color: #b0afaf;
-}
-
-.tm-form-title {
-  font-size: 2.1rem;
-  line-height: 1.4;
 }
 
 .container {
@@ -81,37 +58,6 @@ li:last-child {
 
 .tm-mb-35 {
   margin-bottom: 35px;
-}
-
-.tm-home-mt {
-  margin-top: 140px;
-}
-
-.tm-home-left {
-  max-width: 400px;
-}
-
-.tm-home-list {
-  max-width: 292px;
-  margin-left: auto;
-  margin-right: 0;
-}
-
-ul.tm-home-list:not(.browser-default) {
-  padding: 50px 45px;
-}
-
-.tm-home-list li {
-  margin-bottom: 30px;
-}
-
-.tm-home-list li:last-child {
-  margin-bottom: 0;
-}
-
-.tm-home-container {
-  max-width: 805px;
-  margin-bottom: 500px;
 }
 
 /* Actualizo la imagen de fondo en el template de registro*/
@@ -187,10 +133,6 @@ ul.tm-home-list:not(.browser-default) {
   border: none;
 }
 
-#application .container {
-  max-width: 800px;
-}
-
 #login .container {
   position: relative;
   max-width: 1000px;
@@ -204,12 +146,6 @@ ul.tm-home-list:not(.browser-default) {
   height: auto;
   display: block;
   margin: auto;
-}
-
-.tm-signup-form {
-  max-width: 350px;
-  margin-right: 0;
-  margin-left: auto;
 }
 
 /* Columna izquierda del registro donde se van a ver las entradas de texto utilizadas para ingresar la información del usuario*/
@@ -252,7 +188,7 @@ ul.tm-home-list:not(.browser-default) {
   transition: transform 0.5s;         /*Cuando se le aplique una transformación a cualquiera de los bloques, tendra una transicion de 500ms*/
   top: 50px;
   left: 10px;
-  width: 100%;
+  width: 90%;
 }
 
 /*Personalizo especificamente el bloque que va a ingresar la información del consumidor*/
@@ -275,39 +211,15 @@ ul.tm-home-list:not(.browser-default) {
   margin-left: auto;
 }
 
-.tm-form-description {
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.tm-bg-black {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* Creo una nueva clase que va a contener el color del fondo de la pestaña del login derecha(la que contiene el icono) -> #800020(Vino)*/
+/* Creo una nueva clase que va a representar un fondo de color vino(#800020)*/
 .tm-bg-wine{
   background-color: rgba(128, 0, 32, 0.9);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /*Se aplica doble sombra al fondo derecho del login*/
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /*Se aplica doble sombra*/
 }
-/* Creo una nueva clase que va a contener el color del fondo de la pestaña del login derecha(la que contiene el icono) -> #D4AF37(Dorado)*/
+/* Creo una nueva clase que va a representar un fondo de color dorado(#D4AF37)*/
 .tm-bg-gold{
   background-color: rgba(212, 175, 55,0.9);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /*Se aplica doble sombra al fondo izquierdo del login*/
-}
-
-.tm-form-block {
-  padding: 35px 30px;
-  margin-top: 35px;
-}
-
-.tm-bg-white {
-  background-color: rgba(255, 255, 255, 0.6);
-  border-radius: 10px;
-}
-
-.tm-form-pad-big {
-  padding: 60px 100px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /*Se aplica doble sombra */
 }
 
 /*Modifico los colores de los checkbox que le permitirán al usuario elegir que tipo de cuenta desea*/
@@ -348,10 +260,6 @@ label {
   height: 20px;
 }
 
-li {
-  margin-bottom: 1rem;
-}
-
 textarea,
 input {
   color: white;
@@ -362,7 +270,6 @@ textarea {
   height: 8rem;
 }
 
-/*Cuando se ingrese un texto va a sobresalir una linea marcado gris*/
 textarea:focus {
   outline-color: #ccc;
 }
@@ -389,13 +296,13 @@ textarea:focus {
   border-bottom: 3px solid #fff;
 }
 
-/* Personalizo los select ubicados en el apartado de usuario comercio. La mayoría utilizar configuraciones de 'Materalize'*/
+/* Personalizo los select ubicados en el apartado de usuario comercio. La mayoría utilizan configuraciones de 'Materalize'*/
 .select-wrapper input.select-dropdown,
 .dropdown-content li > a,
 .dropdown-content li > span {
   text-align: center;
   color: white;
-  width: 450px;
+  width: 400px;
 }
 
 /*Cuando se abre el menu*/
@@ -434,8 +341,7 @@ textarea:focus {
   box-shadow: none !important;                                /*"               "*/
 }
 
-/*Le agregue un atributo a los botones que hace que se desplieguen en bloque y que el margen se decia automaticamente para centrarlo*/
-/*Eliminado la linea que definia el fondo negro*/
+/*Estilos aplicados de una clase general que es usada por la mayoria de los botones*/
 .btn-large {
   display: block;
   margin: auto;
@@ -451,14 +357,14 @@ textarea:focus {
   color: white;
   font-weight: bold;
   transform: translateY(-3px);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)        /*Doble sombra*/
 }
 
 .btn-large:active{
   transform: translateY(3px);
 }
 
-/* Esta clase va a ser utilziara para los botones del registro*/
+/* Esta clase va a representar a los botones de color dorado*/
 .btn-large-gold{
   position: absolute;
   top: 655px;
@@ -467,33 +373,11 @@ textarea:focus {
   color: white;
 }
 
-/* Esta clase va a ser utilizada para los botones del inicio de sesión */
+/* Esta clase va a representar a los botones de color vino*/
 .btn-large-wine{
   background-color:  var(--wine);
   color: white;
   font-size: 1.1rem;
-}
-
-.btn-large-white {
-  background-color: white;
-  color: black;
-  font-size: 1.1rem;
-}
-
-.btn-large-white:hover,
-.btn-large-white:focus {
-  background-color: #ccc;
-  color: black;
-}
-
-.tm-footer-link {
-  color: white;
-}
-
-.tm-footer-link:hover,
-.tm-footer-link:focus {
-  color: rgba(255, 255, 255, 0.8);
-  text-decoration: none;
 }
 
 input[type="text"]:not(.browser-default).tm-input-white-bg,
@@ -505,10 +389,6 @@ input[type="email"]:not(.browser-default).tm-input-white-bg {
   font-size: 1.2rem;
   padding: 6px 15px;
   box-sizing: border-box;
-}
-
-.select-wrapper input.select-dropdown.tm-bg-white {
-  background-color: white;
 }
 
 /*Personalizo el input que va a permitir subir un PDF con la declaracion jurada. Esto es en el apartado de usuario comercio*/
@@ -543,136 +423,6 @@ input[type="file"] {
   transform: translateY(3px);
 }
 
-.tm-form-white .select-wrapper input.select-dropdown {
-  color: black;
-  background-color: white;
-  border-radius: 5px;
-  padding: 0 10px;
-}
-
-.tm-form-white .select-wrapper .caret {
-  fill: black;
-  border: 1px solid black;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.tm-form-white .dropdown-content {
-  background-color: white;
-  border-radius: 10px;
-  color: black;
-}
-
-.tm-form-white .select-wrapper input.select-dropdown,
-.tm-form-white .dropdown-content li > a,
-.tm-form-white .dropdown-content li > span {
-  color: black;
-}
-
-.tm-form-white textarea,
-.tm-form-white input,
-.tm-form-white label {
-  color: black;
-}
-
-.tm-form-white ::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: black;
-  opacity: 1; /* Firefox */
-}
-
-.tm-form-white :-ms-input-placeholder {
-  /* Internet Explorer 10-11 */
-  color: black;
-}
-
-.tm-form-white ::-ms-input-placeholder {
-  /* Microsoft Edge */
-  color: black;
-}
-
-.tm-form-white [type="radio"]:not(:checked) + span:before,
-.tm-form-white [type="radio"]:not(:checked) + span:after {
-  border: 1px solid black;
-  background: white;
-}
-
-.tm-font-big [type="radio"]:not(:checked) + span:before,
-.tm-font-big [type="radio"]:not(:checked) + span:after,
-.tm-font-big [type="radio"] + span:before,
-.tm-font-big [type="radio"] + span:after {
-  width: 30px;
-  height: 30px;
-}
-
-.tm-font-big [type="radio"]:not(:checked) + span,
-.tm-font-big [type="radio"]:checked + span {
-  height: 35px;
-  line-height: 35px;
-}
-
-.tm-font-big [type="radio"]:not(:checked) + span,
-.tm-font-big [type="radio"]:checked + span {
-  padding-left: 50px;
-}
-
-.tm-form-white [type="radio"]:checked + span:after,
-.tm-form-white [type="radio"].with-gap:checked + span:before,
-.tm-form-white [type="radio"].with-gap:checked + span:after {
-  border-color: black;
-}
-
-.tm-form-white [type="radio"]:checked + span:after,
-.tm-form-white [type="radio"].with-gap:checked + span:after {
-  background-color: black;
-}
-
-.tm-font-big *,
-.tm-font-big [type="radio"]:not(:checked) + span,
-.tm-font-big [type="radio"]:checked + span,
-.tm-font-big .select-wrapper input.select-dropdown {
-  font-size: 1.2rem;
-}
-
-.btn-white {
-  background-color: white;
-  color: black;
-  border-radius: 5px;
-  text-transform: capitalize;
-}
-
-.btn-white:hover,
-.btn-white:focus {
-  background-color: #ccc;
-}
-
-.tm-border-radius-0 {
-  border-radius: 0;
-}
-
-.tm-form-white textarea {
-  background-color: white;
-  border: none;
-  border-radius: 5px;
-}
-
-.tm-form-white .select-wrapper input.select-dropdown {
-  box-sizing: border-box;
-}
-
-.tm-form-white .select-wrapper .caret {
-  right: 15px;
-}
-
-.tm-form-group-2-col {
-  max-width: 245px;
-}
-
-.tm-form-group-2-col-r {
-  margin-right: 0;
-  margin-left: auto;
-}
-
 .tm-px-5 {
   padding-left: 3rem;
   padding-right: 3rem;
@@ -683,7 +433,7 @@ input[type="file"] {
 }
 
 .tm-footer-text-small {
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 }
 
 .tm-flex-lr {
@@ -693,9 +443,6 @@ input[type="file"] {
 }
 
 @media (max-width: 400px) {
-  .tm-form-block {
-    padding: 15px;
-  }
 
   .col-6 {
     flex: 0 0 100%;
@@ -727,44 +474,8 @@ input[type="file"] {
     flex-direction: column-reverse;
   }
 
-  .tm-form-group-2-col {
-    max-width: none;
-  }
-
-  .tm-form-group-2-col-l {
-    padding-right: 0;
-  }
-
-  .tm-form-group-2-col-r {
-    padding-left: 0;
-  }
-
-  .tm-form-pad-big {
-    padding: 20px 30px;
-  }
-
-  .tm-signup-form {
-    max-width: none;
-    margin-right: auto;
-    margin-left: auto;
-  }
-
   .tm-login-l {
     margin-top: 35px;
-  }
-
-  .tm-home-list {
-    margin-top: 40px;
-  }
-
-  .tm-home-left,
-  .tm-home-list {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .tm-home-container {
-    margin-bottom: 100px;
   }
 }
 
