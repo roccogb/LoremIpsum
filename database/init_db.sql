@@ -30,7 +30,7 @@ CREATE TABLE comercios (
     tiempo_de_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     pdf_menu_link TEXT,
     calificacion FLOAT,                                                 
-    horarios VARCHAR(100)
+    horarios VARCHAR(100),
     FOREIGN KEY (id_usr_comercio) REFERENCES usuario_comercio(id_usr_comercio)
 );
 

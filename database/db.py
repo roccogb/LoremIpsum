@@ -1,6 +1,7 @@
-import mysql.connector               # Libreria utilizada para controlar la base de datos 
+import mysql.connector               # Libreria que me va a permitir acceder a BDD MySQL
 
-# Funcion que va a conectarse con el servidor MySQL, y en específico, con la BDD llamada 'foodyba_dbb'
+# Funcion que va a conectarse con el servidor MySQL, y en específico, con la BDD llamada 'foodyba_dbb'.
+# El objeto que retorne esta funcion va a representar la conexión con el servidor y la BDD. Con el mismo se va a poder ejecutar consultas, crear cursores, gestionar transacciones de data con la BDD,etc
 def get_connection():
   return mysql.connector.connect(
     host="localhost",
