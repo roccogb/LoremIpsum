@@ -31,7 +31,9 @@ CREATE TABLE comercios (
     pdf_menu_link TEXT,
     calificacion FLOAT,                                                 
     horarios VARCHAR(100),
-    FOREIGN KEY (id_usr_comercio) REFERENCES usuario_comercio(id_usr_comercio)
+    -- Defino la FK de esta tabla
+    FOREIGN KEY (id_usr_comercio) REFERENCES usuario_comercio(id_usr_comercio) ON DELETE CASCADE
+    -- La caracteristica 'ON DELETE CASCADE' indica que si se borra el registro 'padre' los 'hijos' se eliminan automaticamente
 );
 
 -- Tabla: resenias
@@ -41,8 +43,8 @@ CREATE TABLE resenias (
     comentario TEXT,
     calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
     tiempo_de_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio),
-    FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr)
+    FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE,
+    FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE
 );
 
 -- Tabla: reservas
@@ -56,6 +58,6 @@ CREATE TABLE reservas (
     cant_personas INT,
     fecha_reserva DATETIME,
     solicitud_especial TEXT,
-    FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr),
-    FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio)
+    FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE,
+    FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE
 );
