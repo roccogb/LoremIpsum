@@ -4,7 +4,6 @@ from routes_backend import register_routes
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'tp-ids-2025'  
 
-# Registrar rutas
 register_routes(app)
 
 if __name__ == '__main__':
