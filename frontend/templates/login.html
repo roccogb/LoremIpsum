@@ -23,12 +23,12 @@
     <div class="container">
         <div class="row tm-register-row tm-mb-35">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-login-l">
-                <form action="" method="post" class="tm-bg-gold p-5 h-100">
+                <form action="{{ url_for('login', _external=True) }}" method="post" class="tm-bg-gold p-5 h-100">
                     <div class="input-field">
-                        <input placeholder="Usuario" id="username" name="username" type="text" class="validate">
+                        <input placeholder="Usuario" id="username" name="username" type="text" class="validate" required>
                     </div>
                     <div class="input-field mb-5">
-                        <input placeholder="Contraseña" id="password" name="password" type="password" class="validate">
+                        <input placeholder="Contraseña" id="password" name="password" type="password" class="validate" required>
                     </div>
                     <div class="tm-flex-lr">
                         <button type="submit" class="waves-effect btn-large btn-large-wine px-4 rounded-0">Iniciar sesión</button>

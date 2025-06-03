@@ -15,7 +15,8 @@ CREATE TABLE usuario_consumidor (
     id_usr INT PRIMARY KEY AUTO_INCREMENT,
     nombre_usuario VARCHAR(100),
     email_usuario VARCHAR(100) UNIQUE,
-    contrasena VARCHAR(100)
+    contrasena VARCHAR(100),
+    -- Implementar un campo que describa la cantidad de reservas que canceló
 );
 
 -- Tabla: comercio
@@ -31,6 +32,7 @@ CREATE TABLE comercios (
     pdf_menu_link TEXT,
     calificacion FLOAT,                                                 
     horarios VARCHAR(100),
+    -- Implementar un campo de 'tags' puede ser un array
     -- Defino la FK de esta tabla
     FOREIGN KEY (id_usr_comercio) REFERENCES usuario_comercio(id_usr_comercio) ON DELETE CASCADE
     -- La caracteristica 'ON DELETE CASCADE' indica que si se borra el registro 'padre' los 'hijos' se eliminan automaticamente
@@ -58,6 +60,7 @@ CREATE TABLE reservas (
     cant_personas INT,
     fecha_reserva DATETIME,
     solicitud_especial TEXT,
+    -- Campo que indica el estado de la reserva
     FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE,
     FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE
 );

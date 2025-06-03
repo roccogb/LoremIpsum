@@ -17,10 +17,14 @@ def verificar_data_comercio(nombre_comercio, categoria_comercio, tipo_cocina, di
 # Endpoint que va a retornar TODA la información de los comercios. La misma será retornada en formato JSON
 @comercios_bp.route("/")
 def get_comercios():
-    conn=get_connection()                   # Me conecto al servidor MySQL y a la BDD
+    conn=get_connection()                               # Me conecto al servidor MySQL y a la BDD
     # Creo un cursor para así poder ejecutar sentencias SQL. El parametro dictionary hace que cada vez que haga una consulta a la BDD, me devuelva los datos como diccionarios facilitando asi la transformación de los mismos a JSON
     cursor=conn.cursor(dictionary=True)
-    comercios=cursor.fetchall()
+
+    qsql_comercios="""SELECT * FROM comercios"""
+    cursor.execute(qsql_comercios)                      # Ejecuto la consulta
+    comercios=cursor.fetchall()                         # Almaceno todas las filas en la lista comercios.
+
     cursor.close()
     conn.close()
     return jsonify(comercios),200
