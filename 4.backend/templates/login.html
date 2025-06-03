@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Iniciar sesión en FoodyBA</title>
+	<!--
+    Template 2105 Input
+	http://www.tooplate.com/view/2105-input
+	-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/materialize.min.css">
+    <link rel="stylesheet" href="../static/css/tooplate.css">
+</head>
+
+<body id="login">
+    <!--Agrego el 'div' con la id 'bg-fade' para asi poder realizar la animación de la transicion de fondo-->
+    <!--En este elemento voy a cambiar la imagen como tambien agregar un 'fade' cuando ocurra el cambio de imagen-->
+    <div id="bg-fade"></div>
+    <div class="container">
+        <div class="row tm-register-row tm-mb-35">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-login-l">
+                <form action="" method="post" class="tm-bg-gold p-5 h-100">
+                    <div class="input-field">
+                        <input placeholder="Usuario" id="username" name="username" type="text" class="validate">
+                    </div>
+                    <div class="input-field mb-5">
+                        <input placeholder="Contraseña" id="password" name="password" type="password" class="validate">
+                    </div>
+                    <div class="tm-flex-lr">
+                        <button type="submit" class="waves-effect btn-large btn-large-wine px-4 rounded-0">Iniciar sesión</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-login-r">
+                <header class="font-weight-light tm-bg-wine p-5 h-100">
+                    <!--Agrego el icono en el contenedor derecho del login-->
+                    <img id="icon-img" src="../static/media/img/icon-FoodyBA-blanco.png" alt="Icon FoodyBA"> <!--La imagen no se encuentra en esa ruta-->
+                </header>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 ml-auto mr-0 text-center">
+                <a href="register.html" class="waves-effect btn-large btn-large-wine px-4 rounded-0">Registrar usuario</a>
+            </div>
+        </div>
+        <footer class="row tm-mt-big mb-3">
+            <div class="col-xl-12 text-center">
+                <p class="d-inline-block tm-bg-wine white-text py-2 tm-px-5">
+                    Copyright &copy; 2025 FoodyBA 
+                </p>
+            </div>
+        </footer>
+    </div>
+    <script src="../static/js/bg-animation.js"></script>
+    <script src="../static/js/jquery-3.2.1.slim.min.js"></script>
+    <script src="../static/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('select').formSelect();
+        });
+    </script>
+</body>
+
+</html>
