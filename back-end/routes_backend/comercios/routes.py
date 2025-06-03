@@ -1,4 +1,4 @@
-# Modulo que va a contener la definicion del blueprint 'Comercios' y el conjunto de servicios vinculado a el
+# Modulo que va a contener el conjunto de servicios vinculados al blueprint 'Comercios'
 from flask import jsonify, request
 from . import comercios_bp
 from database.db import get_connection
