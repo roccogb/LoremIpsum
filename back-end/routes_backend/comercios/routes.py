@@ -1,8 +1,19 @@
 # Modulo que va a contener la definicion del blueprint 'Comercios' y el conjunto de servicios vinculado a el
-from flask import jsonify
+from flask import jsonify, request
 from . import comercios_bp
 from database.db import get_connection
-         
+
+# Funcion auxiliar para verificar si la información ingresada es valida. Para que la información que se ingresa sea considerada válida se deben cumplir las siguientes condiciones:
+#               - 'nombre_comercio' -> No debe contener digitos
+#               - 'categoria_comercio' -> Se tiene que haber seleccionado una categoría
+#               - 'tipo_cocina' -> Se tiene que haber seleccionado un tipo de cocina
+#               - 'email_comercio' -> El email ingresado debe seguir un patrón
+#               - 'nombre_responsable_comercio' -> El nombre del responsable no debe contener digitos
+#               - 'dni_responsable_comercio' -> El DNI deben ser un total de 8 digitos
+#               - 'cuit_responsable_comercio' -> El CUIT del responsable debe contener 11 digitos
+def verificar_data_comercio(nombre_comercio, categoria_comercio, tipo_cocina, direccion_comercio, email_comercio, nombre_responsable_comercio, dni_responsable_comercio, cuit_responsable_comercio):
+    pass
+
 # Endpoint que va a retornar TODA la información de los comercios. La misma será retornada en formato JSON
 @comercios_bp.route("/")
 def get_comercios():
@@ -54,3 +65,21 @@ def get_comercios_filter(filtro,valor):
     else:
         # Si se encontraron comercios que cumplan con el filtro
         return jsonify(comercios_filtrados),200
+
+# Endpoint que va a registrar un nuevo comercio en la BDD. La información del mismo será recibida a traves de un formulario
+@comercios_bp.route("/agregar")
+def add_comercio():
+    nombre_comercio=request.form["name_bss"]
+    categoria_comercio=request.form["categoria"]
+    tipo_cocina=request.form["tipo_cocina"]
+    direccion_comercio=request.form["dir_bss"]  #Convertir la direccion en coords
+    email_comercio=request.form["email_bss"]
+    nombre_responsable_comercio=request.form["nr_bss"]
+    dni_responsable_comercio=request.form["dni_responsable_bss"]
+    cuit_responsable_comercio=request.form["cuit_responsable_bss"]
+    # Resolver el como almacenar el PDF que certifica la existencia del comercio
+
+    if verificar_data_comercio(nombre_comercio,categoria_comercio,tipo_cocina,direccion_comercio, email_comercio, nombre_responsable_comercio, dni_responsable_comercio, cuit_responsable_comercio):
+        pass
+    else:
+        return jsonify({"ERROR":"Error con los datos ingresados"}),400
