@@ -1,3 +1,4 @@
+# BORRADOR
 from flask import Blueprint,send_file, redirect
 from PIL import Image
 import qrcode
