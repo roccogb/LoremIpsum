@@ -23,7 +23,7 @@ def get_comercios():
 
     qsql_comercios="""SELECT * FROM comercios"""
     cursor.execute(qsql_comercios)                      # Ejecuto la consulta
-    comercios=cursor.fetchall()                         # Almaceno todas las filas en la lista comercios.
+    comercios=cursor.fetchall()                         # Almaceno todas las filas del resultado de la consulta en la variable 'comercios'.
 
     cursor.close()
     conn.close()
@@ -57,10 +57,11 @@ def get_comercios_filter(filtro,valor):
     cursor=conn.cursor(dictionary=True)
 
     #Parametrizo la consulta, brindando asi mejor seguridad y legibilidad al código
-    sql="SELECT * FROM comercios WHERE %s=%s"
+    sql="SELECT * FROM comercios WHERE %s='%s'"
     cursor.execute(sql,(filtro,valor))
 
     comercios_filtrados=cursor.fetchall()                   # El método fetchall va a retornar todas las filas del resultado de la consulta
+
     cursor.close()
     conn.close()
     if not comercios_filtrados:

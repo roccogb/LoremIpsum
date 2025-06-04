@@ -15,7 +15,7 @@ CREATE TABLE usuario_consumidor (
     id_usr INT PRIMARY KEY AUTO_INCREMENT,
     nombre_usuario VARCHAR(100),
     email_usuario VARCHAR(100) UNIQUE,
-    contrasena VARCHAR(100),
+    contrasena VARCHAR(100)
     -- Implementar un campo que describa la cantidad de reservas que canceló
 );
 
