@@ -1,4 +1,4 @@
-# Modulo que va a establecer a la carpeta 'routes-backend' como un paquete.
+# Modulo que va a establecer a la carpeta 'routes-backend' como un paquete
 from comercios import comercios_bp
 from auth import auth_bp
 
