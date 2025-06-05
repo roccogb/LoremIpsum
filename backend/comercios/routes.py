@@ -6,7 +6,8 @@ from database.db import get_connection
 from geopy.geocoders import Nominatim
 
 
-# Esta funcion va a convertir una dirección, pasada como string, en coordenadas geograficas. La misma puede ser utilizada por el blueprint 'Comercios' como tambien 'Autenticación'
+# Esta funcion va a convertir una dirección, pasada como string, en coordenadas geograficas.
+# La misma puede ser utilizada por el blueprint 'Comercios' como tambien 'Autenticación'
 def transform_dir_coords(str_dir):
     try:
         # Inicializo el geolocalizador Nomitanim de la API OpenStreetMap 
@@ -56,7 +57,8 @@ def get_comercio(id_comercio):
     else:
         # Si se encontró un comercio bajo ese ID
         return jsonify(comercio_encontrado),200
-    
+
+# MOMENTANEO. Si se filtra mediante etiquetas el parametro 'valor' puede ser multiple. Solucionarlo
 # Endpoint que va a retornar información de la BDD de los comercios que cumplan con cierto patrón. Ej: 'retornar toda la información de los comercios con tipo de cocina china'
 # Implementar la funcionalidad de filtrar comercios según los tags vinculados a los mismos
 @comercios_bp.route("/<filtro>/<valor>")
