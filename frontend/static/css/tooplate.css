@@ -326,7 +326,12 @@ textarea:focus {
 .dropdown-content li > span {
   text-align: center !important;
   color: white;
-  width: 100px !important;        /* Fuerzo el cambio de ancho*/
+  width: 100%;                          /* Fuerzo el cambio de ancho. El mismo va a ser igual a todo el ancho del bloque*/
+  display: flex !important;             /* Convierto el 'select' en una flexbox para poder trabajar mejor con los elementos*/
+  align-items: center !important;       /* Alineo los items en el centro verticalmente*/
+  justify-content: center !important;   /* Si no uso todo el espacio del contenedor, lo alineo en el centro. Sirve para alinear horizontalmente*/
+  height: 40px !important;
+  padding: 0 !important;
 }
 
 .ltc{
@@ -335,7 +340,7 @@ textarea:focus {
 
 .input-time {
   text-align: center;
-  width: 100px !important;
+  width: 100% !important;
   min-width: 80px;
   max-width: 150px;
 }
