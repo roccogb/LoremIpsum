@@ -11,7 +11,7 @@
 	http://www.tooplate.com/view/2105-input
 	-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/bootstrap/login_boots.min.css">
     <link rel="stylesheet" href="../static/css/materialize.min.css">
     <link rel="stylesheet" href="../static/css/tooplate.css">
 </head>
@@ -62,6 +62,12 @@
                         <div class="input-field usr-comercio">
                             <input placeholder="Nombre del comercio" id="nombre_comercio" name="name_bss" type="text" class="validate" required>
                         </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Teléfono del comercio" id="tel_comercio" name="tel_bss" type="number" class="validate" required>
+                        </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Direccion del comercio" id="dir_comercio" name="dir_bss" type="text" class="validate" required>
+                        </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 pl-0 tm-pr-xs-0">
                             <select name="categoria">
                                 <option value="-">Categoria</option>
@@ -84,23 +90,85 @@
                                 <option value="clasica">Cócina clasica</option>
                             </select>
                         </div>
+                        <label class="sub-titulos">Horarios del comercio</label>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Direccion del comercio" id="dir_comercio" name="dir_bss" type="text" class="validate" required>
+                            <table>
+                                <tr>
+                                    <th></th>
+                                    <th class="ltc">De</th>
+                                    <th class="ltc">Hasta</th>
+                                </tr>
+                                <tr>
+                                    <td class="ltc">Dias</td>
+                                    <td class="td-dia">
+                                        <select name="dia_apertura">
+                                            <option value="lunes">Lunes</option>
+                                            <option value="martes">Martes</option>
+                                            <option value="miercoles">Miercoles</option>
+                                            <option value="jueves">Jueves</option>
+                                            <option value="viernes">Viernes</option>
+                                            <option value="sabado">Sabado</option>
+                                            <option value="domingo">Domingo</option>
+                                        </select>
+                                    </td>
+                                    <td class="td-dia">
+                                        <select name="dia_cierre">
+                                            <option value="lunes">Lunes</option>
+                                            <option value="martes">Martes</option>
+                                            <option value="miercoles">Miercoles</option>
+                                            <option value="jueves">Jueves</option>
+                                            <option value="viernes">Viernes</option>
+                                            <option value="sabado">Sabado</option>
+                                            <option value="domingo">Domingo</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="ltc">Horario</td>
+                                    <td><input type="time" name="apertura" class="input-time" required></td>
+                                    <td><input type="time" name="cierre" class="input-time" required></td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Email del comercio" id="email_comercio" name="email_bss" type="text" class="validate" required>
+                            <input placeholder="Link menu PDF" id="lkmenu_comercio" name="lkm_bss" type="url" class="validate" required>
+                        </div>
+                        <label class="sub-titulos">Etiquetas del comercio</label>
+                        <div class="input-field usr-comercio">
+                            <select multiple name="etiquetas[]" id="etiquetas_comercio" required>
+                                <option value="" disabled>Selecciona una o más etiquetas</option>
+                                <option value="vegano">Vegetariano</option>
+                                <option value="vegano">Vegano</option>
+                                <option value="sin_tacc">Sin TACC</option>
+                                <option value="pet_friendly">Apto para mascotas</option>
+                                <option value="wifi">WiFi</option>
+                                <option value="terraza">Terraza</option>
+                                <option value="delivery">Delivery</option>
+                                <option value="para_llevar">Para llevar</option>
+                                <option value="accesible">Accesible</option>
+                            </select>
                         </div>
                         <br>
                         <label class="sub-titulos">Datos del responsable</label>
-                        <div class="input-field usr-comercio">
-                            <input placeholder="Nombre completo" id="nombre_responsable" name="nr_bss" type="text" class="validate" required>
-                        </div>
                         <div class="input-field usr-comercio">
                             <input placeholder="Documento de Identidad Nacional(DNI)" id="dni_responsablebss" name="dni_responsable_bss" type="number" class="validate" required>
                         </div>
                         <div class="input-field usr-comercio">
                             <input placeholder="Clave Única de Identificación Tributaria(CUIT)" id="cuit_responsablebss" name="cuit_responsable_bss" type="number" class="validate" required>
                         </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Nombre completo" id="nombre_responsable_bss" name="nr_bss" type="text" class="validate" required>
+                        </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Email del responsable" id="email_responasble_bss" name="email_bss" type="text" class="validate" required>
+                        </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Contraseña" id="p_responsable" name="p_r_bss" type="password" class="validate" required>
+                        </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Confirmar contraseña" id="cp_responsable" name="cp_r_bss" type="password" class="validate" required>
+                        </div>
+                        <!-- La implementación del boton del certificado esta de más. Se puede dejar o sacar-->
                         <label class="sub-titulos">Certificado de la existencia del comercio</label>
                         <input type="file" name="declaracion_jurada" id="dj_establecimiento" accept="pdf" required>
                         <label for="dj_establecimiento" class="upload-file-label">Subir archivo</label>

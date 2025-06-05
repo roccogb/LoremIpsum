@@ -1,60 +1,74 @@
 -- Crear base de datos
-CREATE DATABASE IF NOT EXISTS sistema_reservas;
-USE sistema_reservas;
+CREATE DATABASE IF NOT EXISTS foodyba_dbb;
+USE foodyba_dbb;
+
+-- Cuando se registre un usuario del tipo comercio se van a completar datos en la tabla 'usuario_comercio' y 'comercios'
 
 -- Tabla: usuario_comercio
 CREATE TABLE usuario_comercio (
     id_usr_comercio INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_usuario VARCHAR(100),
+    nombre_apellido VARCHAR(100),
+    DNI BIGINT UNIQUE,                          
+    CUIT BIGINT UNIQUE,
     email_usuario VARCHAR(100) UNIQUE,
     contrasena VARCHAR(100)
 );
 
--- Tabla: usuario_final
-CREATE TABLE usuario_final (
+-- Tabla: usuario_consumidor
+CREATE TABLE usuario_consumidor (
     id_usr INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_usuario VARCHAR(100),
+    nombre_apellido VARCHAR(100),                       
+    usuario VARCHAR(100) UNIQUE,
     email_usuario VARCHAR(100) UNIQUE,
-    contrasena VARCHAR(100)
+    contrasena VARCHAR(100),
+    numero_telefono INT UNIQUE,
+    cant_reservas_canceladas INT DEFAULT 0
 );
 
--- Tabla: restaurantes
-CREATE TABLE restaurantes (
-    id_restaurante INT PRIMARY KEY AUTO_INCREMENT,
+-- Tabla: comercio
+CREATE TABLE comercios (
+    id_comercio INT PRIMARY KEY AUTO_INCREMENT,
     id_usr_comercio INT,
-    nombre_restaurante VARCHAR(100),
+    nombre_comercio VARCHAR(100),
     categoria VARCHAR(50),
     tipo_de_cocina VARCHAR(100),
     telefono VARCHAR(20),
-    ubicacion VARCHAR(255),
+    latitud FLOAT,                      -- (UBICACIÓN)Coordenada X
+    longitud FLOAT,                     -- (UBICACIÓN)Coordenada Y
     tiempo_de_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     pdf_menu_link TEXT,
-    FOREIGN KEY (id_usr_comercio) REFERENCES usuario_comercio(id_usr_comercio)
+    calificacion FLOAT DEFAULT 0.0,     -- Esto se va completar por un promedio
+    dias VARCHAR(100),                  -- El formato va a ser -> Ej='Lunes-Viernes'
+    horarios VARCHAR(100),              -- El formato va a ser -> Ej='17:00-21:00'
+    etiquetas TEXT,                     -- Esta columna va a ser un array convertido a texto ya que SQL no trabaja con estos tipos de datos. Formato '[etiqueta_1,etiqueta_2,...]'
+    -- Defino la FK de esta tabla
+    FOREIGN KEY (id_usr_comercio) REFERENCES usuario_comercio(id_usr_comercio) ON DELETE CASCADE
+    -- La caracteristica 'ON DELETE CASCADE' indica que si se borra el registro 'padre' los 'hijos' se eliminan automaticamente
 );
 
--- Tabla: calificaciones
-CREATE TABLE calificaciones (
-    id_restaurante INT,
+-- Tabla: reseñas
+CREATE TABLE resenias (
+    id_comercio INT,
     id_usr INT,
     comentario TEXT,
     calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
     tiempo_de_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id_restaurante, id_usr),
-    FOREIGN KEY (id_restaurante) REFERENCES restaurantes(id_restaurante),
-    FOREIGN KEY (id_usr) REFERENCES usuario_final(id_usr)
+    FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE,
+    FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE
 );
 
 -- Tabla: reservas
 CREATE TABLE reservas (
     id_reserva INT PRIMARY KEY AUTO_INCREMENT,
     id_usr INT,
-    id_restaurante INT,
+    id_comercio INT,
     nombre_bajo_reserva VARCHAR(100),
     email VARCHAR(100),
     telefono VARCHAR(20),
     cant_personas INT,
     fecha_reserva DATETIME,
     solicitud_especial TEXT,
-    FOREIGN KEY (id_usr) REFERENCES usuario_final(id_usr),
-    FOREIGN KEY (id_restaurante) REFERENCES restaurantes(id_restaurante)
+    estado_reserva BOOLEAN,             -- El estado de esta columna va a depender si el consumidor escanea un QR brindado por el comercio
+    FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE,
+    FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE
 );
