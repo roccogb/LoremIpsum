@@ -6,7 +6,7 @@ from database.db import get_connection
 from geopy.geocoders import Nominatim
 
 
-# BORRADOR. PUEDE SER UTILIZADA ESTA IMPLEMENTACIÓN EN EL BLUEPRINT AUTH AL REALIZAR EL REGISTRO DE UN USUARIO DE TIPO COMERCIO
+# Esta funcion puede ser utilizada por el blueprint 'Comercios' como tambien 'Autenticación'
 def transform_dir_coords(str_dir):
     try:
         # Inicializo el geolocalizador Nomitanim de la API OpenStreetMap 
