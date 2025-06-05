@@ -6,7 +6,7 @@ from database.db import get_connection
 from geopy.geocoders import Nominatim
 
 
-# Esta funcion puede ser utilizada por el blueprint 'Comercios' como tambien 'Autenticación'
+# Esta funcion va a convertir una dirección, pasada como string, en coordenadas geograficas. La misma puede ser utilizada por el blueprint 'Comercios' como tambien 'Autenticación'
 def transform_dir_coords(str_dir):
     try:
         # Inicializo el geolocalizador Nomitanim de la API OpenStreetMap 
