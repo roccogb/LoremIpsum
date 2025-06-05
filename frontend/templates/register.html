@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Registro en FoodyBA</title>
+	<!--
+    Template 2105 Input
+	http://www.tooplate.com/view/2105-input
+	-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/materialize.min.css">
+    <link rel="stylesheet" href="../static/css/tooplate.css">
+</head>
+
+<body id="register">
+    <div class="container">
+        <div class="row tm-register-row tm-bg-wine" id="block-insert-info">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-register-col-l">
+                <form action="" method="post">
+                    <div class="mb-2">
+                        <label class="mr-4" id="check-usr-consumidor">
+                            <input class="with-gap" id="check-usr-consumidor" name="title" type="radio" value="consumidor" checked/>
+                            <span>Consumidor</span>
+                        </label>
+                        <label id="check-usr-comercio">
+                            <input class="with-gap"  name="title" type="radio" value="comercio" />
+                            <span>Comercio</span>
+                        </label>
+                    </div>
+                    <!-- Si el usuario decide crear un usuario del tipo consumidor-->
+                    <div id="data-usr-consumidor">
+                        <label class="sub-titulos">Ingrese sus datos</label>
+                        <div class="input-field usr-consumidor">
+                            <input placeholder="Nombre" id="first_name" name="first_name" type="text" class="validate" required>
+                        </div>
+                        <div class="input-field usr-consumidor">
+                            <input placeholder="Apellido" id="last_name" name="last_name" type="text" class="validate" required>
+                        </div>
+                        <div class="input-field usr-consumidor">
+                            <input placeholder="Usuario" id="usr" name="usr" type="text" class="validate" required>
+                        </div>
+                        <div class="input-field usr-consumidor">
+                            <input placeholder="Email" id="email" name="email" type="text" class="validate" required>
+                        </div>
+                        <div class="input-field usr-consumidor">
+                            <input placeholder="Numero de teléfono" id="mobile" name="mobile" type="number" class="validate" required>
+                        </div>
+                        <div class="input-field usr-consumidor">
+                            <input placeholder="Contraseña" id="password" name="password" type="password" class="validate" required>
+                        </div>
+                        <div class="input-field usr-consumidor">
+                            <input placeholder="Confirmar contraseña" id="password" name="password" type="password" class="validate" required>
+                        </div>
+                    </div>
+                    <!-- Si el usuario es del tipo comercio-->
+                    <div id="data-usr-comercio">
+                        <label class="sub-titulos">Datos del comercio</label>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Nombre del comercio" id="nombre_comercio" name="name_bss" type="text" class="validate" required>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 pl-0 tm-pr-xs-0">
+                            <select name="categoria">
+                                <option value="-">Categoria</option>
+                                <option value="gourmet">Gourmet</option>
+                                <option value="especialidad">Especialidad</option>
+                                <option value="familiar">Familiar</option>
+                                <option value="buffet">Buffet</option>
+                                <option value="comida_rapida">Comida rapida</option>
+                                <option value="tematico">Tematico</option>
+                                <option value="para_llevar">Para llevar</option>
+                            </select>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 pl-0 tm-pr-xs-0">
+                            <select name="tipo_cocina">
+                                <option value="-">Tipo de cocina</option>
+                                <option value="alta_cocina">Alta cocina</option>
+                                <option value="tecnico_conceptual">Cocina técnico-conceptual</option>
+                                <option value="vanguardia">Cócina de vanguardia</option>
+                                <option value="autor">Cócina de autor</option>
+                                <option value="clasica">Cócina clasica</option>
+                            </select>
+                        </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Direccion del comercio" id="dir_comercio" name="dir_bss" type="text" class="validate" required>
+                        </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Email del comercio" id="email_comercio" name="email_bss" type="text" class="validate" required>
+                        </div>
+                        <br>
+                        <label class="sub-titulos">Datos del responsable</label>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Nombre completo" id="nombre_responsable" name="nr_bss" type="text" class="validate" required>
+                        </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Documento de Identidad Nacional(DNI)" id="dni_responsablebss" name="dni_responsable_bss" type="number" class="validate" required>
+                        </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Clave Única de Identificación Tributaria(CUIT)" id="cuit_responsablebss" name="cuit_responsable_bss" type="number" class="validate" required>
+                        </div>
+                        <label class="sub-titulos">Certificado de la existencia del comercio</label>
+                        <input type="file" name="declaracion_jurada" id="dj_establecimiento" accept="pdf" required>
+                        <label for="dj_establecimiento" class="upload-file-label">Subir archivo</label>
+                    </div>
+                    <!-- Boton que enviará el formulario. Dependiendo que tipo de checkbox este seleccionada, el endpoint vinculado responderá de distinta manera-->
+                    <div class="text-right mt-4">
+                        <button type="submit" class="waves-effect btn-large btn-large-gold px-4">Crear cuenta</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-register-col-r">
+                <header class="mb-5">
+                    <img id="icon-img" src="../static/media/img/icon-FoodyBA-blanco-dorado.png" alt="Icono FoodyBA">
+                    <h4 class="mt-0">Registrarse en FoodyBA</h4>
+                </header>
+
+            </div>
+        </div>
+        <footer class="row tm-mt-big mb-3">
+            <div class="col-xl-12">
+                <p class="text-center grey-text text-lighten-2 tm-bg-wine tm-footer-text-small">
+                    Copyright &copy; 2025 FoodyBA
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../static/js/r-usr-comercio.js"></script>
+    <script src="../static/js/jquery-3.2.1.slim.min.js"></script>
+    <script src="../static/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('select').formSelect();
+        });
+    </script>
+</body>
+
+</html>
