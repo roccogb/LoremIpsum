@@ -311,13 +311,24 @@ textarea:focus {
   background-color: rgba(212, 175, 55,0.9);
 }
 
-/*Flecha*/
-.select-wrapper .caret {
-  fill: white;
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  right: 150px;
+/*TABLA DE HORARIOS Y DIAS DEL REGISTRO USUARIO COMERCIO*/
+
+/*Personalizo los elementos 'td-dia' que contienen un select de clase 'select-wrapper', es decir los select.*/
+.td-dia .select-wrapper input.select-dropdown {
+  width: 100px !important;           /*Fuerzo el nuevo tamaño de los select ya que si no tendrían el tamaño heredado*/
+  min-width: 100px !important;       /*Declaro cual sería el ancho minimo y el maximo*/
+  max-width: 200px !important;
+}
+
+/*Igualo el tamaño del menú desplegable*/
+.td-dia .dropdown-content{
+  width: 100px !important;
+  min-width: 100px !important;
+  max-width: 120px !important;
+}
+
+.ltc{
+  color: white;
 }
 
 /*Personalizo aquellos las entradas de texto que comparten las clases '.tm-bg-gold' y '.input-field'*/

@@ -15,3 +15,6 @@ Este archivo contiene referencias a la documentación de las dependecias adicion
     https://www.w3schools.com/python/python_mysql_getstarted.asp
     https://pypi.org/project/mysql-connector-python/
     https://dev.mysql.com/doc/connector-python/en/
+  - GeoPy(Libreria que va a permitir trabajar con las direcciones del comercio)
+    https://pypi.org/project/geopy/
+    https://geopy.readthedocs.io/en/stable/

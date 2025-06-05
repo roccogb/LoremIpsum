@@ -5,3 +5,4 @@ pillow
 pymupdf
 qrcode
 requests
+geopy

@@ -6,6 +6,8 @@ USE foodyba_dbb;
 CREATE TABLE usuario_comercio (
     id_usr_comercio INT PRIMARY KEY AUTO_INCREMENT,
     nombre_usuario VARCHAR(100),
+    DNI INT UNIQUE,
+    CUIT INT UNIQUE,
     email_usuario VARCHAR(100) UNIQUE,
     contrasena VARCHAR(100)
 );
@@ -13,10 +15,12 @@ CREATE TABLE usuario_comercio (
 -- Tabla: usuario_consumidor
 CREATE TABLE usuario_consumidor (
     id_usr INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_usuario VARCHAR(100),
+    nombre_apellido VARCHAR(100),
+    usuario VARCHAR(100),
     email_usuario VARCHAR(100) UNIQUE,
-    contrasena VARCHAR(100)
-    -- Implementar un campo que describa la cantidad de reservas que canceló
+    contrasena VARCHAR(100),
+    numero_telefono INT UNIQUE,
+    cant_reservas_canceladas INT DEFAULT 0
 );
 
 -- Tabla: comercio
@@ -27,12 +31,14 @@ CREATE TABLE comercios (
     categoria VARCHAR(50),
     tipo_de_cocina VARCHAR(100),
     telefono VARCHAR(20),
-    ubicacion VARCHAR(255),
+    latitud FLOAT,                      -- (UBICACIÓN)Coordenada X
+    longitud FLOAT,                     -- (UBICACIÓN)Coordenada Y
     tiempo_de_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     pdf_menu_link TEXT,
-    calificacion FLOAT,                                                 
-    horarios VARCHAR(100),
-    -- Implementar un campo de 'tags' puede ser un array
+    calificacion FLOAT DEFAULT 0.0,   
+    dias VARCHAR(100),                                              
+    horarios VARCHAR(100),              
+    etiquetas TEXT,                     -- Esta columna va a ser un array convertido a texto ya que SQL no trabaja con estos tipos de datos. Formato '[etiqueta_1,etiqueta_2,...]'
     -- Defino la FK de esta tabla
     FOREIGN KEY (id_usr_comercio) REFERENCES usuario_comercio(id_usr_comercio) ON DELETE CASCADE
     -- La caracteristica 'ON DELETE CASCADE' indica que si se borra el registro 'padre' los 'hijos' se eliminan automaticamente
@@ -60,7 +66,7 @@ CREATE TABLE reservas (
     cant_personas INT,
     fecha_reserva DATETIME,
     solicitud_especial TEXT,
-    -- Campo que indica el estado de la reserva
+    estado_reserva BOOLEAN,
     FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE,
     FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE
 );
