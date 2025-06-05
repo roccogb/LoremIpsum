@@ -2,33 +2,11 @@
 # Este es un borrador, el endpoint 'agregar' con las funciones auxiliares que utilizan puede ser necesitadas en otro blueprint'
 from flask import jsonify, request
 from . import comercios_bp
-from backend.database.db import get_connection
+from database.db import get_connection
 from geopy.geocoders import Nominatim
-import re                                       # Libreria que me va a permitir trabajar con expresiones regulares
 
-# Funcion auxiliar para verificar si la información ingresada es valida. Para que la información que se ingresa sea considerada válida se deben cumplir las siguientes condiciones:
-#               - 'nombre_comercio' -> No debe contener digitos
-#               - 'categoria_comercio' -> Se tiene que haber seleccionado una categoría
-#               - 'tipo_cocina' -> Se tiene que haber seleccionado un tipo de cocina
-#               - 'email_comercio' -> El email ingresado debe seguir un patrón
-#               - 'nombre_responsable_comercio' -> El nombre del responsable no debe contener digitos
-#               - 'dni_responsable_comercio' -> El DNI deben ser un total de 8 digitos
-#               - 'cuit_responsable_comercio' -> El CUIT del responsable debe contener 11 digitos
-def verificar_data_comercio(nombre_comercio, categoria_comercio, tipo_cocina, telefono_comercio, direccion_comercio, email_comercio, nombre_responsable_comercio,dni_responsable_comercio,cuit_responsable_comercio):
-    # Verifico si el email ingresado es válido
-    # La expresión regular representa al conjunto de cadenas que cumplan lo siguiente:
-    #   '^[A-Za-z0-9._-]+'->Que la cadena empiece con un caracter existente, al menos una vez, en los siguientes conjuntos: [a-z],[A-Z],[0-9], . , _ , -  
-    #   '@' -> Que contenga un arroba
-    #   '[a-zA-Z._-]+' -> Que los caracteres continuos al arroba se encuentren, al menos una vez, en los siguientes conjuntos: [a-z],[A-Z], . , _ , -
-    #   '\.[a-zA-Z]{2,}$' -> Que contenga un punto y que los caracteres finales de la cadena, sean mayores a 2 y se encuentren en los conjunto: [a-z], [A-Z]
-    email_valido=re.search(r"^[A-Za-z0-9._-]+@[a-zA-Z._-]+\.[a-zA-Z]{2,}$", email_comercio)
 
-    if nombre_comercio.isalpha() and categoria_comercio != "-" and tipo_cocina != "-" and len(str(telefono_comercio)) == 8 and direccion_comercio != None and email_valido and nombre_responsable_comercio.isalpha() and len(str(dni_responsable_comercio)) == 8 and len(str(cuit_responsable_comercio)):
-        return True
-    else:
-        return False
-
-# Funcion auxiliar que, mediante la librería geocoder, va a retornar una lista con las coordenadas en el siguiente formato [coordX,coordY]
+# BORRADOR. PUEDE SER UTILIZADA ESTA IMPLEMENTACIÓN EN EL BLUEPRINT AUTH AL REALIZAR EL REGISTRO DE UN USUARIO DE TIPO COMERCIO
 def transform_dir_coords(str_dir):
     try:
         # Inicializo el geolocalizador Nomitanim de la API OpenStreetMap 
@@ -85,7 +63,7 @@ def get_comercio(id_comercio):
 def get_comercios_filter(filtro,valor):
     # Verifico que el filtro pasado por la URI sea válido
     filtros_validos=["categoria","tipo_de_cocina","ubicacion","tiempo_de_creacion",
-                    "calificacion","horarios"]      # Agregar las 'tags' vinculadas al comercio
+                    "calificacion","horarios","etiquetas"]     
     if filtro not in filtros_validos:
         return jsonify({"ERROR":"Filtro inválido"}),400
     
@@ -107,17 +85,31 @@ def get_comercios_filter(filtro,valor):
         # Si se encontraron comercios que cumplan con el filtro
         return jsonify(comercios_filtrados),200
 
-# MOMENTANEO. BORRADOR
-@comercios_bp.route("/agregar")
-def add_comercio():
-    nombre_comercio=request.form["name_bss"]
-    categoria_comercio=request.form["categoria"]
-    tipo_cocina=request.form["tipo_cocina"]
-    telefono_comercio=request.form["tel_bss"]
-    direccion_comercio= transform_dir_coords(request.form["dir_bss"])
-    email_comercio=request.form["email_bss"]
-    nombre_responsable_comercio=request.form["nr_bss"]
-    dni_responsable_comercio=request.form["dni_responsable_bss"]
-    cuit_responsable_comercio=request.form["cuit_responsable_bss"]
+# Este endpoint va a permitir editar la información de un comercio. El mismo va a recibir un archivo JSON con la nueva información ingresada
+@comercios_bp.route("/editar", methods=["PUT"])
+def edit_comercio():
+    body_request=request.get_json()
 
-    pass
+    conn=get_connection()                       # Me conecto al servidor MySQL y a la BDD
+    cursor=conn.cursor()
+    
+    # Verifico que el JSON recibido sea válido
+    columnas_editar=["id_comercio","nombre_comercio","categoria","tipo_de_cocina",
+                     "telefono","direccion", "pdf_menu_link", "dias",
+                     "horarios","etiquetas"]
+
+    for columna in columnas_editar:
+        if columna not in body_request:
+            return jsonify({"ERROR":f"Falta el parametro: {columna}"}), 400
+    
+    claves_json=list(body_request.keys())
+    lat,lng=transform_dir_coords(claves_json[5])            # Convierto la dirección ingresada por el usuario en coordenadas lat=coordX;long=coordY
+
+    # Consulta de SQL que me va a permitir actualizar la información de un comercio
+    qsl_actualizar_comercio=f"""UPDATE comercios SET {claves_json[1]}=%s, {claves_json[2]}=%s, {claves_json[3]}=%s, {claves_json[4]}=%s, latitud={lat}, longitud={lng},{claves_json[6]}=%s, {claves_json[7]}=%s, {claves_json[8]}=%s, {claves_json[9]}=%s WHERE {claves_json[0]}=%s;"""
+    cursor.execute(qsl_actualizar_comercio,(body_request["nombre_comercio"],body_request["categoria"],body_request["tipo_de_cocina"], body_request["telefono"], body_request["pdf_menu_link"], body_request["dias"], body_request["horarios"], body_request["etiquetas"], body_request["id_comercio"]))
+
+    conn.commit()                       # Guardo los nuevos cambios
+    cursor.close()
+    conn.close()
+    return jsonify({"msg":"Comercio actualizado"}),200

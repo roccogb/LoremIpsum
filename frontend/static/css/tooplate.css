@@ -305,30 +305,39 @@ textarea:focus {
   width: 400px;
 }
 
+/* Escondo la flechita de los select*/
+.select-wrapper .caret{
+  display: none !important;         /*Necesito utilizar el 'important' ya que los estilos aplicados en los 'select' son realizados con materalize*/
+}
+
 /*Cuando se abre el menu*/
 .dropdown-content {
-  text-align: center;
+  text-align: center !important;
   background-color: rgba(212, 175, 55,0.9);
 }
 
 /*TABLA DE HORARIOS Y DIAS DEL REGISTRO USUARIO COMERCIO*/
 
 /*Personalizo los elementos 'td-dia' que contienen un select de clase 'select-wrapper', es decir los select.*/
-.td-dia .select-wrapper input.select-dropdown {
-  width: 100px !important;           /*Fuerzo el nuevo tamaño de los select ya que si no tendrían el tamaño heredado*/
-  min-width: 100px !important;       /*Declaro cual sería el ancho minimo y el maximo*/
-  max-width: 200px !important;
-}
-
-/*Igualo el tamaño del menú desplegable*/
-.td-dia .dropdown-content{
-  width: 100px !important;
-  min-width: 100px !important;
-  max-width: 120px !important;
+/*.select-dropdown -> Clase de materalize utilizada para simular el efecto de un select*/
+/*.dropdown-content -> Menu desplegable cuando el usuario hace click en el select*/
+.td-dia .select-wrapper input.select-dropdown,
+.dropdown-content li > a,
+.dropdown-content li > span {
+  text-align: center !important;
+  color: white;
+  width: 100px !important;        /* Fuerzo el cambio de ancho*/
 }
 
 .ltc{
   color: white;
+}
+
+.input-time {
+  text-align: center;
+  width: 100px !important;
+  min-width: 80px;
+  max-width: 150px;
 }
 
 /*Personalizo aquellos las entradas de texto que comparten las clases '.tm-bg-gold' y '.input-field'*/

@@ -6,8 +6,8 @@ USE foodyba_dbb;
 CREATE TABLE usuario_comercio (
     id_usr_comercio INT PRIMARY KEY AUTO_INCREMENT,
     nombre_usuario VARCHAR(100),
-    DNI INT UNIQUE,
-    CUIT INT UNIQUE,
+    DNI BIGINT UNIQUE,
+    CUIT BIGINT UNIQUE,
     email_usuario VARCHAR(100) UNIQUE,
     contrasena VARCHAR(100)
 );
