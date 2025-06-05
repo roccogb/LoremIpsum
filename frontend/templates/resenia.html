@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodyBA</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #800020;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            position:relative;
+            background-color: #d4af37;
+            max-width: 800px;
+            max-height: 1200px;
+            margin: auto;
+            margin-top: 150px;
+            border-radius: 20px;
+        }
+        .linea{
+            position: absolute;
+            width: 7px;
+            height: 350px;
+            background: black;
+            left: 400px;
+            margin-top: 60px;
+            border-radius: 5px;
+        }
+        .resenia {
+            
+            background-color: #d4af37;
+            width: 50%;
+            height: 80%;
+            border-radius: 20px;
+            margin: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .nueva{
+            position: relative;
+            margin-top: 70px;
+            margin-right: 10px;
+            width: 400px;
+            height: 300px;
+            border: 1px solid black;
+            background-color:#705d1c
+            
+        }
+        
+        
+        .generar-frente {
+            position:absolute;
+            width: 300px;
+            height: 150px;
+            background-color: white;
+            top: 100px;
+            left: 20px;
+            z-index: 2;
+            border: 2px solid black;
+            border-radius: 35px;
+        }
+        .generar-fondo{
+            position: absolute;
+            width: 305px;
+            height: 155px;
+            background-color: #d4af37;
+            top: 105px;
+            left: 25px;
+            z-index: 1;
+            border-radius: 35px;
+        }
+        .generar-fondo, .generar-frente{
+            pointer-events: none;
+        }
+        .formulario-resenia{
+            position: absolute;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .estrella {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            margin-right: 160px;
+            gap: 5px;
+        }
+        .estrella input[type="radio"]{
+            display: none
+        }
+        .estrella label{
+            font-size: 25px;
+            color: #d4af37;
+            z-index: 4;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        
+        .estrella input:checked + label ~ label{
+            color: grey
+        }
+        
+        .input-resenia{
+            width: 230px;
+            height: 80px;
+            margin-top: 25px;
+            margin-left: 35px;
+            resize: none;
+            font-size: 10px;
+            border-color: black;
+        }
+        .boton-enviar{
+            width: 60px;
+            height: 25px;
+            margin-top: 5px;
+            border-radius: 20px;
+            margin-left: 250px;
+            color: white;
+            background-color: rgb(49, 49, 49)
+            
+        }
+        .boton-enviar:hover{
+            background-color: #d4af37
+        }
+        .boton-enviar:active{
+            background-color: #800020
+        }
+        h1 {
+            color: white;
+        }
+        .nombre{
+            margin: 30px;
+            font-size: 30px;
+        }
+        .opinion{
+            margin: 10px;
+            margin-top: 15px;
+            font-size: 30px;
+        }
+        #img-restaurant{
+            width: 300px;
+            margin: 45px;
+            margin-top: 10px
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div id="resenias" class="resenia anterior">
+            <h1 class="nombre">Nombre restaurant</h1>
+            <img src="{{ url_for('static', filename='media/restaurant.jpg')}}" alt="restaurant-img" id="img-restaurant">
+        </div>
+        <div class="linea"></div>
+        <div class="resenia nueva">
+            <h1 class="opinion">¡Dejanos tu opinión!</h1>
+            <div class="generar-fondo"></div>
+            <div class="generar-frente"></div>
+            <form action="/enviar_resenia" method="POST" class="formulario-resenia">
+                    
+                <div class="estrella">
+                    <input type="radio" id="estrella1" name="calification" value="1">
+                    <label for="estrella1" title="Muy mala">★</label>
+
+                    <input type="radio" id="estrella2" name="calification" value="2">
+                    <label for="estrella2" title="Mala">★</label>
+
+                    <input type="radio" id="estrella3" name="calification" value="3">
+                    <label for="estrella3" title="Buena">★</label>
+
+                    <input type="radio" id="estrella4" name="calification" value="4">
+                    <label for="estrella4" title="Muy buena">★</label>
+
+                    <input type="radio" id="estrella5" name="calification" value="5">
+                    <label for="estrella5" title="Excelente">★</label>
+                </div>
+                    <textarea placeholder="Escribir reseña..." class="input-resenia"></textarea>
+                    <button type="submit" class="boton-enviar">ENVIAR</button>
+                </form>
+                
+            </div>
+
+
+            
+        </div>
+
+    </div>
+
+</body>
+
+</html>
