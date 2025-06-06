@@ -95,23 +95,38 @@ def edit_comercio():
     conn=get_connection()                       # Me conecto al servidor MySQL y a la BDD
     cursor=conn.cursor()
     
-    # Verifico que el JSON recibido sea válido
-    columnas_editar=["id_comercio","nombre_comercio","categoria","tipo_de_cocina",
+    # Verifico que el JSON recibido contenga claves válidas. Estas mismas representan las columnas de la tabla
+    claves_validas=["id_comercio","nombre_comercio","categoria","tipo_de_cocina",
                      "telefono","direccion", "pdf_menu_link", "dias",
                      "horarios","etiquetas"]
 
-    for columna in columnas_editar:
-        if columna not in body_request:
-            return jsonify({"ERROR":f"Falta el parametro: {columna}"}), 400
+    for clave in claves_validas:
+        if clave not in body_request:
+            return jsonify({"ERROR":f"Falta el dato '{clave}' en la petición"}), 400
     
-    claves_json=list(body_request.keys())
-    lat,lng=transform_dir_coords(claves_json[5])            # Convierto la dirección ingresada por el usuario en coordenadas lat=coordX;long=coordY
+    lat,lng=transform_dir_coords(body_request["direccion"])            # Convierto la dirección ingresada por el usuario en coordenadas lat=coordX;long=coordY
 
     # Consulta de SQL que me va a permitir actualizar la información de un comercio
-    qsl_actualizar_comercio=f"""UPDATE comercios SET {claves_json[1]}=%s, {claves_json[2]}=%s, {claves_json[3]}=%s, {claves_json[4]}=%s, latitud={lat}, longitud={lng},{claves_json[6]}=%s, {claves_json[7]}=%s, {claves_json[8]}=%s, {claves_json[9]}=%s WHERE {claves_json[0]}=%s;"""
-    cursor.execute(qsl_actualizar_comercio,(body_request["nombre_comercio"],body_request["categoria"],body_request["tipo_de_cocina"], body_request["telefono"], body_request["pdf_menu_link"], body_request["dias"], body_request["horarios"], body_request["etiquetas"], body_request["id_comercio"]))
+    qsl_actualizar_comercio=f"""UPDATE comercios 
+                                SET 
+                                {claves_validas[1]}=%s, 
+                                {claves_validas[2]}=%s, 
+                                {claves_validas[3]}=%s, 
+                                {claves_validas[4]}=%s, 
+                                latitud={lat}, 
+                                longitud={lng},
+                                {claves_validas[6]}=%s, 
+                                {claves_validas[7]}=%s, 
+                                {claves_validas[8]}=%s, 
+                                {claves_validas[9]}=%s 
+                                WHERE {claves_validas[0]}=%s;"""
+    
+    cursor.execute(qsl_actualizar_comercio,(body_request["nombre_comercio"],body_request["categoria"],body_request["tipo_de_cocina"],
+                                            body_request["telefono"], body_request["pdf_menu_link"], body_request["dias"], 
+                                            body_request["horarios"], body_request["etiquetas"], body_request["id_comercio"]))
 
     conn.commit()                       # Guardo los nuevos cambios
     cursor.close()
     conn.close()
+    
     return jsonify({"msg":"Comercio actualizado"}),200
