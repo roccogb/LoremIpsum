@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil del consumidor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <header class="mb-4">
+            <h1 class="text-center">Mi Perfil</h1>
+        </header>
+
+        <section class="card mb-4 p-4">
+            <h2>{{ usuario.nombre_usuario }}</h2>
+            <p><strong>Email:</strong> {{ usuario.email_usuario }}</p>
+            <p><strong>Miembro desde:</strong> {{ usuario.fecha_creacion }}</p>
+        </section>
+
+        <section class="card mb-4 p-4">
+            <h3>Mis Reservas</h3>
+            {% if reservas %}
+                <ul class="list-group">
+                    {% for reserva in reservas %}
+                        <li class="list-group-item">
+                            <strong>{{ reserva.nombre_restaurante }}</strong> - {{ reserva.fecha }} ({{ reserva.estado }})
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No tenes reservas todavia.</p>
+            {% endif %}
+        </section>
+
+        <section class="card p-4">
+            <h3>Mis Reseñas</h3>
+            {% if resenas %}
+                <ul class="list-group">
+                    {% for resena in resenas %}
+                        <li class="list-group-item">
+                            <strong>{{ resena.nombre_restaurante }}</strong><br>
+                            {{ resena.comentario }}<br>
+                            Puntaje: {{ resena.puntaje }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hiciste ninguna reseña todavia.</p>
+            {% endif %}
+        </section>
+    </div>
+</body>
+</html>
