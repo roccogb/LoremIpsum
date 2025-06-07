@@ -7,3 +7,5 @@ from .test_routes import test_bp
 def register_routes(app):
     app.register_blueprint(comercios_bp,url_prefix="/comercio")
     app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(test_bp)
+
