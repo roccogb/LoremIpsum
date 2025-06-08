@@ -12,7 +12,9 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../static/bootstrap/resto_bootstrap.min.css" rel="stylesheet">
-
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="../static/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="../static/css/seleccion_resto.css">
@@ -117,15 +119,90 @@
           </div>
           <!-- ***** Banner End ***** -->
 
-          <!-- ***** Gaming Library Start ***** -->
+          <!-- RESERVA Y MAPA -->
           <div class="gaming-library profile-library">
             <div class="col-lg-12">
               <div class="heading-section">
-                <h4><em>Localización</em> (METER MAPA)</h4>
+                <h4><em>Reservas</em> (METER MAPA)</h4>
               </div>
             </div>
-          </div>
-          <!-- ***** Gaming Library End ***** -->
+          <div class="booking">
+              <div class="container">
+                  <div class="row align-items-center">
+                      <div class="col-lg-5">
+                          <div class="booking-form">
+                              <form>
+                                  <div class="control-group">
+                                      <div class="input-group">
+                                          <input type="text" class="form-control" placeholder="Titular de la reserva" required="required" />
+                                         <div class="input-group-append">
+                                              <div class="input-group-text"><i class="far fa-user"></i></div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                  <div class="control-group">
+                                    <div class="input-group">
+                                        <input type="email" class="form-control" placeholder="Correo electrónico" required="required" />
+                                        <div class="input-group-append">
+                                            <div class="input-group-text"><i class="far fa-envelope"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Teléfono" required="required" />
+                                        <div class="input-group-append">
+                                            <div class="input-group-text"><i class="fa fa-mobile-alt"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="input-group date" id="date" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" placeholder="Fecha" data-target="#date" data-toggle="datetimepicker"/>
+                                        <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="input-group time" id="time" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" placeholder="Horario" data-target="#time" data-toggle="datetimepicker"/>
+                                        <div class="input-group-append" data-target="#time" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="input-group">
+                                        <select class="custom-select form-control">
+                                            <option selected>Cantidad de personas</option>
+                                            <option value="1">1 Persona</option>
+                                            <option value="2">2 Personas</option>
+                                            <option value="3">3 Personas</option>
+                                            <option value="4">4 Personas</option>
+                                            <option value="5">5 Personas</option>
+                                            <option value="6">6 Personas</option>
+                                            <option value="7">7 Personas</option>
+                                            <option value="8">8 Personas</option>
+                                            <option value="9">9 Personas</option>
+                                            <option value="10">10 Personas</option>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text"><i class="fa fa-chevron-down"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="btn custom-btn" type="submit">Reservar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+          <!-- FINAL RESERVA Y MAPA -->
         </div>
       </div>
     </div>
@@ -148,7 +225,7 @@
   <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->
   <script src="../static/js/jquery.min.js"></script>
-  <script src="static/bootstrap/resto_bootstrap.min.js"></script>
+  <script src="../static/bootstrap/resto_bootstrap.min.js"></script>
 
   <script src="../static/js/isotope.min.js"></script>
   <script src="../static/js/owl-carousel.js"></script>
@@ -156,7 +233,15 @@
   <script src="../static/js/popup.js"></script>
   <script src="../static/js/custom.js"></script>
 
+  <!--ESTO ES DE LA RESERVA-->
+  <script src="../static/js/easing.min.js"></script>
+  <script src="../static/js/owl.carousel.min.js"></script>
+  <script src="../static/js/moment.min.js"></script>
+  <script src="../static/js/moment-timezone.min.js"></script>
+  <script src="../static/js/tempusdominus-bootstrap-4.min.js"></script>
 
-  </body>
+  <script src="../static/js/main.js"></script>
+
+</body>
 
 </html>
