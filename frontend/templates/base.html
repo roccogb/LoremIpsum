@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodyBA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block styles %}{% endblock %}
+</head>
+<body class="body-bg">
+    
+    <nav class="navbar">
+        <div class="logo">
+            🍴 FoodyBA
+        </div>
+        
+        <div class="search-box">
+            🔍 <input type="text" placeholder="Buscar local" aria-label="Buscar restaurante">
+        </div>
+        
+        <div class="nav-links" id="navLinks">
+            <a href="/" class="active">Inicio</a>
+            <a href="/descubre">Descubre</a>
+            <a href="/review">Reseña</a>
+            <span class="nav-user" onclick="showUserMenu()" role="button" tabindex="0" aria-label="Menú de usuario">👤</span>
+        </div>
+        
+        <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menú">
+            ☰
+        </button>
+    </nav>
+    
+    <div class="page-container">
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

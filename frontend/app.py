@@ -9,6 +9,14 @@ API_BACK="http://localhost:8100"
 def home():
     return render_template("home.html")
 
+@app.route("/descubre")
+def descubre():
+    return render_template("descubre.html")
+
+@app.route("/review")
+def review():
+    return render_template("review.html")
+
 @app.route("/login", methods=['GET','POST'])
 def login():
     if request.method == 'GET':
