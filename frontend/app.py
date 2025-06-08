@@ -5,6 +5,10 @@ app=Flask(__name__)
 
 API_BACK="http://localhost:8100"
 
+@app.route("/")
+def home():
+    return render_template("home.html")
+
 @app.route("/login", methods=['GET','POST'])
 def login():
     if request.method == 'GET':

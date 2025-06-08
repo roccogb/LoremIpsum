@@ -4,7 +4,7 @@ from flask import jsonify, request
 from . import comercios_bp
 from database.db import get_connection
 from geopy.geocoders import Nominatim
-
+from ast import literal_eval                    # Libreria que estándar de Python para trabajr con cadenas
 
 # Esta funcion va a convertir una dirección, pasada como string, en coordenadas geograficas.
 # La misma puede ser utilizada por el blueprint 'Comercios' como tambien 'Autenticación'
@@ -58,33 +58,50 @@ def get_comercio(id_comercio):
         # Si se encontró un comercio bajo ese ID
         return jsonify(comercio_encontrado),200
 
-# MOMENTANEO. Si se filtra mediante etiquetas el parametro 'valor' puede ser multiple. Solucionarlo
+# De momento, se va a poder filtrar solamente por un parámetro. Implementación a futuro: que se pueda a filtrar por mas de un parámetro
 # Endpoint que va a retornar información de la BDD de los comercios que cumplan con cierto patrón. Ej: 'retornar toda la información de los comercios con tipo de cocina china'
-# Implementar la funcionalidad de filtrar comercios según los tags vinculados a los mismos
-@comercios_bp.route("/<filtro>/<valor>")
-def get_comercios_filter(filtro,valor):
-    # Verifico que el filtro pasado por la URI sea válido
-    filtros_validos=["categoria","tipo_de_cocina","ubicacion","tiempo_de_creacion",
-                    "calificacion","horarios","etiquetas"]     
-    if filtro not in filtros_validos:
+# Va a recibir un archivo JSON con la información necesaria para filtrar
+@comercios_bp.route("/filtrar")
+def get_comercios_filter():
+    body_request=request.get_json()
+
+    # Verifico que el JSON contenga filtros válidos
+    filtros_validos=["categoria","tipo_de_cocina","ubicacion",
+                     "calificacion","dias","horarios","etiquetas"]
+    
+    if body_request["filtro"] not in filtros_validos:
         return jsonify({"ERROR":"Filtro inválido"}),400
     
     conn=get_connection()
     cursor=conn.cursor(dictionary=True)
 
-    #Parametrizo la consulta, brindando asi mejor seguridad y legibilidad al código
-    sql=f"""SELECT * FROM comercios WHERE {filtro}=%s;"""    
-    cursor.execute(sql,(valor,))
+    qsql_filtrar_comercios=f""""""
 
-    comercios_filtrados=cursor.fetchall()                   # El método fetchall va a retornar todas las filas del resultado de la consulta
+    # Armo la consulta que me va a permitir filtrar los comercios segun el parámetro ingresado
+    if body_request["filtro"] == "etiquetas":
+        # Si el filtro seleccionado es mediante etiquetas
+        # Convierto el string que representa una estructura de datos en el objeto que corresponde
+        valores_filtro=literal_eval(body_request["valor"])
+        # Creo una nueva lista aplicando una expresión, como 'etiquetas LIKE ....', a todos los elementos de un iterable. Esta tecnica se conoce como comprensión de listas
+        # ["etiquetas LIKE '%etiquetaA%'", "etiquetas LIKE '%etiquetaB%'", ..... ]
+        condiciones_filtro=[f"etiquetas LIKE '%{valor}%'" for valor in valores_filtro]
+        # Uno todos los elementos de la lista 'condiciones_filtro' con el caracter ' OR ' generando la siguiente sentencia SQL para poder realizar una consulta a la BDD
+        # "SELECT * FROM comercios WHERE etiquetas LIKE '%etiquetaA%' OR etiquetas LIKE '%etiquetaB%'"
+        qsql_filtrar_comercios="SELECT * FROM comercios WHERE " + " OR ".join(condiciones_filtro)         
+    else:
+        # Si es cualquier otro tipo de filtro
+        qsql_filtrar_comercios=f"SELECT * FROM comercios WHERE {body_request["filtro"]}='{body_request["valor"]}';"
+    
+    cursor.execute(qsql_filtrar_comercios)
+    comercios_filtrados=cursor.fetchall()                           # Almaceno todos los registros resultantes de la consulta a la BDD en la variable 'comercios_filtrados'
 
     cursor.close()
     conn.close()
     if not comercios_filtrados:
-        # Si no encontró comercios que cumplan con el filtro
-        return jsonify({"ERROR":"No existen comercios que compartan esa caracteristica"}),404
+        # Si no se encontrarón comercios que cumplan con los parámetros recibidos
+        return jsonify({"ERROR":"No se encontraron comercios bajo esos parametros"}),404
     else:
-        # Si se encontraron comercios que cumplan con el filtro
+        # Si se encontraron comercios
         return jsonify(comercios_filtrados),200
 
 # Este endpoint va a permitir editar la información de un comercio. El mismo va a recibir un archivo JSON con la nueva información ingresada
