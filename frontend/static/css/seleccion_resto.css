@@ -297,22 +297,21 @@ section {
 
 /*  MAPAAA  */
 
-.map-responsive {
-  overflow: hidden;
-  padding-bottom: 56.25%;
+.map-container {
   position: relative;
-  height: 0;
   width: 50%;
-  height: auto;
-  border: 0;
+  padding-bottom: 56.25%; /* Relación 16:9 */
+  overflow: hidden;
+  margin-bottom: 2rem; /* espacio opcional debajo */
 }
 
-.map-responsive iframe {
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
+.map-frame {
   position: absolute;
+  top: 0;
+  left: 4px;
+  width: 100%;
+  height: 100%;
+  border: none; /* equivalente a frameborder="0" */
 }
 
 /*  FIN MAPA  */
