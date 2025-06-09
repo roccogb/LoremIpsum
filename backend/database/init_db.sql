@@ -21,7 +21,7 @@ CREATE TABLE usuario_consumidor (
     usuario VARCHAR(100) UNIQUE,
     email_usuario VARCHAR(100) UNIQUE,
     contrasena VARCHAR(100),
-    numero_telefono INT UNIQUE,
+    numero_telefono BIGINT UNIQUE,
     cant_reservas_canceladas INT DEFAULT 0
 );
 
@@ -29,10 +29,11 @@ CREATE TABLE usuario_consumidor (
 CREATE TABLE comercios (
     id_comercio INT PRIMARY KEY AUTO_INCREMENT,
     id_usr_comercio INT,
+    ruta_imagen VARCHAR(100), 
     nombre_comercio VARCHAR(100),
     categoria VARCHAR(50),
     tipo_de_cocina VARCHAR(100),
-    telefono VARCHAR(20),
+    telefono BIGINT UNIQUE,
     latitud FLOAT,                      -- (UBICACIÓN)Coordenada X
     longitud FLOAT,                     -- (UBICACIÓN)Coordenada Y
     tiempo_de_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -64,7 +65,7 @@ CREATE TABLE reservas (
     id_comercio INT,
     nombre_bajo_reserva VARCHAR(100),
     email VARCHAR(100),
-    telefono VARCHAR(20),
+    telefono BIGINT,
     cant_personas INT,
     fecha_reserva DATETIME,
     solicitud_especial TEXT,

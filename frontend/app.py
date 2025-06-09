@@ -3,7 +3,19 @@ import requests                 # Libreria para realizar peticiones HTTP
 
 app=Flask(__name__)
 
-API_BACK="http://localhost:8100"
+API_BACK="http://0.0.0.0:8100"
+
+@app.route("/")
+def home():
+    return render_template("home.html")
+
+@app.route("/descubre")
+def descubre():
+    return render_template("descubre.html")
+
+@app.route("/review")
+def review():
+    return render_template("review.html")
 
 @app.route("/login", methods=['GET','POST'])
 def login():
