@@ -1,9 +1,3 @@
-
-/* 
----------------------------------------------
-font & reset css
---------------------------------------------- 
-*/
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900");
 
 ul, li {
@@ -61,17 +55,14 @@ img {
   overflow: hidden;
 }
 
-/* 
----------------------------------------------
-Global Styles
---------------------------------------------- 
-*/
+/* ESTILOS GLOBALES DE LA PÁGINA. */
 html,
 body {
   background: #D4AF37;
   font-family: 'Poppins', sans-serif;
 }
 
+/*  CUADRO QUE TENDRÁ TODO EL CONTENIDO */
 body .page-content {
   margin-top: 110px;
   background-color: #800020;
@@ -79,6 +70,7 @@ body .page-content {
   border-radius: 23px;
 }
 
+/*  FUENTES Y TAMAÑOS   */
 p {
   font-size: 15px;
   color: #ffffff;
@@ -159,13 +151,7 @@ section {
   text-decoration: underline;
 }
 
-/* 
----------------------------------------------
-Header Style
---------------------------------------------- 
-*/
-
-
+/*  ACÁ SE METE TODO DEL HEADER, COMO EL "HOME", "DESCUBRE", ETC.   */
 .header-area {
   background-color: transparent;
   position: absolute;
@@ -300,12 +286,8 @@ Header Style
   color: #fff;
 }
 
-/* 
----------------------------------------------
-Gaming Library Style
---------------------------------------------- 
-*/
 
+/*  EL CUADRO DONDE VAN LAS RESERVAS Y EL MAPA   */
 .gaming-library {
   margin-top: 60px;
   padding: 30px;
@@ -313,12 +295,103 @@ Gaming Library Style
   border-radius: 23px;
 }
 
-/* 
----------------------------------------------
-Profile Style
---------------------------------------------- 
-*/
+/*  MAPAAA  */
 
+.map-responsive {
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 0;
+  width: 50%;
+  height: auto;
+  border: 0;
+}
+
+.map-responsive iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+/*  FIN MAPA  */
+
+.booking {
+    position: relative;
+    width: 100%;
+    margin-bottom: 45px;}
+
+.booking .booking-content {
+    padding: 45px 0 15px 0;
+}
+
+.booking .booking-content .section-header {
+    margin-bottom: 30px;
+}
+
+.booking .booking-form {
+    padding: 60px 30px;
+    background: #D4AF37;
+}
+
+.booking .booking-form .control-group {
+    margin-bottom: 15px;
+}
+
+.booking .booking-form .input-group-text {
+    position: absolute;
+    padding: 0;
+    border: none;
+    background: none;
+    top: 15px;
+    right: 15px;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.booking .booking-form .form-control {
+    height: 48px;
+    font-size: 15px;
+    color: #ffffff;
+    padding: 0 15px;
+    border-radius: 5px !important;
+    border: 2px solid #D4AF37;
+    background: #460616;
+}
+
+.booking .booking-form select.form-control {
+    padding: 0 10px;
+}
+
+.booking .booking-form .form-control::placeholder {
+    color: #ffffff;
+    opacity: 1;
+}
+
+.booking .booking-form .form-control:-ms-input-placeholder,
+.booking .booking-form .form-control::-ms-input-placeholder {
+    color: #ffffff;
+}
+
+.booking .booking-form .input-group [data-toggle="datetimepicker"] {
+    cursor: default;
+}
+
+.booking .booking-form .btn.custom-btn {
+    width: 100%;
+    color: #fbaf32;
+    background: #333333;
+    border: 2px solid #333333;
+}
+
+.booking .booking-form .btn.custom-btn:hover {
+    color: #ffffff;
+    background: #800020;
+}
+
+
+/*  ENTRAN TODOS LOS DETALLES DE LAS CARACTERÍSTICAS DEL RESTO, COMO IMG, TÍTULO, ETC.  */
 .main-profile {
   border-radius: 23px;
   padding: 30px;
@@ -392,12 +465,8 @@ Profile Style
   text-align: center;
 }
 
-/* 
----------------------------------------------
-Responsive Style
---------------------------------------------- 
-*/
 
+/*  RESPONSIVE  */
 body {
   overflow-x: hidden;
 }
