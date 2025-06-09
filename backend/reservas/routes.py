@@ -1,6 +1,8 @@
 from flask import jsonify, request
 from database.db import get_connection
 from . import reservas_bp
+import qrcode
+import os
 
 # Este endpoint mostrará todas las reservas vinculadas a un usuario.
 # Se recibirá, a traves de la URI, un 'id' el cual servirá para identificar las reservas relacionadas al usuario
@@ -95,7 +97,13 @@ def agregar_reserva():
                                        body_request["email"],body_request["telefono"],body_request["cant_personas"],
                                        body_request["fecha_reserva"],body_request["solicitud_especial"]))
 
-    conn.commit()                   # Guardo los nuevos cambios realizados
+    conn.commit()                                           # Guardo los nuevos cambios realizados
+
+    # Creo un código QR vinculado a la reserva en cuestión
+    # El metodo 'lastrowid' va a retornar el ID de la ultima reserva agregada
+    # Es necesario que en la URL este la IP local asi cualquier dispositivo de la misma red puede acceder al servidor Flask utilizando esa dirección. Permitiendo asi, a un telefono conectado a la misma red, escanear el QR para confirmar la reserva
+    qr_reserva=qrcode.make(f"http://192.168.0.8:8100/reserva/estado/{cursor.lastrowid}")
+    qr_reserva.save(f"../frontend/static/media/img/qr_reserva{cursor.lastrowid}.png")
 
     cursor.close()
     conn.close()
@@ -113,6 +121,14 @@ def eliminar_reserva(id_reserva):
     cursor.execute(qsql_eliminar_reserva,(id_reserva,))
 
     conn.commit()                           # Guardo los cambios realizados
+
+    # Elimino la imagen QR relacionada a esa reserva
+    ruta_img_qr=f"../frontend/static/media/img/qr_reserva{id_reserva}.png"
+    # Me aseguro de que la imagen se encuentre en la ruta determinada
+    if os.path.exists(ruta_img_qr):
+        # Si es asi, la elimino
+        os.remove(ruta_img_qr)
+
     cursor.close()
     conn.close()
     return jsonify({"msg":"Reserva eliminada con éxito"}),200
@@ -157,3 +173,23 @@ def editar_reserva():
     conn.close()
     return jsonify({"msg":"Reserva actualizada"}),200
     
+# Este endpoint modificará el estado de una reserva para asi poder confirmarla. Se recibirá a traves de un parametro dinamico de la URI el ID de la misma
+# Implementación a futuro.
+#   Luego de pasado un determinado tiempo, el estado de la reserva será 'False'
+#   Realizar algun tipo de animación con el front o algo por el estilo para mostrar que la reserva se confirmo
+@reservas_bp.route("/estado/<int:id_reserva>")
+def modificar_estado(id_reserva):
+    conn=get_connection()
+    cursor=conn.cursor(dictionary=True)
+
+    # Actualizo el estado de la reserva
+    qsql_nuevo_estado="""UPDATE reservas
+                         SET
+                            estado_reserva=True
+                         WHERE id_reserva=%s;"""
+    cursor.execute(qsql_nuevo_estado,(id_reserva,))
+
+    conn.commit()                           # Guardo los cambios realizados
+    cursor.close()
+    conn.close()
+    return jsonify({"msg":"Estado de reserva actualizado"}),200
