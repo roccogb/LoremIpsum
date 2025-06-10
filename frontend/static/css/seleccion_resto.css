@@ -534,3 +534,43 @@ body {
     width: 16%;
   }
 }
+
+/* Asegura que el contenedor del mapa y el formulario se estiren al mismo alto */
+.map-container, .booking {
+  width: 100%;
+  height: 100%;
+  min-height: 350px; /* Ajusta este valor según tu diseño */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Ajusta el iframe del mapa para que se adapte al contenedor */
+.map-frame {
+  width: 100%;
+  height: 350px;
+  border: 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+/* Haz que el formulario de reservas ocupe el ancho completo de su columna */
+.booking-form {
+  width: 100%;
+
+  padding: 24px 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+/* Responsive: apila los elementos uno debajo del otro en pantallas pequeñas */
+@media (max-width: 991px) {
+  .map-frame,
+  .map-container,
+  .booking-form,
+  .booking {
+    height: 540px;
+    min-height: 250px;
+  }
+}
