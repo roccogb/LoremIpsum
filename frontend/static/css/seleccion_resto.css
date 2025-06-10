@@ -135,157 +135,6 @@ p {
   background-color: transparent;
 }
 
-section {
-  margin-top: 120px;
-}
-
-.heading-section h4 {
-  font-size: 34px;
-  text-decoration: none;
-  margin-bottom: 30px;
-}
-
-.heading-section h4 em {
-  color: #fff;
-  font-style: normal;
-  text-decoration: underline;
-}
-
-/*  ACÁ SE METE TODO DEL HEADER, COMO EL "HOME", "DESCUBRE", ETC.   */
-.header-area {
-  background-color: transparent;
-  position: absolute;
-  height: 70px;
-  top: 15px;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  -webkit-transition: all .5s ease 0s;
-  -moz-transition: all .5s ease 0s;
-  -o-transition: all .5s ease 0s;
-  transition: all .5s ease 0s;
-}
-
-.header-area .main-nav {
-  min-height: 80px;
-  background: transparent;
-  display: flex;
-  padding: 15px 0px;
-  border-radius: 50px;
-}
-
-.header-area .main-nav .logo img {
-  width: 90px;
-  margin-left: 20px;
-  margin-top: -22px;
-}
-
-.background-header .main-nav .logo {
-  margin-top: 8px;
-}
-
-.background-header .main-nav .logo img {
-  width: 180px;
-}
-
-.header-area .main-nav .nav {
-  display: inline-flex;
-  flex-basis: 90%;
-  justify-content: flex-end;
-  vertical-align: middle;
-  text-align: right;
-  margin-top: 0px;
-  margin-right: 0px;
-  -webkit-transition: all 0.3s ease 0s;
-  -moz-transition: all 0.3s ease 0s;
-  -o-transition: all 0.3s ease 0s;
-  transition: all 0.3s ease 0s;
-  position: relative;
-  z-index: 999;
-}
-
-.header-area .main-nav .nav li {
-  padding-left: 10px;
-  padding-right: 10px;
-  display: inline-block;
-}
-
-.header-area .main-nav .nav li a {
-  display: block;
-  font-weight: 400;
-  font-size: 14px;
-  text-transform: capitalize;
-  color: #ffffff;
-  -webkit-transition: all 0.3s ease 0s;
-  -moz-transition: all 0.3s ease 0s;
-  -o-transition: all 0.3s ease 0s;
-  transition: all 0.3s ease 0s;
-  border: transparent;
-  padding: 13px 10px;
-  border-radius: 18px;
-  letter-spacing: .3px;
-}
-
-.header-area .main-nav .nav li:last-child a {
-  background-color: #27292a;
-  padding: 8px 10px 8px 20px;
-  border-radius: 23px;
-}
-
-.header-area .main-nav .nav li:last-child a img {
-  max-width: 30px;
-  border-radius: 50%;
-  margin-left: 5px;
-}
-
-.header-area .main-nav .nav li.has-sub ul.sub-menu li:last-child a:hover,
-.background-header .main-nav .nav li.has-sub ul.sub-menu li:last-child a:hover {
-  padding-left: 25px !important;
-}
-
-.header-area .main-nav .nav li:hover a,
-.header-area .main-nav .nav li a.active {
-  color: #800020 !important;
-}
-
-.header-area .main-nav .nav li:last-child:hover a,
-.header-area .main-nav .nav li:last-child a.active {
-  color: #fff !important;
-  background-color: #800020 !important;
-}
-
-.background-header .main-nav .nav li:hover a,
-.background-header .main-nav .nav li a.active {
-  color: #fff;
-  opacity: 1;
-}
-
-.header-area .main-nav .nav li.has-sub {
-  position: relative;
-  padding-right: 15px;
-}
-
-.header-area .main-nav .menu-trigger {
-  cursor: pointer;
-  display: block;
-  position: absolute;
-  top: 23px;
-  width: 32px;
-  height: 40px;
-  text-indent: -9999em;
-  z-index: 99;
-  right: 20px;
-  display: none;
-}
-
-.header-area.header-sticky {
-  min-height: 70px;
-}
-
-.header-area.header-sticky .nav li a.active {
-  color: #fff;
-}
-
 
 /*  EL CUADRO DONDE VAN LAS RESERVAS Y EL MAPA   */
 .gaming-library {
@@ -355,7 +204,7 @@ section {
     color: #ffffff;
     padding: 0 15px;
     border-radius: 5px !important;
-    border: 2px solid #D4AF37;
+    border: 2px solid #d4af37;
     background: #460616;
 }
 
@@ -366,11 +215,6 @@ section {
 .booking .booking-form .form-control::placeholder {
     color: #ffffff;
     opacity: 1;
-}
-
-.booking .booking-form .form-control:-ms-input-placeholder,
-.booking .booking-form .form-control::-ms-input-placeholder {
-    color: #ffffff;
 }
 
 .booking .booking-form .input-group [data-toggle="datetimepicker"] {
@@ -573,4 +417,68 @@ body {
     height: 540px;
     min-height: 250px;
   }
+}
+
+/* === PERSONALIZACIÓN DEL CALENDARIO Y RELOJ (Tempus Dominus) === */
+
+:root {
+  --calendar-text: #ffffff;       /* texto normal */
+  --calendar-hover: #fbaf32;  /* hover y seleccionado */
+  --calendar-hover-text: #000000; /* texto cuando se selecciona */
+  --calendar-muted: #bbbbbb;      /* días/meses inactivos */
+}
+
+/* Fondo del calendario/reloj */
+.bootstrap-datetimepicker-widget {
+  background-color: #800020 !important;
+  color: #333333;
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Texto normal */
+.bootstrap-datetimepicker-widget table td,
+.bootstrap-datetimepicker-widget table th {
+  color: var(--calendar-text);
+}
+
+/* Hover sobre celdas */
+.bootstrap-datetimepicker-widget table td:hover,
+.bootstrap-datetimepicker-widget table span:hover {
+  background-color: var(--calendar-hover);
+  color: var(--calendar-hover-text);
+}
+
+/* Seleccionado */
+.bootstrap-datetimepicker-widget table td.active,
+.bootstrap-datetimepicker-widget table td.active:hover,
+.bootstrap-datetimepicker-widget table span.active,
+.bootstrap-datetimepicker-widget table span.active:hover {
+  background-color: var(--calendar-hover);
+  color: var(--calendar-hover-text);
+}
+
+/* Celdas inactivas (otro mes o año) */
+.bootstrap-datetimepicker-widget table td.old,
+.bootstrap-datetimepicker-widget table td.new,
+.bootstrap-datetimepicker-widget table td span.old {
+  color: var(--calendar-muted);
+}
+
+/* Asegura que los meses/años no estén todos pegados */
+.bootstrap-datetimepicker-widget table td span {
+  display: inline-block;
+  width: 60px;
+  height: 40px;
+  line-height: 40px;
+  margin: 4px;
+  text-align: center;
+}
+
+/* Flechas y switch */
+.bootstrap-datetimepicker-widget table th.picker-switch,
+.bootstrap-datetimepicker-widget table th.next,
+.bootstrap-datetimepicker-widget table th.prev {
+  color: var(--calendar-text);
 }
