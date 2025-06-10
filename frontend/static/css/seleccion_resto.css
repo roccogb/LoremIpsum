@@ -1,0 +1,576 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900");
+
+ul, li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: #FFFFFF;
+}
+
+header, nav, section, article, aside, footer, hgroup {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  background-color: #D4AF37;
+  font-size: 16px;
+  -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+	color: #CCC;
+  text-decoration: none !important;
+}
+a:hover {
+	color: rgb(0, 0, 0);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: #fff;
+  font-weight: 700;
+}
+
+ul {
+  margin-bottom: 0px;
+}
+
+p {
+  font-size: 15px;
+  line-height: 30px;
+  color: #fff;
+}
+
+img {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ESTILOS GLOBALES DE LA PÁGINA. */
+html,
+body {
+  background: #D4AF37;
+  font-family: 'Poppins', sans-serif;
+}
+
+/*  CUADRO QUE TENDRÁ TODO EL CONTENIDO */
+body .page-content {
+  margin-top: 110px;
+  background-color: #800020;
+  padding: 60px;
+  border-radius: 23px;
+}
+
+/*  FUENTES Y TAMAÑOS   */
+p {
+  font-size: 15px;
+  color: #ffffff;
+  line-height: 30px;
+  margin-bottom: 0px;
+}
+
+.templatemo-item {
+	max-width: 80px; 
+	border-radius: 23px;
+}
+
+.main-button a {
+  font-size: 14px;
+  color: #fff;
+  background-color: #333333;
+  padding: 12px 30px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-button a:hover {
+  background-color: #fff;
+  color: #800020;
+}
+
+.main-border-button a {
+  font-size: 14px;
+  color: #FFFFFF;
+  background-color: #333333;
+  padding: 12px 30px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-border-button a:hover {
+  border-color: #fff;
+  background-color: #fff;
+  color: #800020;
+}
+
+.border-no-active a {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.border-no-active a:hover{
+  border-color: #ec0000;
+  color: #ffffff;
+  background-color: transparent;
+}
+
+section {
+  margin-top: 120px;
+}
+
+.heading-section h4 {
+  font-size: 34px;
+  text-decoration: none;
+  margin-bottom: 30px;
+}
+
+.heading-section h4 em {
+  color: #fff;
+  font-style: normal;
+  text-decoration: underline;
+}
+
+/*  ACÁ SE METE TODO DEL HEADER, COMO EL "HOME", "DESCUBRE", ETC.   */
+.header-area {
+  background-color: transparent;
+  position: absolute;
+  height: 70px;
+  top: 15px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  -webkit-transition: all .5s ease 0s;
+  -moz-transition: all .5s ease 0s;
+  -o-transition: all .5s ease 0s;
+  transition: all .5s ease 0s;
+}
+
+.header-area .main-nav {
+  min-height: 80px;
+  background: transparent;
+  display: flex;
+  padding: 15px 0px;
+  border-radius: 50px;
+}
+
+.header-area .main-nav .logo img {
+  width: 90px;
+  margin-left: 20px;
+  margin-top: -22px;
+}
+
+.background-header .main-nav .logo {
+  margin-top: 8px;
+}
+
+.background-header .main-nav .logo img {
+  width: 180px;
+}
+
+.header-area .main-nav .nav {
+  display: inline-flex;
+  flex-basis: 90%;
+  justify-content: flex-end;
+  vertical-align: middle;
+  text-align: right;
+  margin-top: 0px;
+  margin-right: 0px;
+  -webkit-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  position: relative;
+  z-index: 999;
+}
+
+.header-area .main-nav .nav li {
+  padding-left: 10px;
+  padding-right: 10px;
+  display: inline-block;
+}
+
+.header-area .main-nav .nav li a {
+  display: block;
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: capitalize;
+  color: #ffffff;
+  -webkit-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  border: transparent;
+  padding: 13px 10px;
+  border-radius: 18px;
+  letter-spacing: .3px;
+}
+
+.header-area .main-nav .nav li:last-child a {
+  background-color: #27292a;
+  padding: 8px 10px 8px 20px;
+  border-radius: 23px;
+}
+
+.header-area .main-nav .nav li:last-child a img {
+  max-width: 30px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+.header-area .main-nav .nav li.has-sub ul.sub-menu li:last-child a:hover,
+.background-header .main-nav .nav li.has-sub ul.sub-menu li:last-child a:hover {
+  padding-left: 25px !important;
+}
+
+.header-area .main-nav .nav li:hover a,
+.header-area .main-nav .nav li a.active {
+  color: #800020 !important;
+}
+
+.header-area .main-nav .nav li:last-child:hover a,
+.header-area .main-nav .nav li:last-child a.active {
+  color: #fff !important;
+  background-color: #800020 !important;
+}
+
+.background-header .main-nav .nav li:hover a,
+.background-header .main-nav .nav li a.active {
+  color: #fff;
+  opacity: 1;
+}
+
+.header-area .main-nav .nav li.has-sub {
+  position: relative;
+  padding-right: 15px;
+}
+
+.header-area .main-nav .menu-trigger {
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  top: 23px;
+  width: 32px;
+  height: 40px;
+  text-indent: -9999em;
+  z-index: 99;
+  right: 20px;
+  display: none;
+}
+
+.header-area.header-sticky {
+  min-height: 70px;
+}
+
+.header-area.header-sticky .nav li a.active {
+  color: #fff;
+}
+
+
+/*  EL CUADRO DONDE VAN LAS RESERVAS Y EL MAPA   */
+.gaming-library {
+  margin-top: 60px;
+  padding: 30px;
+  background-color: #460616;
+  border-radius: 23px;
+}
+
+/*  MAPAAA  */
+
+.map-container {
+  position: relative;
+  width: 50%;
+  padding-bottom: 56.25%; /* Relación 16:9 */
+  overflow: hidden;
+  margin-bottom: 2rem; /* espacio opcional debajo */
+}
+
+.map-frame {
+  position: absolute;
+  top: 0;
+  left: 4px;
+  width: 100%;
+  height: 100%;
+  border: none; /* equivalente a frameborder="0" */
+}
+
+/*  FIN MAPA  */
+
+.booking {
+    position: relative;
+    width: 100%;
+    margin-bottom: 45px;}
+
+.booking .booking-content {
+    padding: 45px 0 15px 0;
+}
+
+.booking .booking-content .section-header {
+    margin-bottom: 30px;
+}
+
+.booking .booking-form {
+    padding: 60px 30px;
+    background: #D4AF37;
+}
+
+.booking .booking-form .control-group {
+    margin-bottom: 15px;
+}
+
+.booking .booking-form .input-group-text {
+    position: absolute;
+    padding: 0;
+    border: none;
+    background: none;
+    top: 15px;
+    right: 15px;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.booking .booking-form .form-control {
+    height: 48px;
+    font-size: 15px;
+    color: #ffffff;
+    padding: 0 15px;
+    border-radius: 5px !important;
+    border: 2px solid #D4AF37;
+    background: #460616;
+}
+
+.booking .booking-form select.form-control {
+    padding: 0 10px;
+}
+
+.booking .booking-form .form-control::placeholder {
+    color: #ffffff;
+    opacity: 1;
+}
+
+.booking .booking-form .form-control:-ms-input-placeholder,
+.booking .booking-form .form-control::-ms-input-placeholder {
+    color: #ffffff;
+}
+
+.booking .booking-form .input-group [data-toggle="datetimepicker"] {
+    cursor: default;
+}
+
+.booking .booking-form .btn.custom-btn {
+    width: 100%;
+    color: #fbaf32;
+    background: #333333;
+    border: 2px solid #333333;
+}
+
+.booking .booking-form .btn.custom-btn:hover {
+    color: #ffffff;
+    background: #800020;
+}
+
+
+/*  ENTRAN TODOS LOS DETALLES DE LAS CARACTERÍSTICAS DEL RESTO, COMO IMG, TÍTULO, ETC.  */
+.main-profile {
+  border-radius: 23px;
+  padding: 30px;
+  background-color: #800020;
+}
+
+.heart {
+  color: #FFFFFF;
+  font-size: 30px;
+}
+
+.stars::before {
+  content: "★★★★★";
+  font-family: Arial, sans-serif;
+  color: gold;
+  font-size: 30px;
+}
+
+.main-profile .main-info h4 {
+  margin-bottom: 20px;
+}
+
+.main-profile .main-info .main-border-button {
+  margin-top: 25px;
+}
+
+.main-profile ul {
+  border-radius: 23px;
+  padding: 30px;
+  background-color: #460616;
+}
+
+.main-profile ul li {
+  width: 100%;
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #333333;
+}
+
+.clips {
+  margin-top: 30px;
+  border-top: 2px solid #800020;
+}
+
+.clips .heading-section {
+  margin-top: 30px;
+}
+
+.clips .item  {
+  border-radius: 23px;
+  padding: 40px 40px;
+  background-color: #460616;
+  margin-bottom: 30px;
+}
+
+.clips .item .thumb {
+  position:relative;
+  margin-bottom: 15px;
+}
+
+.clips .item h4 {
+  font-size: 15px;
+  display: inline-block;
+  text-align:start;
+}
+
+.clips .main-button {
+  margin-top: 10px;
+  text-align: center;
+}
+
+
+/*  RESPONSIVE  */
+body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 767px) {
+  body .page-content {
+    padding: 0px 30px;
+  }
+  .main-banner {
+    text-align: center;
+  }
+  .main-banner h4 {
+    font-size: 35px;
+  }
+  .gaming-library .item ul li,
+  .gaming-library .item ul li:first-child,
+  .gaming-library .item ul li:last-child {
+    width: 100% !important;
+    text-align: center !important;
+  }
+  .gaming-library .item ul li {
+    margin-top: 30px;
+  }
+  .most-popular .item .inner-item {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .background-header {
+  display: inline-block;
+  }
+  .header-area .main-nav #search {
+    display: none;
+  }
+  .heading-section h4 {
+    font-size: 20px;
+  }
+  .gaming-library .item ul li {
+    width: 48% !important;
+  }
+  .gaming-library .item ul li:last-child {
+    text-align: left;
+  }
+  .start-stream .item {
+    margin: 15px 0px;
+  }
+  .feature-banner .thumb {
+    margin-top: 30px;
+  }
+  .main-profile .main-info {
+    margin: 45px 0px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .header-area .main-nav .nav li {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  .header-area .main-nav .logo {
+    margin-right: 30px;
+    border-right: none;
+  }
+  .gaming-library .item ul li {
+    width: 16%;
+  }
+}
+
+/* Asegura que el contenedor del mapa y el formulario se estiren al mismo alto */
+.map-container, .booking {
+  width: 100%;
+  height: 100%;
+  min-height: 350px; /* Ajusta este valor según tu diseño */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Ajusta el iframe del mapa para que se adapte al contenedor */
+.map-frame {
+  width: 100%;
+  height: 350px;
+  border: 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+/* Haz que el formulario de reservas ocupe el ancho completo de su columna */
+.booking-form {
+  width: 100%;
+
+  padding: 24px 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+/* Responsive: apila los elementos uno debajo del otro en pantallas pequeñas */
+@media (max-width: 991px) {
+  .map-frame,
+  .map-container,
+  .booking-form,
+  .booking {
+    height: 540px;
+    min-height: 250px;
+  }
+}
