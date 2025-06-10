@@ -17,6 +17,10 @@ def descubre():
 def review():
     return render_template("review.html")
 
+@app.route("/restaurante")
+def review():
+    return render_template("resto.html")
+
 @app.route("/login", methods=['GET','POST'])
 def login():
     if request.method == 'GET':
