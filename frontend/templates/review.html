@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}  <!-- Incluye los estilos base -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="review-container">
+        <div class="review-card">
+            <!-- Sección del restaurante -->
+            <div class="restaurant-section">
+                <h1 class="restaurant-title">Nombre restaurant</h1>
+                <div class="restaurant-icon">
+                    <div class="store-icon">
+                        <img src="../static/media/img/planetario.jpg" alt="temporal">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Separador vertical -->
+            <div class="divider"></div>
+
+            <!-- Sección de reseña -->
+            <div class="review-section">
+                <div class="review-header">
+                    <h2 class="review-title">¡DEJANOS TU OPINIÓN!</h2>
+                    <div class="star-rating" id="starRating">
+                        <span class="star" data-rating="1">☆</span>
+                        <span class="star" data-rating="2">☆</span>
+                        <span class="star" data-rating="3">☆</span>
+                        <span class="star" data-rating="4">☆</span>
+                        <span class="star" data-rating="5">☆</span>
+                    </div>
+                </div>
+
+                <form class="review-form" id="reviewForm" onsubmit="submitReview(event)">
+                    <div class="form-group">
+                        <textarea 
+                            id="reviewText" 
+                            name="review" 
+                            placeholder="Escribe tu reseña aquí..." 
+                            maxlength="500"
+                            required
+                            aria-label="Escribe tu reseña"
+                        ></textarea>
+                        <div class="char-counter">
+                            <span id="charCount">0</span>/500
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            ENVIAR
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Botón de regreso -->
+        <div class="back-section">
+            <button class="back-btn" onclick="goBack()">
+                ← Volver al restaurante
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        let selectedRating = 0;
+        
+        // Manejo de calificación con estrellas
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star');
+            const reviewText = document.getElementById('reviewText');
+            const charCount = document.getElementById('charCount');
+            
+            // Event listeners para las estrellas
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    setRating(rating);
+                });
+                
+                star.addEventListener('mouseenter', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    highlightStars(rating);
+                });
+            });
+            
+            // Restaurar estrellas al salir del mouse
+            document.getElementById('starRating').addEventListener('mouseleave', function() {
+                highlightStars(selectedRating);
+            });
+            
+            // Contador de caracteres
+            reviewText.addEventListener('input', function() {
+                const count = this.value.length;
+                charCount.textContent = count;
+                
+                if (count > 450) {
+                    charCount.style.color = '#ff6b6b';
+                } else {
+                    charCount.style.color = '#666';
+                }
+            });
+        });
+        
+        function setRating(rating) {
+            selectedRating = rating;
+            highlightStars(rating);
+        }
+        
+        function highlightStars(rating) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.textContent = '★';
+                    star.classList.add('active');
+                } else {
+                    star.textContent = '☆';
+                    star.classList.remove('active');
+                }
+            });
+        }
+        
+        function submitReview(event) {
+            event.preventDefault();
+            
+            const reviewText = document.getElementById('reviewText').value.trim();
+            
+            if (selectedRating === 0) {
+                alert('Por favor, selecciona una calificación con estrellas.');
+                return;
+            }
+            
+            if (reviewText === '') {
+                alert('Por favor, escribe una reseña.');
+                return;
+            }
+            
+            // Aquí iría la lógica para enviar la reseña
+            console.log('Reseña enviada:', {
+                rating: selectedRating,
+                text: reviewText
+            });
+            
+            // Simulación de envío exitoso
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'ENVIANDO...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.textContent = '¡ENVIADO!';
+                submitBtn.style.backgroundColor = '#4CAF50';
+                
+                setTimeout(() => {
+                    // Redirigir o limpiar formulario
+                    alert('¡Gracias por tu reseña!');
+                    document.getElementById('reviewForm').reset();
+                    setRating(0);
+                    document.getElementById('charCount').textContent = '0';
+                    
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.backgroundColor = '';
+                }, 1500);
+            }, 1000);
+        }
+        
+        function goBack() {
+            // Aquí puedes usar window.history.back() o redirigir a una URL específica
+            if (document.referrer) {
+                window.history.back();
+            } else {
+                window.location.href = '/'; // Redirigir al inicio si no hay historial
+            }
+        }
+    </script>
+{% endblock %}
