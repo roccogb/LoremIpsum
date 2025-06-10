@@ -1,57 +1,67 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Perfil del consumidor</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
-    <link rel="stylesheet" href="../static/bootstrap/login_boots.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/tooplate.css') }}">
+{% extends "base.html" %}
 
-</head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <header class="mb-4">
-            <h1 class="text-center">Mi Perfil</h1>
-        </header>
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
+{% endblock %}
 
-        <section class="card mb-4 p-4">
-            <h2>{{ usuario.nombre_usuario }}</h2>
+{% block btnnavbar %}
+    <div class="nav-links" id="navLinks">
+        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Inicio</a>
+        <a href="/descubre" class="{% if request.path == '/descubre' %}active{% endif %}">Descubre</a>
+        <a href="/ayuda" class="{% if request.path == '/ayuda' %}active{% endif %}">Ayuda</a>
+        <span class="nav-user" onclick="showUserMenu()" role="button" tabindex="0" aria-label="Menú de usuario">👤</span>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="popular-section">
+
+        <h1 class="section-title">🙋 Mi Perfil</h1>
+        <div class="restaurant-card">
+            <p><strong>Usuario:</strong> {{ usuario.nombre_usuario }}</p>
             <p><strong>Email:</strong> {{ usuario.email_usuario }}</p>
             <p><strong>Miembro desde:</strong> {{ usuario.fecha_creacion }}</p>
-        </section>
+        </div>
 
-        <section class="card mb-4 p-4">
-            <h3>Mis Reservas</h3>
-            {% if reservas %}
-                <ul class="list-group">
-                    {% for reserva in reservas %}
-                        <li class="list-group-item">
-                            <strong>{{ reserva.nombre_restaurante }}</strong> - {{ reserva.fecha }} ({{ reserva.estado }})
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No tenes reservas todavia.</p>
-            {% endif %}
-        </section>
+        <h2 class="section-title">📅 Mis Reservas</h2>
+        {% if reservas %}
+            {% for reserva in reservas %}
+                <div class="restaurant-card">
+                    <p>{{ reserva.nombre_restaurante }} - {{ reserva.fecha }} ({{ reserva.estado }})</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="restaurant-card">
+                <p>No tenés reservas activas.</p>
+            </div>
+        {% endif %}
 
-        <section class="card p-4">
-            <h3>Mis Reseñas</h3>
-            {% if resenas %}
-                <ul class="list-group">
-                    {% for resena in resenas %}
-                        <li class="list-group-item">
-                            <strong>{{ resena.nombre_restaurante }}</strong><br>
-                            {{ resena.comentario }}<br>
-                            Puntaje: {{ resena.puntaje }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No hiciste ninguna reseña todavia.</p>
-            {% endif %}
-        </section>
+        <h2 class="section-title">📝 Mis Reseñas</h2>
+        {% if resenas %}
+            {% for resena in resenas %}
+                <div class="restaurant-card">
+                    <p><strong>{{ resena.nombre_restaurante }}</strong></p>
+                    <p>{{ resena.comentario }}</p>
+                    <p>Puntaje:
+                        {% for i in range(resena.puntaje) %}
+                            ★
+                        {% endfor %}
+                    </p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="restaurant-card">
+                <p>No dejaste reseñas aún.</p>
+            </div>
+        {% endif %}
+
+        <div class="back-section" style="text-align: center; margin-top: 30px;">
+            <a href="/home"></a>
+                <button class="back-btn">← Volver al inicio</button>
+            </a>
+        </div>
+
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

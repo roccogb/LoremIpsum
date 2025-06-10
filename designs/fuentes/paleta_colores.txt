@@ -7,3 +7,5 @@ Dorado (#D4AF37)
 Gris oscuro (#333333)
 
 Vino (#800020)
+
+Vino más oscuro (#460616)

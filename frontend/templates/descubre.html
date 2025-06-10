@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+
+{% block title %}Descubre - FoodyBA{% endblock %}
+
+{% block styles %}
+    {{ super() }}  <!-- Incluye los estilos base -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/descubre.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="discover-container">
+    <div class="discover-header">
+        <h1 class="discover-title">¡Descubre todos los restaurantes de FoodyBA!</h1>
+    </div>
+    
+    <div class="main-content-wrapper">
+        <!-- Sidebar de filtros -->
+        <div class="filters-sidebar">
+            <!-- Filtro por ubicación -->
+            <div class="filter-section">
+                <div class="filter-title">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Filtrar por ubicación
+                </div>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="ubicacion1">
+                        <label for="ubicacion1">Palermo</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="ubicacion2">
+                        <label for="ubicacion2">Recoleta</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="ubicacion3">
+                        <label for="ubicacion3">San Telmo</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filtro por categoría -->
+            <div class="filter-section">
+                <div class="filter-title">
+                    <i class="fas fa-utensils"></i>
+                    Categoría
+                </div>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="categoria1">
+                        <label for="categoria1">Parrilla</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="categoria2">
+                        <label for="categoria2">Pizza</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="categoria3">
+                        <label for="categoria3">Sushi</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filtro por tipo de cocina -->
+            <div class="filter-section">
+                <div class="filter-title">
+                    <i class="fas fa-chef-hat"></i>
+                    Tipos de cocina
+                </div>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="cocina1">
+                        <label for="cocina1">Tradicional 1</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cocina2">
+                        <label for="cocina2">Tradicional 2</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cocina3">
+                        <label for="cocina3">Tradicional 3</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filtro por horario -->
+            <div class="filter-section">
+                <div class="filter-title">
+                    <i class="fas fa-clock"></i>
+                    Horario
+                </div>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="horario1">
+                        <label for="horario1">Horario 1</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="horario2">
+                        <label for="horario2">Horario 2</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="horario3">
+                        <label for="horario3">Horario 3</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Grid de restaurantes -->
+        <div class="restaurants-section">
+            <div class="restaurants-grid">
+                <!-- Fila 1 -->
+                <div class="restaurant-card" onclick="selectRestaurant(this)">
+                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="restaurant-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="restaurant-name">Nombre restaurant</div>
+                    <div class="restaurant-rating">
+                        <div class="rating-stars">★★★★★</div>
+                        <div class="rating-number">5.0</div>
+                    </div>
+                    <div class="restaurant-category">Cena específica</div>
+                </div>
+                
+                <div class="restaurant-card" onclick="selectRestaurant(this)">
+                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="restaurant-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="restaurant-name">Nombre restaurant</div>
+                    <div class="restaurant-rating">
+                        <div class="rating-stars">★★★★★</div>
+                        <div class="rating-number">5.0</div>
+                    </div>
+                    <div class="restaurant-category">Cena específica</div>
+                </div>
+                
+                <div class="restaurant-card" onclick="selectRestaurant(this)">
+                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="restaurant-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="restaurant-name">Nombre restaurant</div>
+                    <div class="restaurant-rating">
+                        <div class="rating-stars">★★★★★</div>
+                        <div class="rating-number">5.0</div>
+                    </div>
+                    <div class="restaurant-category">Cena específica</div>
+                </div>
+                
+                <div class="restaurant-card" onclick="selectRestaurant(this)">
+                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="restaurant-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="restaurant-name">Nombre restaurant</div>
+                    <div class="restaurant-rating">
+                        <div class="rating-stars">★★★★★</div>
+                        <div class="rating-number">5.0</div>
+                    </div>
+                    <div class="restaurant-category">Cena específica</div>
+                </div>
+                
+                <div class="restaurant-card" onclick="selectRestaurant(this)">
+                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="restaurant-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="restaurant-name">Nombre restaurant</div>
+                    <div class="restaurant-rating">
+                        <div class="rating-stars">★★★★★</div>
+                        <div class="rating-number">5.0</div>
+                    </div>
+                    <div class="restaurant-category">Cena específica</div>
+                </div>
+                
+                <!-- Fila 2 -->
+                <div class="restaurant-card" onclick="selectRestaurant(this)">
+                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="restaurant-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="restaurant-name">Nombre restaurant</div>
+                    <div class="restaurant-rating">
+                        <div class="rating-stars">★★★★★</div>
+                        <div class="rating-number">5.0</div>
+                    </div>
+                    <div class="restaurant-category">Cena específica</div>
+                </div>
+                
+                <div class="restaurant-card" onclick="selectRestaurant(this)">
+                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="restaurant-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="restaurant-name">Nombre restaurant</div>
+                    <div class="restaurant-rating">
+                        <div class="rating-stars">★★★★★</div>
+                        <div class="rating-number">5.0</div>
+                    </div>
+                    <div class="restaurant-category">Cena específica</div>
+                </div>
+                
+                <div class="restaurant-card" onclick="selectRestaurant(this)">
+                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="restaurant-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="restaurant-name">Nombre restaurant</div>
+                    <div class="restaurant-rating">
+                        <div class="rating-stars">★★★★★</div>
+                        <div class="rating-number">5.0</div>
+                    </div>
+                    <div class="restaurant-category">Cena específica</div>
+                </div>
+                
+                <div class="restaurant-card" onclick="selectRestaurant(this)">
+                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="restaurant-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="restaurant-name">Nombre restaurant</div>
+                    <div class="restaurant-rating">
+                        <div class="rating-stars">★★★★★</div>
+                        <div class="rating-number">5.0</div>
+                    </div>
+                    <div class="restaurant-category">Cena específica</div>
+                </div>
+                
+                <div class="restaurant-card" onclick="selectRestaurant(this)">
+                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="restaurant-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="restaurant-name">Nombre restaurant</div>
+                    <div class="restaurant-rating">
+                        <div class="rating-stars">★★★★★</div>
+                        <div class="rating-number">5.0</div>
+                    </div>
+                    <div class="restaurant-category">Cena específica</div>
+                </div>
+            </div>
+            
+            <!-- Paginación -->
+            <div class="pagination-container">
+                <button class="pagination-btn active" onclick="goToPage(1)">1</button>
+                <button class="pagination-btn" onclick="goToPage(2)">2</button>
+                <button class="pagination-btn" onclick="goToPage(3)">3</button>
+                <button class="pagination-btn" onclick="goToPage(4)">4</button>
+                <button class="pagination-btn" onclick="goToPage(5)">5</button>
+                <button class="pagination-btn" onclick="goToPage(6)">6</button>
+                <button class="pagination-btn" onclick="goToPage(7)">7</button>
+                <div class="pagination-dots">...</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/descubre.js') }}"></script>
+{% endblock %}
