@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
+{% endblock %}
+
 {% block btnnavbar %}
     <div class="nav-links" id="navLinks">
         <a href="/" class="{% if request.path == '/' %}active{% endif %}">Inicio</a>
@@ -8,7 +12,6 @@
         <span class="nav-user" onclick="showUserMenu()" role="button" tabindex="0" aria-label="Menú de usuario">👤</span>
     </div>
 {% endblock %}
-
 
 {% block content %}
 <div class="container">
@@ -54,7 +57,7 @@
         {% endif %}
 
         <div class="back-section" style="text-align: center; margin-top: 30px;">
-            <a href="/home">
+            <a href="/home"></a>
                 <button class="back-btn">← Volver al inicio</button>
             </a>
         </div>
