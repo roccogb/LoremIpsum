@@ -422,10 +422,10 @@ body {
 /* === PERSONALIZACIÓN DEL CALENDARIO Y RELOJ (Tempus Dominus) === */
 
 :root {
-  --calendar-text: #ffffff;       /* texto normal */
-  --calendar-hover: #fbaf32;  /* hover y seleccionado */
-  --calendar-hover-text: #000000; /* texto cuando se selecciona */
-  --calendar-muted: #bbbbbb;      /* días/meses inactivos */
+  --calendar-text: #ffffff;          /* texto normal */
+  --calendar-hover: #fbaf32;         /* seleccionado */
+  --calendar-hover-text: #000000;    /* texto cuando se selecciona */
+  --calendar-muted: #bbbbbb;         /* días/meses inactivos */
 }
 
 /* Fondo del calendario/reloj */
@@ -443,11 +443,11 @@ body {
   color: var(--calendar-text);
 }
 
-/* Hover sobre celdas */
+/* Hover sobre celdas: ahora es suave, no dorado */
 .bootstrap-datetimepicker-widget table td:hover,
 .bootstrap-datetimepicker-widget table span:hover {
-  background-color: var(--calendar-hover);
-  color: var(--calendar-hover-text);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--calendar-text);
 }
 
 /* Seleccionado */
@@ -474,11 +474,37 @@ body {
   line-height: 40px;
   margin: 4px;
   text-align: center;
+  border-radius: 6px;
+  background-color: #800020;
 }
 
 /* Flechas y switch */
 .bootstrap-datetimepicker-widget table th.picker-switch,
 .bootstrap-datetimepicker-widget table th.next,
 .bootstrap-datetimepicker-widget table th.prev {
+  color: var(--calendar-text);
+}
+
+/* Números del reloj (hora/min/seg) bien distribuidos */
+.bootstrap-datetimepicker-widget table td.hour,
+.bootstrap-datetimepicker-widget table td.minute,
+.bootstrap-datetimepicker-widget table td.second {
+  display: inline-block;
+  width: 60px;
+  height: 40px;
+  line-height: 40px;
+  margin: 6px;
+  text-align: center;
+  border-radius: 6px;
+  background-color: #800020;
+  color: var(--calendar-text);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover en reloj: suave */
+.bootstrap-datetimepicker-widget table td.hour:hover,
+.bootstrap-datetimepicker-widget table td.minute:hover,
+.bootstrap-datetimepicker-widget table td.second:hover {
+  background-color: rgba(255, 255, 255, 0.1);
   color: var(--calendar-text);
 }
