@@ -7,43 +7,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="{{ url_for('static', filename='favicon_burdeos.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
     {% block styles %}{% endblock %}
 </head>
 <body class="body-bg">
-    
-    <nav class="navbar">
-        <div class="logo">
-        <img src="{{ url_for('static', filename='media/img/logo_foodyba.png') }}" alt="FoodyBA Logo" style="height: 35px; vertical-align: middle; margin-right: 15px;">
-        </div>
 
-        
-        <div class="search-box">
-            🔍 <input type="text" placeholder="Buscar local" aria-label="Buscar restaurante">
-        </div>
-        
-        <div class="nav-links" id="navLinks">
-            <a href="/" class="active">Inicio</a>
-            <a href="/descubre">Descubre</a>
-            <a href="/review">Ayuda</a>
-            <span class="nav-user" onclick="showUserMenu()" role="button" tabindex="0" aria-label="Menú de usuario">☰</span>
-        </div>
-        
-        <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menú">
-            ☰
-        </button>
-    </nav>
-    
-    <div class="page-container">
-        <main>
-            {% block content %}
-            {% endblock %}
-        </main>
+<nav class="navbar">
+    <div class="logo">
+        <a href="/">
+            <img src="{{ url_for('static', filename='media/img/logo_foodyba.png') }}" alt="FoodyBA Logo" class="logo-img">
+        </a>
     </div>
-    
-    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
 
-    {% block scripts %}{% endblock %}
+    <div class="search-box-enhanced">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Buscar local" aria-label="Buscar restaurante">
+    </div>
+
+    <div class="nav-links" id="navLinks">
+        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Inicio</a>
+        <a href="/descubre" class="{% if request.path == '/descubre' %}active{% endif %}">Descubre</a>
+        <a href="/ayuda" class="{% if request.path == '/ayuda' %}active{% endif %}">Ayuda</a>
+    </div>
+
+    <div class="user-menu-wrapper">
+        <span class="nav-user" onclick="showUserMenu()" role="button" tabindex="0" aria-label="Menú de usuario">🏠</span>
+        <div id="userDropdown" class="user-dropdown">
+            <a href="/perfil">Mi Perfil</a>
+            <a href="/logout">Cerrar sesión</a>
+        </div>
+    </div>
+
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menú móvil">☰</button>
+</nav>
+
+<div class="page-container">
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/base.js') }}"></script>
+{% block scripts %}{% endblock %}
 </body>
 </html>
