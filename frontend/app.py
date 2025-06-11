@@ -1,33 +1,61 @@
-from flask import Flask, request, render_template
-import requests                 # Libreria para realizar peticiones HTTP
+from flask import Flask, request, render_template, redirect, session, url_for, flash
+import requests
 
-app=Flask(__name__)
+app = Flask(__name__)
+app.secret_key = "contra_ids"  # Necesario para usar sesiones y flash
 
-API_BACK="http://0.0.0.0:8100"
+API_BACK = "http://127.0.0.1:8100"  # Dirección local del backend
 
+# Pagina de inicio
 @app.route("/")
 def home():
     return render_template("home.html")
 
+# Pagina de descubre
 @app.route("/descubre")
 def descubre():
     return render_template("descubre.html")
 
-@app.route("/review")
-def review():
-    return render_template("review.html")
+# Pagina de ayuda
+@app.route("/ayuda")
+def ayuda():
+    return render_template("ayuda.html")
 
-@app.route("/login", methods=['GET','POST'])
+
+# Login de usuario
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == 'GET':
-        # Si la petición recibida por el usuario es del tipo 'GET'
+    if request.method == "GET":
         return render_template("login.html")
-    elif request.method == 'POST':
-        # Si la petición recibida por el usuario es del tipo 'POST'
-        usuario=request.form["username"]
-        contrasena=request.form["password"]
-        response=requests.post(f"{API_BACK}/auth/usr", json={"usr":usuario,"pss":contrasena})          # Envío una petición al backend para comprobar si el usuario ingresado existe en la BDD
-        return response.json()                                                                         # Estructura de control que si el ingreso no es exitoso rediriga nuevamente al login
+    else:
+        usuario = request.form["username"]
+        contrasena = request.form["password"]
+
+        try:
+            response = requests.post(f"{API_BACK}/auth/usr", json={"usr": usuario, "pss": contrasena})
+            data = response.json()
+        except Exception as e:
+            flash("Error de conexión con el servidor", "error")
+            return redirect(url_for("login"))
+
+        if response.status_code == 200 and data.get("msg") == "ingreso exitoso":
+            session["usuario"] = usuario
+            return redirect(url_for("home"))
+        else:
+            flash("Credenciales inválidas", "error")
+            return redirect(url_for("login"))
+
+# Register usuario
+@app.route("/register")
+def register():
+    return render_template("register.html")
+
+
+# Logout
+@app.route("/logout")
+def logout():
+    session.pop("usuario", None)
+    return redirect(url_for("home"))
 
 if __name__ == "__main__":
     app.run(host="localhost", port=8200, debug=True)
