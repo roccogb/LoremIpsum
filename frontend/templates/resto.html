@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% block title %} Restaurante seleccionado - FoodyBA{% endblock %}
-
 {% block styles %}
     <link href="{{ url_for('static', filename='bootstrap/resto_bootstrap.min.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -17,7 +15,7 @@
           <div class="page-content">
             <div class="row">
               <h1>
-                <span class="heart"> &#10084; </span>
+                <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
                 NOMBRE RESTAURANTE
               </h1>
               <div class="col-lg-12">
