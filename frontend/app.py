@@ -18,7 +18,7 @@ def review():
     return render_template("review.html")
 
 @app.route("/restaurante")
-def review():
+def resto():
     return render_template("resto.html")
 
 @app.route("/login", methods=['GET','POST'])
