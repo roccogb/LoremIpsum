@@ -1,5 +1,11 @@
-from flask import Blueprint
+from flask import Flask
+from auth.routes import auth_bp  # Importar el blueprint de autenticación
 
-auth_bp = Blueprint('auth_bp', __name__)
+def create_app():
+    app = Flask(__name__)
+    app.config["SECRET_KEY"] = "clave_ids"
+    
+    # Registrar blueprint de autenticación
+    app.register_blueprint(auth_bp, url_prefix="/auth")
 
-from . import routes  # importa las rutas para registrarlas
+    return app
