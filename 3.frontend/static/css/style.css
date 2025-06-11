@@ -1,0 +1,1431 @@
+/* Defino variables globales que van a representar la paleta de colores de la página web. Las mismas van a poder ser llamadas desde cualquier lado*/
+:root{
+  --gold:#D4AF37;
+  --wine:#800020;
+  --sgray:#333333
+}
+
+/* === Reset y estructura === */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, body.body-bg {
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+}
+
+body.body-bg {
+    background-color: var(--wine); /* mismo color que navbar */
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+/* === Navbar común === */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: white;
+    background-color: var(--gold);
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.navbar .logo {
+    font-size: 22px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.navbar .logo img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--sgray);
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.search-box input {
+    width: 300px;
+    height: 40px;
+    background: none;
+    border: none;
+    color: white;
+    outline: none;
+    border-radius: 5px;
+    font-size: 16px; /* Evita zoom en iOS */
+    text-align: center;
+}
+
+.search-box input::placeholder {
+    color: #ccc;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    margin-left: 20px;
+    white-space: nowrap;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #7a0019;
+}
+
+.nav-links a.active {
+    display: flex;
+    width: 100px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #7a0019;
+    padding: 5px 10px;
+    color: white;
+}
+
+.nav-user {
+    font-size: 20px;
+    margin-left: 20px;
+    background-color: #7a0019;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-user:hover {
+    background-color: #5a0014;
+}
+
+.nav-user i {
+    color: white;
+}
+
+/* === Main === */
+main {
+    padding: 30px;
+    margin: 0 auto;
+    background-color: var(--gold);
+}
+
+.page-container {
+    background-color: var(--gold);
+}
+
+/* === Responsive Navbar === */
+@media (max-width: 768px) {
+    .navbar {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+    
+    .navbar .logo {
+        font-size: 20px;
+    }
+    
+    .search-box {
+        margin: 0 10px;
+        min-width: 150px;
+        order: 3;
+        flex-basis: 100%;
+        margin-top: 10px;
+    }
+    
+    .nav-links {
+        gap: 10px;
+    }
+    
+    .nav-links a {
+        margin-left: 10px;
+        font-size: 14px;
+    }
+    
+    .nav-user {
+        margin-left: 10px;
+        padding: 6px;
+        font-size: 18px;
+    }
+    
+    main {
+        padding: 20px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+    
+    .navbar .logo {
+        font-size: 18px;
+    }
+    
+    .search-box {
+        margin: 0 5px;
+        min-width: 120px;
+    }
+    
+    .nav-links a {
+        margin-left: 5px;
+        font-size: 12px;
+        padding: 3px 6px;
+    }
+    
+    .nav-links a.active {
+        padding: 3px 6px;
+    }
+    
+    .nav-user {
+        margin-left: 5px;
+        padding: 4px;
+        font-size: 16px;
+    }
+    
+    main {
+        padding: 15px 10px;
+    }
+}
+
+/* === Menu móvil hamburguesa (opcional) === */
+@media (max-width: 576px) {
+    .nav-links {
+        height: -webkit-fill-available;
+        display: none;
+        position: absolute;
+        top: 100px;
+        left: 0;
+        right: 0;
+        background-color: var(--wine);
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        z-index: 1000;
+    }
+    
+    .nav-links.show {
+        display: flex;
+    }
+    
+    .nav-links a {
+        margin: 5px 0;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    
+    .hamburger {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 5px;
+    }
+    
+   
+}
+
+@media (min-width: 577px) {
+    .hamburger {
+        display: none !important;
+    }
+}
+
+/* Container que se va a encontrar en el template de 'home'*/
+.home-container {
+    background-color: var(--wine);
+    padding: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 20px;
+}
+
+/* === Hero Section === */
+.hero-section {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.hero-card {
+    background-image: url(../media/img/puente_mujer.jpg);
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    padding: 30px;
+    color: white;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.restaurant-info {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 2;
+}
+
+.restaurant-name {
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin: 0;
+}
+
+.stars {
+    display: flex;
+    gap: 5px;
+    margin: 0;
+    justify-content: center;
+}
+
+.star {
+    color: #FFD700;
+    font-size: 20px;
+}
+
+/* === Navegación con flechas === */
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    z-index: 3;
+}
+
+.nav-arrow:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.nav-arrow.left {
+    left: 20px;
+}
+
+.nav-arrow.right {
+    right: 20px;
+}
+
+/*HOME - Restaurantes populares */
+.popular-section {
+    background-color: var(--gold);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.section-title {
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    display: block;
+}
+
+.section-title:hover {
+    color: #f0f0f0;
+    text-decoration: underline;
+}
+
+.restaurants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.restaurant-card {
+    background: var(--wine);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    position: relative;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.restaurant-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 15px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.restaurant-card:hover .restaurant-icon {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.1);
+}
+
+.restaurant-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.restaurant-rating .star {
+    font-size: 16px;
+    color: #FFD700;
+}
+
+.restaurant-details {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.heart-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 18px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    z-index: 10;
+}
+
+.heart-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.heart-btn.active {
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+}
+
+.heart-btn.active:hover {
+    background: rgba(255, 0, 0, 1);
+}
+
+.discover-btn {
+    background: #2F4F2F;
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    margin-top: 20px;
+}
+
+.discover-btn:hover {
+    background: #1C3A1C;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* === Responsive Design === */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .home-container {
+        padding: 25px;
+        width: 95%;
+    }
+    
+    .restaurants-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+    }
+    
+    .restaurant-name {
+        font-size: 24px;
+    }
+    
+    .nav-arrow {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+}
+
+/* Tablets pequeñas */
+@media (max-width: 768px) {
+    .home-container {
+        padding: 20px;
+        width: 98%;
+        margin: 10px auto;
+    }
+    
+    .hero-card {
+        padding: 20px;
+        min-height: 250px;
+    }
+    
+    .restaurant-name {
+        font-size: 22px;
+    }
+    
+    .restaurants-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 10px;
+    }
+    
+    .restaurant-card {
+        padding: 15px;
+        min-height: 140px;
+    }
+    
+    .restaurant-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .popular-section {
+        padding: 20px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .nav-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .nav-arrow.left {
+        left: 15px;
+    }
+    
+    .nav-arrow.right {
+        right: 15px;
+    }
+    
+    .heart-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        top: 8px;
+        right: 8px;
+    }
+    
+    .discover-btn {
+        padding: 12px 30px;
+        font-size: 15px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    .home-container {
+        padding: 15px;
+        width: 100%;
+        margin: 5px auto;
+        border-radius: 15px;
+    }
+    
+    .hero-card {
+        padding: 15px;
+        min-height: 200px;
+        border-radius: 15px;
+    }
+    
+    .restaurant-name {
+        font-size: 18px;
+    }
+    
+    .stars .star {
+        font-size: 16px;
+    }
+    
+    .restaurants-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .restaurant-card {
+        padding: 12px;
+        min-height: 120px;
+        border-radius: 12px;
+    }
+    
+    .restaurant-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+    
+    .restaurant-rating {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+    
+    .restaurant-details {
+        font-size: 11px;
+    }
+    
+    .popular-section {
+        padding: 15px;
+        border-radius: 15px;
+    }
+    
+    .section-title {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .nav-arrow {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+    
+    .nav-arrow.left {
+        left: 10px;
+    }
+    
+    .nav-arrow.right {
+        right: 10px;
+    }
+    
+    .heart-btn {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+        top: 6px;
+        right: 6px;
+    }
+    
+    .discover-btn {
+        padding: 10px 25px;
+        font-size: 14px;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 360px) {
+    .home-container {
+        padding: 10px;
+    }
+    
+    .restaurants-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .restaurant-card {
+        padding: 15px;
+        min-height: 130px;
+    }
+    
+    .restaurant-name {
+        font-size: 16px;
+    }
+    
+    .hero-card {
+        min-height: 180px;
+    }
+    
+    .nav-arrow {
+        display: none; /* Ocultar flechas en pantallas muy pequeñas */
+    }
+}
+
+/* === Mejoras de accesibilidad === */
+@media (prefers-reduced-motion: reduce) {
+    .restaurant-card,
+    .nav-arrow,
+    .heart-btn,
+    .discover-btn,
+    .restaurant-icon {
+        transition: none;
+    }
+    
+    .restaurant-card:hover,
+    .nav-arrow:hover,
+    .heart-btn:hover,
+    .discover-btn:hover {
+        transform: none;
+    }
+}
+
+/* ==== descubre.css ==== */
+.discover-container {
+        background-color: var(--wine);
+        min-height: calc(100vh - 80px);
+        padding: 40px 0;
+        border-radius: 20px;
+    }
+    
+    .discover-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    
+    .discover-title {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-decoration: underline;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .main-content-wrapper {
+        display: flex;
+        gap: 30px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .filters-sidebar {
+        background-color: rgba(0,0,0,0.4);
+        border-radius: 15px;
+        padding: 25px;
+        width: 280px;
+        height: fit-content;
+        backdrop-filter: blur(10px);
+    }
+    
+    .filter-section {
+        margin-bottom: 25px;
+    }
+    
+    .filter-title {
+        color: white;
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .filter-title i {
+        color: #D4A574;
+    }
+    
+    .filter-options {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .filter-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        transition: background-color 0.3s;
+        cursor: pointer;
+    }
+    
+    .filter-option:hover {
+        background-color: rgba(255,255,255,0.1);
+    }
+    
+    .filter-option input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #D4A574;
+    }
+    
+    .filter-option label {
+        color: white;
+        cursor: pointer;
+        font-size: 0.95rem;
+        margin: 0;
+    }
+    
+    .restaurants-grid {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        max-width: 1000px;
+    }
+    
+    .restaurant-card {
+        background: linear-gradient(145deg, #D4A574 0%, #E6B885 100%);
+        border-radius: 20px;
+        padding: 20px;
+        position: relative;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
+    }
+    
+    .restaurant-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+    }
+    
+    .favorite-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--wine);
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    
+    .favorite-btn:hover {
+        transform: scale(1.2);
+    }
+    
+    .favorite-btn.active {
+        color: #e74c3c;
+    }
+    
+    .restaurant-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255,255,255,0.2);
+        border-radius: 15px;
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 15px;
+        font-size: 2.5rem;
+        color: var(--wine);
+    }
+    
+    .restaurant-name {
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--wine);
+        margin-bottom: 10px;
+    }
+    
+    .restaurant-rating {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+    
+    .rating-stars {
+        color: #ffc107;
+        font-size: 1.1rem;
+    }
+    
+    .rating-number {
+        color: var(--wine);
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+    
+    .restaurant-category {
+        text-align: center;
+        color: var(--wine);
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+    
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+        gap: 10px;
+    }
+    
+    .pagination-btn {
+        background-color: rgba(0,0,0,0.6);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        backdrop-filter: blur(10px);
+    }
+    
+    .pagination-btn:hover {
+        background-color: #D4A574;
+        transform: scale(1.1);
+    }
+    
+    .pagination-btn.active {
+        background-color: #D4A574;
+        box-shadow: 0 0 15px rgba(212, 165, 116, 0.5);
+    }
+    
+    .pagination-dots {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+    }
+    
+    @media (max-width: 768px) {
+        .main-content-wrapper {
+            flex-direction: column;
+            padding: 0 15px;
+        }
+        
+        .filters-sidebar {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .discover-title {
+            font-size: 2rem;
+        }
+        
+        .restaurants-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .restaurant-card {
+            padding: 15px;
+        }
+    }
+
+/* === Container Principal === */
+.review-container {
+    background-color: var(--wine);
+    padding: 30px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-radius: 20px;
+    min-height: 500px;
+}
+
+/* === Card Principal === */
+.review-card {
+    background-color: var(--gold);
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    gap: 30px;
+    min-height: 400px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+/* === Sección del Restaurante === */
+.restaurant-section {
+            text-align: center;
+            padding: 20px;
+        }
+
+.restaurant-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+.restaurant-icon {
+            display: flex;
+            justify-content: center;
+        }
+
+.store-icon {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ccc;
+        }
+
+.store-icon img{
+    width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+}
+
+.store-sign {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255,255,255,0.9);
+    color: --gold;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 50%;
+    border: 2px solid white;
+    z-index: 2;
+}
+
+.store-building {
+    width: 120px;
+    height: 90px;
+    color: --gold;
+}
+
+/* === Separador === */
+.divider {
+    width: 3px;
+    background-color: #654321;
+    border-radius: 2px;
+    margin: 0 10px;
+}
+
+/* === Sección de Reseña === */
+.review-section {
+    flex: 1.2;
+    background-color: #8B7355;
+    border-radius: 15px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.review-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.review-title {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+}
+
+/* === Sistema de Estrellas === */
+.star-rating {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.star {
+    font-size: 24px;
+    color: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.star:hover {
+    transform: scale(1.2);
+    color: #FFD700;
+}
+
+.star.active {
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255,215,0,0.5);
+}
+
+/* === Formulario === */
+.review-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-group textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    resize: vertical;
+    background-color: white;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.form-group textarea:focus {
+    outline: none;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2), 0 0 0 3px rgba(255,255,255,0.3);
+}
+
+.form-group textarea::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.char-counter {
+    position: absolute;
+    bottom: -20px;
+    right: 5px;
+    font-size: 12px;
+    color: #666;
+}
+
+/* === Botón de Envío === */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.submit-btn {
+    background-color: #2F4F2F;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    letter-spacing: 0.5px;
+    min-width: 100px;
+}
+
+.submit-btn:hover {
+    background-color: #1C3A1C;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* === Sección de Regreso === */
+.back-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-btn {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.back-btn:hover {
+    background-color: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.5);
+    transform: translateY(-2px);
+}
+
+/* === Responsive Design === */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .review-container {
+        padding: 25px;
+        width: 95%;
+    }
+    
+    .review-card {
+        padding: 30px;
+        gap: 25px;
+    }
+    
+    .restaurant-title {
+        font-size: 22px;
+    }
+    
+    .review-title {
+        font-size: 18px;
+    }
+}
+
+/* Tablets pequeñas */
+@media (max-width: 768px) {
+    .review-container {
+        padding: 20px;
+        width: 98%;
+    }
+    
+    .review-card {
+        flex-direction: column;
+        padding: 25px;
+        gap: 20px;
+        min-height: auto;
+    }
+    
+    .restaurant-section {
+        padding: 15px;
+    }
+    
+    .restaurant-title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .store-building {
+        width: 100px;
+        height: 75px;
+    }
+    
+    .store-sign {
+        font-size: 12px;
+        top: 12px;
+    }
+    
+    .divider {
+        width: 100%;
+        height: 3px;
+        margin: 15px 0;
+    }
+    
+    .review-section {
+        padding: 25px;
+    }
+    
+    .review-title {
+        font-size: 17px;
+    }
+    
+    .star {
+        font-size: 22px;
+        gap: 6px;
+    }
+    
+    .form-group textarea {
+        min-height: 100px;
+        font-size: 14px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    .review-container {
+        padding: 15px;
+        width: 100%;
+        border-radius: 15px;
+    }
+    
+    .review-card {
+        padding: 20px;
+        border-radius: 15px;
+        gap: 15px;
+    }
+    
+    .restaurant-section {
+        padding: 10px;
+    }
+    
+    .restaurant-title {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .store-building {
+        width: 80px;
+        height: 60px;
+    }
+    
+    .store-sign {
+        font-size: 10px;
+        top: 8px;
+        padding: 2px 6px;
+    }
+    
+    .review-section {
+        padding: 20px;
+        border-radius: 12px;
+    }
+    
+    .review-title {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+    
+    .star-rating {
+        gap: 5px;
+        margin-bottom: 15px;
+    }
+    
+    .star {
+        font-size: 20px;
+    }
+    
+    .form-group textarea {
+        min-height: 80px;
+        padding: 12px;
+        font-size: 13px;
+    }
+    
+    .char-counter {
+        font-size: 11px;
+        bottom: -18px;
+    }
+    
+    .submit-btn {
+        padding: 10px 25px;
+        font-size: 13px;
+    }
+    
+    .back-btn {
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 360px) {
+    .review-container {
+        padding: 10px;
+    }
+    
+    .review-card {
+        padding: 15px;
+    }
+    
+    .restaurant-title {
+        font-size: 16px;
+    }
+    
+    .review-title {
+        font-size: 14px;
+    }
+    
+    .star {
+        font-size: 18px;
+    }
+    
+    .review-section {
+        padding: 15px;
+    }
+    
+    .form-group textarea {
+        min-height: 70px;
+        padding: 10px;
+        font-size: 12px;
+    }
+}
+
+/* === Animaciones y efectos === */
+@keyframes starGlow {
+    0% { text-shadow: 0 0 5px rgba(255,215,0,0.5); }
+    50% { text-shadow: 0 0 15px rgba(255,215,0,0.8); }
+    100% { text-shadow: 0 0 5px rgba(255,215,0,0.5); }
+}
+
+.star.active {
+    animation: starGlow 2s ease-in-out infinite;
+}
+
+/* === Mejoras de accesibilidad === */
+@media (prefers-reduced-motion: reduce) {
+    .star,
+    .submit-btn,
+    .back-btn,
+    .form-group textarea {
+        transition: none;
+    }
+    
+    .star.active {
+        animation: none;
+    }
+    
+    .star:hover,
+    .submit-btn:hover,
+    .back-btn:hover {
+        transform: none;
+    }
+}

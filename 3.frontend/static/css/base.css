@@ -1,0 +1,400 @@
+/* === Reset y estructura === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, body.body-bg {
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+}
+
+body.body-bg {
+    background-color: #800020; /* mismo color que navbar */
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+/* === Navbar común === */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: white;
+    background-color: #d4af37;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.navbar .logo {
+    font-size: 22px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.navbar .logo img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.search-box {
+    flex: 1;
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #2d2d2d;
+    border-radius: 20px;
+    padding: 5px 10px;
+    min-width: 200px;
+}
+
+.search-box input {
+    background: none;
+    border: none;
+    color: white;
+    outline: none;
+    padding-left: 5px;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 16px; /* Evita zoom en iOS */
+}
+
+.search-box input::placeholder {
+    color: #ccc;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    margin-left: 20px;
+    white-space: nowrap;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #7a0019;
+}
+
+.nav-links a.active {
+    background-color: #7a0019;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #d4af37;
+}
+
+.nav-user {
+    font-size: 20px;
+    margin-left: 20px;
+    background-color: #7a0019;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-user:hover {
+    background-color: #5a0014;
+}
+
+.nav-user i {
+    color: white;
+}
+
+/* === Main === */
+main {
+    padding: 30px;
+    margin: 0 auto;
+    background-color: #d4af37;
+}
+
+.page-container {
+    background-color: #d4af37;
+}
+
+/* === Responsive Navbar === */
+@media (max-width: 768px) {
+    .navbar {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+    
+    .navbar .logo {
+        font-size: 20px;
+    }
+    
+    .search-box {
+        margin: 0 10px;
+        min-width: 150px;
+        order: 3;
+        flex-basis: 100%;
+        margin-top: 10px;
+    }
+    
+    .nav-links {
+        gap: 10px;
+    }
+    
+    .nav-links a {
+        margin-left: 10px;
+        font-size: 14px;
+    }
+    
+    .nav-user {
+        margin-left: 10px;
+        padding: 6px;
+        font-size: 18px;
+    }
+    
+    main {
+        padding: 20px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+    
+    .navbar .logo {
+        font-size: 18px;
+    }
+    
+    .search-box {
+        margin: 0 5px;
+        min-width: 120px;
+    }
+    
+    .nav-links a {
+        margin-left: 5px;
+        font-size: 12px;
+        padding: 3px 6px;
+    }
+    
+    .nav-links a.active {
+        padding: 3px 6px;
+    }
+    
+    .nav-user {
+        margin-left: 5px;
+        padding: 4px;
+        font-size: 16px;
+    }
+    
+    main {
+        padding: 15px 10px;
+    }
+}
+
+/* === Menu móvil hamburguesa (opcional) === */
+@media (max-width: 576px) {
+    .nav-links {
+        height: -webkit-fill-available;
+        display: none;
+        position: absolute;
+        top: 100px;
+        left: 0;
+        right: 0;
+        background-color: #800020;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        z-index: 1000;
+    }
+    
+    .nav-links.show {
+        display: flex;
+    }
+    
+    .nav-links a {
+        margin: 5px 0;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    
+    .hamburger {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 5px;
+    }
+    
+   
+}
+
+@media (min-width: 577px) {
+    .hamburger {
+        display: none !important;
+    }
+}
+
+.user-menu-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.nav-user {
+    font-size: 22px;
+    background-color: #7a0019;
+    border-radius: 50%;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: white;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 45px;
+    background-color: #800020;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 1000;
+    min-width: 160px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.user-dropdown a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.user-dropdown a:hover {
+    background-color: #5a0014;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
+.logo-img {
+    height: 28px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.search-box-enhanced {
+  display: flex;
+  align-items: center;
+  background-color: #2d2d2d;
+  border-radius: 20px;
+  padding: 6px 12px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  width: 100%;
+  max-width: 320px;
+  margin: auto;
+}
+
+.search-box-enhanced .search-icon {
+  color: #d4af37;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.search-box-enhanced input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 15px;
+  width: 100%;
+}
+
+.search-box-enhanced input::placeholder {
+  color: #ccc;
+}
+
+
+/* Menu hamburguesa animado */
+@media (max-width: 768px) {
+  .nav-links {
+    max-height: 0;
+    overflow: hidden;
+    flex-direction: column;
+    background-color: #800020;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    transition: max-height 0.4s ease-in-out;
+  }
+
+  .nav-links.show {
+    max-height: 300px;
+  }
+
+  .hamburger {
+    display: block;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    transition: transform 0.3s ease;
+  }
+
+  .hamburger.active {
+    transform: rotate(90deg);
+  }
+}
+
+/* Menu de usuario animado */
+.user-dropdown {
+  opacity: 0;
+  transform: scale(0.9) translateY(-10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  transform-origin: top right;
+  background-color: #800020;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  top: 45px;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+
+.user-dropdown.show {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+
+
+/* Nav item activo solo texto */
+.nav-links a.active {
+  background-color: transparent !important;
+  color: #7a0019 !important;
+  font-weight: bold;
+}
