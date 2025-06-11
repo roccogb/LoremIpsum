@@ -21,6 +21,10 @@ def descubre():
 def ayuda():
     return render_template("ayuda.html")
 
+#Prueba-> Pagina de review
+@app.route("/review")
+def review():
+    return render_template("review.html")
 
 # Login de usuario
 @app.route("/login", methods=["GET", "POST"])
