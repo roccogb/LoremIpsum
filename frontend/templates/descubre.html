@@ -14,264 +14,208 @@
     
     <div class="main-content-wrapper">
         <!-- Sidebar de filtros -->
-        <div class="filters-sidebar">
-            <!-- Filtro por ubicación -->
-            <div class="filter-section">
-                <div class="filter-title">
-                    <i class="fas fa-map-marker-alt"></i>
-                    Filtrar por ubicación
+        <!-- El form me va a permitir enviar una peticion a mi API con los filtros aplicados para la busqueda -->
+        <form action="/descubre/0" method="post" class="form-filter">
+            <div class="filters-sidebar">
+                <!-- Cada filter-section será un acordeón -->
+                <!-- Filtrar por tipo de cocina -->
+                <div class="filter-section">
+                    <input type="checkbox" id="toggle-cocina" class="accordion-toggle" checked>
+                    <label for="toggle-cocina" class="filter-title">
+                        <i class="fas fa-chevron-down accordion-icon">-</i>
+                        <i class="fas fa-chef-hat"></i> Tipos de cocina
+                    </label>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="alta_cocina" name="tipo_cocina" value="alta_cocina">
+                            <label for="alta_cocina">Alta cocina</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="tecnico_conceptual" name="tipo_cocina" value="tecnico_conceptual">
+                            <label for="tecnico_conceptual">Cocina técnico-conceptual</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="vanguardia" name="tipo_cocina" value="vanguardia">
+                            <label for="vanguardia">Cocina de vanguardia</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="autor" name="tipo_cocina" value="autor">
+                            <label for="autor">Cocina de autor</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="clasica" name="tipo_cocina" value="clasica">
+                            <label for="clasica">Cocina clasica</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="filter-options">
-                    <div class="filter-option">
-                        <input type="checkbox" id="ubicacion1">
-                        <label for="ubicacion1">Palermo</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="ubicacion2">
-                        <label for="ubicacion2">Recoleta</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="ubicacion3">
-                        <label for="ubicacion3">San Telmo</label>
+                <!-- Filtrar por categoria -->
+                <div class="filter-section">
+                    <input type="checkbox" id="toggle-categoria" class="accordion-toggle" checked>
+                    <label for="toggle-categoria" class="filter-title">
+                        <i class="fas fa-chevron-down accordion-icon">-</i>
+                        <i class="fas fa-utensils"></i> Categoría
+                    </label>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="gourmet" name="categoria" value="gourmet">
+                            <label for="gourmet">Gourmet</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="especialidad" name="categoria" value="especialidad">
+                            <label for="especialidad">Especialidad</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="familiar_cat" name="categoria" value="familiar">
+                            <label for="familiar_cat">Familiar</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="buffet" name="categoria" value="buffet">
+                            <label for="buffet">Buffet</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="comida_rapida" name="categoria" value="comida_rapida">
+                            <label for="comida_rapida">Comida rapida</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="tematico" name="categoria" value="tematico">
+                            <label for="tematico">Tematico</label>
+                        </div>
                     </div>
                 </div>
+                <!-- Filtrar por horario -->
+                <div class="filter-section">
+                    <input type="checkbox" id="toggle-horario" class="accordion-toggle" checked>
+                    <label for="toggle-horario" class="filter-title">
+                        <i class="fas fa-chevron-down accordion-icon">-</i>
+                        <i class="fas fa-utensils"></i> Horarios
+                    </label>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="0-24" name="horario" value="0-24">
+                            <label for="0-24">24h</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="7-11" name="horario" value="7-11">
+                            <label for="7-11">Desayuno (7:00-11:00)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="12-15" name="horario" value="12-15">
+                            <label for="12-15">Almuerzo (12:00-15:00)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="16-18" name="horario" value="16-18">
+                            <label for="16-18">Merienda (16:00-18:00)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="19-23" name="horario" value="19-23">
+                            <label for="19-23">Cena (19:00-23:00)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="23-5" name="horario" value="23-5">
+                            <label for="23-5">Nocturno (23:00-05:00)</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Filtrar por etiquetas ( Seleccion multiple ) -->
+                <div class="filter-section">
+                    <input type="checkbox" id="toggle-etiquetas" class="accordion-toggle" checked>
+                    <label for="toggle-etiquetas" class="filter-title">
+                        <i class="fas fa-chevron-down accordion-icon">-</i>
+                        <i class="fas fa-utensils"></i> Etiquetas
+                    </label>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="familiar_etiq" name="etiquetas[]" value="familiar">
+                            <label for="familiar_etiq">Familiar</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="vegetariano" name="etiquetas[]" value="vegetariano">
+                            <label for="vegetariano">Vegetariano</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="vegano" name="etiquetas[]" value="vegano">
+                            <label for="vegano">Vegano</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="sin_tacc" name="etiquetas[]" value="sin_tacc">
+                            <label for="sin_tacc">Sin tacc</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="pet_friendly" name="etiquetas[]" value="pet_friendly">
+                            <label for="pet_friendly">Apto para mascotas</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="wifi" name="etiquetas[]" value="wifi">
+                            <label for="wifi">WiFi</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="terraza" name="etiquetas[]" value="terraza">
+                            <label for="terraza">Terraza</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="delivery" name="etiquetas[]" value="delivery">
+                            <label for="delivery">Delivery</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="para_llevar" name="etiquetas[]" value="para_llevar">
+                            <label for="para_llevar">Para llevar</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="accesible" name="etiquetas[]" value="accesible">
+                            <label for="accesible">Accesible</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Filtrar por calificacion-->
+                <div class="filter-section">
+                    <input type="checkbox" id="toggle-calificaciones" class="accordion-toggle" checked>
+                    <label for="toggle-calificaciones" class="filter-title">
+                        <i class="fas fa-chevron-down accordion-icon">-</i>
+                        <i class="fas fa-utensils"></i> Calificacion
+                    </label>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="asc" name="orden_calificacion" value="asc">
+                            <label for="asc">Ascendente</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" class="casilla_filtro" id="desc" name="orden_calificacion" value="desc">
+                            <label for="desc">Descendente</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Boton que me va a permitir confirmar los filtros seleccionados-->
+                <input type="submit" value="Aplicar">
             </div>
-            
-            <!-- Filtro por categoría -->
-            <div class="filter-section">
-                <div class="filter-title">
-                    <i class="fas fa-utensils"></i>
-                    Categoría
-                </div>
-                <div class="filter-options">
-                    <div class="filter-option">
-                        <input type="checkbox" id="categoria1">
-                        <label for="categoria1">Parrilla</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="categoria2">
-                        <label for="categoria2">Pizza</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="categoria3">
-                        <label for="categoria3">Sushi</label>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Filtro por tipo de cocina -->
-            <div class="filter-section">
-                <div class="filter-title">
-                    <i class="fas fa-chef-hat"></i>
-                    Tipos de cocina
-                </div>
-                <div class="filter-options">
-                    <div class="filter-option">
-                        <input type="checkbox" id="cocina1">
-                        <label for="cocina1">Tradicional 1</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="cocina2">
-                        <label for="cocina2">Tradicional 2</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="cocina3">
-                        <label for="cocina3">Tradicional 3</label>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Filtro por horario -->
-            <div class="filter-section">
-                <div class="filter-title">
-                    <i class="fas fa-clock"></i>
-                    Horario
-                </div>
-                <div class="filter-options">
-                    <div class="filter-option">
-                        <input type="checkbox" id="horario1">
-                        <label for="horario1">Horario 1</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="horario2">
-                        <label for="horario2">Horario 2</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="horario3">
-                        <label for="horario3">Horario 3</label>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </form>
         
         <!-- Grid de restaurantes -->
         <div class="restaurants-section">
             <div class="restaurants-grid">
-                <!-- Fila 1 -->
-                <div class="restaurant-card" onclick="selectRestaurant(this)">
-                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="restaurant-icon">
-                        <i class="fas fa-store"></i>
+                <div id="total_comercios" style="display:none;">{{ total_comercios }}</div>
+                <div id="total_paginas" style="display:none;">{{ total_paginas }}</div>
+                <div id="pagina_actual" style="display:none;">{{ pagina_actual }}</div>
+                 {% for comercio in comercios %}
+                    <div class="restaurant-card" onclick="selectRestaurant(this)">
+                        <button class="favorite-btn" onclick="toggleFavorite(event, this)">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="restaurant-img">
+                            <img src="{{url_for('static', filename= comercio['ruta_imagen'])}}" alt="Imagen-Restaurante">
+                        </div>
+                        <div class="restaurant-name">{{comercio["nombre_comercio"]}}</div>
+                        <div class="restaurant-rating">
+                            <div class="rating-stars">★</div>
+                            <div class="rating-number">{{comercio["calificacion"]}}</div>
+                        </div>
                     </div>
-                    <div class="restaurant-name">Nombre restaurant</div>
-                    <div class="restaurant-rating">
-                        <div class="rating-stars">★★★★★</div>
-                        <div class="rating-number">5.0</div>
-                    </div>
-                    <div class="restaurant-category">Cena específica</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="selectRestaurant(this)">
-                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="restaurant-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="restaurant-name">Nombre restaurant</div>
-                    <div class="restaurant-rating">
-                        <div class="rating-stars">★★★★★</div>
-                        <div class="rating-number">5.0</div>
-                    </div>
-                    <div class="restaurant-category">Cena específica</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="selectRestaurant(this)">
-                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="restaurant-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="restaurant-name">Nombre restaurant</div>
-                    <div class="restaurant-rating">
-                        <div class="rating-stars">★★★★★</div>
-                        <div class="rating-number">5.0</div>
-                    </div>
-                    <div class="restaurant-category">Cena específica</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="selectRestaurant(this)">
-                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="restaurant-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="restaurant-name">Nombre restaurant</div>
-                    <div class="restaurant-rating">
-                        <div class="rating-stars">★★★★★</div>
-                        <div class="rating-number">5.0</div>
-                    </div>
-                    <div class="restaurant-category">Cena específica</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="selectRestaurant(this)">
-                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="restaurant-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="restaurant-name">Nombre restaurant</div>
-                    <div class="restaurant-rating">
-                        <div class="rating-stars">★★★★★</div>
-                        <div class="rating-number">5.0</div>
-                    </div>
-                    <div class="restaurant-category">Cena específica</div>
-                </div>
-                
-                <!-- Fila 2 -->
-                <div class="restaurant-card" onclick="selectRestaurant(this)">
-                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="restaurant-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="restaurant-name">Nombre restaurant</div>
-                    <div class="restaurant-rating">
-                        <div class="rating-stars">★★★★★</div>
-                        <div class="rating-number">5.0</div>
-                    </div>
-                    <div class="restaurant-category">Cena específica</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="selectRestaurant(this)">
-                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="restaurant-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="restaurant-name">Nombre restaurant</div>
-                    <div class="restaurant-rating">
-                        <div class="rating-stars">★★★★★</div>
-                        <div class="rating-number">5.0</div>
-                    </div>
-                    <div class="restaurant-category">Cena específica</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="selectRestaurant(this)">
-                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="restaurant-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="restaurant-name">Nombre restaurant</div>
-                    <div class="restaurant-rating">
-                        <div class="rating-stars">★★★★★</div>
-                        <div class="rating-number">5.0</div>
-                    </div>
-                    <div class="restaurant-category">Cena específica</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="selectRestaurant(this)">
-                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="restaurant-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="restaurant-name">Nombre restaurant</div>
-                    <div class="restaurant-rating">
-                        <div class="rating-stars">★★★★★</div>
-                        <div class="rating-number">5.0</div>
-                    </div>
-                    <div class="restaurant-category">Cena específica</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="selectRestaurant(this)">
-                    <button class="favorite-btn" onclick="toggleFavorite(event, this)">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <div class="restaurant-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="restaurant-name">Nombre restaurant</div>
-                    <div class="restaurant-rating">
-                        <div class="rating-stars">★★★★★</div>
-                        <div class="rating-number">5.0</div>
-                    </div>
-                    <div class="restaurant-category">Cena específica</div>
-                </div>
+                {% endfor %}
             </div>
-            
-            <!-- Paginación -->
-            <div class="pagination-container">
-                <button class="pagination-btn active" onclick="goToPage(1)">1</button>
-                <button class="pagination-btn" onclick="goToPage(2)">2</button>
-                <button class="pagination-btn" onclick="goToPage(3)">3</button>
-                <button class="pagination-btn" onclick="goToPage(4)">4</button>
-                <button class="pagination-btn" onclick="goToPage(5)">5</button>
-                <button class="pagination-btn" onclick="goToPage(6)">6</button>
-                <button class="pagination-btn" onclick="goToPage(7)">7</button>
-                <div class="pagination-dots">...</div>
-            </div>
-        </div>
+    </div>
+    <!-- Paginación -->
+    <div class="pagination-container">
+        <button class="pagination-btn" onclick="prevPage()" id="btn_prev">Previo</button>
+        <button class="pagination-btn" onclick="nextPage()" id="btn_sig">Siguiente</button>
     </div>
 </div>
 {% endblock %}
