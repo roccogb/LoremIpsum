@@ -321,11 +321,12 @@ textarea:focus {
 /*Personalizo los elementos 'td-dia' que contienen un select de clase 'select-wrapper', es decir los select.*/
 /*.select-dropdown -> Clase de materalize utilizada para simular el efecto de un select*/
 /*.dropdown-content -> Menu desplegable cuando el usuario hace click en el select*/
-.td-dia .select-wrapper input.select-dropdown,
+.td-dia-horario .select-wrapper input.select-dropdown,
 .dropdown-content li > a,
 .dropdown-content li > span {
   text-align: center !important;
   color: white;
+  margin: auto;
   width: 100%;                          /* Fuerzo el cambio de ancho. El mismo va a ser igual a todo el ancho del bloque*/
   display: flex !important;             /* Convierto el 'select' en una flexbox para poder trabajar mejor con los elementos*/
   align-items: center !important;       /* Alineo los items en el centro verticalmente*/
@@ -336,13 +337,6 @@ textarea:focus {
 
 .ltc{
   color: white;
-}
-
-.input-time {
-  text-align: center;
-  width: 100% !important;
-  min-width: 80px;
-  max-width: 150px;
 }
 
 /*Personalizo aquellos las entradas de texto que comparten las clases '.tm-bg-gold' y '.input-field'*/
@@ -447,6 +441,27 @@ input[type="file"] {
 .upload-file-label:active{
   transform: translateY(3px);
 }
+
+/* Boton para volver al inicio*/
+#btn-home {
+  display: block;
+  width: 85%;
+  top: 225px;
+  background-color: #800020;
+  color: white;
+  border-radius: 10px;
+  z-index: 3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Añade sombra para efecto de elevación */
+}
+
+#btn-home:hover,
+#btn-home:focus{
+  background-color: var(--sgray);
+  transform: translateY(-3px);
+  font-weight: bold;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 
 .tm-px-5 {
   padding-left: 3rem;

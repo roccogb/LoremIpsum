@@ -1,30 +1,61 @@
-from flask import Flask, request, render_template, redirect, session, url_for, flash
+from flask import Flask, request, render_template, redirect, session, url_for, flash, jsonify
 import requests
 
 app = Flask(__name__)
-app.secret_key = "contra_ids"  # Necesario para usar sesiones y flash
+app.secret_key = "contra_ids"  # Necesario para usar session y flash
 
-API_BACK = "http://127.0.0.1:8100"  # Dirección local del backend
+API_BACK = "http://0.0.0.0:8100"  # Dirección local del backend
 
 # Pagina de inicio
 @app.route("/")
 def home():
     return render_template("home.html")
 
-# Pagina de descubre
-@app.route("/descubre")
-def descubre():
-    return render_template("descubre.html")
+# Este endpoint va a renderizar la página de descubre. En la misma se presentarán todos los comercios registrados y las herramientas necesarias para navegar en estos mismos, como; filtros,paginación,etc.
+# El párametro dinamico recibido será el indice de la pagina actual renderizada
+# Dividir el endpoint en dos partes donde la principal diferencia se va a encontrar en a que endpoint del back le realiza la peticion para conseguir la data
+# POST -> Descubre con filtros aplicados.
+# GET -> Descubre sin filtros.
+@app.route("/descubre/<int:indice_pag>", methods=["GET","POST"])
+def descubre(indice_pag):
+    inicio = indice_pag * 9
+    if request.method == "POST":
+        tipo_cocina=request.form.get("tipo_cocina","null")
+        categoria=request.form.get("categoria","null")
+        calificacion=request.form.get("orden_calificacion","null")
+        horarios=request.form.getlist("horarios[]")
+        etiquetas=request.form.getlist("etiquetas[]")            
+        dias=request.form.getlist("dias[]")
 
+        response=requests.get(f"{API_BACK}/comercio/filtrar", 
+                               json={"tipo_cocina":tipo_cocina,"categoria":categoria,"horarios":horarios,
+                                     "calificacion":calificacion,"etiquetas":etiquetas, "dias":dias})
+    elif request.method == "GET":
+        response=requests.get(f"{API_BACK}/comercio/")
+
+    if response.status_code == 200:
+        comercios_bdd = list(response.json())
+        total_comercios = len(comercios_bdd)
+        fin = min(inicio + 9, total_comercios)
+    
+        total_paginas = (total_comercios - 1) // 9
+        
+        # Si el índice pedido es mayor que las páginas disponibles
+        if indice_pag > total_paginas:
+            return redirect(url_for("descubre", indice_pag=total_paginas))
+            
+        return render_template("descubre.html", 
+                            comercios=comercios_bdd[inicio:fin],
+                            total_comercios=total_comercios,
+                            pagina_actual=indice_pag,
+                            total_paginas=total_paginas)
+    else:
+        return render_template("descubre.html",comercios=[])
+    
 # Pagina de ayuda
 @app.route("/ayuda")
 def ayuda():
     return render_template("ayuda.html")
-
-#Prueba-> Pagina de review
-@app.route("/review")
-def review():
-    return render_template("review.html")
 
 # Login de usuario
 @app.route("/login", methods=["GET", "POST"])
