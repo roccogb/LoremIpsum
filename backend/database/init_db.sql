@@ -32,7 +32,7 @@ CREATE TABLE comercios (
     ruta_imagen VARCHAR(100), 
     nombre_comercio VARCHAR(100),
     categoria VARCHAR(50),
-    tipo_de_cocina VARCHAR(100),
+    tipo_cocina VARCHAR(100),
     telefono BIGINT UNIQUE,
     latitud FLOAT,                      -- (UBICACIÓN)Coordenada X
     longitud FLOAT,                     -- (UBICACIÓN)Coordenada Y

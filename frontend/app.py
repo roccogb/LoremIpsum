@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, session, url_for, flash
+from flask import Flask, request, render_template, redirect, session, url_for, flash, jsonify
 import requests
 
 app = Flask(__name__)
@@ -16,6 +16,7 @@ def home():
 # Dividir el endpoint en dos partes donde la principal diferencia se va a encontrar en a que endpoint del back le realiza la peticion para conseguir la data
 # POST -> Descubre con filtros aplicados.
 # GET -> Descubre sin filtros.
+# NO FUNCIONA BIEN -> Cuando se filtra y el resultado de comercios es mayor 9, no carga bien y no se puede pasar de página. Back de filtrado funciona bien. El error esta acá
 @app.route("/descubre/<int:indice_pag>", methods=["GET","POST"])
 def descubre(indice_pag):
     inicio = indice_pag * 9
@@ -23,19 +24,17 @@ def descubre(indice_pag):
         # Se le hace la peticion de los comercios a la BDD pero filtrados
         tipo_cocina=request.form.get("tipo_cocina","null")
         categoria=request.form.get("categoria","null")
-        horario=request.form.get("horario","null")
+        horario=request.form.get("horarios","null")
         calificacion=request.form.get("calificacion","null")
-        etiquetas=request.form.getlist("etiquetas[]")            # Me toma solo una tag
+        etiquetas=request.form.getlist("etiquetas[]")            
+        dias=request.form.getlist("dias[]")
 
-        # Aca realizará la petición con los filtros aplicados
-        return f"""Tipo de cocina: {tipo_cocina}
-                   Categoria: {categoria}
-                   Horario: {horario}
-                   Calificacion: {calificacion}
-                   etiquetas: {etiquetas} """
+        response=requests.get(f"{API_BACK}/comercio/filtrar", 
+                               json={"tipo_cocina":tipo_cocina,"categoria":categoria,"horarios":horario,
+                                     "calificacion":calificacion,"etiquetas":etiquetas, "dias":dias})
     elif request.method == "GET":
         # Se le hace la peticion a la BDD de los comercios SIN FILTRAR
-        response = requests.get(f"{API_BACK}/comercio/")
+        response=requests.get(f"{API_BACK}/comercio/")
     if response.status_code == 200:
         comercios_bdd = list(response.json())
         total_comercios = len(comercios_bdd)
@@ -52,6 +51,45 @@ def descubre(indice_pag):
                             total_comercios=total_comercios,
                             pagina_actual=indice_pag,
                             total_paginas=total_paginas)
+    else:
+        return jsonify({"ERROR":f"{response.status_code}"})
+    
+# @app.route("/descubre/<int:indice_pag>", methods=["GET","POST"])
+# def descubre(indice_pag):
+#     inicio = indice_pag * 9
+#     if request.method == "POST":
+#         # Se le hace la peticion de los comercios a la BDD pero filtrados
+#         tipo_cocina=request.form.get("tipo_cocina","null")
+#         categoria=request.form.get("categoria","null")
+#         horario=request.form.get("horarios","null")
+#         calificacion=request.form.get("calificacion","null")
+#         etiquetas=request.form.getlist("etiquetas[]")            
+#         dias=request.form.getlist("dias[]")
+
+#         response=requests.get(f"{API_BACK}/comercio/filtrar", 
+#                                json={"tipo_cocina":tipo_cocina,"categoria":categoria,"horarios":horario,
+#                                      "calificacion":calificacion,"etiquetas":etiquetas, "dias":dias})
+#     elif request.method == "GET":
+#         # Se le hace la peticion a la BDD de los comercios SIN FILTRAR
+#         response=requests.get(f"{API_BACK}/comercio/")
+#     if response.status_code == 200:
+#         comercios_bdd = list(response.json())
+#         total_comercios = len(comercios_bdd)
+#         fin = min(inicio + 9, total_comercios)
+    
+#         total_paginas = (total_comercios - 1) // 9
+        
+#         # Si el índice pedido es mayor que las páginas disponibles
+#         if indice_pag > total_paginas:
+#             return redirect(url_for("descubre", indice_pag=total_paginas))
+            
+#         return render_template("descubre.html", 
+#                             comercios=comercios_bdd[inicio:fin],
+#                             total_comercios=total_comercios,
+#                             pagina_actual=indice_pag,
+#                             total_paginas=total_paginas)
+#     else:
+#         return jsonify({"ERROR":f"{response.status_code}"})
 
 # Pagina de ayuda
 @app.route("/ayuda")

@@ -91,28 +91,66 @@
                     </label>
                     <div class="filter-options">
                         <div class="filter-option">
-                            <input type="radio" class="casilla_filtro" id="0-24" name="horario" value="0-24">
+                            <input type="radio" class="casilla_filtro" id="0-24" name="horarios" value="0-24">
                             <label for="0-24">24h</label>
                         </div>
                         <div class="filter-option">
-                            <input type="radio" class="casilla_filtro" id="7-11" name="horario" value="7-11">
+                            <input type="radio" class="casilla_filtro" id="7-11" name="horarios" value="7-11">
                             <label for="7-11">Desayuno (7:00-11:00)</label>
                         </div>
                         <div class="filter-option">
-                            <input type="radio" class="casilla_filtro" id="12-15" name="horario" value="12-15">
+                            <input type="radio" class="casilla_filtro" id="12-15" name="horarios" value="12-15">
                             <label for="12-15">Almuerzo (12:00-15:00)</label>
                         </div>
                         <div class="filter-option">
-                            <input type="radio" class="casilla_filtro" id="16-18" name="horario" value="16-18">
+                            <input type="radio" class="casilla_filtro" id="16-18" name="horarios" value="16-18">
                             <label for="16-18">Merienda (16:00-18:00)</label>
                         </div>
                         <div class="filter-option">
-                            <input type="radio" class="casilla_filtro" id="19-23" name="horario" value="19-23">
+                            <input type="radio" class="casilla_filtro" id="19-23" name="horarios" value="19-23">
                             <label for="19-23">Cena (19:00-23:00)</label>
                         </div>
                         <div class="filter-option">
-                            <input type="radio" class="casilla_filtro" id="23-5" name="horario" value="23-5">
+                            <input type="radio" class="casilla_filtro" id="23-5" name="horarios" value="23-5">
                             <label for="23-5">Nocturno (23:00-05:00)</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Filtrar por dias-->
+                <div class="filter-section">
+                    <input type="checkbox" id="toggle-dias" class="accordion-toggle" checked>
+                    <label for="toggle-dias" class="filter-title">
+                        <i class="fas fa-chevron-down accordion-icon">-</i>
+                        <i class="fas fa-utensils"></i> Dias
+                    </label>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="lunes" name="dias[]" value="lunes">
+                            <label for="lunes">Lunes</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="martes" name="dias[]" value="martes">
+                            <label for="martes">Martes</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="miercoles" name="dias[]" value="miercoles">
+                            <label for="miercoles">Miercoles</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="jueves" name="dias[]" value="jueves">
+                            <label for="jueves">Jueves</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="viernes" name="dias[]" value="viernes">
+                            <label for="viernes">Viernes</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="sabado" name="dias[]" value="sabado">
+                            <label for="sabado">Sabado</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="domingo" name="dias[]" value="domingo">
+                            <label for="domingo">Domingo</label>
                         </div>
                     </div>
                 </div>
@@ -124,9 +162,14 @@
                         <i class="fas fa-utensils"></i> Etiquetas
                     </label>
                     <div class="filter-options">
+                        <!-- VOLAR ESTA ETIQUETA Y PROBAR CON OTRA-->
                         <div class="filter-option">
-                            <input type="checkbox" id="familiar_etiq" name="etiquetas[]" value="familiar">
-                            <label for="familiar_etiq">Familiar</label>
+                            <input type="checkbox" id="musica_vivo" name="etiquetas[]" value="musica_vivo">
+                            <label for="musica_vivo">Musica en vivo</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="happy_hour" name="etiquetas[]" value="happy_hour">
+                            <label for="happy_hour">Happy hour</label>
                         </div>
                         <div class="filter-option">
                             <input type="checkbox" id="vegetariano" name="etiquetas[]" value="vegetariano">
@@ -137,20 +180,20 @@
                             <label for="vegano">Vegano</label>
                         </div>
                         <div class="filter-option">
-                            <input type="checkbox" id="sin_tacc" name="etiquetas[]" value="sin_tacc">
-                            <label for="sin_tacc">Sin tacc</label>
+                            <input type="checkbox" id="sin_tacc" name="etiquetas[]" value="sin_gluten">
+                            <label for="sin_gluten">Sin gluten</label>
                         </div>
                         <div class="filter-option">
-                            <input type="checkbox" id="pet_friendly" name="etiquetas[]" value="pet_friendly">
-                            <label for="pet_friendly">Apto para mascotas</label>
+                            <input type="checkbox" id="apto_mascotas" name="etiquetas[]" value="apto_mascotas">
+                            <label for="apto_mascotas">Apto para mascotas</label>
                         </div>
                         <div class="filter-option">
                             <input type="checkbox" id="wifi" name="etiquetas[]" value="wifi">
                             <label for="wifi">WiFi</label>
                         </div>
                         <div class="filter-option">
-                            <input type="checkbox" id="terraza" name="etiquetas[]" value="terraza">
-                            <label for="terraza">Terraza</label>
+                            <input type="checkbox" id="zona_fumadores" name="etiquetas[]" value="zona_fumadores">
+                            <label for="zona_fumadores">Zona fumadores</label>
                         </div>
                         <div class="filter-option">
                             <input type="checkbox" id="delivery" name="etiquetas[]" value="delivery">
