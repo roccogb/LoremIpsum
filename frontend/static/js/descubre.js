@@ -2,14 +2,16 @@ let indice_pag=0;
 let total_comercios=0;
 let total_pag=0;
 
+    
     // Esta funcion se va a ejecutar directamente cuando el template se renderice
     document.addEventListener('DOMContentLoaded', function() {
-        
-        total_comercios = parseInt(document.getElementById("total_comercios").textContent);
+        total_comercios = parseInt(document.getElementById("total_comercios").textContent); // Se podría eliminar
         total_pag = parseInt(document.getElementById("total_paginas").textContent);
         indice_pag = parseInt(document.getElementById("pagina_actual").textContent);
 
         actualizarBotonesPagina();
+        bloquearMultiplesCheckboxes('0-24', ['7-11', '12-15', '16-18', '19-23', '23-5']);
+        
     });
 
     // Esta funcion va a renderizar la pagina descubre segun el indice actual
@@ -47,6 +49,23 @@ let total_pag=0;
         };
     };
 
+    // Esta funcion va a deshabilitar el resto de los checkbox de horarios si el de las 24h es seleccionado
+    function bloquearMultiplesCheckboxes(principalId, idsABloquear) {
+        const principal = document.getElementById(principalId);
+        const checkboxesABloquear = idsABloquear.map(id => document.getElementById(id));
+
+        principal.addEventListener('change', function() {
+            checkboxesABloquear.forEach(cb => {
+                if (cb) {
+                    cb.disabled = this.checked;
+                    if (this.checked) cb.checked = false;
+                }
+            });
+        });
+    };
+
+
+
     // Función para alternar favoritos
     function toggleFavorite(event, button) {
         event.stopPropagation(); // Prevenir que se active el click del card
@@ -62,7 +81,8 @@ let total_pag=0;
             button.classList.remove('active');
         }
     }
-    
+
+
     // Función para seleccionar restaurante
     function selectRestaurant(card) {
         // Aquí puedes agregar la lógica para navegar a la página del restaurante

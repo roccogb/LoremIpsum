@@ -94,39 +94,37 @@
                         <div class="input-field usr-comercio">
                             <table>
                                 <tr>
-                                    <th></th>
-                                    <th class="ltc">De</th>
-                                    <th class="ltc">Hasta</th>
-                                </tr>
-                                <tr>
                                     <td class="ltc">Dias</td>
-                                    <td class="td-dia">
-                                        <select name="dia_apertura">
-                                            <option value="lunes">Lunes</option>
-                                            <option value="martes">Martes</option>
-                                            <option value="miercoles">Miercoles</option>
-                                            <option value="jueves">Jueves</option>
-                                            <option value="viernes">Viernes</option>
-                                            <option value="sabado">Sabado</option>
-                                            <option value="domingo">Domingo</option>
-                                        </select>
-                                    </td>
-                                    <td class="td-dia">
-                                        <select name="dia_cierre">
-                                            <option value="lunes">Lunes</option>
-                                            <option value="martes">Martes</option>
-                                            <option value="miercoles">Miercoles</option>
-                                            <option value="jueves">Jueves</option>
-                                            <option value="viernes">Viernes</option>
-                                            <option value="sabado">Sabado</option>
-                                            <option value="domingo">Domingo</option>
-                                        </select>
+                                    <td class="td-dia-horario">
+                                        <div class="input-field usr-comercio">
+                                            <select multiple name="dias[]" id="dias" required>
+                                                <option value="" disabled>Selecciona una o más dias</option>
+                                                <option value="lunes">Lunes</option>
+                                                <option value="martes">Martes</option>
+                                                <option value="miercoles">Miercoles</option>
+                                                <option value="Jueves">Jueves</option>
+                                                <option value="Viernes">Viernes</option>
+                                                <option value="Sabado">Sabado</option>
+                                                <option value="Domingo">Domingo</option>
+                                            </select>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="ltc">Horario</td>
-                                    <td><input type="time" name="apertura" class="input-time" required></td>
-                                    <td><input type="time" name="cierre" class="input-time" required></td>
+                                    <td class="td-dia-horario">
+                                        <div class="input-field usr-comercio">
+                                            <select multiple name="horarios[]" id="horarios" required>
+                                                <option value="" disabled>Selecciona una o mas franjas horarias</option>
+                                                <option value="7-11">Desayuno(7:00-11:00)</option>
+                                                <option value="12-15">Almuerzo(12:00-15:00)</option>
+                                                <option value="16-18">Merienda(16:00-18:00)</option>
+                                                <option value="19-23">Cena(19:00-23:00)</option>
+                                                <option value="23-5">Nocturno(23:00-05:00)</option>
+                                                <option value="0-24">24h</option>
+                                            </select>
+                                        </div>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -137,13 +135,14 @@
                         <div class="input-field usr-comercio">
                             <select multiple name="etiquetas[]" id="etiquetas_comercio" required>
                                 <option value="" disabled>Selecciona una o más etiquetas</option>
-                                <option value="familiar">Familiar</option>
+                                <option value="musica_vivo">Musica en vivo</option>
+                                <option value="happy_hour">Happy hour</option>
                                 <option value="vegetariano">Vegetariano</option>
                                 <option value="vegano">Vegano</option>
-                                <option value="sin_tacc">Sin TACC</option>
-                                <option value="pet_friendly">Apto para mascotas</option>
+                                <option value="sin_gluten">Sin gluten</option>
+                                <option value="apto_mascotas">Apto para mascotas</option>
                                 <option value="wifi">WiFi</option>
-                                <option value="terraza">Terraza</option>
+                                <option value="zona_fumadores">Zona de fumadores</option>
                                 <option value="delivery">Delivery</option>
                                 <option value="para_llevar">Para llevar</option>
                                 <option value="accesible">Accesible</option>
@@ -170,9 +169,9 @@
                             <input placeholder="Confirmar contraseña" id="cp_responsable" name="cp_r_bss" type="password" class="validate" required>
                         </div>
                         <!-- La implementación del boton del certificado esta de más. Se puede dejar o sacar-->
-                        <label class="sub-titulos">Certificado de la existencia del comercio</label>
-                        <input type="file" name="declaracion_jurada" id="dj_establecimiento" accept="pdf" required>
-                        <label for="dj_establecimiento" class="upload-file-label">Subir archivo</label>
+                        <label class="sub-titulos">Adjuntar imagen del local</label>
+                        <input type="file" name="img_local" id="img_local" accept="png/jpg/jpeg">
+                        <label for="img_local" class="upload-file-label">Subir imagen</label>
                     </div>
                     <!-- Boton que enviará el formulario. Dependiendo que tipo de checkbox este seleccionada, el endpoint vinculado responderá de distinta manera-->
                     <div class="text-right mt-4">
@@ -184,9 +183,8 @@
                 <header class="mb-5 text-center">
                     <img id="icon-img" src="../static/media/img/icon-FoodyBA-blanco-dorado.png" alt="Icono FoodyBA" class="mb-3">
                     <h4 class="mt-0 white-text">Registrarse en FoodyBA</h4>
-                    <a href="/" class="waves-effect btn-large mt-4" style="background-color: #800020; color: white; border-radius: 10px;">Volver al inicio</a>
                 </header>
-
+                <a href="/" class="waves-effect btn-large mt-4" id="btn-home">Volver al inicio</a>
             </div>
         </div>
         <footer class="row tm-mt-big mb-3">

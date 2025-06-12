@@ -69,6 +69,10 @@ def get_comercios_filter():
             if len(valor) > 0:
                 for tag in valor:
                     condiciones_filtro.append(f"etiquetas LIKE '%{tag}%'")
+        elif clave == "horarios":
+            if len(valor) > 0:
+                for tag in valor:
+                    condiciones_filtro.append(f"horarios LIKE '%{tag}%'")
         elif clave == "calificacion":
             if valor != "null":
                 ordenar_calificacion = True
