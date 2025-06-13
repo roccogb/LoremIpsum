@@ -179,12 +179,14 @@ body {
 
 /* Listas de reservas y reseñas */
 .list-reservas, 
-.list-resenias {
+.list-resenias,
+.list-favs {
     margin-top: 15px;
 }
 
 .info-reserva, 
-.info-resenia {
+.info-resenia,
+.info-fav {
     background: var(--vino);
     border-radius: 15px;
     padding: 20px;
@@ -193,7 +195,8 @@ body {
 }
 
 .info-reserva p, 
-.info-resenia p {
+.info-resenia p,
+.info-fav p {
     margin-bottom: 8px;
     text-align: left;
 }
