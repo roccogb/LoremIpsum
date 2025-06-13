@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="review-container">
+        <div class="review-card">
+            <!-- Sección del restaurante -->
+            <div class="restaurant-section">
+                <h1 class="restaurant-title">Nombre restaurant</h1>
+                <div class="restaurant-icon">
+                    <div class="store-icon">
+                        <img src="../static/media/img/planetario.jpg" alt="temporal">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Separador vertical -->
+            <div class="divider"></div>
+
+            <!-- Sección de reseña -->
+            <div class="review-section">
+                <div class="review-header">
+                    <h2 class="review-title">¡DEJANOS TU OPINIÓN!</h2>
+                    <div class="star-rating" id="starRating">
+                        <span class="star" data-rating="1">☆</span>
+                        <span class="star" data-rating="2">☆</span>
+                        <span class="star" data-rating="3">☆</span>
+                        <span class="star" data-rating="4">☆</span>
+                        <span class="star" data-rating="5">☆</span>
+                    </div>
+                </div>
+
+                <form class="review-form" id="reviewForm" onsubmit="submitReview(event)">
+                    <div class="form-group">
+                        <textarea 
+                            id="reviewText" 
+                            name="review" 
+                            placeholder="Escribe tu reseña aquí..." 
+                            maxlength="500"
+                            required
+                            aria-label="Escribe tu reseña"
+                        ></textarea>
+                        <div class="char-counter">
+                            <span id="charCount">0</span>/500
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            ENVIAR
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Botón de regreso -->
+        <div class="back-section">
+            <button class="back-btn" onclick="goBack()">
+                ← Volver al restaurante
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{url_for('static', filename='js/review.js')}}"></script>
+{% endblock %}

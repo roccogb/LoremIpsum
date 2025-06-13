@@ -305,19 +305,38 @@ textarea:focus {
   width: 400px;
 }
 
+/* Escondo la flechita de los select*/
+.select-wrapper .caret{
+  display: none !important;         /*Necesito utilizar el 'important' ya que los estilos aplicados en los 'select' son realizados con materalize*/
+}
+
 /*Cuando se abre el menu*/
 .dropdown-content {
-  text-align: center;
+  text-align: center !important;
   background-color: rgba(212, 175, 55,0.9);
 }
 
-/*Flecha*/
-.select-wrapper .caret {
-  fill: white;
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  right: 150px;
+/*TABLA DE HORARIOS Y DIAS DEL REGISTRO USUARIO COMERCIO*/
+
+/*Personalizo los elementos 'td-dia' que contienen un select de clase 'select-wrapper', es decir los select.*/
+/*.select-dropdown -> Clase de materalize utilizada para simular el efecto de un select*/
+/*.dropdown-content -> Menu desplegable cuando el usuario hace click en el select*/
+.td-dia-horario .select-wrapper input.select-dropdown,
+.dropdown-content li > a,
+.dropdown-content li > span {
+  text-align: center !important;
+  color: white;
+  margin: auto;
+  width: 100%;                          /* Fuerzo el cambio de ancho. El mismo va a ser igual a todo el ancho del bloque*/
+  display: flex !important;             /* Convierto el 'select' en una flexbox para poder trabajar mejor con los elementos*/
+  align-items: center !important;       /* Alineo los items en el centro verticalmente*/
+  justify-content: center !important;   /* Si no uso todo el espacio del contenedor, lo alineo en el centro. Sirve para alinear horizontalmente*/
+  height: 40px !important;
+  padding: 0 !important;
+}
+
+.ltc{
+  color: white;
 }
 
 /*Personalizo aquellos las entradas de texto que comparten las clases '.tm-bg-gold' y '.input-field'*/
@@ -422,6 +441,27 @@ input[type="file"] {
 .upload-file-label:active{
   transform: translateY(3px);
 }
+
+/* Boton para volver al inicio*/
+#btn-home {
+  display: block;
+  width: 85%;
+  top: 225px;
+  background-color: #800020;
+  color: white;
+  border-radius: 10px;
+  z-index: 3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Añade sombra para efecto de elevación */
+}
+
+#btn-home:hover,
+#btn-home:focus{
+  background-color: var(--sgray);
+  transform: translateY(-3px);
+  font-weight: bold;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 
 .tm-px-5 {
   padding-left: 3rem;

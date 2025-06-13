@@ -1,4 +1,5 @@
-from db import get_connection
+from backend.database.db import get_connection
+
 try:
   conn = get_connection()
   cursor = conn.cursor()
@@ -8,7 +9,7 @@ try:
   print("Tablas de la bd")
   for t in tablas:
     print("-",t[0])
-except Exeption as e:
+except Exception as e:
   print("Error al conectar o consultar",e)
 finally:
   cursor.close()

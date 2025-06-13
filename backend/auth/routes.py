@@ -1,15 +1,12 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import request, jsonify, render_template, redirect, flash, url_for
 from . import auth_bp
+from database.db import get_connection
 
-# ruta para registrar usuarios
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # aca se procesan los datos del formulario
         form = request.form
-
         if form.get("title") == "consumidor":
-            # logica para registrar usuario final
             nombre = form.get("first_name")
             apellido = form.get("last_name")
             usuario = form.get("usr")
@@ -17,7 +14,6 @@ def register():
             password = form.get("password")
             print(f"[consumidor] {usuario} - {email}")
         else:
-            # logica para registrar usuario comercio
             nombre_comercio = form.get("name_bss")
             categoria = form.get("categoria")
             tipo_cocina = form.get("tipo_cocina")
@@ -29,15 +25,25 @@ def register():
 
     return render_template("register.html")
 
-# ruta para iniciar sesion
-@auth_bp.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        usuario = request.form.get("username")
-        password = request.form.get("password")
-        print(f"intento de login: {usuario} / {password}")
-        flash("login exitoso")
-        return redirect(url_for("auth_bp.login"))
+@auth_bp.route('/usr', methods=["GET", "POST"])
+def verificar_usr():
+    body_request = request.get_json()
+    conn = get_connection()
+    cursor = conn.cursor()
 
-    return render_template("login.html")
+    qsql_usr_comercio = "SELECT * FROM usuario_comercio WHERE email_usuario=%s AND contrasena=%s"
+    qsql_usr_consumidor = "SELECT * FROM usuario_consumidor WHERE email_usuario=%s AND contrasena=%s"
 
+    cursor.execute(qsql_usr_consumidor, (body_request["usr"], body_request["pss"]))
+    usuario_consumidor_existente = cursor.fetchone()
+
+    cursor.execute(qsql_usr_comercio, (body_request["usr"], body_request["pss"]))
+    usuario_comercio_existente = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if usuario_comercio_existente or usuario_consumidor_existente:
+        return jsonify({"msg": "Ingreso exitoso"}), 200
+    else:
+        return jsonify({"ERROR": "No se encontró ningún usuario con esa información"}), 404

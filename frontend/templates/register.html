@@ -11,9 +11,10 @@
 	http://www.tooplate.com/view/2105-input
 	-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/bootstrap/login_boots.min.css">
     <link rel="stylesheet" href="../static/css/materialize.min.css">
     <link rel="stylesheet" href="../static/css/tooplate.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon_burdeos.ico') }}">
 </head>
 
 <body id="register">
@@ -62,6 +63,12 @@
                         <div class="input-field usr-comercio">
                             <input placeholder="Nombre del comercio" id="nombre_comercio" name="name_bss" type="text" class="validate" required>
                         </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Teléfono del comercio" id="tel_comercio" name="tel_bss" type="number" class="validate" required>
+                        </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Direccion del comercio" id="dir_comercio" name="dir_bss" type="text" class="validate" required>
+                        </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 pl-0 tm-pr-xs-0">
                             <select name="categoria">
                                 <option value="-">Categoria</option>
@@ -71,7 +78,6 @@
                                 <option value="buffet">Buffet</option>
                                 <option value="comida_rapida">Comida rapida</option>
                                 <option value="tematico">Tematico</option>
-                                <option value="para_llevar">Para llevar</option>
                             </select>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 pl-0 tm-pr-xs-0">
@@ -84,26 +90,88 @@
                                 <option value="clasica">Cócina clasica</option>
                             </select>
                         </div>
+                        <label class="sub-titulos">Horarios del comercio</label>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Direccion del comercio" id="dir_comercio" name="dir_bss" type="text" class="validate" required>
+                            <table>
+                                <tr>
+                                    <td class="ltc">Dias</td>
+                                    <td class="td-dia-horario">
+                                        <div class="input-field usr-comercio">
+                                            <select multiple name="dias[]" id="dias" required>
+                                                <option value="" disabled>Selecciona una o más dias</option>
+                                                <option value="lunes">Lunes</option>
+                                                <option value="martes">Martes</option>
+                                                <option value="miercoles">Miercoles</option>
+                                                <option value="Jueves">Jueves</option>
+                                                <option value="Viernes">Viernes</option>
+                                                <option value="Sabado">Sabado</option>
+                                                <option value="Domingo">Domingo</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="ltc">Horario</td>
+                                    <td class="td-dia-horario">
+                                        <div class="input-field usr-comercio">
+                                            <select multiple name="horarios[]" id="horarios" required>
+                                                <option value="" disabled>Selecciona una o mas franjas horarias</option>
+                                                <option value="7-11">Desayuno(7:00-11:00)</option>
+                                                <option value="12-15">Almuerzo(12:00-15:00)</option>
+                                                <option value="16-18">Merienda(16:00-18:00)</option>
+                                                <option value="19-23">Cena(19:00-23:00)</option>
+                                                <option value="23-5">Nocturno(23:00-05:00)</option>
+                                                <option value="0-24">24h</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Email del comercio" id="email_comercio" name="email_bss" type="text" class="validate" required>
+                            <input placeholder="Link menu PDF" id="lkmenu_comercio" name="lkm_bss" type="url" class="validate" required>
+                        </div>
+                        <label class="sub-titulos">Etiquetas del comercio</label>
+                        <div class="input-field usr-comercio">
+                            <select multiple name="etiquetas[]" id="etiquetas_comercio" required>
+                                <option value="" disabled>Selecciona una o más etiquetas</option>
+                                <option value="musica_vivo">Musica en vivo</option>
+                                <option value="happy_hour">Happy hour</option>
+                                <option value="vegetariano">Vegetariano</option>
+                                <option value="vegano">Vegano</option>
+                                <option value="sin_gluten">Sin gluten</option>
+                                <option value="apto_mascotas">Apto para mascotas</option>
+                                <option value="wifi">WiFi</option>
+                                <option value="zona_fumadores">Zona de fumadores</option>
+                                <option value="delivery">Delivery</option>
+                                <option value="para_llevar">Para llevar</option>
+                                <option value="accesible">Accesible</option>
+                            </select>
                         </div>
                         <br>
                         <label class="sub-titulos">Datos del responsable</label>
-                        <div class="input-field usr-comercio">
-                            <input placeholder="Nombre completo" id="nombre_responsable" name="nr_bss" type="text" class="validate" required>
-                        </div>
                         <div class="input-field usr-comercio">
                             <input placeholder="Documento de Identidad Nacional(DNI)" id="dni_responsablebss" name="dni_responsable_bss" type="number" class="validate" required>
                         </div>
                         <div class="input-field usr-comercio">
                             <input placeholder="Clave Única de Identificación Tributaria(CUIT)" id="cuit_responsablebss" name="cuit_responsable_bss" type="number" class="validate" required>
                         </div>
-                        <label class="sub-titulos">Certificado de la existencia del comercio</label>
-                        <input type="file" name="declaracion_jurada" id="dj_establecimiento" accept="pdf" required>
-                        <label for="dj_establecimiento" class="upload-file-label">Subir archivo</label>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Nombre completo" id="nombre_responsable_bss" name="nr_bss" type="text" class="validate" required>
+                        </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Email del responsable" id="email_responasble_bss" name="email_bss" type="text" class="validate" required>
+                        </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Contraseña" id="p_responsable" name="p_r_bss" type="password" class="validate" required>
+                        </div>
+                        <div class="input-field usr-comercio">
+                            <input placeholder="Confirmar contraseña" id="cp_responsable" name="cp_r_bss" type="password" class="validate" required>
+                        </div>
+                        <!-- La implementación del boton del certificado esta de más. Se puede dejar o sacar-->
+                        <label class="sub-titulos">Adjuntar imagen del local</label>
+                        <input type="file" name="img_local" id="img_local" accept="png/jpg/jpeg">
+                        <label for="img_local" class="upload-file-label">Subir imagen</label>
                     </div>
                     <!-- Boton que enviará el formulario. Dependiendo que tipo de checkbox este seleccionada, el endpoint vinculado responderá de distinta manera-->
                     <div class="text-right mt-4">
@@ -112,11 +180,11 @@
                 </form>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-register-col-r">
-                <header class="mb-5">
-                    <img id="icon-img" src="../static/media/img/icon-FoodyBA-blanco-dorado.png" alt="Icono FoodyBA">
-                    <h4 class="mt-0">Registrarse en FoodyBA</h4>
+                <header class="mb-5 text-center">
+                    <img id="icon-img" src="../static/media/img/icon-FoodyBA-blanco-dorado.png" alt="Icono FoodyBA" class="mb-3">
+                    <h4 class="mt-0 white-text">Registrarse en FoodyBA</h4>
                 </header>
-
+                <a href="/" class="waves-effect btn-large mt-4" id="btn-home">Volver al inicio</a>
             </div>
         </div>
         <footer class="row tm-mt-big mb-3">
