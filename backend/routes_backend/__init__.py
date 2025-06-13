@@ -8,3 +8,4 @@ def register_routes(app):
     app.register_blueprint(reservas_bp, url_prefix="/reserva")
     app.register_blueprint(comercios_bp, url_prefix="/comercio")
     app.register_blueprint(auth_bp, url_prefix="/auth")
+    app.register_blueprint(resenia-bp, url_prefix="/resenias")
