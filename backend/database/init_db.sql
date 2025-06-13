@@ -32,16 +32,16 @@ CREATE TABLE comercios (
     ruta_imagen VARCHAR(100), 
     nombre_comercio VARCHAR(100),
     categoria VARCHAR(50),
-    tipo_de_cocina VARCHAR(100),
+    tipo_cocina VARCHAR(100),
     telefono BIGINT UNIQUE,
     latitud FLOAT,                      -- (UBICACIÓN)Coordenada X
     longitud FLOAT,                     -- (UBICACIÓN)Coordenada Y
     tiempo_de_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     pdf_menu_link TEXT,
     calificacion FLOAT DEFAULT 0.0,     -- Esto se va completar por un promedio
-    dias VARCHAR(100),                  -- El formato va a ser -> Ej='Lunes-Viernes'
-    horarios VARCHAR(100),              -- El formato va a ser -> Ej='17:00-21:00'
-    etiquetas TEXT,                     -- Esta columna va a ser un array convertido a texto ya que SQL no trabaja con estos tipos de datos. Formato '[etiqueta_1,etiqueta_2,...]'
+    dias TEXT,                          -- El formato va a ser -> Ej='[lunes,miercoles,sabado,....]'
+    horarios TEXT,                      -- El formato va a ser -> Ej='[7-11,12-15,...]'
+    etiquetas TEXT,                     -- El formato va a ser -> Ej='[apto_mascotas,delivery,...]'
     -- Defino la FK de esta tabla
     FOREIGN KEY (id_usr_comercio) REFERENCES usuario_comercio(id_usr_comercio) ON DELETE CASCADE
     -- La caracteristica 'ON DELETE CASCADE' indica que si se borra el registro 'padre' los 'hijos' se eliminan automaticamente
