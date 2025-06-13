@@ -1,3 +1,15 @@
+/* Variables globales de colores */
+:root {
+  --mostaza: #D4AF37;
+  --vino: #800020;
+  --sgray: #414141;
+  --golf: #D4A574;
+  --dorado: #FFD700;
+  --verde-activo: #4CAF50;
+  --rojo-cancelado: #f44336;
+}
+
+/* Reset y configuración base */
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +18,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #800020;
+    background-color: var(--vino);
     min-height: 100vh;
     padding: 20px;
 }
@@ -16,7 +28,6 @@ body {
     margin: 0 auto;
 }
 
-/* Header Section */
 .hero-section {
     position: relative;
     margin-bottom: 30px;
@@ -42,51 +53,51 @@ body {
     gap: 20px;
 }
 
-.restaurant-name {
-    font-size: 28px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    margin: 0;
-}
-
-.stars {
-    display: flex;
-    gap: 5px;
-    margin: 0;
-}
-
-.star {
-    color: #FFD700;
-    font-size: 20px;
-}
-
-/* Popular Restaurants Section */
+/* Sección principal */
 .popular-section {
-    background-color: #d4af37;
+    background-color: var(--mostaza);
     border-radius: 20px;
     padding: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
+/* Títulos de sección */
 .section-title {
     color: white;
     font-size: 22px;
     font-weight: bold;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
     text-decoration: none;
     cursor: pointer;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
     display: block;
+    position: relative;
+    padding-right: 30px;
 }
 
 .section-title:hover {
     color: #f0f0f0;
-    text-decoration: underline;
+    transform: translateX(5px);
 }
 
+/* Estilo aplicado a la etiqueta del menu desplegable*/
+.section-title.clickable::after {
+    content: '▼';
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: transform 0.3s ease;
+    font-size: 18px;
+}
+
+.section-title.clickable.collapsed::after {
+    transform: rotate(-90deg);
+}
+
+/* Tarjetas del restaurante reutilizadas para mostrar la info*/
 .restaurant-card {
-    background: #800020;
+    background: var(--vino);
     border-radius: 15px;
     padding: 20px;
     text-align: center;
@@ -103,9 +114,118 @@ body {
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
+.restaurant-card p {
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+/* Imagen y información del restaurante */
+.perfil-resto-img {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.perfil-resto-img img {
+    max-width: 200px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.restaurant-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.restaurant-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.rating-stars {
+    color: var(--dorado);
+    font-size: 18px;
+}
+
+.rating-number {
+    font-weight: bold;
+}
+
+.stars {
+    display: flex;
+    gap: 5px;
+    margin: 0;
+}
+
+.star {
+    color: var(--dorado);
+    font-size: 20px;
+}
+
+/* Estilos aplicados cuando se despliega el contenido */
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.collapsible-content.expanded {
+    max-height: 2000px;
+}
+
+/* Listas de reservas y reseñas */
+.list-reservas, 
+.list-resenias {
+    margin-top: 15px;
+}
+
+.info-reserva, 
+.info-resenia {
+    background: var(--vino);
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.info-reserva p, 
+.info-resenia p {
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+/* Estados y calificaciones */
+.estado-activa {
+    color: var(--verde-activo);
+    font-weight: bold;
+}
+
+.estado-cancelada {
+    color: var(--rojo-cancelado);
+    font-weight: bold;
+}
+
+.calificacion-alta {
+    color: var(--verde-activo);
+}
+
+.calificacion-baja {
+    color: var(--rojo-cancelado);
+}
+
+/* Sección de botón de retorno */
+.back-section {
+    text-align: center;
+    margin-top: 30px;
+}
+
 .back-btn {
-    background: #FFD700;
-    color: #800020;
+    background: var(--sgray);
+    color: white;
     border: none;
     padding: 12px 30px;
     border-radius: 25px;
@@ -117,10 +237,11 @@ body {
 }
 
 .back-btn:hover {
-    background: #e6c200;
+    background: #383838;
     transform: translateY(-2px);
 }
 
+/* Responsive Design */
 @media (max-width: 600px) {
     .container {
         padding: 10px;
@@ -128,7 +249,7 @@ body {
 
     .section-title {
         font-size: 18px;
-        text-align: center;
+        text-align: left;
     }
 
     .restaurant-card {
@@ -138,5 +259,20 @@ body {
 
     .back-btn {
         width: 100%;
+    }
+
+    .restaurant-name {
+        font-size: 20px;
+    }
+
+    .hero-card {
+        padding: 20px;
+        min-height: 200px;
+    }
+
+    .restaurant-info {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
     }
 }

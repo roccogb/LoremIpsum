@@ -108,5 +108,18 @@ def logout():
     session.pop("usuario", None)
     return redirect(url_for("home"))
 
+# Prueba, luego se va a eliminar
+@app.route("/perfil_comerciante")
+def render_pcomerciante():
+    return render_template("perfil_comerciante.html")
+
+# Prueba, luego se va a eliminar
+@app.route("/perfil_consumidor")
+def render_pconsumidor():
+    return render_template("perfil_consumidor.html",usuario={"nombre_usuario":"Walter Mazzanti","email_usuario":"wmazzanti@live.com","fecha_creacion":"2025-06-21 18:05:34"},
+                                                    reservas=[{"nombre_restaurante":"El Chileno Rojo","fecha":"2025-05-21 18:50:41", "estado":True},
+                                                             {"nombre_restaurante":"Paseo del Glamour","fecha":"2025-05-15 21:50:00", "estado":True}],
+                                                    resenias=[{"nombre_restaurante":"Paseo del Glamour","comentario":"Flojito","puntaje":3}])
+
 if __name__ == "__main__":
     app.run(host="localhost", port=8200, debug=True)

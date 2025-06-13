@@ -1,16 +1,7 @@
 {% extends "base.html" %}
 
-{% block css %}
+{% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
-{% endblock %}
-
-{% block btnnavbar %}
-    <div class="nav-links" id="navLinks">
-        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Inicio</a>
-        <a href="/descubre" class="{% if request.path == '/descubre' %}active{% endif %}">Descubre</a>
-        <a href="/ayuda" class="{% if request.path == '/ayuda' %}active{% endif %}">Ayuda</a>
-        <span class="nav-user" onclick="showUserMenu()" role="button" tabindex="0" aria-label="Menú de usuario">👤</span>
-    </div>
 {% endblock %}
 
 {% block content %}
@@ -19,16 +10,16 @@
 
         <h1 class="section-title">🙋 Mi Perfil</h1>
         <div class="restaurant-card">
-            <p><strong>Usuario:</strong> {{ usuario.nombre_usuario }}</p>
-            <p><strong>Email:</strong> {{ usuario.email_usuario }}</p>
-            <p><strong>Miembro desde:</strong> {{ usuario.fecha_creacion }}</p>
+            <p><strong>Usuario:</strong> {{ usuario["nombre_usuario"] }}</p>
+            <p><strong>Email:</strong> {{ usuario["email_usuario"] }}</p>
+            <p><strong>Miembro desde:</strong> {{ usuario["fecha_creacion"] }}</p>
         </div>
 
         <h2 class="section-title">📅 Mis Reservas</h2>
         {% if reservas %}
             {% for reserva in reservas %}
                 <div class="restaurant-card">
-                    <p>{{ reserva.nombre_restaurante }} - {{ reserva.fecha }} ({{ reserva.estado }})</p>
+                    <p>{{ reserva["nombre_restaurante"] }} - {{ reserva["fecha"] }} ({{ reserva["estado"] }})</p>
                 </div>
             {% endfor %}
         {% else %}
@@ -38,13 +29,13 @@
         {% endif %}
 
         <h2 class="section-title">📝 Mis Reseñas</h2>
-        {% if resenas %}
-            {% for resena in resenas %}
+        {% if resenias %}
+            {% for resenia in resenias %}
                 <div class="restaurant-card">
-                    <p><strong>{{ resena.nombre_restaurante }}</strong></p>
-                    <p>{{ resena.comentario }}</p>
+                    <p><strong>{{ resenia["nombre_restaurante"] }}</strong></p>
+                    <p>{{ resenia["comentario"] }}</p>
                     <p>Puntaje:
-                        {% for i in range(resena.puntaje) %}
+                        {% for i in range(resenia["puntaje"]) %}
                             ★
                         {% endfor %}
                     </p>
