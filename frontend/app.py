@@ -68,6 +68,11 @@ def descubre(indice_pag):
                             total_paginas=total_paginas)
     else:
         return render_template("descubre.html",comercios=[])
+
+# Página del restaurante seleccionado
+@app.route("/restaurante")
+def resto():
+    return render_template("resto.html")
     
 # Pagina de ayuda
 @app.route("/ayuda")
