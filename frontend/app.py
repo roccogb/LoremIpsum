@@ -74,7 +74,10 @@ def login():
             return redirect(url_for("login"))
 
         if response.status_code == 200 and data.get("msg") == "ingreso exitoso":
-            session["usuario"] = usuario
+            session["usuario"] = data["nombres_usuario"] # Guarda en session datos para verificar el logueo.
+            session["id_usr"] = data["id_usr"]
+            session["tipo"] = data["tipo"]
+            
             return redirect(url_for("home"))
         else:
             flash("Credenciales inválidas", "error")

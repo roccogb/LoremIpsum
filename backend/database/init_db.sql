@@ -49,13 +49,16 @@ CREATE TABLE comercios (
 
 -- Tabla: reseñas
 CREATE TABLE resenias (
+    id_resenia INT AUTO_INCREMENT PRIMARY KEY,
     id_comercio INT,
     id_usr INT,
     comentario TEXT,
     calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
     tiempo_de_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id_reserva INT NOT NULL UNIQUE,
     FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE,
-    FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE
+    FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE,
+    FOREIGN KEY (id_reserva) REFERENCES reservas(id_reservas) ON DELETE CASCADE
 );
 
 -- Tabla: reservas
