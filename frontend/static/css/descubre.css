@@ -1,5 +1,13 @@
+/* Defino variables globales que van a representar la paleta de colores de la página web. Las mismas van a poder ser llamadas desde cualquier lado*/
+:root{
+  --mostaza:#D4AF37;
+  --vino:#800020;
+  --sgray:#414141;
+  --golf:#D4A574;
+}
+
 .discover-container {
-    background-color: #800020;
+    background-color: var(--vino);
     min-height: calc(100vh - 80px);
     padding: 40px 0;
     border-radius: 20px;
@@ -205,8 +213,8 @@
 
 /* Estilos cuando el input del tipo 'checkbox' este checked */
 .filter-option input[type="checkbox"]:checked + label::before {
-    background-color: #D4A574;
-    border-color: #D4A574;
+    background-color: var(--golf);
+    border-color: var(--golf);
     box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
 }
 
@@ -217,8 +225,8 @@
 
 /* Estilos cuando el input del tipo 'radio' este checked */
 .filter-option input[type="radio"]:checked + label::before {
-    background-color: #D4A574;
-    border-color: #D4A574;
+    background-color: var(--golf);
+    border-color: var(--golf);
     box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
 }
 
@@ -231,7 +239,7 @@
 .filter-option input[type="checkbox"]:checked + label,
 .filter-option input[type="radio"]:checked + label {
     background-color: rgba(212, 165, 116, 0.1);
-    color: #D4A574;
+    color: var(--golf);
     font-weight: 500;
 }
 
@@ -244,7 +252,7 @@
 .form-filter input[type="submit"] {
     width: 100%;
     background: linear-gradient(145deg, #D4A574 0%, #E6B885 100%);
-    color: #800020;
+    color: var(--vino);
     border: none;
     border-radius: 10px;
     padding: 12px 20px;
@@ -289,6 +297,29 @@
     box-shadow: 0 12px 35px rgba(0,0,0,0.3);
 }
 
+/* Animación para las imágenes dentro de las tarjetas */
+.restaurant-img {
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.restaurant-img img {
+    display: block;
+    padding: 10px;
+    margin: auto;
+    width: 200px;
+    height: 100%;
+    transition: transform 0.3s ease;
+    /* Atributos para lograr que la imagen se renderice con mayor calidad*/
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: optimize-quality;
+}
+
+.restaurant-card:hover .restaurant-img img {
+    transform: scale(1.05);
+}
+
 .favorite-btn {
     position: absolute;
     top: 15px;
@@ -296,7 +327,7 @@
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: #800020;
+    color: var(--vino);
     cursor: pointer;
     transition: transform 0.2s;
 }
@@ -309,19 +340,12 @@
     color: #e74c3c;
 }
 
-.restaurant-img img{
-    display: block;
-    padding: 10px;
-    margin: auto;
-    width: 200px;
-    height: 100%;
-}
 
 .restaurant-name {
     text-align: center;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #800020;
+    color: var(--vino);
     margin-bottom: 10px;
 }
 
@@ -339,14 +363,14 @@
 }
 
 .rating-number {
-    color: #800020;
+    color: var(--vino);
     font-weight: bold;
     font-size: 1.1rem;
 }
 
 .restaurant-category {
     text-align: center;
-    color: #800020;
+    color: var(--vino);
     font-size: 0.9rem;
     opacity: 0.8;
 }
@@ -380,12 +404,12 @@
 }
 
 .pagination-btn:hover {
-    background-color: #D4A574;
+    background-color: var(--golf);
     transform: scale(1.1);
 }
 
 .pagination-btn.active {
-    background-color: #D4A574;
+    background-color: var(--golf);
     box-shadow: 0 0 15px rgba(212, 165, 116, 0.5);
 }
 

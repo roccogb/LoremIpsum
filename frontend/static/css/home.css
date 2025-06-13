@@ -1,6 +1,14 @@
+/* Defino variables globales que van a representar la paleta de colores de la página web. Las mismas van a poder ser llamadas desde cualquier lado*/
+:root{
+  --mostaza:#D4AF37;
+  --vino:#800020;
+  --sgray:#414141;
+  --golf:#D4A574;
+}
+
 /* === Container Principal === */
 .home-container {
-    background-color: #800020;
+    background-color: var(--vino);
     padding: 30px;
     width: 100%;
     max-width: 1200px;
@@ -8,24 +16,32 @@
     border-radius: 20px;
 }
 
-/* === Hero Section === */
+/* Estilos aplicados a la seccion del top */
 .hero-section {
     position: relative;
     margin-bottom: 30px;
 }
 
 .hero-card {
-    background-image: url(../media/img/puente_mujer.jpg);
-    background-size: cover;
-    background-position: center;
+    background-size: cover; 
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: local; /* Mejor para celular */
     border-radius: 20px;
     padding: 30px;
     color: white;
-    min-height: 300px;
+    min-height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    z-index: 2;
+    /* Mejoras críticas para imágenes de fondo */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: optimize-quality;
+    transition: background-image 0.5s ease-in-out;
+    background-blend-mode: overlay;
 }
 
 .restaurant-info {
@@ -34,7 +50,22 @@
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    z-index: 2;
+}
+
+.restaurant-info .restaurant-name{
+    position: absolute;
+    top:25px;
+    left: 100px;
+}
+
+.restaurant-info .stars{
+    position: absolute;
+    left: 130px;
+    top: 65px;
+}
+
+.restaurant-info .star{
+    font-size: 25px;
 }
 
 .restaurant-name {
@@ -56,7 +87,7 @@
     font-size: 20px;
 }
 
-/* === Navegación con flechas === */
+/* Estilos aplicados para la navegación con flechas */
 .nav-arrow {
     position: absolute;
     top: 50%;
@@ -87,9 +118,9 @@
     right: 20px;
 }
 
-/* === Restaurantes Populares === */
+/* Estilos aplicados a la seccion de restaurantes populares */
 .popular-section {
-    background-color: #d4af37;
+    background-color: var(--mostaza);
     border-radius: 20px;
     padding: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -114,13 +145,13 @@
 
 .restaurants-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
     gap: 15px;
     margin-bottom: 20px;
 }
 
 .restaurant-card {
-    background: #800020;
+    background: linear-gradient(145deg, #D4A574 0%, #E6B885 100%);
     border-radius: 15px;
     padding: 20px;
     text-align: center;
@@ -141,8 +172,6 @@
 }
 
 .restaurant-icon {
-    width: 50px;
-    height: 50px;
     margin: 0 auto 15px;
     background: rgba(255,255,255,0.1);
     border-radius: 10px;
@@ -151,11 +180,30 @@
     justify-content: center;
     font-size: 24px;
     transition: all 0.3s ease;
+    overflow: hidden;
+    width: 80%;
+    height: 150px;
+}
+
+.restaurant-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantiene proporción sin distorsión */
+    object-position: center; /* Centra la imagen */
+    border-radius: 8px;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: optimize-quality;
+    transition: transform 0.3s ease;
 }
 
 .restaurant-card:hover .restaurant-icon {
     background: rgba(255,255,255,0.2);
-    transform: scale(1.1);
+}
+
+/* Cuando se pasa el mouse por encima de la carta del restaurante se realiza un zoom*/
+.restaurant-card:hover .restaurant-icon img {
+    transform: scale(1.05);
 }
 
 .restaurant-rating {
@@ -214,7 +262,7 @@
 }
 
 .discover-btn {
-    background: #2F4F2F;
+    background: var(--sgray);
     color: white;
     border: none;
     padding: 15px 35px;
@@ -228,7 +276,7 @@
 }
 
 .discover-btn:hover {
-    background: #1C3A1C;
+    background: #2e2e2e;
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
@@ -256,6 +304,10 @@
         height: 45px;
         font-size: 20px;
     }
+    
+    .restaurant-icon {
+        height: 140px;
+    }
 }
 
 /* Tablets pequeñas */
@@ -268,7 +320,7 @@
     
     .hero-card {
         padding: 20px;
-        min-height: 250px;
+        min-height: 280px; /* Mantener proporción en tablet */
     }
     
     .restaurant-name {
@@ -286,9 +338,7 @@
     }
     
     .restaurant-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
+        height: 120px;
         margin-bottom: 10px;
     }
     
@@ -340,7 +390,7 @@
     
     .hero-card {
         padding: 15px;
-        min-height: 200px;
+        min-height: 220px; /* Altura optimizada para móvil */
         border-radius: 15px;
     }
     
@@ -364,9 +414,7 @@
     }
     
     .restaurant-icon {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
+        height: 100px;
         margin-bottom: 8px;
     }
     
@@ -438,7 +486,11 @@
     }
     
     .hero-card {
-        min-height: 180px;
+        min-height: 200px; /* Altura mínima para pantallas muy pequeñas */
+    }
+    
+    .restaurant-icon {
+        height: 120px;
     }
     
     .nav-arrow {
@@ -452,14 +504,16 @@
     .nav-arrow,
     .heart-btn,
     .discover-btn,
-    .restaurant-icon {
+    .restaurant-icon,
+    .restaurant-icon img {
         transition: none;
     }
     
     .restaurant-card:hover,
     .nav-arrow:hover,
     .heart-btn:hover,
-    .discover-btn:hover {
+    .discover-btn:hover,
+    .restaurant-card:hover .restaurant-icon img {
         transform: none;
     }
 }

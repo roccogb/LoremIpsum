@@ -9,7 +9,24 @@ API_BACK = "http://0.0.0.0:8100"  # Dirección local del backend
 # Pagina de inicio
 @app.route("/")
 def home():
-    return render_template("home.html")
+    response=requests.get(f"{API_BACK}/comercio/filtrar",json={"tipo_cocina":"null","categoria":"null","calificacion":"desc",
+                                                                         "horarios":[],"etiquetas":[],"dias":[]})
+    if response.status_code == 200:
+        comercios_rank_bdd=list(response.json())
+        top_comercios=[]
+        comercios_destacados=[]
+        if len(comercios_rank_bdd) >= 3:
+            top_comercios=comercios_rank_bdd[:3]
+            
+            if len(comercios_rank_bdd) >= 9:
+                comercios_destacados=comercios_rank_bdd[3:9]
+            else:
+                comercios_destacados=comercios_rank_bdd[3:]
+
+        return render_template("home.html", comercios_destacados=comercios_destacados, rank_comercios=top_comercios)
+    else:
+        #Implementar template de error
+        pass
 
 # Este endpoint va a renderizar la página de descubre. En la misma se presentarán todos los comercios registrados y las herramientas necesarias para navegar en estos mismos, como; filtros,paginación,etc.
 # El párametro dinamico recibido será el indice de la pagina actual renderizada
@@ -84,7 +101,6 @@ def login():
 @app.route("/register")
 def register():
     return render_template("register.html")
-
 
 # Logout
 @app.route("/logout")
