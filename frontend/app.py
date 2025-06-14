@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 app.secret_key = "contra_ids"  # Necesario para usar session y flash
 
-API_BACK = "http://0.0.0.0:8100"  # Dirección local del backend
+API_BACK = "http://10.37.119.248:8100"  # Dirección local del backend
 
 # Pagina de inicio
 @app.route("/")
@@ -25,8 +25,8 @@ def home():
 
         return render_template("home.html", comercios_destacados=comercios_destacados, rank_comercios=top_comercios)
     else:
-        #Implementar template de error
-        pass
+        return "Error al obtener los comercios desde el backend", 500
+    
 
 # Este endpoint va a renderizar la página de descubre. En la misma se presentarán todos los comercios registrados y las herramientas necesarias para navegar en estos mismos, como; filtros,paginación,etc.
 # El párametro dinamico recibido será el indice de la pagina actual renderizada
@@ -70,10 +70,50 @@ def descubre(indice_pag):
         return render_template("descubre.html",comercios=[])
 
 # Página del restaurante seleccionado
-@app.route("/restaurante")
-def resto():
-    return render_template("resto.html")
-    
+@app.route("/restaurante/<int:id_comercio>")
+def resto(id_comercio):
+    #Petición al backend para obtener los detalles del comercio.
+    response = requests.get(f"{API_BACK}/comercio/{id_comercio}")
+    if response.status_code == 200:
+        comercio = response.json()
+        return render_template("resto.html", comercios=comercio)
+    else:
+        # Redirigir al home. 
+        flash("Comercio no encontrado")
+        return redirect(url_for("home"))
+
+@app.route("/reservar", methods=["POST"])
+def reservar():
+    if "usuario" not in session:
+        flash("Debes iniciar sesión para reservar")
+        return redirect(url_for("login"))
+    else:
+        # Recibe los datos del formulario de reserva.
+        id_comercio = request.form.get("id_comercio")
+        nombre_bajo_reserva = request.form.get("nombre_bajo_reserva")
+        email = request.form.get("email")
+        telefono = request.form.get("telefono")
+        cant_personas = request.form.get("cant_personas")
+        fecha_reserva = request.form.get("fecha_reserva")
+        #hora_reserva = request.form.get("hora_reserva")
+        solicitud_especial = request.form.get("solicitud_especial", "")
+
+        # Envía los datos al backend para crear la reserva.
+        response = requests.post(f"{API_BACK}/reserva/crear", json={
+            "id_usr": session.get("id_usr"),
+            "id_comercio": id_comercio,
+            "nombre_bajo_reserva": nombre_bajo_reserva,
+            "email": email,
+            "telefono": telefono,
+            "cant_personas": cant_personas,
+            "fecha_reserva": fecha_reserva,
+            "solicitud_especial": solicitud_especial,
+            "estado_reserva": False
+        })
+
+        if response.status_code == 200:
+            flash("Reserva creada exitosamente", "success")
+
 # Pagina de ayuda
 @app.route("/ayuda")
 def ayuda():
