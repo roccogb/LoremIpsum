@@ -43,7 +43,9 @@ def verificar_usr():
     cursor.close()
     conn.close()
 
-    if usuario_comercio_existente or usuario_consumidor_existente:
-        return jsonify({"msg": "Ingreso exitoso"}), 200
+    if usuario_consumidor_existente:
+        return jsonify({"msg": "Ingreso exitoso de consumidor"}), 200
+    elif usuario_comercio_existente
+         return jsonify({"msg": "Ingreso exitoso de comerciante"}), 200
     else:
         return jsonify({"ERROR": "No se encontró ningún usuario con esa información"}), 404
