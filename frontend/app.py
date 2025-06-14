@@ -44,13 +44,6 @@ def descubre(indice_pag):
         etiquetas=request.form.getlist("etiquetas[]")            
         dias=request.form.getlist("dias[]")
 
-<<<<<<< HEAD
-@app.route("/restaurante")
-def resto():
-    return render_template("resto.html")
-
-@app.route("/login", methods=['GET','POST'])
-=======
         response=requests.get(f"{API_BACK}/comercio/filtrar", 
                                json={"tipo_cocina":tipo_cocina,"categoria":categoria,"horarios":horarios,
                                      "calificacion":calificacion,"etiquetas":etiquetas, "dias":dias})
@@ -88,7 +81,6 @@ def ayuda():
 
 # Login de usuario
 @app.route("/login", methods=["GET", "POST"])
->>>>>>> desarrollo
 def login():
     if request.method == "GET":
         return render_template("login.html")
