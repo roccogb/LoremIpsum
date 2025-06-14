@@ -25,7 +25,8 @@ def home():
 
         return render_template("home.html", comercios_destacados=comercios_destacados, rank_comercios=top_comercios)
     else:
-        return "mal bro"
+        return "Error al obtener los comercios desde el backend", 500
+    
 
 # Este endpoint va a renderizar la página de descubre. En la misma se presentarán todos los comercios registrados y las herramientas necesarias para navegar en estos mismos, como; filtros,paginación,etc.
 # El párametro dinamico recibido será el indice de la pagina actual renderizada
