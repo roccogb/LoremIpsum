@@ -1,29 +1,19 @@
-from flask import request, jsonify, render_template, redirect, flash, url_for, session
+from flask import request, jsonify, render_template, redirect, flash, url_for
 from . import auth_bp
 from database.db import get_connection
+from geopy.geocoders import Nominatim
+import datetime
 
-@auth_bp.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        form = request.form
-        if form.get("title") == "consumidor":
-            nombre = form.get("first_name")
-            apellido = form.get("last_name")
-            usuario = form.get("usr")
-            email = form.get("email")
-            password = form.get("password")
-            print(f"[consumidor] {usuario} - {email}")
-        else:
-            nombre_comercio = form.get("name_bss")
-            categoria = form.get("categoria")
-            tipo_cocina = form.get("tipo_cocina")
-            email_comercio = form.get("email_bss")
-            print(f"[comercio] {nombre_comercio} - {email_comercio}")
+def transform_dir_coords(str_dir):
+    try:
+        geolocalizador=Nominatim(user_agent="geo-FoodyBA")    
+        locacion=geolocalizador.geocode(str_dir)
+        if locacion:
+            return [locacion.latitude, locacion.longitude]
+    except Exception as e:
+        print("Error: ",e)
+    return None
 
-        flash("usuario registrado correctamente")
-        return redirect(url_for('auth_bp.login'))
-
-    return render_template("register.html")
 
 @auth_bp.route("/consumidor", methods=["POST"])
 def auth_consumidor():
@@ -57,7 +47,7 @@ def auth_consumidor():
            
     except Exception as e:
         print(f"Error en auth_consumidor: {e}")
-        return jsonify({"msg": "Error interno del servidor"}), 500
+        return jsonify({"msg": "Error interno del servidor auth consumidor"}), 500
 
 
 @auth_bp.route("/comercio", methods=["POST"])
@@ -98,54 +88,163 @@ def auth_comercio():
                     
     except Exception as e:
         print(f"Error en auth_comercio: {e}")
-        return jsonify({"msg": "Error interno del servidor"}), 500
+        return jsonify({"msg": "Error interno del servidor auth_comercio"}), 500
 
-@auth_bp.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'GET':
-        return render_template('login.html')
 
-    email = request.form.get('email')
-    password = request.form.get('password')
-    rol = request.form.get('rol')  # viene del form: consumidor o comercio
+@auth_bp.route('/register', methods=['POST'])
+def register_user():
+    """Endpoint para registrar usuarios (consumidor o comercio)"""
+    try:
+        data = request.get_json()
+        
+        tipo_usuario = data.get('tipo_usuario')
+        
+        conn = get_connection()
+        if not conn:
+            return jsonify({"error": "Error de conexión a la base de datos"}), 500
+        
+        cursor = conn.cursor()
+        
+        
+        if tipo_usuario == "consumidor":
+                return register_consumidor(data, cursor, conn)
+        elif tipo_usuario == "comercio":
+                return register_comercio(data, cursor, conn)
+                
+        
+        cursor.close()
+        conn.close()
+            
+    except Exception as e:
+        print(f"Error general: {str(e)}")
+        return jsonify({"error": "Error interno del servidor register user"}), 500
 
-    conn = get_connection()
-    if not conn:
-        flash("Error de conexión con la base de datos")
-        return redirect(url_for('auth_bp.login'))
-
-    cursor = conn.cursor(dictionary=True)
-
-    if rol == 'consumidor':
-        query = """
+def register_consumidor(data, cursor, conn):
+    """Registra un usuario consumidor"""
+    
+    # Extraer datos del consumidor
+    nombre = data.get('nombre_consumidor', '').strip()
+    apellido = data.get('apellido_consumidor', '').strip()
+    usuario = data.get('usuario_consumidor', '').strip()
+    email = data.get('email_consumidor', '').strip()
+    telefono = data.get('telefono_consumidor', '').strip()
+    password = data.get('password_consumidor', '').strip()
+    
+    # Validaciones básicas
+    if not all([nombre, apellido, usuario, email, telefono, password]):
+        return jsonify({"error": "Todos los campos son requeridos para consumidor"}), 400
+    
+    # Combinar nombre y apellido
+    nombre_completo = f"{nombre} {apellido}"
+    
+    # Convertir teléfono a entero       
+    telefono_int = int(telefono)
+    
+    # Verificar si el usuario ya existe
+    cursor.execute("""
         SELECT * FROM usuario_consumidor 
-        WHERE email_usuario = %s AND contrasena = %s
+        WHERE usuario = %s AND email_usuario = %s AND numero_telefono = %s
+    """, (usuario, email, telefono_int))
+    
+    if cursor.fetchone():
+        return jsonify({"error": "Usuario, email o teléfono ya registrado"}), 409
+    
+    else :  # Insertar nuevo consumidor
+        insert_query = """
+            INSERT INTO usuario_consumidor 
+            (nombre_apellido, usuario, email_usuario, contrasena, numero_telefono) 
+            VALUES (%s, %s, %s, %s, %s)
         """
-        cursor.execute(query, (email, password))
-    else:
-        query = """
-        SELECT uc.*, c.nombre_comercio
-        FROM usuario_comercio uc
-        LEFT JOIN comercios c ON uc.id_usr_comercio = c.id_usr_comercio
-        WHERE uc.email_usuario = %s AND uc.contrasena = %s
-        """
-        cursor.execute(query, (email, password))
+        cursor.execute(insert_query, (nombre_completo, usuario, email, password, telefono_int))
+        conn.commit()
+    
+    return jsonify({
+        "message": "Consumidor registrado exitosamente",
+    }), 200
 
-    user_data = cursor.fetchone()
-    cursor.close()
-    conn.close()
 
-    if not user_data:
-        flash("Credenciales incorrectas")
-        return redirect(url_for('auth_bp.login'))
+def register_comercio(data, cursor, conn):
+    """Registra un usuario comercio y su comercio asociado"""
 
-    # Guardar datos en la session
-    session['rol'] = rol
-    session['usuario'] = user_data.get('nombre_apellido') or user_data.get('nombre_usuario')
-    session['email'] = user_data.get('email_usuario')
-
-    # Redireccion segun rol
-    if rol == 'consumidor':
-        return redirect('/perfil/consumidor')
-    else:
-        return redirect('/perfil/comercio')
+    # Extraer datos del responsable del comercio
+    nombre_responsable = data.get('nombre_responsable', '').strip()
+    dni_responsable = data.get('dni_responsable', '0').strip()
+    cuit_responsable = data.get('cuit_responsable', '0').strip()
+    email_responsable = data.get('email_responsable', '').strip()
+    contrasena = data.get('contrasena_usr_comercio', '').strip()
+    
+    # Extraer datos del comercio
+    nombre_comercio = data.get('nombre_comercio', '').strip()
+    tel_comercio = data.get('tel_comercio', '0').strip()
+    lat,lng = transform_dir_coords(data.get('dir_comercio', '').strip())
+    lkmenu_comercio = data.get('lkmenu_comercio', '').strip()
+    categoria = data.get('categoria', '').strip()
+    tipo_cocina = data.get('tipo_cocina', '').strip()
+    ruta_img = data.get('ruta_img', '')
+    
+    # Arrays que vienen del frontend
+    dias = data.get('dias', [])
+    horarios = data.get('horarios', [])
+    etiquetas = data.get('etiquetas', [])
+    
+    
+    dni_int = int(dni_responsable)
+    cuit_int = int(cuit_responsable)
+    telefono_int = int(tel_comercio)
+    
+    # Convertir arrays a strings para almacenar en la BD
+    dias_str = str(dias) if dias else str([])
+    horarios_str= str(horarios) if horarios else str([])
+    etiquetas_str = str(etiquetas) if etiquetas else str([])
+    
+    # Metodo para hacer mas de 2 consultas post sql que esten conectadas x id
+    conn.start_transaction()
+    
+    #  Verificar si el usuario comercio ya existe en la tabla comercio
+    cursor.execute("""
+        SELECT * FROM usuario_comercio 
+        WHERE DNI = %s AND CUIT = %s AND email_usuario = %s
+    """, (dni_int, cuit_int, email_responsable))
+    
+    if cursor.fetchone():
+        return jsonify({"error": "DNI, CUIT o email ya registrado"}), 409
+    
+    # Insertar usuario comercio a la tabla comercio
+    insert_user_query = """
+        INSERT INTO usuario_comercio 
+        (nombre_apellido, DNI, CUIT, email_usuario, contrasena) 
+        VALUES (%s, %s, %s, %s, %s)
+    """
+    
+    cursor.execute(insert_user_query, (
+        nombre_responsable, dni_int, cuit_int, email_responsable, contrasena
+    ))
+    
+    id_usr_comercio = cursor.lastrowid
+    
+    #  Verificar si el id_usr_comercio del comercio ya existe en la tabla
+    cursor.execute("SELECT * FROM comercios WHERE id_usr_comercio = %s", (id_usr_comercio,))
+    if cursor.fetchone():
+        return jsonify({"error": "id_usr_comercio del comercio ya registrado"}), 409
+    
+    #  Insertar comercio a tabla comercio
+    insert_comercio_query = """
+        INSERT INTO comercios 
+        (id_usr_comercio, ruta_imagen, nombre_comercio, categoria, tipo_cocina, 
+            telefono, pdf_menu_link, dias, horarios, etiquetas, tiempo_de_creacion) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    """
+    
+    cursor.execute(insert_comercio_query, (
+        id_usr_comercio, ruta_img, nombre_comercio, categoria, tipo_cocina,
+        telefono_int, lkmenu_comercio, dias_str, horarios_str, etiquetas_str,
+        datetime.datetime.now()
+    ))
+    
+    # confirmar consultas
+    conn.commit()
+    
+    return jsonify({
+        "message": "Comercio registrado exitosamente",
+    }), 200
+    
