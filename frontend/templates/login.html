@@ -23,32 +23,18 @@
 <div class="container">
     <div class="row tm-register-row tm-mb-35">
         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-login-l">
-            <form action="{{ url_for('login', _external=True) }}" method="post" class="tm-bg-gold p-5 h-100">
-                <div class="input-field">
-                    <input placeholder="Email" id="email" name="email" type="text" class="validate" required>
-                </div>
-                <div class="input-field mb-5">
-                    <input placeholder="Contraseña" id="password" name="password" type="password" class="validate" required>
-                </div>
-                <!-- Selector de tipo de usuario: consumidor o comercio -->
-                <div class="input-field mb-5">
-                    <p>
-                        <label>
-                            <input name="rol" type="radio" value="consumidor" checked />
-                            <span>Consumidor</span>
-                        </label>
-                    </p>
-                    <p>
-                        <label>
-                            <input name="rol" type="radio" value="comercio" />
-                            <span>Comercio</span>
-                        </label>
-                    </p>
-                </div>
-                <div class="tm-flex-lr">
-                    <button type="submit" class="waves-effect btn-large btn-large-wine px-4 rounded-0">Iniciar sesión</button>
-                </div>
-            </form>
+           <form action="{{ url_for('auth_bp.login', _external=True) }}" method="post" class="tm-bg-gold p-5 h-100">
+    <div class="input-field">
+        <input placeholder="Email" id="email" name="email" type="text" class="validate" required>
+    </div>
+    <div class="input-field mb-5">
+        <input placeholder="Contraseña" id="password" name="password" type="password" class="validate" required>
+    </div>
+
+    <div class="tm-flex-lr">
+        <button type="submit" class="waves-effect btn-large btn-large-wine px-4 rounded-0">Iniciar sesión</button>
+    </div>
+        </form>
         </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-login-r">
                 <header class="font-weight-light tm-bg-wine p-5 h-100">
@@ -59,7 +45,7 @@
         </div>
         <div class="row">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 ml-auto mr-0 text-center">
-                <a href="{{url_for('register', _external=True )}}" class="waves-effect btn-large btn-large-wine px-4 rounded-0">Registrar usuario</a>
+                <a href="{{url_for('auth_bp.register', _external=True )}}" class="waves-effect btn-large btn-large-wine px-4 rounded-0">Registrar usuario</a>
             </div>
         </div>
         <footer class="row tm-mt-big mb-3">
