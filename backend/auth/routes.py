@@ -1,4 +1,4 @@
-from flask import request, jsonify, render_template, redirect, flash, url_for
+from flask import request, jsonify, render_template, redirect, flash, url_for, session
 from . import auth_bp
 from database.db import get_connection
 
@@ -99,3 +99,53 @@ def auth_comercio():
     except Exception as e:
         print(f"Error en auth_comercio: {e}")
         return jsonify({"msg": "Error interno del servidor"}), 500
+
+@auth_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+
+    email = request.form.get('email')
+    password = request.form.get('password')
+    rol = request.form.get('rol')  # viene del form: consumidor o comercio
+
+    conn = get_connection()
+    if not conn:
+        flash("Error de conexión con la base de datos")
+        return redirect(url_for('auth_bp.login'))
+
+    cursor = conn.cursor(dictionary=True)
+
+    if rol == 'consumidor':
+        query = """
+        SELECT * FROM usuario_consumidor 
+        WHERE email_usuario = %s AND contrasena = %s
+        """
+        cursor.execute(query, (email, password))
+    else:
+        query = """
+        SELECT uc.*, c.nombre_comercio
+        FROM usuario_comercio uc
+        LEFT JOIN comercios c ON uc.id_usr_comercio = c.id_usr_comercio
+        WHERE uc.email_usuario = %s AND uc.contrasena = %s
+        """
+        cursor.execute(query, (email, password))
+
+    user_data = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if not user_data:
+        flash("Credenciales incorrectas")
+        return redirect(url_for('auth_bp.login'))
+
+    # Guardar datos en la session
+    session['rol'] = rol
+    session['usuario'] = user_data.get('nombre_apellido') or user_data.get('nombre_usuario')
+    session['email'] = user_data.get('email_usuario')
+
+    # Redireccion segun rol
+    if rol == 'consumidor':
+        return redirect('/perfil/consumidor')
+    else:
+        return redirect('/perfil/comercio')
