@@ -32,7 +32,8 @@ cursor.execute("""INSERT INTO usuario_consumidor
                   (1, 'Matias Sapienza', 'msspza', 'matikpo2002@live.com','contraseña', 22113030, 0),
                   (2, 'Angela Leiva', 'AL777', 'negritacuartetera@gmail.com', 'ABC333', 11033030, 5),
                   (3, 'Sasha Ferro', 'ruggeri_chupapija', 'sashamiau@outlook.com', 'DEF888', 15150233, 20),
-                  (4, 'Kevin Lomonaco','SeñorDELanoche','guarachita@hotmail.com','1234', 20335555, 15);""")
+                  (4, 'Kevin Lomonaco','SeñorDELanoche','guarachita@hotmail.com','1234', 20335555, 15),
+                  (5, 'Andrés Ducatenzeiler','Duka','rojitocorazon@live.com','1234', 69697777, 0);""")
 
 ################ REGISTROS DE PRUEBA PARA LA TABLA 'comercios'
 cursor.execute("""INSERT INTO comercios
@@ -62,6 +63,14 @@ cursor.execute("""INSERT INTO reservas
                   (15, 1, 99, 'Matias Sapienza', 'matikpo2002@live.com', 22113030,4, '2025-06-01 20:30:50', 'Punto de coccion:La carne tiene que decir mu', True),
                   (21, 3, 1, 'Sasha Ferro', 'sashamiau@outlook.com',15150233, 1, '2025-06-05 18:25:50', 'El mejor cafe con leche posible', False),
                   (22, 1, 99, 'Matias Sapienza', 'matikpo2002@live.com', 22113030, 1, '2025-06-06 11:15:20', 'El mejor chinchulin disponible', True);""")
+
+############## REGISTROS DE PRUEBA PARA LA TABLA 'resenias'
+cursor.execute("""INSERT INTO resenias
+                  (id_comercio,id_usr,comentario,calificacion,tiempo_de_creacion)
+                  VALUES
+                  (32,5,"Extraordinario lugar, siempre atienden con la mejor. Ojala pudiera poner mayor puntuación", 5,'2025-06-15 16:15:20'),
+                  (32, 1, "Habia un enfermo en el baño que se estaba masturbando mientras gritaba extraordinario y nadie hizo nada. Por lo visto es un usuario habitual del establecimiento y estan acostumbrados",1,'2025-05-15 15:30:15' ),
+                  (26,2, "Muy linda musica y todos fueron mas lindos",5,'2025-06-15 18:45:20');""")
 
 conn.commit()                           # Guardo los cambios realizados en la BDD
 cursor.close()
