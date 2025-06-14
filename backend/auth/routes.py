@@ -25,27 +25,77 @@ def register():
 
     return render_template("register.html")
 
-@auth_bp.route('/usr', methods=["GET", "POST"])
-def verificar_usr():
-    body_request = request.get_json()
-    conn = get_connection()
-    cursor = conn.cursor()
+@auth_bp.route("/auth/consumidor", methods=["POST"])
+def auth_consumidor():
+    """Endpoint para autenticar usuarios consumidores"""
+    try:
+        data = request.get_json()
+        email = data.get("email")
+        pswd = data.get("pss")
+        
+        conn = get_connection()
+        if not conn:
+            return jsonify({"msg": "Error de conexión a la base de datos"}), 500
+        
+        cursor = conn.cursor(dictionary=True)
+        
+        # Buscar usuario por nombre de usuario o email
+        query = """
+        SELECT *
+        FROM usuario_consumidor 
+        WHERE email_usuario = %s AND contrasena = %s
+        """
+        cursor.execute(query, (email, pswd))
+        user_data = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        if not user_data:
+            return jsonify({"msg": "Usuario no encontrado"}), 404         
+        else:
+            
+            return jsonify(user_data), 200
+           
+    except Exception as e:
+        print(f"Error en auth_consumidor: {e}")
+        return jsonify({"msg": "Error interno del servidor"}), 500
 
-    qsql_usr_comercio = "SELECT * FROM usuario_comercio WHERE email_usuario=%s AND contrasena=%s"
-    qsql_usr_consumidor = "SELECT * FROM usuario_consumidor WHERE email_usuario=%s AND contrasena=%s"
 
-    cursor.execute(qsql_usr_consumidor, (body_request["usr"], body_request["pss"]))
-    usuario_consumidor_existente = cursor.fetchone()
-
-    cursor.execute(qsql_usr_comercio, (body_request["usr"], body_request["pss"]))
-    usuario_comercio_existente = cursor.fetchone()
-
-    cursor.close()
-    conn.close()
-
-    if usuario_consumidor_existente:
-        return jsonify({"msg": "Ingreso exitoso de consumidor"}), 200
-    elif usuario_comercio_existente
-         return jsonify({"msg": "Ingreso exitoso de comerciante"}), 200
-    else:
-        return jsonify({"ERROR": "No se encontró ningún usuario con esa información"}), 404
+@auth_bp.route("/auth/comercio", methods=["POST"])
+def auth_comercio():
+    """Endpoint para autenticar usuarios comerciantes"""
+    try:
+        data = request.get_json()
+        email = data.get("email")  # Puede ser email o DNI
+        pswd = data.get("pss")
+       
+        conn = get_connection()
+        if not conn:
+            return jsonify({"msg": "Error de conexión a la base de datos"}), 500
+        
+        cursor = conn.cursor(dictionary=True)
+        
+        # Buscar usuario comercio por email o DNI, y hacer JOIN con comercios
+        query = """
+        SELECT 
+            uc.id_usr_comercio, uc.nombre_apellido, uc.DNI, uc.CUIT, 
+            uc.email_usuario, uc.contrasena,
+            c.id_comercio, c.ruta_imagen, c.nombre_comercio, c.categoria,
+            c.tipo_cocina, c.telefono, c.latitud, c.longitud, 
+            c.tiempo_de_creacion, c.pdf_menu_link, c.calificacion,
+            c.dias, c.horarios, c.etiquetas
+        FROM usuario_comercio uc
+        LEFT JOIN comercios c ON uc.id_usr_comercio = c.id_usr_comercio
+        WHERE uc.email_usuario = %s AND uc.contrasena = %s
+        """
+        cursor.execute(query, (email, pswd))
+        user_data = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        if not user_data:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
+        else:
+            return jsonify(user_data), 200
+                    
+    except Exception as e:
+        print(f"Error en auth_comercio: {e}")
+        return jsonify({"msg": "Error interno del servidor"}), 500
