@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 app.secret_key = "contra_ids"  # Necesario para usar session y flash
 
-API_BACK = "http://0.0.0.0:8100"  # Dirección local del backend
+API_BACK = "http://192.168.1.6:8100"  # Dirección local del backend
 
 # Pagina de inicio
 @app.route("/")
@@ -149,9 +149,71 @@ def login():
             return redirect(url_for("login"))
 
 # Register usuario
-@app.route("/register")
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template("register.html")
+    """Endpoint para renderizar la página de registro"""
+    if request.method == 'POST':
+        # Este método maneja el formulario HTML tradicional
+        form = request.form
+        if form.get("tipo_usuario") == "consumidor":
+            nombre_consumidor = form.get("first_name")
+            apellido_consumidor = form.get("last_name")
+            usuario_consumidor = form.get("usr")
+            email_consumidor = form.get("email")
+            telefono_consumidor = form.get("moblie")
+            password_consumidor = form.get("password")
+            response = requests.post(f"{API_BACK}/auth/register", 
+                                            json={
+                                                "tipo_usuario":form.get("tipo_usuario"),
+                                                "nombre_consumidor" : nombre_consumidor,
+                                                "apellido_consumidor" : apellido_consumidor,
+                                                "usuario_consumidor" : usuario_consumidor,
+                                                "email_consumidor": email_consumidor,
+                                                "telefono_consumidor" : telefono_consumidor,
+                                                "password_consumidor": password_consumidor
+                                                  })
+        else:
+            nombre_comercio = form.get("name_bss")
+            tel_comercio = form.get("tel_bss")
+            dir_comercio = form.get("dir_bss")
+            lkmenu_comercio = form.get("lkm_bss")
+            categoria = form.get("categoria")
+            tipo_cocina = form.get("tipo_cocina")
+            email_responsable = form.get("email_bss")
+            dias = form.getlist("dias[]")
+            horarios = form.getlist("horarios[]")
+            etiquetas = form.getlist("etiquetas[]")
+            dni_responsable = form.get("dni_responsable_bss")
+            cuit_responsable = form.get("cuit_responsable_bss")
+            nombre_responsable = form.get("nr_bss")
+            contrasena_usr_comercio = form.get("p_r_bss")
+            ruta_img = form.get("img_local")
+            response = requests.post(f"{API_BACK}/auth/register", 
+                                            json={
+                                                "tipo_usuario":form.get("tipo_usuario"),
+                                                "nombre_comercio" : nombre_comercio,
+                                                "tel_comercio" : tel_comercio,
+                                                "dir_comercio" : dir_comercio,
+                                                "lkmenu_comercio" : lkmenu_comercio,
+                                                "categoria" : categoria,
+                                                "tipo_cocina" : tipo_cocina,
+                                                "email_responsable" : email_responsable,
+                                                "dias" : dias,
+                                                "horarios" : horarios,
+                                                "etiquetas" : etiquetas,
+                                                "dni_responsable" : dni_responsable,
+                                                "cuit_responsable" : cuit_responsable,
+                                                "nombre_responsable" : nombre_responsable,
+                                                "contrasena_usr_comercio" : contrasena_usr_comercio,
+                                                "ruta_img" : ruta_img
+                                                  })
+            
+        if response.status_code == 200 :
+            flash("usuario registrado correctamente")
+            return redirect('/login')
+
+        flash("error al registrar el usuario")
+        return render_template("register.html")
 
 # Logout
 @app.route("/logout")
