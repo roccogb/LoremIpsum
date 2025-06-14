@@ -2,9 +2,11 @@
 
 {% block styles %}
     <link href="{{ url_for('static', filename='bootstrap/resto_bootstrap.min.css') }}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />   <!-- Archivo CSS de Leaflet-->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>  <!-- Archivo JS de Leaflet-->
     <link href="{{ url_for('static', filename='css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/seleccion_resto.css') }}">
+  
 {% endblock %}
 
 {% block content %}
@@ -16,13 +18,13 @@
             <div class="row">
               <h1>
                 <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
-                  NOMBRE RESTAURANTEE
+                {{ comercios.nombre_comercio if comercio else "Restaurante no encontrado" }}
               </h1>
               <div class="col-lg-12">
                 <div class="main-profile ">
                   <div class="row">
                     <div class="col-lg-4">
-                      <img src="{{ url_for('static', filename='media/img/resto_prueba.jpeg') }}" alt="" style="border-radius: 23px;">
+                      <img src="{{ url_for('static', filename=comercio.ruta_imagen) if comercio else '' }}" alt="" style="border-radius: 23px;">
                     </div>
                     <div class="col-lg-4 align-self-center">
                       <div class="main-info header-text">
@@ -30,18 +32,19 @@
                         <div class="stars"></div>
                         <br>
                         <br>
-                        <p>Ubicación.</p>
+                        <p> {{ comercios.categoria }} - {{ comercios.tipo_cocina }}</p>
+                        <p>Ubicación: lat {{ comercios.latitud }} - long {{ comercios.longitud }}</p>
                         <div class="main-border-button">
-                          <a href="#">Reservar</a>
+                          <a href="#form-reserva">Reservar</a>
                         </div>
                       </div>
                     </div>
                     <div class="col-lg-4 align-self-center">
                       <ul>
-                        <li>Categoría</li>
-                        <li>Tipo de cocina</li>
-                        <li>Característica 3</li>
-                        <li>Característica 4</li>
+                        <li>Categoría: {{ comercios.categoria if comercios else "No disponible" }}</li>
+                        <li>Tipo de cocina: {{ comercios.tipo_cocina if comercios else "No disponible" }}</li>
+                        <li>Teléfono: {{ comercios.telefono if comercios else "No disponible" }}</li>
+                        <li>Etiquetas: {{ comercios.etiquetas if comercios else "No disponible" }}</li>
                       </ul>
                     </div>
                   </div>
@@ -59,13 +62,17 @@
                               <div class="thumb">
                               </div>
                               <div class="down-content">
-                                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis accusantium molestiae necessitatibus quaerat voluptates cupiditate aliquam minus nostrum, ad ratione, saepe culpa. Explicabo ea qui, aspernatur ratione beatae iste quae!</li>
+                                <li> {{ comercios.descripcion if comercios else "Descripción no disponible" }} </li>
                               </div>
                             </div>
                           </div>
                           <div class="col-lg-12">
                             <div class="main-button">
-                              <a href="#">Ver Menú</a>
+                              {% if comercios.pdf_menu_link %}
+                                <a href=" {{ comercios.pdf_menu_link }}" target= "_blank">Ver Menú</a>
+                              {% else %}
+                               <a href="#" onclick="alert('Menú no disponible'); return false;">Ver Menú</a>
+                              {% endif %}
                             </div>
                           </div>
                         </div>
@@ -79,18 +86,13 @@
             <div class="gaming-library profile-library">
               <div class="col-lg-12">
                 <div class="heading-section">
-                  <h4><em>Reservas</em> (METER MAPA)</h4>
+                  <h4><em>Reservas</em></h4>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6">
-                  <div class="map-container">
-                    <iframe
-                      class="map-frame"
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3163.136657876158!2d139.69170621530928!3d35.68948752589844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188cd3b1a67baf%3A0x2c2f9f7c6dcb908a!2sShinjuku%2C%20Tokyo!5e0!3m2!1sen!2sjp!4v1617644748372!5m2!1sen!2sjp"
-                      allowfullscreen=""
-                      referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                  <div class="map">
+                    <p id="coordenadas_comercio">{{x}};{{y}}</p>
                   </div>
                 </div>
                 <div class="col-lg-6">
@@ -99,10 +101,11 @@
                       <div class="row align-items-center">
                         <div class="col-lg-12">
                           <div class="booking-form">
-                            <form>
+                            <form id="form-reserva" method="POST" action="{{ url_for('reservar') }}">
+                              <input type="hidden" name="id_comercio" value="{{ comercio.id_comercio }}">
                               <div class="control-group">
                                 <div class="input-group">
-                                  <input type="text" class="form-control" placeholder="Titular de la reserva" required="required" />
+                                  <input name="nombre_bajo_reserva" type="text" class="form-control" placeholder="Titular de la reserva" required />
                                   <div class="input-group-append">
                                     <div class="input-group-text"><i class="far fa-user"></i></div>
                                   </div>
@@ -110,7 +113,7 @@
                               </div>
                               <div class="control-group">
                                 <div class="input-group">
-                                  <input type="email" class="form-control" placeholder="Correo electrónico" required="required" />
+                                  <input name="email" type="email" class="form-control" placeholder="Correo electrónico" required />
                                   <div class="input-group-append">
                                     <div class="input-group-text"><i class="far fa-envelope"></i></div>
                                   </div>
@@ -118,7 +121,7 @@
                               </div>
                               <div class="control-group">
                                 <div class="input-group">
-                                  <input type="text" class="form-control" placeholder="Teléfono" required="required" />
+                                  <input name= "telefono" type="text" class="form-control" placeholder="Teléfono" required="required" />
                                   <div class="input-group-append">
                                     <div class="input-group-text"><i class="fa fa-mobile-alt"></i></div>
                                   </div>
@@ -126,7 +129,7 @@
                               </div>
                               <div class="control-group">
                                 <div class="input-group date" id="date" data-target-input="nearest">
-                                  <input type="text" class="form-control datetimepicker-input" placeholder="Fecha" data-target="#date" data-toggle="datetimepicker" />
+                                  <input name="fecha_reserva" type="text" class="form-control datetimepicker-input" placeholder="Fecha" data-target="#date" data-toggle="datetimepicker" />
                                   <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                                   </div>
@@ -134,7 +137,7 @@
                               </div>
                               <div class="control-group">
                                 <div class="input-group time" id="time" data-target-input="nearest">
-                                  <input type="text" class="form-control datetimepicker-input" placeholder="Horario" data-target="#time" data-toggle="datetimepicker" />
+                                  <input name="hora_reserva" type="text" class="form-control datetimepicker-input" placeholder="Horario" data-target="#time" data-toggle="datetimepicker" />
                                   <div class="input-group-append" data-target="#time" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="far fa-clock"></i></div>
                                   </div>
@@ -142,23 +145,19 @@
                               </div>
                               <div class="control-group">
                                 <div class="input-group">
-                                  <select class="custom-select form-control">
-                                    <option selected>Cantidad de personas</option>
-                                    <option value="1">1 Persona</option>
-                                    <option value="2">2 Personas</option>
-                                    <option value="3">3 Personas</option>
-                                    <option value="4">4 Personas</option>
-                                    <option value="5">5 Personas</option>
-                                    <option value="6">6 Personas</option>
-                                    <option value="7">7 Personas</option>
-                                    <option value="8">8 Personas</option>
-                                    <option value="9">9 Personas</option>
-                                    <option value="10">10 Personas</option>
+                                  <select name="cant_personas" class="custom-select form-control" required>
+                                    <option disabled selected>Cantidad de personas</option>
+                                    {% for i in range(1, 11) %}
+                                      <option value="{{ i }}">{{ i }} Persona{{ 's' if i > 1 else '' }}</option>
+                                    {% endfor %}
                                   </select>
                                   <div class="input-group-append">
                                     <div class="input-group-text"><i class="fa fa-chevron-down"></i></div>
                                   </div>
                                 </div>
+                              </div>
+                              <div class="control-group">
+                                <textarea name="solicitud_especial" class="form-control" placeholder="Solicitud especial (opcional)"></textarea>
                               </div>
                               <div>
                                 <button class="btn custom-btn" type="submit">Reservar</button>
@@ -180,16 +179,14 @@
   
     <br>
 
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved. 
-            <br></p>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="footer">
+            <p>© 2025 FoodyBA. Todos los derechos reservados.</p>
           </div>
         </div>
       </div>
-    </footer>
 {% endblock %}
 
 {% block scripts %}
@@ -201,6 +198,8 @@
     <script src="{{ url_for('static', filename='js/tabs.js') }}"></script>
     <script src="{{ url_for('static', filename='js/popup.js') }}"></script>
     <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/mapa.js') }}"></script>
+
 
     <!-- Scripts de reserva -->
     <script src="{{ url_for('static', filename='js/easing.min.js') }}"></script>
