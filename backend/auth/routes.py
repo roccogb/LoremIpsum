@@ -25,7 +25,7 @@ def register():
 
     return render_template("register.html")
 
-@auth_bp.route("/auth/consumidor", methods=["POST"])
+@auth_bp.route("/consumidor", methods=["POST"])
 def auth_consumidor():
     """Endpoint para autenticar usuarios consumidores"""
     try:
@@ -60,7 +60,7 @@ def auth_consumidor():
         return jsonify({"msg": "Error interno del servidor"}), 500
 
 
-@auth_bp.route("/auth/comercio", methods=["POST"])
+@auth_bp.route("/comercio", methods=["POST"])
 def auth_comercio():
     """Endpoint para autenticar usuarios comerciantes"""
     try:

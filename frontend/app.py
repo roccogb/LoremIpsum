@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 app.secret_key = "contra_ids"  # Necesario para usar session y flash
 
-API_BACK = "http://192.168.1.6:8100"  # Dirección local del backend
+API_BACK = "http://0.0.0.0:8100"  # Dirección local del backend
 
 # Pagina de inicio
 @app.route("/")

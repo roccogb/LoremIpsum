@@ -11,9 +11,9 @@
 	http://www.tooplate.com/view/2105-input
 	-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
-    <link rel="stylesheet" href="../static/bootstrap/login_boots.min.css">
-    <link rel="stylesheet" href="../static/css/materialize.min.css">
-    <link rel="stylesheet" href="../static/css/tooplate.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/login_boots.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/materialize.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/tooplate.css')}}">
 </head>
 
 <body id="login">
@@ -25,7 +25,7 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-login-l">
                 <form action="{{ url_for('login', _external=True) }}" method="post" class="tm-bg-gold p-5 h-100">
                     <div class="input-field">
-                        <input placeholder="Usuario" id="username" name="username" type="text" class="validate" required>
+                        <input placeholder="Email" id="email" name="email" type="text" class="validate" required>
                     </div>
                     <div class="input-field mb-5">
                         <input placeholder="Contraseña" id="password" name="password" type="password" class="validate" required>
@@ -38,13 +38,13 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-login-r">
                 <header class="font-weight-light tm-bg-wine p-5 h-100">
                     <!--Agrego el icono en el contenedor derecho del login-->
-                    <img id="icon-img" src="../static/media/img/icon-FoodyBA-blanco.png" alt="Icon FoodyBA"> <!--La imagen no se encuentra en esa ruta-->
+                    <img id="icon-img" src="{{url_for('static',filename='media/img/icon-FoodyBA-blanco.png')}}" alt="Icon FoodyBA"> <!--La imagen no se encuentra en esa ruta-->
                 </header>
             </div>
         </div>
         <div class="row">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 ml-auto mr-0 text-center">
-                <a href="register.html" class="waves-effect btn-large btn-large-wine px-4 rounded-0">Registrar usuario</a>
+                <a href="{{url_for('register', _external=True )}}" class="waves-effect btn-large btn-large-wine px-4 rounded-0">Registrar usuario</a>
             </div>
         </div>
         <footer class="row tm-mt-big mb-3">
@@ -55,9 +55,9 @@
             </div>
         </footer>
     </div>
-    <script src="../static/js/bg-animation.js"></script>
-    <script src="../static/js/jquery-3.2.1.slim.min.js"></script>
-    <script src="../static/js/materialize.min.js"></script>
+    <script src="{{url_for('static', filename='js/bg-animation.js')}}"></script>
+    <script src="{{url_for('static', filename='js/jquery-3.2.1.slim.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/materialize.min.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('select').formSelect();
