@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, session, url_for, flash
 from werkzeug.utils import secure_filename
+from ast import literal_eval
 import requests
 import os
 
@@ -8,6 +9,11 @@ app.secret_key = "contra_ids"  # Necesario para usar session y flash
 
 API_BACK = "http://0.0.0.0:8100"                                        # Dirección local del backend
 UPLOAD_FOLDER = os.path.join(os.getcwd(),'static','media', 'img')       # Carpeta donde van a ir todas las imagenes
+TRANSF_TAG={"musica_vivo":"Musica en vivo", "happy_hour":"Happy hour",
+             "vegetariano":"Vegetariano","vegano":"Vegano",
+             "sin_gluten":"Sin Gluten", "apto_mascotas":"Apto para mascotas",
+             "wifi":"WiFi","zona_fumadores":"Zona fumadores",
+             "delivery":"Delivery","para_llevar":"Para llevar","accesible":"Accesible"}
 
 # Pagina de inicio
 @app.route("/")
@@ -76,10 +82,16 @@ def descubre(indice_pag):
 @app.route("/restaurante/<int:id_comercio>")
 def resto(id_comercio):
     #Petición al backend para obtener los detalles del comercio.
+    if id_comercio <= 0:
+        return redirect(url_for("home"))
+    
     response = requests.get(f"{API_BACK}/comercio/{id_comercio}")
     if response.status_code == 200:
-        comercio = response.json()
-        return render_template("resto.html", comercios=comercio)
+        comercio_bdd = response.json()
+        comercio_bdd["dias"]=literal_eval(comercio_bdd["dias"])
+
+        comercio_bdd["etiquetas"]=[ TRANSF_TAG[tag] for tag in literal_eval(comercio_bdd["etiquetas"])]
+        return render_template("resto.html", comercios=comercio_bdd)
     else:
         # Redirigir al home. 
         flash("Comercio no encontrado")

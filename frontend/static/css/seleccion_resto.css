@@ -28,14 +28,12 @@ body {
 }
 
 /* ===== HEADER DEL RESTAURANTE ===== */
-.page-content h1 {
+.page-content h3 {
   display: flex;
   align-items: center;
-  gap: 15px;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: bold;
   color:#ffffff;
-  margin-bottom: 30px;
   text-align: center;
 }
 
@@ -90,36 +88,95 @@ body {
   font-size: 1.1rem;
 }
 
-/* ===== ESTRELLAS DE CALIFICACIÓN ===== */
+/* ===== ESTRELLAS DE CALIFICACIÓN - CENTRADAS ===== */
 .stars {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  padding: 10px 0;
 }
 
 .stars::before {
-  content: "★★★★☆";
-  color: var(--golf);
-  font-size: 1.5rem;
+  color: #FFC107;
+  font-size: 1.8rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* ===== BOTÓN PRINCIPAL ===== */
+/* ===== ETIQUETAS DEL RESTAURANTE - DESPLIEGUE LATERAL ===== */
+.tags-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.tags-section p {
+  background: #b8941f;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tags-section p:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  background: var(--sgray);
+}
+
+/* ===== BOTÓN PRINCIPAL - CENTRADO Y MEJORADO ===== */
+.main-border-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
 .main-border-button a {
   display: inline-block;
-  background: var(--sgray);
-  color:#ffffff;
-  padding: 12px 30px;
+  background: linear-gradient(135deg, var(--sgray), #2e2e2e);
+  color: #ffffff;
+  padding: 15px 40px;
   text-decoration: none;
-  border-radius: 25px;
+  border-radius: 30px;
   font-weight: bold;
+  font-size: 1.1rem;
   transition: var(--transition);
   box-shadow: var(--shadow);
+  border: 2px solid transparent;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-border-button a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.main-border-button a:hover::before {
+  left: 100%;
 }
 
 .main-border-button a:hover {
-  background-color: #2e2e2e;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+  background: #1d1d1d;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 /* ===== LISTA DE INFORMACIÓN ===== */
@@ -135,6 +192,48 @@ body {
   border-radius: 8px;
   border-left: 4px solid var(--mostaza);
   font-weight: 500;
+}
+
+/* ===== ESTILOS PARA HORARIOS - DÍAS HORIZONTALES ===== */
+.horarios-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.horarios-label {
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.dias-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.dia-item {
+  background: #b8941f;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
+  cursor: default;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.dia-item:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: var(--sgray);
 }
 
 .clips {
@@ -160,17 +259,17 @@ body {
   font-size: 1.1rem;
 }
 
-/* ===== BOTÓN DE MENÚ ===== */
+/* Boton de menú */
 .main-button a {
-  display: inline-block;
+  display: flex;
+  margin: auto;
   background: var(--vino);
   color: #ffffff;
-  padding: 12px 25px;
+  padding: 15px;
   text-decoration: none;
   border-radius: 8px;
   font-weight: bold;
   transition: var(--transition);
-  margin-top: 20px;
 }
 
 .main-button a:hover {
@@ -188,8 +287,8 @@ body {
 }
 
 /* ===== MAPA ===== */
-.map {
-  height: 400px;
+#map {
+  height: 100%;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--shadow);
@@ -204,7 +303,7 @@ body {
   display: none;
 }
 
-/* ===== FORMULARIO DE RESERVA ===== */
+/* Estilos aplicados al formulario de reserva*/
 .booking-form {
   background: var(--mostaza);
   padding: 30px;
@@ -269,7 +368,7 @@ textarea.form-control {
   color: #666;
 }
 
-/* ===== BOTÓN PERSONALIZADO ===== */
+/* Boton personalizado */
 .custom-btn {
   background-color: var(--sgray);
   color: #ffffff;
@@ -290,7 +389,6 @@ textarea.form-control {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== FOOTER ===== */
 .footer {
   background: var(--vino);
   color: #ffffff;
@@ -300,7 +398,6 @@ textarea.form-control {
   margin-top: 40px;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
   .page-content h1 {
     font-size: 2rem;
@@ -328,6 +425,29 @@ textarea.form-control {
     height: 250px;
     margin-bottom: 20px;
   }
+  
+  .tags-section {
+    justify-content: center;
+  }
+  
+  .tags-section p {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+  
+  .main-border-button a {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+
+  .dias-section {
+    gap: 6px;
+  }
+  
+  .dia-item {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
 }
 
 @media (max-width: 576px) {
@@ -346,9 +466,32 @@ textarea.form-control {
   .clips, .gaming-library {
     padding: 20px;
   }
+  
+  .tags-section {
+    gap: 6px;
+  }
+  
+  .tags-section p {
+    font-size: 0.70rem;
+    padding: 5px 10px;
+  }
+
+  /* Horarios en pantallas muy pequeñas */
+  .horarios-item {
+    gap: 8px;
+  }
+  
+  .dias-section {
+    gap: 4px;
+  }
+  
+  .dia-item {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+  }
 }
 
-/* ===== ANIMACIONES ===== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -360,10 +503,48 @@ textarea.form-control {
   }
 }
 
+@keyframes slideInTag {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideInDay {
+  from {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
 .main-profile,
 .clips,
 .gaming-library {
   animation: fadeIn 0.6s ease-out;
+}
+
+.tags-section p {
+  animation: slideInTag 0.4s ease-out forwards;
+}
+
+.tags-section p:nth-child(n) {
+  animation-delay: calc(0.1s * var(--i, 1));
+}
+
+.dia-item {
+  animation: slideInDay 0.5s ease-out forwards;
+}
+
+.dia-item:nth-child(n) {
+  animation-delay: calc(0.1s * var(--i, 1));
 }
 
 /* ===== EFECTOS HOVER ADICIONALES ===== */
@@ -401,5 +582,5 @@ textarea.form-control {
 }
 
 .input-group:hover .input-group-text {
-  background: #ffffff;
+  background: var(--vino);
 }
