@@ -4,10 +4,6 @@
   --vino: #800020;
   --sgray: #414141;
   --golf: #D4A574;
-  --primary-color: var(--mostaza);
-  --secondary-color: var(--vino);
-  --text-color: var(--sgray);
-  --light-bg: #f8f9fa;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --transition: all 0.3s ease;
 }
@@ -22,8 +18,7 @@
 body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
-  color: var(--text-color);
-  background-color: var(--light-bg);
+  color: #ffffff;
 }
 
 .container {
@@ -111,7 +106,7 @@ body {
 /* ===== BOTÓN PRINCIPAL ===== */
 .main-border-button a {
   display: inline-block;
-  background: linear-gradient(135deg, var(--primary-color), var(--golf));
+  background: var(--sgray);
   color:#ffffff;
   padding: 12px 30px;
   text-decoration: none;
@@ -122,8 +117,9 @@ body {
 }
 
 .main-border-button a:hover {
+  background-color: #2e2e2e;
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 /* ===== LISTA DE INFORMACIÓN ===== */
@@ -133,15 +129,14 @@ body {
 }
 
 .main-profile ul li {
-  background: var(--light-bg);
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 12px 20px;
   margin-bottom: 10px;
   border-radius: 8px;
-  border-left: 4px solid var(--primary-color);
+  border-left: 4px solid var(--mostaza);
   font-weight: 500;
 }
 
-/* ===== SECCIÓN DE DESCRIPCIÓN ===== */
 .clips {
   background: #ffffff;
   border-radius: 12px;
@@ -154,7 +149,7 @@ body {
   color: white;
   font-size: 1.8rem;
   margin-bottom: 20px;
-  border-bottom: 3px solid var(--primary-color);
+  border-bottom: 3px solid var(--mostaza);
   padding-bottom: 10px;
 }
 
@@ -168,7 +163,7 @@ body {
 /* ===== BOTÓN DE MENÚ ===== */
 .main-button a {
   display: inline-block;
-  background: var(--secondary-color);
+  background: var(--vino);
   color: #ffffff;
   padding: 12px 25px;
   text-decoration: none;
@@ -179,7 +174,7 @@ body {
 }
 
 .main-button a:hover {
-  background: var(--primary-color);
+  background: var(--mostaza);
   transform: translateY(-2px);
 }
 
@@ -211,7 +206,7 @@ body {
 
 /* ===== FORMULARIO DE RESERVA ===== */
 .booking-form {
-  background: var(--light-bg);
+  background: var(--mostaza);
   padding: 30px;
   border-radius: 12px;
   box-shadow: var(--shadow);
@@ -230,12 +225,12 @@ body {
 }
 
 .form-control:focus {
-  border-color: var(--primary-color);
+  border-color: var(--mostaza);
   box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
 }
 
 .input-group-text {
-  background: var(--primary-color);
+  background: var(--mostaza);
   color: #ffffff;
   border: none;
   border-radius: 0 8px 8px 0;
@@ -276,7 +271,7 @@ textarea.form-control {
 
 /* ===== BOTÓN PERSONALIZADO ===== */
 .custom-btn {
-  background: linear-gradient(135deg, var(--primary-color), var(--golf));
+  background-color: var(--sgray);
   color: #ffffff;
   border: none;
   padding: 15px 40px;
@@ -290,13 +285,14 @@ textarea.form-control {
 }
 
 .custom-btn:hover {
+  background-color: #2b2a2a;
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* ===== FOOTER ===== */
 .footer {
-  background: var(--secondary-color);
+  background: var(--vino);
   color: #ffffff;
   text-align: center;
   padding: 20px;
@@ -383,16 +379,14 @@ textarea.form-control {
 
 /* ===== ESTILOS PARA ELEMENTOS INTERACTIVOS ===== */
 .form-control:hover {
-  border-color: var(--primary-color);
+  border-color: var(--mostaza);
 }
 
 .custom-select:hover {
-  border-color: var(--primary-color);
+  border-color: var(--mostaza);
 }
 
-/* ===== MEJORAS VISUALES ===== */
 .main-profile ul li:hover {
-  background: #e9ecef;
   transform: translateX(5px);
 }
 
