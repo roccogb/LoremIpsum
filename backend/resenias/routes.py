@@ -14,10 +14,10 @@ def crear_resenia():
     id_reserva = data.get("id_reserva")
     id_usr = session["id_usr"]
 
-    if not all([id_comercio, puntuacion, comentario, id_reserva]):  # Corrobora que los campos se llenen.
+    if not all([id_comercio, calificacion, comentario, id_reserva]):  # Corrobora que los campos se llenen.
         return jsonify({"msg": "Debe  completar todos los datos"}), 400
     
-    if not (1 <= int(puntuacion) <= 5):
+    if not (1 <= int(calificacion) <= 5):
         return jsonify ({"msg": "Debe enviar una calificación"}), 400
     
     conn = get_connection
@@ -28,17 +28,18 @@ def crear_resenia():
         cursor.execute (""" 
             SELECT * FROM reservas WHERE id_reservas = %s 
             AND id_usr = %s AND id_comercio = %s AND estado_reserva = TRUE 
-            """,(id_reserva, id_usr))
+            """,(id_reserva, id_usr, id_comercio))
         reserva_valida = cursor.fetchone()
 
         if not reserva_valida:
             return jsonify({"error": "Reserva no confirmada por asistencia"}), 403
         
+        """
         # Verificar que no exista otra reseña con la misma reserva
-        cursor.execute ("""SELECT * FROM resenias WHERE id_reserva = %s """, (id_reserva))
+        cursor.execute (" SELECT * FROM resenias WHERE id_reserva = %s ", (id_reserva))
         if cursor.fetchone():
             return jsonify({"error": "Ya existe una resenia para esta reseña."}), 409
-        
+        """
         # Insertar reseña
 
         cursor.execute ("""

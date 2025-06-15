@@ -42,7 +42,6 @@ def verificar_usr():
         cursor.close() # Si se encuentra en comercio, cierra el cursor en esta linea para liberar recursos.
         conn.close()
         return jsonify({
-            "msg": "ingreso exitoso",
             "tipo": "comercio",
             "id_usr": usuario_comercio["id_usr_comercio"],
             "nombre_usuario": usuario_comercio["nombre_apellido"]
@@ -57,7 +56,6 @@ def verificar_usr():
     if usuario_consumidor: # Retorna 'tipo', 'ids_usr' y 'usuario' para guardarlo en session.
         
         return jsonify({
-            "msg": "ingreso exitoso",
             "tipo": "consumidor",
             "id_usr": usuario_consumidor["id_usr"],
             "nombre_usuario": usuario_consumidor["usuario"]

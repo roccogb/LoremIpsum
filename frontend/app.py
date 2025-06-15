@@ -73,7 +73,7 @@ def login():
             flash("Error de conexión con el servidor", "error")
             return redirect(url_for("login"))
 
-        if response.status_code == 200 and data.get("msg") == "ingreso exitoso":
+        if response.status_code == 200:
             session["usuario"] = data["nombres_usuario"] # Guarda en session datos para verificar el logueo.
             session["id_usr"] = data["id_usr"]
             session["tipo"] = data["tipo"]
@@ -94,6 +94,15 @@ def register():
 def logout():
     session.pop("usuario", None)
     return redirect(url_for("home"))
+
+
+@app.route("/resenias")
+def resenias_1():
+    return render_template("resenia.html")
+
+@app.route("/review")
+def resenia():
+    return render_template("review.html")
 
 if __name__ == "__main__":
     app.run(host="localhost", port=8200, debug=True)
