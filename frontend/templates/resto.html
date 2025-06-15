@@ -10,7 +10,6 @@
 {% endblock %}
 
 {% block content %}
-  </head>
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
@@ -18,13 +17,13 @@
             <div class="row">
               <h1>
                 <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
-                {{ comercios.nombre_comercio if comercio else "Restaurante no encontrado" }}
+                {{ comercios.nombre_comercio if comercios else "Restaurante no encontrado" }}
               </h1>
               <div class="col-lg-12">
                 <div class="main-profile ">
                   <div class="row">
                     <div class="col-lg-4">
-                      <img src="{{ url_for('static', filename=comercio.ruta_imagen) if comercio else '' }}" alt="" style="border-radius: 23px;">
+                      <img src="{{ url_for('static', filename=comercios.ruta_imagen) if comercios else '' }}" alt="" style="border-radius: 23px;">
                     </div>
                     <div class="col-lg-4 align-self-center">
                       <div class="main-info header-text">
@@ -96,13 +95,13 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <div class="booking">
+                  <div class="reserva">
                     <div class="container">
                       <div class="row align-items-center">
                         <div class="col-lg-12">
-                          <div class="booking-form">
+                          <div class="reserva-form">
                             <form id="form-reserva" method="POST" action="{{ url_for('reservar') }}">
-                              <input type="hidden" name="id_comercio" value="{{ comercio.id_comercio }}">
+                              <input type="hidden" name="id_comercio" value="{{ comercios.id_comercio }}">
                               <div class="control-group">
                                 <div class="input-group">
                                   <input name="nombre_bajo_reserva" type="text" class="form-control" placeholder="Titular de la reserva" required />

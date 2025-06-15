@@ -7,9 +7,6 @@ ul, li {
   color: #FFFFFF;
 }
 
-header, nav, section, article, aside, footer, hgroup {
-  display: block;
-}
 
 * {
   box-sizing: border-box;
@@ -146,48 +143,46 @@ p {
 
 /*  MAPAAA  */
 
-.map-container {
-  position: relative;
-  width: 50%;
-  padding-bottom: 56.25%; /* Relación 16:9 */
-  overflow: hidden;
-  margin-bottom: 2rem; /* espacio opcional debajo */
+/* Asegura que el contenedor del mapa y el formulario se estiren al mismo alto */
+.map, .reserva {
+  width: 100%;
+  min-height: 350px; /* Ajusta este valor según tu diseño */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
+/* Ajusta el iframe del mapa para que se adapte al contenedor */
 .map-frame {
-  position: absolute;
-  top: 0;
-  left: 4px;
   width: 100%;
-  height: 100%;
-  border: none; /* equivalente a frameborder="0" */
+  height: 350px;
+  border: 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
 }
 
 /*  FIN MAPA  */
 
-.booking {
-    position: relative;
-    width: 100%;
-    margin-bottom: 45px;}
-
-.booking .booking-content {
+.reserva .reserva-content {
     padding: 45px 0 15px 0;
 }
 
-.booking .booking-content .section-header {
+.reserva .reserva-content .section-header {
     margin-bottom: 30px;
 }
 
-.booking .booking-form {
+.reserva .reserva-form {
     padding: 60px 30px;
     background: #D4AF37;
 }
 
-.booking .booking-form .control-group {
+.reserva .reserva-form .control-group {
     margin-bottom: 15px;
 }
 
-.booking .booking-form .input-group-text {
+.reserva .reserva-form .input-group-text {
     position: absolute;
     padding: 0;
     border: none;
@@ -198,7 +193,7 @@ p {
     font-size: 14px;
 }
 
-.booking .booking-form .form-control {
+.reserva .reserva-form .form-control {
     height: 48px;
     font-size: 15px;
     color: #ffffff;
@@ -208,27 +203,27 @@ p {
     background: #460616;
 }
 
-.booking .booking-form select.form-control {
+.reserva .reserva-form select.form-control {
     padding: 0 10px;
 }
 
-.booking .booking-form .form-control::placeholder {
+.reserva .reserva-form .form-control::placeholder {
     color: #ffffff;
     opacity: 1;
 }
 
-.booking .booking-form .input-group [data-toggle="datetimepicker"] {
+.reserva .reserva-form .input-group [data-toggle="datetimepicker"] {
     cursor: default;
 }
 
-.booking .booking-form .btn.custom-btn {
+.reserva .reserva-form .btn.custom-btn {
     width: 100%;
     color: #fbaf32;
     background: #333333;
     border: 2px solid #333333;
 }
 
-.booking .booking-form .btn.custom-btn:hover {
+.reserva .reserva-form .btn.custom-btn:hover {
     color: #ffffff;
     background: #800020;
 }
@@ -405,28 +400,9 @@ body {
   }
 }
 
-/* Asegura que el contenedor del mapa y el formulario se estiren al mismo alto */
-.map-container, .booking {
-  width: 100%;
-  min-height: 350px; /* Ajusta este valor según tu diseño */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  margin-top: 20px;
-}
-
-/* Ajusta el iframe del mapa para que se adapte al contenedor */
-.map-frame {
-  width: 100%;
-  height: 350px;
-  border: 0;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-}
 
 /* Haz que el formulario de reservas ocupe el ancho completo de su columna */
-.booking-form {
+.reserva-form {
   width: 100%;
 
   padding: 24px 16px;
@@ -438,8 +414,8 @@ body {
 @media (max-width: 991px) {
   .map-frame,
   .map-container,
-  .booking-form,
-  .booking {
+  .reserva-form,
+  .reserva {
     height: 540px;
     min-height: 250px;
   }
