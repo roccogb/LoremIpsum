@@ -13,8 +13,10 @@ def agregar():
 
     conn = get_connection() #conecta con la bdd y el servidor
     cursor = conn.cursor(dictionary= True) #"cualquier resultado de las consultas pasa a diccionarios para trabajar con él".
+    
     cursor.execute("SELECT * FROM favoritos WHERE id_usr=%s AND id_comercio=%s", (id_usr, id_comercio))
     existe = cursor.fetchone() #agarra el resultado de la consulta.
+    
     if existe: #si el favorito ya existe, lo borra.
         cursor.execute("DELETE FROM favoritos WHERE id_usr=%s AND id_comercio=%s", (id_usr, id_comercio))
         conn.commit()
@@ -25,14 +27,18 @@ def agregar():
         favorito = True
     cursor.close()
     conn.close()
+   
     return jsonify({"success": True, "favorito": favorito})
 
-@favoritos_bp.route('/<int:id_usr>', methods=['GET'])
+@favoritos_bp.route('/<int:id_usr>', methods=['GET']) #Lista los ID de los comercios favoritos de un usuario específico.
 def listar_favoritos(id_usr):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT id_comercio FROM favoritos WHERE id_usr=%s", (id_usr,))
+
+    cursor.execute("SELECT id_comercio FROM favoritos WHERE id_usr=%s", (id_usr,)) #Busca todos los id_comercio que están marcados como favoritos por ese usuario.
     favs = [row['id_comercio'] for row in cursor.fetchall()]
+
     cursor.close()
     conn.close()
+
     return jsonify(favs)
