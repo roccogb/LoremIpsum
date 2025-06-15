@@ -117,6 +117,9 @@ def reservar():
         if response.status_code == 200:
             flash("Reserva creada exitosamente", "success")
 
+@app.route("/reseñar", methods=["POST"])
+def agregar_resena():
+    pass
 
 # Pagina de ayuda
 @app.route("/ayuda")

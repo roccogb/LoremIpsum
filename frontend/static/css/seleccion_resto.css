@@ -1,536 +1,411 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900");
-
-ul, li {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  color: #FFFFFF;
+/* ===== VARIABLES CSS ===== */
+:root {
+  --mostaza: #D4AF37;
+  --vino: #800020;
+  --sgray: #414141;
+  --golf: #D4A574;
+  --primary-color: var(--mostaza);
+  --secondary-color: var(--vino);
+  --text-color: var(--sgray);
+  --light-bg: #f8f9fa;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
 }
 
-header, nav, section, article, aside, footer, hgroup {
-  display: block;
-}
-
+/* ===== ESTILOS GENERALES ===== */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  background-color: #D4AF37;
-  font-size: 16px;
-  -ms-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-	color: #CCC;
-  text-decoration: none !important;
-}
-a:hover {
-	color: rgb(0, 0, 0);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  color: #fff;
-  font-weight: 700;
-}
-
-ul {
-  margin-bottom: 0px;
-}
-
-p {
-  font-size: 15px;
-  line-height: 30px;
-  color: #fff;
-}
-
-img {
-  width: 100%;
-  overflow: hidden;
-}
-
-/* ESTILOS GLOBALES DE LA PÁGINA. */
-html,
 body {
-  background: #D4AF37;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--light-bg);
 }
 
-/*  CUADRO QUE TENDRÁ TODO EL CONTENIDO */
-body .page-content {
-  margin-top: 110px;
-  background-color: #800020;
-  padding: 60px;
-  border-radius: 23px;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-/*  FUENTES Y TAMAÑOS   */
-p {
-  font-size: 15px;
-  color: #ffffff;
-  line-height: 30px;
-  margin-bottom: 0px;
-}
-
-.templatemo-item {
-	max-width: 80px; 
-	border-radius: 23px;
-}
-
-.main-button a {
-  font-size: 14px;
-  color: #fff;
-  background-color: #333333;
-  padding: 12px 30px;
-  display: inline-block;
-  border-radius: 25px;
-  font-weight: 400;
-  text-transform: capitalize;
-  letter-spacing: 0.5px;
-  transition: all .3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.main-button a:hover {
-  background-color: #fff;
-  color: #800020;
-}
-
-.main-border-button a {
-  font-size: 14px;
-  color: #FFFFFF;
-  background-color: #333333;
-  padding: 12px 30px;
-  display: inline-block;
-  border-radius: 25px;
-  font-weight: 400;
-  text-transform: capitalize;
-  letter-spacing: 0.5px;
-  transition: all .3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.main-border-button a:hover {
-  border-color: #fff;
-  background-color: #fff;
-  color: #800020;
-}
-
-.border-no-active a {
-  border-color: #ffffff;
-  color: #ffffff;
-}
-
-.border-no-active a:hover{
-  border-color: #ec0000;
-  color: #ffffff;
-  background-color: transparent;
-}
-
-
-/*  EL CUADRO DONDE VAN LAS RESERVAS Y EL MAPA   */
-.gaming-library {
-  margin-top: 60px;
-  padding: 30px;
-  background-color: #460616;
-  border-radius: 23px;
-}
-
-/*  MAPAAA  */
-
-.map-container {
-  position: relative;
-  width: 50%;
-  padding-bottom: 56.25%; /* Relación 16:9 */
-  overflow: hidden;
-  margin-bottom: 2rem; /* espacio opcional debajo */
-}
-
-.map-frame {
-  position: absolute;
-  top: 0;
-  left: 4px;
-  width: 100%;
-  height: 100%;
-  border: none; /* equivalente a frameborder="0" */
-}
-
-/*  FIN MAPA  */
-
-.booking {
-    position: relative;
-    width: 100%;
-    margin-bottom: 45px;}
-
-.booking .booking-content {
-    padding: 45px 0 15px 0;
-}
-
-.booking .booking-content .section-header {
-    margin-bottom: 30px;
-}
-
-.booking .booking-form {
-    padding: 60px 30px;
-    background: #D4AF37;
-}
-
-.booking .booking-form .control-group {
-    margin-bottom: 15px;
-}
-
-.booking .booking-form .input-group-text {
-    position: absolute;
-    padding: 0;
-    border: none;
-    background: none;
-    top: 15px;
-    right: 15px;
-    color: #ffffff;
-    font-size: 14px;
-}
-
-.booking .booking-form .form-control {
-    height: 48px;
-    font-size: 15px;
-    color: #ffffff;
-    padding: 0 15px;
-    border-radius: 5px !important;
-    border: 2px solid #d4af37;
-    background: #460616;
-}
-
-.booking .booking-form select.form-control {
-    padding: 0 10px;
-}
-
-.booking .booking-form .form-control::placeholder {
-    color: #ffffff;
-    opacity: 1;
-}
-
-.booking .booking-form .input-group [data-toggle="datetimepicker"] {
-    cursor: default;
-}
-
-.booking .booking-form .btn.custom-btn {
-    width: 100%;
-    color: #fbaf32;
-    background: #333333;
-    border: 2px solid #333333;
-}
-
-.booking .booking-form .btn.custom-btn:hover {
-    color: #ffffff;
-    background: #800020;
-}
-
-
-/*  ENTRAN TODOS LOS DETALLES DE LAS CARACTERÍSTICAS DEL RESTO, COMO IMG, TÍTULO, ETC.  */
-.main-profile {
-  border-radius: 23px;
-  padding: 30px;
-  background-color: #800020;
-}
-
-.heart-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-    font-size: 18px;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
-    z-index: 10;
-}
-
-.heart-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
-}
-
-.heart-btn.active {
-    background: rgba(255, 0, 0, 0.8);
-    color: white;
-}
-
-.heart-btn.active:hover {
-    background: rgba(255, 0, 0, 1);
-}
-
-
-.stars::before {
-  content: "★★★★★";
-  font-family: Arial, sans-serif;
-  color: gold;
-  font-size: 30px;
-}
-
-.main-profile .main-info h4 {
-  margin-bottom: 20px;
-}
-
-.main-profile .main-info .main-border-button {
-  margin-top: 25px;
-}
-
-.main-profile ul {
-  border-radius: 23px;
-  padding: 30px;
-  background-color: #460616;
-}
-
-.main-profile ul li {
-  width: 100%;
-  font-size: 14px;
-  color: #ffffff;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #333333;
-}
-
-.clips {
-  margin-top: 30px;
-  border-top: 2px solid #800020;
-}
-
-.clips .heading-section {
-  margin-top: 30px;
-}
-
-.clips .item  {
-  border-radius: 23px;
-  padding: 40px 40px;
-  background-color: #460616;
+/* ===== HEADER DEL RESTAURANTE ===== */
+.page-content h1 {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color:#ffffff;
   margin-bottom: 30px;
-}
-
-.clips .item .thumb {
-  position:relative;
-  margin-bottom: 15px;
-}
-
-.clips .item h4 {
-  font-size: 15px;
-  display: inline-block;
-  text-align:start;
-}
-
-.clips .main-button {
-  margin-top: 10px;
   text-align: center;
 }
 
-
-/*  RESPONSIVE  */
-body {
-  overflow-x: hidden;
+/* ===== BOTÓN DE CORAZÓN ===== */
+.heart-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 5px;
+  border-radius: 50%;
 }
 
-@media (max-width: 767px) {
-  body .page-content {
-    padding: 0px 30px;
-  }
-  .main-banner {
+.heart-btn:hover {
+  color: red;
+  transform: scale(1.1);
+}
+
+.heart-btn.active {
+  color: red;
+}
+
+/* ===== PERFIL PRINCIPAL ===== */
+.main-profile {
+  background: var(--vino);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+  margin-bottom: 30px;
+}
+
+.main-profile img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 23px;
+  box-shadow: var(--shadow);
+}
+
+/* ===== INFORMACIÓN PRINCIPAL ===== */
+.main-info h4 {
+  color:#ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.main-info p {
+  color:#ffffff;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+/* ===== ESTRELLAS DE CALIFICACIÓN ===== */
+.stars {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.stars::before {
+  content: "★★★★☆";
+  color: var(--golf);
+  font-size: 1.5rem;
+}
+
+/* ===== BOTÓN PRINCIPAL ===== */
+.main-border-button a {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary-color), var(--golf));
+  color:#ffffff;
+  padding: 12px 30px;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+}
+
+.main-border-button a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* ===== LISTA DE INFORMACIÓN ===== */
+.main-profile ul {
+  list-style: none;
+  padding: 0;
+}
+
+.main-profile ul li {
+  background: var(--light-bg);
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+  font-weight: 500;
+}
+
+/* ===== SECCIÓN DE DESCRIPCIÓN ===== */
+.clips {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 30px;
+  box-shadow: var(--shadow);
+}
+
+.heading-section h4 {
+  color: white;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  border-bottom: 3px solid var(--primary-color);
+  padding-bottom: 10px;
+}
+
+.down-content li {
+  list-style: none;
+  color: #666;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+/* ===== BOTÓN DE MENÚ ===== */
+.main-button a {
+  display: inline-block;
+  background: var(--secondary-color);
+  color: #ffffff;
+  padding: 12px 25px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: var(--transition);
+  margin-top: 20px;
+}
+
+.main-button a:hover {
+  background: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/*Seccion para realizar las reservas */
+.gaming-library {
+  background: var(--vino);
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 30px;
+  box-shadow: var(--shadow);
+}
+
+/* ===== MAPA ===== */
+.map {
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+#coordenadas_comercio {
+  display: none;
+}
+
+/* ===== FORMULARIO DE RESERVA ===== */
+.booking-form {
+  background: var(--light-bg);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.control-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+}
+
+.input-group-text {
+  background: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 0 8px 8px 0;
+}
+
+.custom-select {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 12px 15px;
+}
+
+textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Estilos a los objetos de reseñas */
+.review-item{
+  border: 1px solid #e0e0e0; 
+  padding: 15px; 
+  margin-bottom: 15px; 
+  border-radius: 8px; 
+  background-color: white;
+}
+
+.review-header{
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 10px;
+}
+
+.no-reviews{
+  text-align: center; 
+  padding: 40px; 
+  color: #666;
+}
+
+/* ===== BOTÓN PERSONALIZADO ===== */
+.custom-btn {
+  background: linear-gradient(135deg, var(--primary-color), var(--golf));
+  color: #ffffff;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+  margin-top: 20px;
+}
+
+.custom-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(212, 175, 55, 0.3);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--secondary-color);
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 40px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .page-content h1 {
+    font-size: 2rem;
+    flex-direction: column;
     text-align: center;
   }
-  .main-banner h4 {
-    font-size: 35px;
+  
+  .main-profile {
+    padding: 20px;
   }
-  .gaming-library .item ul li,
-  .gaming-library .item ul li:first-child,
-  .gaming-library .item ul li:last-child {
-    width: 100% !important;
-    text-align: center !important;
+  
+  .main-profile img {
+    height: 200px;
   }
-  .gaming-library .item ul li {
-    margin-top: 30px;
+  
+  .main-info h4 {
+    font-size: 1.3rem;
   }
-  .most-popular .item .inner-item {
+  
+  .booking-form {
+    padding: 20px;
+  }
+  
+  .map {
+    height: 250px;
     margin-bottom: 20px;
   }
 }
 
-@media (max-width: 992px) {
-  .background-header {
-  display: inline-block;
+@media (max-width: 576px) {
+  .container {
+    padding: 0 15px;
   }
-  .header-area .main-nav #search {
-    display: none;
+  
+  .page-content h1 {
+    font-size: 1.8rem;
   }
-  .heading-section h4 {
-    font-size: 20px;
+  
+  .main-profile {
+    padding: 15px;
   }
-  .gaming-library .item ul li {
-    width: 48% !important;
-  }
-  .gaming-library .item ul li:last-child {
-    text-align: left;
-  }
-  .start-stream .item {
-    margin: 15px 0px;
-  }
-  .feature-banner .thumb {
-    margin-top: 30px;
-  }
-  .main-profile .main-info {
-    margin: 45px 0px;
+  
+  .clips, .gaming-library {
+    padding: 20px;
   }
 }
 
-@media (max-width: 1200px) {
-  .header-area .main-nav .nav li {
-    padding-right: 5px;
-    padding-left: 5px;
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  .header-area .main-nav .logo {
-    margin-right: 30px;
-    border-right: none;
-  }
-  .gaming-library .item ul li {
-    width: 16%;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Asegura que el contenedor del mapa y el formulario se estiren al mismo alto */
-.map-container, .booking {
-  width: 100%;
-  min-height: 350px; /* Ajusta este valor según tu diseño */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  margin-top: 20px;
+.main-profile,
+.clips,
+.gaming-library {
+  animation: fadeIn 0.6s ease-out;
 }
 
-/* Ajusta el iframe del mapa para que se adapte al contenedor */
-.map-frame {
-  width: 100%;
-  height: 350px;
-  border: 0;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+/* ===== EFECTOS HOVER ADICIONALES ===== */
+.main-profile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Haz que el formulario de reservas ocupe el ancho completo de su columna */
-.booking-form {
-  width: 100%;
-
-  padding: 24px 16px;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+.clips:hover,
+.gaming-library:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Responsive: apila los elementos uno debajo del otro en pantallas pequeñas */
-@media (max-width: 991px) {
-  .map-frame,
-  .map-container,
-  .booking-form,
-  .booking {
-    height: 540px;
-    min-height: 250px;
-  }
+/* ===== ESTILOS PARA ELEMENTOS INTERACTIVOS ===== */
+.form-control:hover {
+  border-color: var(--primary-color);
 }
 
-/* === PERSONALIZACIÓN DEL CALENDARIO Y RELOJ (Tempus Dominus) === */
-
-:root {
-  --calendar-text: #ffffff;          /* texto normal */
-  --calendar-hover: #fbaf32;         /* seleccionado */
-  --calendar-hover-text: #000000;    /* texto cuando se selecciona */
-  --calendar-muted: #bbbbbb;         /* días/meses inactivos */
+.custom-select:hover {
+  border-color: var(--primary-color);
 }
 
-/* Fondo del calendario/reloj */
-.bootstrap-datetimepicker-widget {
-  background-color: #800020 !important;
-  color: #333333;
-  border-radius: 10px;
-  padding: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+/* ===== MEJORAS VISUALES ===== */
+.main-profile ul li:hover {
+  background: #e9ecef;
+  transform: translateX(5px);
 }
 
-/* Texto normal */
-.bootstrap-datetimepicker-widget table td,
-.bootstrap-datetimepicker-widget table th {
-  color: var(--calendar-text);
+.input-group {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
-/* Hover sobre celdas: ahora es suave, no dorado */
-.bootstrap-datetimepicker-widget table td:hover,
-.bootstrap-datetimepicker-widget table span:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: var(--calendar-text);
+.input-group-append .input-group-text {
+  transition: var(--transition);
 }
 
-/* Seleccionado */
-.bootstrap-datetimepicker-widget table td.active,
-.bootstrap-datetimepicker-widget table td.active:hover,
-.bootstrap-datetimepicker-widget table span.active,
-.bootstrap-datetimepicker-widget table span.active:hover {
-  background-color: var(--calendar-hover);
-  color: var(--calendar-hover-text);
-}
-
-/* Celdas inactivas (otro mes o año) */
-.bootstrap-datetimepicker-widget table td.old,
-.bootstrap-datetimepicker-widget table td.new,
-.bootstrap-datetimepicker-widget table td span.old {
-  color: var(--calendar-muted);
-}
-
-/* Asegura que los meses/años no estén todos pegados */
-.bootstrap-datetimepicker-widget table td span {
-  display: inline-block;
-  width: 60px;
-  height: 40px;
-  line-height: 40px;
-  margin: 4px;
-  text-align: center;
-  border-radius: 6px;
-  background-color: #800020;
-}
-
-/* Flechas y switch */
-.bootstrap-datetimepicker-widget table th.picker-switch,
-.bootstrap-datetimepicker-widget table th.next,
-.bootstrap-datetimepicker-widget table th.prev {
-  color: var(--calendar-text);
-}
-
-/* Números del reloj (hora/min/seg) bien distribuidos */
-.bootstrap-datetimepicker-widget table td.hour,
-.bootstrap-datetimepicker-widget table td.minute,
-.bootstrap-datetimepicker-widget table td.second {
-  display: inline-block;
-  width: 60px;
-  height: 40px;
-  line-height: 40px;
-  margin: 6px;
-  text-align: center;
-  border-radius: 6px;
-  background-color: #800020;
-  color: var(--calendar-text);
-  transition: all 0.2s ease-in-out;
-}
-
-/* Hover en reloj: suave */
-.bootstrap-datetimepicker-widget table td.hour:hover,
-.bootstrap-datetimepicker-widget table td.minute:hover,
-.bootstrap-datetimepicker-widget table td.second:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: var(--calendar-text);
+.input-group:hover .input-group-text {
+  background: #ffffff;
 }
