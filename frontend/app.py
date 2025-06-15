@@ -76,7 +76,7 @@ def resto(id_comercio):
     response = requests.get(f"{API_BACK}/comercio/{id_comercio}")
     if response.status_code == 200:
         comercio = response.json()
-        return render_template("resto.html", comercios=comercio)
+        return render_template("resto.html", comercios=comercio, x=comercio.get("latitud"), y=comercio.get("longitud"))
     else:
         # Redirigir al home. 
         flash("Comercio no encontrado")
