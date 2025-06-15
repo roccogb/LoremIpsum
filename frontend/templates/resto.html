@@ -24,7 +24,7 @@
                 <div class="main-profile ">
                   <div class="row">
                     <div class="col-lg-4">
-                      <img src="{{ url_for('static', filename=comercio.ruta_imagen) if comercio else '' }}" alt="" style="border-radius: 23px;">
+                      <img src="{{ url_for('static', filename=comercios.ruta_imagen) if comercios else '' }}" alt="" style="border-radius: 23px;">
                     </div>
                     <div class="col-lg-4 align-self-center">
                       <div class="main-info header-text">
@@ -102,7 +102,7 @@
                         <div class="col-lg-12">
                           <div class="booking-form">
                             <form id="form-reserva" method="POST" action="{{ url_for('reservar') }}">
-                              <input type="hidden" name="id_comercio" value="{{ comercio.id_comercio }}">
+                              <input type="hidden" name="id_comercio" value="{{ comercios.id_comercio }}">
                               <div class="control-group">
                                 <div class="input-group">
                                   <input name="nombre_bajo_reserva" type="text" class="form-control" placeholder="Titular de la reserva" required />
