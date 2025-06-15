@@ -39,10 +39,10 @@
                     </div>
                     <div class="col-lg-4 align-self-center">
                       <ul>
-                        <li>Categoría: {{ comercios.categoria if comercios else "No disponible" }}</li>
-                        <li>Tipo de cocina: {{ comercios.tipo_cocina if comercios else "No disponible" }}</li>
-                        <li>Teléfono: {{ comercios.telefono if comercios else "No disponible" }}</li>
-                        <li>Etiquetas: {{ comercios.etiquetas if comercios else "No disponible" }}</li>
+                        <li>{{ comercios.categoria if comercios else "No disponible" }}</li>  <!-- CATEGORÍA -->
+                        <li>{{ comercios.tipo_cocina if comercios else "No disponible" }}</li> <!-- TIPO DE COCINA -->
+                        <li>{{ comercios.telefono if comercios else "No disponible" }}</li> <!-- TELÉFONO -->
+                        <li>{{ comercios.etiquetas if comercios else "No disponible" }}</li> <!-- ETIQUETAS -->
                       </ul>
                     </div>
                   </div>
