@@ -1,4 +1,4 @@
-from flask import request, jsonify, render_template, redirect, flash, url_for
+from flask import request, jsonify
 from . import auth_bp
 from database.db import get_connection
 from geopy.geocoders import Nominatim
@@ -13,7 +13,6 @@ def transform_dir_coords(str_dir):
     except Exception as e:
         print("Error: ",e)
     return None
-
 
 @auth_bp.route("/consumidor", methods=["POST"])
 def auth_consumidor():
@@ -49,10 +48,9 @@ def auth_consumidor():
         print(f"Error en auth_consumidor: {e}")
         return jsonify({"msg": "Error interno del servidor auth consumidor"}), 500
 
-
+# Este endpoint va a autenticar usuarios comerciantes
 @auth_bp.route("/comercio", methods=["POST"])
 def auth_comercio():
-    """Endpoint para autenticar usuarios comerciantes"""
     try:
         data = request.get_json()
         email = data.get("email")  # Puede ser email o DNI
@@ -90,10 +88,9 @@ def auth_comercio():
         print(f"Error en auth_comercio: {e}")
         return jsonify({"msg": "Error interno del servidor auth_comercio"}), 500
 
-
+# Este endpoint va a registrar un usuario nuevo. Dependiendo el tipo del usuario va a realizar diferentes acciones
 @auth_bp.route('/register', methods=['POST'])
 def register_user():
-    """Endpoint para registrar usuarios (consumidor o comercio)"""
     try:
         data = request.get_json()
         
@@ -105,13 +102,11 @@ def register_user():
         
         cursor = conn.cursor()
         
-        
         if tipo_usuario == "consumidor":
                 return register_consumidor(data, cursor, conn)
         elif tipo_usuario == "comercio":
                 return register_comercio(data, cursor, conn)
                 
-        
         cursor.close()
         conn.close()
             
@@ -122,7 +117,6 @@ def register_user():
 def register_consumidor(data, cursor, conn):
     """Registra un usuario consumidor"""
     
-    # Extraer datos del consumidor
     nombre = data.get('nombre_consumidor', '').strip()
     apellido = data.get('apellido_consumidor', '').strip()
     usuario = data.get('usuario_consumidor', '').strip()
@@ -132,12 +126,9 @@ def register_consumidor(data, cursor, conn):
     
     # Validaciones básicas
     if not all([nombre, apellido, usuario, email, telefono, password]):
-        return jsonify({"error": "Todos los campos son requeridos para consumidor"}), 400
+        return jsonify({"error": "Ocurrió un error al ingresar los datos, verifique que todos los campos esten completos"}), 400
     
-    # Combinar nombre y apellido
-    nombre_completo = f"{nombre} {apellido}"
-    
-    # Convertir teléfono a entero       
+    nombre_completo = f"{nombre} {apellido}" 
     telefono_int = int(telefono)
     
     # Verificar si el usuario ya existe
@@ -149,7 +140,8 @@ def register_consumidor(data, cursor, conn):
     if cursor.fetchone():
         return jsonify({"error": "Usuario, email o teléfono ya registrado"}), 409
     
-    else :  # Insertar nuevo consumidor
+    else :  
+        # Insertar nuevo consumidor
         insert_query = """
             INSERT INTO usuario_consumidor 
             (nombre_apellido, usuario, email_usuario, contrasena, numero_telefono) 
@@ -162,11 +154,9 @@ def register_consumidor(data, cursor, conn):
         "message": "Consumidor registrado exitosamente",
     }), 200
 
-
 def register_comercio(data, cursor, conn):
     """Registra un usuario comercio y su comercio asociado"""
 
-    # Extraer datos del responsable del comercio
     nombre_responsable = data.get('nombre_responsable', '').strip()
     dni_responsable = data.get('dni_responsable', '0').strip()
     cuit_responsable = data.get('cuit_responsable', '0').strip()
@@ -180,14 +170,19 @@ def register_comercio(data, cursor, conn):
     lkmenu_comercio = data.get('lkmenu_comercio', '').strip()
     categoria = data.get('categoria', '').strip()
     tipo_cocina = data.get('tipo_cocina', '').strip()
-    ruta_img = data.get('ruta_img', '')
+    ruta_img = data.get('ruta_img')
     
     # Arrays que vienen del frontend
     dias = data.get('dias', [])
     horarios = data.get('horarios', [])
     etiquetas = data.get('etiquetas', [])
     
-    
+    if not all([nombre_responsable, dni_responsable, cuit_responsable, 
+                email_responsable, contrasena, nombre_comercio,
+                tel_comercio,lat,lng,lkmenu_comercio,
+                categoria,tipo_cocina,dias,horarios]):
+        return jsonify({"error": "Ocurrió un error al ingresar los datos, verifique que todos los campos esten completos"}), 400
+
     dni_int = int(dni_responsable)
     cuit_int = int(cuit_responsable)
     telefono_int = int(tel_comercio)
@@ -230,20 +225,16 @@ def register_comercio(data, cursor, conn):
     #  Insertar comercio a tabla comercio
     insert_comercio_query = """
         INSERT INTO comercios 
-        (id_usr_comercio, ruta_imagen, nombre_comercio, categoria, tipo_cocina, 
-            telefono, pdf_menu_link, dias, horarios, etiquetas, tiempo_de_creacion) 
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        (id_usr_comercio, ruta_imagen, nombre_comercio, categoria, tipo_cocina,telefono, latitud, longitud, tiempo_de_creacion,pdf_menu_link, calificacion, dias, horarios, etiquetas) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
     
     cursor.execute(insert_comercio_query, (
         id_usr_comercio, ruta_img, nombre_comercio, categoria, tipo_cocina,
-        telefono_int, lkmenu_comercio, dias_str, horarios_str, etiquetas_str,
-        datetime.datetime.now()
+        telefono_int,lat,lng,datetime.datetime.now(),lkmenu_comercio,0,dias_str, horarios_str, etiquetas_str
     ))
     
-    # confirmar consultas
     conn.commit()
-    
     return jsonify({
         "message": "Comercio registrado exitosamente",
     }), 200

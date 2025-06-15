@@ -11,6 +11,7 @@
 	http://www.tooplate.com/view/2105-input
 	-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/login_boots.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/materialize.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/tooplate.css')}}">
@@ -20,10 +21,14 @@
     <!--Agrego el 'div' con la id 'bg-fade' para asi poder realizar la animación de la transicion de fondo-->
     <!--En este elemento voy a cambiar la imagen como tambien agregar un 'fade' cuando ocurra el cambio de imagen-->
 <div id="bg-fade"></div>
+<a href="{{url_for('home', _external=True)}}" id="btn-home-corner" class="waves-effect">
+    <i class="material-icons">home</i>
+    <span>Inicio</span>
+</a>
 <div class="container">
     <div class="row tm-register-row tm-mb-35">
         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-login-l">
-           <form action="{{ url_for('auth_bp.login', _external=True) }}" method="post" class="tm-bg-gold p-5 h-100">
+           <form action="{{ url_for('login', _external=True) }}" method="post" class="tm-bg-gold p-5 h-100">
     <div class="input-field">
         <input placeholder="Email" id="email" name="email" type="text" class="validate" required>
     </div>
@@ -45,7 +50,7 @@
         </div>
         <div class="row">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 ml-auto mr-0 text-center">
-                <a href="{{url_for('auth_bp.register', _external=True )}}" class="waves-effect btn-large btn-large-wine px-4 rounded-0">Registrar usuario</a>
+                <a href="{{url_for('register', _external=True )}}" class="waves-effect btn-large btn-large-wine px-4 rounded-0">Registrar usuario</a>
             </div>
         </div>
         <footer class="row tm-mt-big mb-3">

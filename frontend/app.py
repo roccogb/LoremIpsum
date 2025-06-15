@@ -1,10 +1,13 @@
-from flask import Flask, request, render_template, redirect, session, url_for, flash, jsonify
+from flask import Flask, request, render_template, redirect, session, url_for, flash
+from werkzeug.utils import secure_filename
 import requests
+import os
 
 app = Flask(__name__)
 app.secret_key = "contra_ids"  # Necesario para usar session y flash
 
-API_BACK = "http://192.168.1.6:8100"  # Dirección local del backend
+API_BACK = "http://0.0.0.0:8100"                                        # Dirección local del backend
+UPLOAD_FOLDER = os.path.join(os.getcwd(),'static','media', 'img')       # Carpeta donde van a ir todas las imagenes
 
 # Pagina de inicio
 @app.route("/")
@@ -153,14 +156,13 @@ def login():
 def register():
     """Endpoint para renderizar la página de registro"""
     if request.method == 'POST':
-        # Este método maneja el formulario HTML tradicional
         form = request.form
         if form.get("tipo_usuario") == "consumidor":
             nombre_consumidor = form.get("first_name")
             apellido_consumidor = form.get("last_name")
             usuario_consumidor = form.get("usr")
             email_consumidor = form.get("email")
-            telefono_consumidor = form.get("moblie")
+            telefono_consumidor = form.get("mobile")
             password_consumidor = form.get("password")
             response = requests.post(f"{API_BACK}/auth/register", 
                                             json={
@@ -187,7 +189,18 @@ def register():
             cuit_responsable = form.get("cuit_responsable_bss")
             nombre_responsable = form.get("nr_bss")
             contrasena_usr_comercio = form.get("p_r_bss")
-            ruta_img = form.get("img_local")
+
+            imagen=request.files.get("img_local")
+            if not imagen or imagen.filename == "":
+                ruta_img="media/img/img_resto_defecto.jpg"
+            else:            
+                nombre_archivo_seguro=secure_filename(imagen.filename)
+                imagen.save( os.path.join(UPLOAD_FOLDER,nombre_archivo_seguro) )
+                ruta_img=f"media/img/{nombre_archivo_seguro}"
+
+            if "0-24" in horarios:
+                horarios=["0-24"]
+
             response = requests.post(f"{API_BACK}/auth/register", 
                                             json={
                                                 "tipo_usuario":form.get("tipo_usuario"),
@@ -207,13 +220,11 @@ def register():
                                                 "contrasena_usr_comercio" : contrasena_usr_comercio,
                                                 "ruta_img" : ruta_img
                                                   })
-            
-        if response.status_code == 200 :
-            flash("usuario registrado correctamente")
+        if response.status_code == 200:
+            flash("Se registro el usuario correctamente","message")
             return redirect('/login')
-
-        flash("error al registrar el usuario")
-        return render_template("register.html")
+        flash(f"{response.json()["error"]}","warning")
+    return render_template("register.html")
 
 # Logout
 @app.route("/logout")

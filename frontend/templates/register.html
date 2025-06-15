@@ -14,14 +14,19 @@
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/login_boots.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/materialize.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/tooplate.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon_burdeos.ico') }}">
 </head>
 
 <body id="register">
+    <a href="{{url_for('home', _external=True)}}" id="btn-home-corner" class="waves-effect">
+        <i class="material-icons">home</i>
+        <span>Inicio</span>
+    </a>
     <div class="container">
         <div class="row tm-register-row tm-bg-wine" id="block-insert-info">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-register-col-l">
-                <form action="" method="post">
+                <form action="{{url_for('register', _external=True)}}" method="post" enctype="multipart/form-data">
                     <div class="mb-2">
                         <label class="mr-4" id="check-usr-consumidor">
                             <input class="with-gap" id="check-usr-consumidor" name="tipo_usuario" type="radio" value="consumidor" checked/>
@@ -36,38 +41,35 @@
                     <div id="data-usr-consumidor">
                         <label class="sub-titulos">Ingrese sus datos</label>
                         <div class="input-field usr-consumidor">
-                            <input placeholder="Nombre" id="first_name" name="first_name" type="text" class="validate" required>
+                            <input placeholder="Nombre" id="first_name" name="first_name" type="text" class="validate">
                         </div>
                         <div class="input-field usr-consumidor">
-                            <input placeholder="Apellido" id="last_name" name="last_name" type="text" class="validate" required>
+                            <input placeholder="Apellido" id="last_name" name="last_name" type="text" class="validate">
                         </div>
                         <div class="input-field usr-consumidor">
-                            <input placeholder="Usuario" id="usr" name="usr" type="text" class="validate" required>
+                            <input placeholder="Usuario" id="usr" name="usr" type="text" class="validate">
                         </div>
                         <div class="input-field usr-consumidor">
-                            <input placeholder="Email" id="email" name="email" type="text" class="validate" required>
+                            <input placeholder="Email" id="email" name="email" type="text" class="validate">
                         </div>
                         <div class="input-field usr-consumidor">
-                            <input placeholder="Numero de teléfono" id="mobile" name="mobile" type="number" class="validate" required>
+                            <input placeholder="Numero de teléfono" id="mobile" name="mobile" type="number" class="validate">
                         </div>
                         <div class="input-field usr-consumidor">
-                            <input placeholder="Contraseña" id="password" name="password" type="password" class="validate" required>
-                        </div>
-                        <div class="input-field usr-consumidor">
-                            <input placeholder="Confirmar contraseña" id="password" name="password" type="password" class="validate" required>
+                            <input placeholder="Contraseña" id="password" name="password" type="password" class="validate">
                         </div>
                     </div>
                     <!-- Si el usuario es del tipo comercio-->
                     <div id="data-usr-comercio">
                         <label class="sub-titulos">Datos del comercio</label>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Nombre del comercio" id="nombre_comercio" name="name_bss" type="text" class="validate" required>
+                            <input placeholder="Nombre del comercio" id="nombre_comercio" name="name_bss" type="text" class="validate">
                         </div>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Teléfono del comercio" id="tel_comercio" name="tel_bss" type="number" class="validate" required>
+                            <input placeholder="Teléfono del comercio" id="tel_comercio" name="tel_bss" type="number" class="validate">
                         </div>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Direccion del comercio" id="dir_comercio" name="dir_bss" type="text" class="validate" required>
+                            <input placeholder="Direccion del comercio" id="dir_comercio" name="dir_bss" type="text" class="validate">
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 pl-0 tm-pr-xs-0">
                             <select name="categoria">
@@ -97,7 +99,7 @@
                                     <td class="ltc">Dias</td>
                                     <td class="td-dia-horario">
                                         <div class="input-field usr-comercio">
-                                            <select multiple name="dias[]" id="dias" required>
+                                            <select multiple name="dias[]" id="dias">
                                                 <option value="" disabled>Selecciona una o más dias</option>
                                                 <option value="lunes">Lunes</option>
                                                 <option value="martes">Martes</option>
@@ -114,7 +116,7 @@
                                     <td class="ltc">Horario</td>
                                     <td class="td-dia-horario">
                                         <div class="input-field usr-comercio">
-                                            <select multiple name="horarios[]" id="horarios" required>
+                                            <select multiple name="horarios[]" id="horarios">
                                                 <option value="" disabled>Selecciona una o mas franjas horarias</option>
                                                 <option value="7-11">Desayuno(7:00-11:00)</option>
                                                 <option value="12-15">Almuerzo(12:00-15:00)</option>
@@ -129,11 +131,11 @@
                             </table>
                         </div>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Link menu PDF" id="lkmenu_comercio" name="lkm_bss" type="url" class="validate" required>
+                            <input placeholder="Link menu PDF" id="lkmenu_comercio" name="lkm_bss" type="url" class="validate">
                         </div>
                         <label class="sub-titulos">Etiquetas del comercio</label>
                         <div class="input-field usr-comercio">
-                            <select multiple name="etiquetas[]" id="etiquetas_comercio" required>
+                            <select multiple name="etiquetas[]" id="etiquetas_comercio">
                                 <option value="" disabled>Selecciona una o más etiquetas</option>
                                 <option value="musica_vivo">Musica en vivo</option>
                                 <option value="happy_hour">Happy hour</option>
@@ -151,26 +153,23 @@
                         <br>
                         <label class="sub-titulos">Datos del responsable</label>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Documento de Identidad Nacional(DNI)" id="dni_responsablebss" name="dni_responsable_bss" type="number" class="validate" required>
+                            <input placeholder="Documento de Identidad Nacional(DNI)" id="dni_responsablebss" name="dni_responsable_bss" type="number" class="validate">
                         </div>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Clave Única de Identificación Tributaria(CUIT)" id="cuit_responsablebss" name="cuit_responsable_bss" type="number" class="validate" required>
+                            <input placeholder="Clave Única de Identificación Tributaria(CUIT)" id="cuit_responsablebss" name="cuit_responsable_bss" type="number" class="validate">
                         </div>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Nombre completo" id="nombre_responsable_bss" name="nr_bss" type="text" class="validate" required>
+                            <input placeholder="Nombre completo" id="nombre_responsable_bss" name="nr_bss" type="text" class="validate">
                         </div>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Email del responsable" id="email_responasble_bss" name="email_bss" type="text" class="validate" required>
+                            <input placeholder="Email del responsable" id="email_responasble_bss" name="email_bss" type="text" class="validate">
                         </div>
                         <div class="input-field usr-comercio">
-                            <input placeholder="Contraseña" id="p_responsable" name="p_r_bss" type="password" class="validate" required>
-                        </div>
-                        <div class="input-field usr-comercio">
-                            <input placeholder="Confirmar contraseña" id="cp_responsable" name="cp_r_bss" type="password" class="validate" required>
+                            <input placeholder="Contraseña" id="p_responsable" name="p_r_bss" type="password" class="validate">
                         </div>
                         <!-- La implementación del boton del certificado esta de más. Se puede dejar o sacar-->
                         <label class="sub-titulos">Adjuntar imagen del local</label>
-                        <input type="file" name="img_local" id="img_local" accept="png/jpg/jpeg">
+                        <input type="file" name="img_local" id="img_local" accept=".png, .jpg, .jpeg">
                         <label for="img_local" class="upload-file-label">Subir imagen</label>
                     </div>
                     <!-- Boton que enviará el formulario. Dependiendo que tipo de checkbox este seleccionada, el endpoint vinculado responderá de distinta manera-->
@@ -184,7 +183,6 @@
                     <img id="icon-img" src="{{url_for('static', filename='media/img/icon-FoodyBA-blanco-dorado.png')}}" alt="Icono FoodyBA" class="mb-3">
                     <h4 class="mt-0 white-text">Registrarse en FoodyBA</h4>
                 </header>
-                <a href="/" class="waves-effect btn-large mt-4" id="btn-home">Volver al inicio</a>
             </div>
         </div>
         <footer class="row tm-mt-big mb-3">
