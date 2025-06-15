@@ -3,7 +3,7 @@ from . import favoritos_bp
 from database.db import get_connection
 
 
-@favoritos_bp.route('/agregar', methods=['POST'])
+@favoritos_bp.route('/marcar', methods=['POST'])
 def agregar():
     data = request.get_json()
     id_usr = data.get('id_usr')
