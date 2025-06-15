@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
+{% endblock %}
+{% block content%}
+    <div class="container">
+        <div class="popular-section">
+
+            <h1 class="section-title">🙋 Datos del responsable</h1>
+            <div class="restaurant-card">
+                <p><strong>Nombre:</strong> Pablo Kenny</p>
+                <p><strong>DNI:</strong> 25431220</p>
+                <p><strong>CUIT:</strong> 2254312203</p>
+                <p><strong>Email:</strong> supercomediante@lover.com</p>
+            </div>
+
+            <h2 class="section-title">🏪 Mi comercio</h2>
+            <div class="restaurant-card">
+                <div class="perfil-resto-img">
+                    <img src="../static/media/img/burger_house.jpg" alt="Image-Comercio">
+                    <div class="restaurant-name">Burger-House</div>
+                    <div class="restaurant-rating">
+                        <div class="rating-stars">★★★★☆</div>
+                        <div class="rating-number">4.0</div>
+                    </div>
+                </div>
+                <div class="perfil-resto-info">
+                    <p><strong>Categoría:</strong> Especialidad</p>
+                    <p><strong>Tipo de cocina:</strong> Comida rápida</p>
+                    <p><strong>Teléfono:</strong> 34341212</p>
+                    <p><strong>Ubicación:</strong> Avenida Corrientes 3232</p>
+                    <p><strong>Días:</strong> Lunes - Domingo</p>
+                    <p><strong>Horarios:</strong> 24h</p>
+                    <p><strong>Etiquetas:</strong> Apto para mascotas / Wifi / Sin Gluten</p>
+                </div>
+            </div>
+
+            <h2 class="section-title clickable collapsed" onclick="toggleSection('reservas')">📅 Reservas</h2>
+            <div id="reservas" class="collapsible-content">
+                <div class="list-reservas">
+                    <div class="info-reserva">
+                        <p><strong>Nombre bajo reserva:</strong> Kevin Lomonaco</p>
+                        <p><strong>Email:</strong> guarachita@hotmail.com</p>
+                        <p><strong>Teléfono:</strong> 20335555</p>
+                        <p><strong>Cantidad de personas:</strong> 2</p>
+                        <p><strong>Solicitud especial:</strong> Buena música...</p>
+                        <p><strong>Fecha de la reserva:</strong> 08/06/2025 21:30</p>
+                        <p><strong>Estado de la reserva:</strong> <span class="estado-cancelada">Cancelada</span></p>
+                    </div>
+                    <div class="info-reserva">
+                        <p><strong>Nombre bajo reserva:</strong> Matías Sapienza</p>
+                        <p><strong>Email:</strong> matikpo2002@live.com</p>
+                        <p><strong>Teléfono:</strong> 22113030</p>
+                        <p><strong>Cantidad de personas:</strong> 4</p>
+                        <p><strong>Solicitud especial:</strong> Punto de cocción: La carne tiene que decir mu</p>
+                        <p><strong>Fecha de la reserva:</strong> 01/06/2025 20:30</p>
+                        <p><strong>Estado de la reserva:</strong> <span class="estado-activa">Activa</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title clickable collapsed" onclick="toggleSection('resenias')">📝 Reseñas</h2>
+            <div id="resenias" class="collapsible-content">
+                <div class="list-resenias">
+                    <div class="info-resenia">
+                        <p><strong>Nombre:</strong> Franco Mastantuono</p>
+                        <p><strong>Comentario:</strong> Extraordinario</p>
+                        <p><strong>Calificación:</strong> <span class="calificacion-alta">★★★★☆ (4/5)</span></p>
+                        <p><strong>Tiempo de creación:</strong> 08/06/2025 17:40</p>
+                    </div>
+                    <div class="info-resenia">
+                        <p><strong>Nombre:</strong> Luquitas Rodriguez</p>
+                        <p><strong>Comentario:</strong> Una poronga negro</p>
+                        <p><strong>Calificación:</strong> <span class="calificacion-baja">★☆☆☆☆ (1/5)</span></p>
+                        <p><strong>Tiempo de creación:</strong> 05/06/2025 21:30</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="back-section">
+                <button class="back-btn" href="/">← Volver al inicio</button>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
+{% endblock %}

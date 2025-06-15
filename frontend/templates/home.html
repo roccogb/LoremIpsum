@@ -6,11 +6,12 @@
 
 {% block content %}
     <div class="home-container">
-        <!-- Hero Section -->
+        <!-- Ranking de mejores restaurantes calificados -->
         <div class="hero-section">
             <div class="hero-card">
                 <div class="restaurant-info">
-                    <h1 class="restaurant-name">Restaurante 1°</h1>
+                    <div id="comercios_data" style="display: none;">{{rank_comercios | tojson | safe}}</div>
+                    <h1 class="restaurant-name"></h1>
                     <div class="stars">
                         <span class="star">★</span>
                         <span class="star">★</span>
@@ -19,99 +20,33 @@
                         <span class="star">★</span>
                     </div>
                 </div>
-                <button class="nav-arrow left">‹</button>
-                <button class="nav-arrow right">›</button>
+                <button class="nav-arrow left" onclick="prevRestauranteTop()">‹</button>
+                <button class="nav-arrow right" onclick="nextRestauranteTop()">›</button>
             </div>
         </div>
 
-        <!-- Popular Restaurants Section -->
+        <!-- Seccion de restaurantes populares -->
         <div class="popular-section">
-            <a href="/descubre" class="section-title">Restaurantes populares</a>
+            <a href="{{url_for('descubre', indice_pag=0, _external=True)}}" class="section-title">Restaurantes populares</a>
             
             <div class="restaurants-grid">
-                <div class="restaurant-card" onclick="goToRestaurant(1)">
-                    <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
-                    <div class="restaurant-icon">🏪</div>
-                    <div class="restaurant-rating">
-                        <span>3.5</span>
-                        <span class="star">★</span>
+                {% for comercio in comercios_destacados %}
+                    <div class="restaurant-card" onclick="goToComercio('{{comercio[id_comercio]}}')">
+                        <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
+                        <div class="restaurant-icon">
+                            <img src="{{url_for('static', filename=comercio['ruta_imagen'])}}" alt="Comercio-Imagen">
+                        </div>
+                        <div class="restaurant-rating">
+                            <span>{{comercio["calificacion"]}}</span>
+                            <span class="star">★</span>
+                        </div>
+                        <div class="restaurant-details">{{comercio["nombre_comercio"]}}</div>
                     </div>
-                    <div class="restaurant-details">Restaurante 1</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="goToRestaurant(2)">
-                    <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
-                    <div class="restaurant-icon">🏪</div>
-                    <div class="restaurant-rating">
-                        <span>3.8</span>
-                        <span class="star">★</span>
-                    </div>
-                    <div class="restaurant-details">Restaurante 2</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="goToRestaurant(3)">
-                    <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
-                    <div class="restaurant-icon">🏪</div>
-                    <div class="restaurant-rating">
-                        <span>3.6</span>
-                        <span class="star">★</span>
-                    </div>
-                    <div class="restaurant-details">Restaurante 3</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="goToRestaurant(4)">
-                    <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
-                    <div class="restaurant-icon">🏪</div>
-                    <div class="restaurant-rating">
-                        <span>3.9</span>
-                        <span class="star">★</span>
-                    </div>
-                    <div class="restaurant-details">Restaurante 4</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="goToRestaurant(5)">
-                    <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
-                    <div class="restaurant-icon">🏪</div>
-                    <div class="restaurant-rating">
-                        <span>3.7</span>
-                        <span class="star">★</span>
-                    </div>
-                    <div class="restaurant-details">Restaurante 5</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="goToRestaurant(6)">
-                    <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
-                    <div class="restaurant-icon">🏪</div>
-                    <div class="restaurant-rating">
-                        <span>4.0</span>
-                        <span class="star">★</span>
-                    </div>
-                    <div class="restaurant-details">Restaurante 6</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="goToRestaurant(7)">
-                    <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
-                    <div class="restaurant-icon">🏪</div>
-                    <div class="restaurant-rating">
-                        <span>3.8</span>
-                        <span class="star">★</span>
-                    </div>
-                    <div class="restaurant-details">Restaurante 8</div>
-                </div>
-                
-                <div class="restaurant-card" onclick="goToRestaurant(8)">
-                    <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
-                    <div class="restaurant-icon">🏪</div>
-                    <div class="restaurant-rating">
-                        <span>3.9</span>
-                        <span class="star">★</span>
-                    </div>
-                    <div class="restaurant-details">Restaurante 7</div>
-                </div>
+                {% endfor %}
             </div>
             
             <center>
-                <a href="/descubre">
+                <a href="{{url_for('descubre', indice_pag=0,_external=True)}}">
                     <button class="discover-btn">Descubre más</button>
                 </a>
             </center>
