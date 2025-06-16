@@ -30,15 +30,21 @@ def agregar():
    
     return jsonify({"success": True, "favorito": favorito})
 
-@favoritos_bp.route('/<int:id_usr>', methods=['GET']) #Lista los ID de los comercios favoritos de un usuario específico.
-def listar_favoritos(id_usr):
+@favoritos_bp.route('/detallado/<int:id_usr>', methods=['GET'])
+def listar_favoritos_con_detalle(id_usr):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
-    cursor.execute("SELECT id_comercio FROM favoritos WHERE id_usr=%s", (id_usr,)) #Busca todos los id_comercio que están marcados como favoritos por ese usuario.
-    favs = [row['id_comercio'] for row in cursor.fetchall()]
+    query = """
+        SELECT c.nombre, c.imagen
+        FROM favoritos f
+        LEFT JOIN comercios c ON f.id_comercio = c.id_comercio
+        WHERE f.id_usr = %s
+    """
+    cursor.execute(query, (id_usr,))
+    resultados = cursor.fetchall()
 
     cursor.close()
     conn.close()
 
-    return jsonify(favs)
+    return jsonify(resultados)
