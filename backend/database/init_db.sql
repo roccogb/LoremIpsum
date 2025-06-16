@@ -53,7 +53,7 @@ CREATE TABLE resenias (
     id_usr INT,
     comentario TEXT,
     calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
-    tiempo_de_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    tiempo_de_creacion DATETIME,
     FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE,
     FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE
 );
@@ -82,3 +82,4 @@ CREATE TABLE favoritos (
     FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE, 
     FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE
 );  --Si se elimina el usuario o el comercio, se eliminan también sus favoritos.
+

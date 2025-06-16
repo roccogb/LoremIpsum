@@ -92,6 +92,47 @@ li:last-child {
   transition: opacity 1s;                       /* Me va a permitir agregar un efecto de transicion de 1s cuando la propiedad opacidad sufra un cambio*/
 }
 
+/* Boton para volver al inicio en esquina superior izquierda */
+#btn-home-corner {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: var(--wine);
+  color: white;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+#btn-home-corner:hover,
+#btn-home-corner:focus {
+  background-color: var(--sgray);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  text-decoration: none;
+}
+
+#btn-home-corner:active {
+  transform: translateY(0px);
+}
+
+#btn-home-corner i {
+  font-size: 18px;
+}
+
+#btn-home-corner span {
+  font-size: 0.85rem;
+}
+
 #register .container {
   max-width: 900px;
   padding: 5px;
@@ -100,6 +141,7 @@ li:last-child {
 /*Personalizo el bloque(div) que permite al usuario ingresar información*/
 #block-insert-info{
   height: 750px;
+  position: relative; /* Añadido para el posicionamiento del botón */
 }
 
 /* Configuro la columna, utilizando 'Flexbox', para que el icono y el texto se encuentren centrados*/
@@ -193,6 +235,7 @@ li:last-child {
 
 /*Personalizo especificamente el bloque que va a ingresar la información del consumidor*/
 #data-usr-consumidor{
+  top: 75px;
   transform: translateX(0px);                           /* Aplico una transformación dejandolo en la posicion inicial*/
   z-index: 2;                                           /* Defino la profundidad del elemento. Este mismo se mostrará abajo de cualquiera  que tenga un nivel de profundidad mayor a 2*/
 }
@@ -200,9 +243,30 @@ li:last-child {
 /*Personalizo especificamente el bloque que va a ingresar la información del comerciante*/
 #data-usr-comercio{
   transform: translateX(2000px);            /* Valor inicial del bloque*/
-  overflow: scroll;                         /* Atributo que me va a permitir scrollear entre los elementos para ingresar información. Esto funciona solamente si se especifica la altura*/
+  overflow-y: auto;                         /* Solo scroll vertical */
+  overflow-x: hidden;                       /* Oculta scroll horizontal */
   z-index: 1;                               /* Defino la profundidad del elemento. Este mismo se mostrará abajo de cualquiera  que tenga un nivel de profundidad mayor a 1*/
-  height: 80%;
+  height: 580px;                            /* Altura fija para permitir scroll */
+  padding-bottom: 80px;
+}
+
+/* Estilos para la scrollbar del bloque comercio */
+#data-usr-comercio::-webkit-scrollbar {
+  width: 8px;
+}
+
+#data-usr-comercio::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+#data-usr-comercio::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 4px;
+}
+
+#data-usr-comercio::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.8);
 }
 
 .tm-register-col-r {
@@ -302,7 +366,7 @@ textarea:focus {
 .dropdown-content li > span {
   text-align: center;
   color: white;
-  width: 400px;
+  width: 350px;
 }
 
 /* Escondo la flechita de los select*/
@@ -327,7 +391,7 @@ textarea:focus {
   text-align: center !important;
   color: white;
   margin: auto;
-  width: 100%;                          /* Fuerzo el cambio de ancho. El mismo va a ser igual a todo el ancho del bloque*/
+  width: 85%;                           /* Fuerzo el cambio de ancho. El mismo va a ser igual a todo el ancho del bloque*/
   display: flex !important;             /* Convierto el 'select' en una flexbox para poder trabajar mejor con los elementos*/
   align-items: center !important;       /* Alineo los items en el centro verticalmente*/
   justify-content: center !important;   /* Si no uso todo el espacio del contenedor, lo alineo en el centro. Sirve para alinear horizontalmente*/
@@ -383,13 +447,15 @@ textarea:focus {
   transform: translateY(3px);
 }
 
-/* Esta clase va a representar a los botones de color dorado*/
+/* Esta clase va a representar a los botones de color dorado. Este mismo se va a encontar en el template de registro*/
 .btn-large-gold{
   position: absolute;
-  top: 655px;
-  left: 150px;
+  bottom: 20px;                        
+  left: 50%;                           
+  transform: translateX(-50%);         
   background-color: var(--gold);
   color: white;
+  z-index: 10;                         
 }
 
 /* Esta clase va a representar a los botones de color vino*/
@@ -442,27 +508,6 @@ input[type="file"] {
   transform: translateY(3px);
 }
 
-/* Boton para volver al inicio*/
-#btn-home {
-  display: block;
-  width: 85%;
-  top: 225px;
-  background-color: #800020;
-  color: white;
-  border-radius: 10px;
-  z-index: 3;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Añade sombra para efecto de elevación */
-}
-
-#btn-home:hover,
-#btn-home:focus{
-  background-color: var(--sgray);
-  transform: translateY(-3px);
-  font-weight: bold;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-
 .tm-px-5 {
   padding-left: 3rem;
   padding-right: 3rem;
@@ -480,6 +525,24 @@ input[type="file"] {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+/* Responsive para el botón de inicio en esquina */
+@media (max-width: 480px) {
+  #btn-home-corner {
+    top: 15px;
+    left: 15px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  
+  #btn-home-corner i {
+    font-size: 16px;
+  }
+  
+  #btn-home-corner span {
+    font-size: 0.75rem;
+  }
 }
 
 @media (max-width: 400px) {
@@ -517,6 +580,19 @@ input[type="file"] {
   .tm-login-l {
     margin-top: 35px;
   }
+
+  .btn-large-gold {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    padding: 10px 20px;
+  }
+
+  #data-usr-comercio {
+    height: 500px; 
+    padding-bottom: 70px;
+  }
 }
 
 @media (max-width: 400px) {
@@ -541,5 +617,12 @@ input[type="file"] {
 
   .tm-mt-big {
     margin-top: 80px;
+  }
+
+  /* Más ajustes del botón para pantallas muy pequeñas */
+  .btn-large-gold {
+    bottom: 5px;
+    width: 180px;
+    font-size: 0.9rem;
   }
 }

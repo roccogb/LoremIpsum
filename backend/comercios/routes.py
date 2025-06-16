@@ -3,20 +3,7 @@
 from flask import jsonify, request
 from . import comercios_bp
 from database.db import get_connection
-from geopy.geocoders import Nominatim
-from ast import literal_eval                    # Libreria que estándar de Python para trabajr con cadenas
-
-# Esta funcion va a convertir una dirección, pasada como string, en coordenadas geograficas.
-# La misma puede ser utilizada por el blueprint 'Comercios' como tambien 'Autenticación'
-def transform_dir_coords(str_dir):
-    try:
-        geolocalizador=Nominatim(user_agent="geo-FoodyBA")    
-        locacion=geolocalizador.geocode(str_dir)
-        if locacion:
-            return [locacion.latitude, locacion.longitude]
-    except Exception as e:
-        print("Error: ",e)
-    return None
+from fextra import transform_dir_coords
 
 # Endpoint que va a retornar TODA la información de los comercios. La misma será retornada en formato JSON
 @comercios_bp.route("/")

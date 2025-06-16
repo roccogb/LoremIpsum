@@ -39,7 +39,8 @@ def listar_favoritos_con_detalle(id_usr):
         SELECT c.nombre, c.imagen
         FROM favoritos f
         LEFT JOIN comercios c ON f.id_comercio = c.id_comercio
-        WHERE f.id_usr = %s
+        WHERE f.id_usr = %s 
+
     """
     cursor.execute(query, (id_usr,))
     resultados = cursor.fetchall()
