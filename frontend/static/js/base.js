@@ -57,3 +57,37 @@ document.querySelector(".nav-user").addEventListener("keydown", function (e) {
         showUserMenu();
     }
 });
+
+// Selecciona todos los botones de favoritos
+document.querySelectorAll('.heart-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(event) {
+        event.stopPropagation();
+        const id_comercio = btn.getAttribute('data-id');
+        const id_usr = btn.getAttribute('data-usr');
+        if (!id_usr) {
+            window.location.href = "/login";
+            return;
+        }
+        fetch('/favoritos/marcar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_usr: id_usr,
+                id_comercio: id_comercio
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const icon = document.getElementById('icono-fav-' + id_comercio);
+            if (data.favorito) {
+                icon.innerHTML = "&#9829;";
+                icon.classList.add('heart-btn.active');
+            } else {
+                icon.innerHTML = "&#9825;";
+                icon.classList.remove('heart-btn.active');
+            }
+        });
+    });
+});
