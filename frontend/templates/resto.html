@@ -6,7 +6,6 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>  <!-- Archivo JS de Leaflet-->
     <link href="{{ url_for('static', filename='css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/seleccion_resto.css') }}">
-  
 {% endblock %}
 
 {% block content %}
@@ -16,26 +15,38 @@
         <div class="col-lg-12">
           <div class="page-content">
             <div class="row">
-              <h1>
-                <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
-                {{ comercios.nombre_comercio if comercio else "Restaurante no encontrado" }}
-              </h1>
               <div class="col-lg-12">
                 <div class="main-profile ">
                   <div class="row">
                     <div class="col-lg-4">
-                      <img src="{{ url_for('static', filename=comercios.ruta_imagen) if comercios else '' }}" alt="" style="border-radius: 23px;">
+                      <img src="{{ url_for('static', filename=comercios.ruta_imagen)}}" alt="Imagen-Comercio">
                     </div>
                     <div class="col-lg-4 align-self-center">
                       <div class="main-info header-text">
-                        <h4>Calificación</h4>
-                        <div class="stars"></div>
+                        <h3>
+                          <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
+                          {{ comercios.nombre_comercio}}
+                        </h3>
+                          <div class="stars">
+                            {% for i in range(comercios.calificacion) %}
+                              ★
+                            {% endfor %}
+                            {% for i in range(5 - comercios.calificacion) %}
+                              ☆
+                            {% endfor %}
+                          </div>
                         <br>
-                        <br>
-                        <p> {{ comercios.categoria }} - {{ comercios.tipo_cocina }}</p>
-                        <p>Ubicación: lat {{ comercios.latitud }} - long {{ comercios.longitud }}</p>
+                        <div class="tags-section">
+                          {% for tag in comercios.etiquetas %}
+                            <p>{{tag}}</p>
+                          {% endfor %}
+                        </div>
                         <div class="main-border-button">
-                          <a href="#form-reserva">Reservar</a>
+                          {% if comercios.pdf_menu_link %}
+                            <a href="{{ comercios.pdf_menu_link }}" target="_blank">Menú</a>
+                          {% else %}
+                            <a href="#" onclick="alert('Menú no disponible'); return false;">Menú</a>
+                          {% endif %}
                         </div>
                       </div>
                     </div>
@@ -44,44 +55,29 @@
                         <li>Categoría: {{ comercios.categoria if comercios else "No disponible" }}</li>
                         <li>Tipo de cocina: {{ comercios.tipo_cocina if comercios else "No disponible" }}</li>
                         <li>Teléfono: {{ comercios.telefono if comercios else "No disponible" }}</li>
-                        <li>Etiquetas: {{ comercios.etiquetas if comercios else "No disponible" }}</li>
+                        <li class="horarios-item">
+                          <span class="horarios-label">Dias:</span>
+                          <div class="dias-section">
+                            {% for dia in comercios.dias %}
+                              <span class="dia-item">{{dia}}</span>
+                            {% endfor %}
+                          </div>
+                        </li>
+                        <li>
+                          <span class="horarios-label">Horarios:</span>
+                          <div class="dias-section">
+                            {% for horario in comercios.horarios %}
+                              <span class="dia-item">{{horario}}</span>
+                            {% endfor %}
+                          </div>
+                        </li>
                       </ul>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <div class="clips">
-                        <div class="row">
-                          <div class="col-lg-12">
-                            <div class="heading-section">
-                              <h4><em>Descripción</em></h4>
-                            </div>
-                          </div>
-                          <div class="col-lg-100 col-sm-100">
-                            <div class="item">
-                              <div class="thumb">
-                              </div>
-                              <div class="down-content">
-                                <li> {{ comercios.descripcion if comercios else "Descripción no disponible" }} </li>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-lg-12">
-                            <div class="main-button">
-                              {% if comercios.pdf_menu_link %}
-                                <a href=" {{ comercios.pdf_menu_link }}" target= "_blank">Ver Menú</a>
-                              {% else %}
-                               <a href="#" onclick="alert('Menú no disponible'); return false;">Ver Menú</a>
-                              {% endif %}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
             <!-- RESERVA Y MAPA -->
             <div class="gaming-library profile-library">
               <div class="col-lg-12">
@@ -91,8 +87,8 @@
               </div>
               <div class="row">
                 <div class="col-lg-6">
-                  <div class="map">
-                    <p id="coordenadas_comercio">{{x}};{{y}}</p>
+                  <div id="map">
+                    <p id="coordenadas_comercio">{{comercios.latitud}};{{comercios.longitud}}</p>
                   </div>
                 </div>
                 <div class="col-lg-6">
@@ -171,14 +167,54 @@
                 </div> 
               </div> 
             </div> 
-            <!-- FINAL RESERVA Y MAPA -->
+            <!-- Sección que va a mostrar las reseñas del sitio -->
+            <div class="gaming-library profile-library" style="margin-top: 30px;">
+              <div class="col-lg-12">
+                <div class="heading-section">
+                  <h4><em>Reseñas de Clientes</em></h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="reviews-section">
+                    <div class="reviews-list">
+                      {% if resenas %}
+                        {% for resena in resenas %}
+                        <div class="review-item">
+                          <div class="review-header">
+                            <div class="reviewer-info">
+                              <strong>{{ resena.nombre_usuario }}</strong>
+                              <div class="rating">
+                                {% for i in range(resena.calificacion) %}
+                                  ⭐
+                                {% endfor %}
+                                {% for i in range(5 - resena.calificacion) %}
+                                  ☆
+                                {% endfor %}
+                              </div>
+                            </div>
+                            <small class="text-muted">{{ resena.fecha_resena.strftime('%d/%m/%Y') if resena.fecha_resena else 'Fecha no disponible' }}</small>
+                          </div>
+                          <div class="review-content">
+                            <p>{{ resena.comentario }}</p>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      {% else %}
+                        <div class="no-reviews">
+                          <p>Aún no hay reseñas para este restaurante.</p>
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>  
     </div>  
-  
     <br>
-
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
@@ -194,7 +230,6 @@
     <script src="{{ url_for('static', filename='bootstrap/resto_bootstrap.min.js') }}"></script>
 
     <script src="{{ url_for('static', filename='js/isotope.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/owl-carousel.js') }}"></script>
     <script src="{{ url_for('static', filename='js/tabs.js') }}"></script>
     <script src="{{ url_for('static', filename='js/popup.js') }}"></script>
     <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
@@ -203,7 +238,6 @@
 
     <!-- Scripts de reserva -->
     <script src="{{ url_for('static', filename='js/easing.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/moment-timezone.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/tempusdominus-bootstrap-4.min.js') }}"></script>
