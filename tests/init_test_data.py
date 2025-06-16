@@ -66,11 +66,10 @@ cursor.execute("""INSERT INTO reservas
 
 ############## REGISTROS DE PRUEBA PARA LA TABLA 'resenias'
 cursor.execute("""INSERT INTO resenias
-                  (id_comercio,id_usr,comentario,calificacion,tiempo_de_creacion)
+                  (id_comercio,id_usr,comentario,calificacion,tiempo_de_creacion, id_reserva)
                   VALUES
-                  (32,5,"Extraordinario lugar, siempre atienden con la mejor. Ojala pudiera poner mayor puntuación", 5,'2025-06-15 16:15:20'),
-                  (32, 1, "Habia un enfermo en el baño que se estaba masturbando mientras gritaba extraordinario y nadie hizo nada. Por lo visto es un usuario habitual del establecimiento y estan acostumbrados",1,'2025-05-15 15:30:15' ),
-                  (26,2, "Muy linda musica y todos fueron mas lindos",5,'2025-06-15 18:45:20');""")
+                  (32, 1, "Habia un enfermo en el baño que se estaba masturbando mientras gritaba extraordinario y nadie hizo nada. Por lo visto es un usuario habitual del establecimiento y estan acostumbrados",1,'2025-05-15 15:30:15',15 );
+                """)
 
 conn.commit()                           # Guardo los cambios realizados en la BDD
 cursor.close()

@@ -6,7 +6,7 @@ from database.db import get_connection
 def create_review():    
     data = request.get_json()
     id_comercio = data.get("id_comercio")
-    calificacion = data.get("puntuacion")
+    calificacion = data.get("calificacion")
     comentario = data.get("comentario")
     id_reserva = data.get("id_reserva")
     id_usr = data.get("id_usr")
@@ -23,8 +23,8 @@ def create_review():
     try:
         # Verificar reserva válida y confirmada por asistencia.
         cursor.execute (""" 
-            SELECT * FROM reservas WHERE id_reservas = %s 
-            AND id_usr = %s AND id_comercio = %s AND estado_reserva = TRUE 
+            SELECT * FROM reservas WHERE id_reserva = %s 
+            AND id_usr = %s AND id_comercio = %s AND estado_reserva = 1 
             """,(id_reserva, id_usr, id_comercio))
         reserva_valida = cursor.fetchone()
 
@@ -33,8 +33,10 @@ def create_review():
 
         # Insertar reseña
         cursor.execute ("""
-            INSERT INTO resenias (id_comercio, id_usr, comentario, calificacion, tiempo_de_creacion, id_reserva)
-            VALUES (%s, %s, %s, %s, NOW(), %s)
+            INSERT INTO resenias 
+            (id_comercio, id_usr, comentario, calificacion, tiempo_de_creacion, id_reserva)
+            VALUES 
+            (%s, %s, %s, %s, NOW(), %s);
             """, (id_comercio, id_usr, comentario, calificacion, id_reserva))
         conn.commit()
 
@@ -48,40 +50,7 @@ def create_review():
         cursor.close()
         conn.close()
 
-@review_bp.route("/review/<int:id_resenia>", methods=["GET"])
-def get_review(id_resenia):
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    try:
-        cursor.execute("""
-            SELECT 
-                r.comentario,
-                r.calificacion,
-                r.tiempo_de_creacion,
-                u.usuario,
-                c.nombre_comercio
-            FROM resenias r
-            JOIN usuario_consumidor u ON r.id_usr = u.id_usr
-            JOIN comercio c ON r.id_comercio = c.id_comercio
-            WHERE id_resenia = %s
-        """, (id_resenia,))
-        review = cursor.fetchone()
-
-        cursor.close()
-        conn.close()
-
-        if not review:
-            abort(404, descripcion="Reseña no encontrada")
-
-        return jsonify(review),200
-
-    except Exception as e:
-        cursor.close()
-        conn.close()
-        abort(500, description=str(e))
-
-@review_bp.route("/<int:id_comercio>", methods=["GET"])
+@review_bp.route("/com/<int:id_comercio>", methods=["GET"])
 def get_all_review_com(id_comercio):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
@@ -93,10 +62,8 @@ def get_all_review_com(id_comercio):
                 r.calificacion,
                 r.tiempo_de_creacion,
                 u.usuario
-                c.nombre_comercio
             FROM resenias r
             JOIN usuario_consumidor u ON r.id_usr = u.id_usr
-            JOIN comercio c ON r.id_comercio = c.id_comercio
             WHERE id_comercio = %s
         """, (id_comercio,))
         all_reviews = cursor.fetchall()
@@ -115,10 +82,10 @@ def get_all_review_com(id_comercio):
         conn.close()
         abort(500, description=str(e))
 
-@review_bp.route("/review/<int:id_usr>", methods=["GET"])
+@review_bp.route("/usr/<int:id_usr>", methods=["GET"])
 def get_all_review_cons(id_usr):
     conn = get_connection()
-    cursor = conn.cursor(dictionario=True)
+    cursor = conn.cursor(dictionary=True)
 
     try:
         cursor.execute("""
@@ -127,10 +94,10 @@ def get_all_review_cons(id_usr):
                 r.comentario,
                 r.calificacion,
                 r.tiempo_de_creacion,
-                u.nombre_comercio
-            FROM resenia r
-            JOIN usuario_comercio c ON r.id_comercio = c.id_comercio
-            WHERE id_usr = %s"""
+                c.nombre_comercio
+            FROM resenias r
+            JOIN comercios c ON r.id_comercio = c.id_comercio
+            WHERE r.id_usr = %s"""
             , (id_usr,))
         all_reviews = cursor.fetchall()
 
@@ -138,12 +105,11 @@ def get_all_review_cons(id_usr):
         conn.close()
 
         if not all_reviews:
-            abort(404, description="No hay reseñas para este usuario")
+            return abort(404, description="No hay reseñas para este usuario")
 
         return jsonify(all_reviews)
     
     except Exception as e:
-
         cursor.close()
         conn.close()
-        abort(500, desciption=str(e))
+        return abort(500, description=str(e))

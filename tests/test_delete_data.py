@@ -4,8 +4,8 @@ from backend.database.db import get_connection
 conn=get_connection()
 cursor=conn.cursor()
 
-cursor.execute("DROP TABLE IF EXISTS reservas;")
 cursor.execute("DROP TABLE IF EXISTS resenias;")
+cursor.execute("DROP TABLE IF EXISTS reservas;")
 cursor.execute("DROP TABLE IF EXISTS favoritos;")
 cursor.execute("DROP TABLE IF EXISTS comercios;")
 cursor.execute("DROP TABLE IF EXISTS usuario_comercio;")
