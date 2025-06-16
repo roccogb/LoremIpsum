@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, session, url_for, flash
+from flask import Flask, request, render_template, redirect, session, url_for, flash, jsonify
 from werkzeug.utils import secure_filename
 from fextra import transformar_dias_comercio, transformar_horarios_comercio, transformar_tags_comercio, transformar_tp_comercio
 import requests
@@ -30,12 +30,19 @@ def home():
         return render_template("home.html", comercios_destacados=comercios_destacados, rank_comercios=top_comercios)
     else:
         return "Error al obtener los comercios desde el backend", 500
-    
+
+# Endpoint que va a permitir realizar una busqueda individual de un comercio
+@app.route("/buscar", methods=["POST"])
+def buscar_comercio():
+    nombre_comercio=request.form.get("buscador")
+    response = requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":"null","nombre_comercio":nombre_comercio.title()})
+    if response.status_code == 200:
+        comercio_encontrado=response.json()
+        return redirect(url_for("resto", id_comercio=comercio_encontrado["id_comercio"]))
+    return redirect(url_for("home"))
+
 # Este endpoint va a renderizar la página de descubre. En la misma se presentarán todos los comercios registrados y las herramientas necesarias para navegar en estos mismos, como; filtros,paginación,etc.
 # El párametro dinamico recibido será el indice de la pagina actual renderizada
-# Dividir el endpoint en dos partes donde la principal diferencia se va a encontrar en a que endpoint del back le realiza la peticion para conseguir la data
-# POST -> Descubre con filtros aplicados.
-# GET -> Descubre sin filtros.
 @app.route("/descubre/<int:indice_pag>", methods=["GET","POST"])
 def descubre(indice_pag):
     inicio = indice_pag * 9
@@ -79,7 +86,7 @@ def resto(id_comercio):
     if id_comercio <= 0:
         return redirect(url_for("home"))
     
-    response = requests.get(f"{API_BACK}/comercio/{id_comercio}")
+    response = requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":id_comercio,"nombre_comercio":""})
     if response.status_code == 200:
         comercio_bdd = response.json()
 
@@ -98,6 +105,7 @@ def resto(id_comercio):
         flash("Comercio no encontrado")
         return redirect(url_for("home"))
 
+# Este endpoint le va a permitir al usuario, de tipo consumidor, realizar una reserva
 @app.route("/reservar", methods=["POST"])
 def reservar():
     if "usuario" not in session:
@@ -130,6 +138,7 @@ def reservar():
         if response.status_code == 200:
             flash("Reserva creada exitosamente", "success")
 
+# Este endpoint le va a permitir al usuario, de tipo consumidor, realizar una reseña sobre un comercio al cual el mismo haya ido
 @app.route("/reseñar", methods=["POST"])
 def agregar_resena():
     pass
@@ -155,7 +164,6 @@ def login():
             
             if response_consumidor.status_code == 200:
                 data_consumidor = response_consumidor.json()
-                    # Es un usuario consumidor, guardamos sus datos en la sesión
                 session["email"] = email
                 session["tipo_usuario"] = "consumidor"
                 session["datos_usuario"] = {
@@ -173,7 +181,6 @@ def login():
             
             if response_comercio.status_code == 200:
                 data_comercio = response_comercio.json()
-                    # Es un usuario comerciante, guardamos sus datos y los de su comercio
                 session["email"] = email
                 session["tipo_usuario"] = "comercio"
                 session["datos_usuario"] = {
@@ -200,7 +207,6 @@ def login():
                     }
                 return redirect(url_for("home"))
             
-            # Si ninguno de los dos tipos de autenticación funciona
             flash("Credenciales inválidas", "error")
             return redirect(url_for("login"))
             
@@ -286,7 +292,9 @@ def register():
 # Logout
 @app.route("/logout")
 def logout():
-    session.pop("usuario", None)
+    session.pop("email", None)
+    session.pop("tipo_usuario", None)
+    session.pop("datos_usuario", None)
     return redirect(url_for("home"))
 
 

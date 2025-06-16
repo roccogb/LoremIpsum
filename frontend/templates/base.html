@@ -19,8 +19,12 @@
     </div>
 
     <div class="search-box-enhanced">
-        <span class="search-icon">🔍</span>
-        <input type="text" placeholder="Buscar local" aria-label="Buscar restaurante">
+        <form action="{{url_for('buscar_comercio', _external=True)}}" method="POST">
+            <input type="text" placeholder="Buscar local" aria-label="Buscar restaurante" name="buscador" required>
+            <button type="submit" class="search-button" aria-label="Buscar">
+                <span class="search-icon">🔍</span>
+            </button>
+        </form>
     </div>
 
     <div class="nav-links" id="navLinks">
