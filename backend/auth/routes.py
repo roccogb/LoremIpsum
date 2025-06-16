@@ -1,18 +1,8 @@
 from flask import request, jsonify
 from . import auth_bp
 from database.db import get_connection
-from geopy.geocoders import Nominatim
+from fextra import transform_dir_coords
 import datetime
-
-def transform_dir_coords(str_dir):
-    try:
-        geolocalizador=Nominatim(user_agent="geo-FoodyBA")    
-        locacion=geolocalizador.geocode(str_dir)
-        if locacion:
-            return [locacion.latitude, locacion.longitude]
-    except Exception as e:
-        print("Error: ",e)
-    return None
 
 @auth_bp.route("/consumidor", methods=["POST"])
 def auth_consumidor():

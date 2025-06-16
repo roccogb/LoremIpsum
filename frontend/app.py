@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, session, url_for, flash
 from werkzeug.utils import secure_filename
+from fextra import transformar_dias_comercio, transformar_horarios_comercio, transformar_tags_comercio, transformar_tp_comercio
 import requests
 import os
 
@@ -30,7 +31,6 @@ def home():
     else:
         return "Error al obtener los comercios desde el backend", 500
     
-
 # Este endpoint va a renderizar la página de descubre. En la misma se presentarán todos los comercios registrados y las herramientas necesarias para navegar en estos mismos, como; filtros,paginación,etc.
 # El párametro dinamico recibido será el indice de la pagina actual renderizada
 # Dividir el endpoint en dos partes donde la principal diferencia se va a encontrar en a que endpoint del back le realiza la peticion para conseguir la data
@@ -76,10 +76,23 @@ def descubre(indice_pag):
 @app.route("/restaurante/<int:id_comercio>")
 def resto(id_comercio):
     #Petición al backend para obtener los detalles del comercio.
+    if id_comercio <= 0:
+        return redirect(url_for("home"))
+    
     response = requests.get(f"{API_BACK}/comercio/{id_comercio}")
     if response.status_code == 200:
-        comercio = response.json()
-        return render_template("resto.html", comercios=comercio)
+        comercio_bdd = response.json()
+
+        comercio_bdd["dias"]=transformar_dias_comercio(comercio_bdd["dias"])
+        comercio_bdd["etiquetas"]=transformar_tags_comercio(comercio_bdd["etiquetas"])
+        comercio_bdd["categoria"]=comercio_bdd["categoria"].capitalize()
+        comercio_bdd["tipo_cocina"]=transformar_tp_comercio(comercio_bdd["tipo_cocina"])
+        comercio_bdd["horarios"]=transformar_horarios_comercio(comercio_bdd["horarios"])
+
+        if type(comercio_bdd["calificacion"]) == float:
+            comercio_bdd["calificacion"]=round(comercio_bdd["calificacion"])
+
+        return render_template("resto.html", comercios=comercio_bdd)
     else:
         # Redirigir al home. 
         flash("Comercio no encontrado")
@@ -117,6 +130,9 @@ def reservar():
         if response.status_code == 200:
             flash("Reserva creada exitosamente", "success")
 
+@app.route("/reseñar", methods=["POST"])
+def agregar_resena():
+    pass
 
 # Pagina de ayuda
 @app.route("/ayuda")

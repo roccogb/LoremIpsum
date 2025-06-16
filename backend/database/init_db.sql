@@ -76,3 +76,12 @@ CREATE TABLE reservas (
     FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE,
     FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE
 );
+
+-- Tabla: favoritos
+CREATE TABLE favoritos (
+    id_usr INT,
+    id_comercio INT,
+    id_favorito INT PRIMARY KEY AUTO_INCREMENT,
+    FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE, 
+    FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE
+);
