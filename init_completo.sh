@@ -1,37 +1,50 @@
-
 #!/bin/bash
 
-echo "Configurando proyecto Flask..."
+echo "configurando proyecto Flask..."
 
-#crear entorno virtual
-echo "Creando entorno virtual..."
+# Crear entorno virtual
+echo " Creando entorno virtual..."
 python3 -m venv venv
 
-#ctivar entorno virtual
-echo "Activando entorno virtual..."
+# Activar entorno virtual
+echo " Activando entorno virtual..."
 source venv/bin/activate
 
 # Instalar Flask
-echo " Instalando Flask..."
+echo " instalando Flask..."
 pip install flask
 
 # Instalar dependencias
-echo "Instalando dependencias del requirements.txt..."
+echo " Instalando dependencias del requirements.txt..."
 pip install -r requirements.txt
 
-# ejecutar init_db.py
-echo "Inicializando base de datos..."
+# Ejecutar init_db.py
+echo " Inicializando base de datos..."
 python3 backend/database/init_db.py
 
-# ejecutar init_test_data
-echo "Cargando datos de prueba..."
+# Ejecutar init_test_data
+echo " Cargando datos de prueba..."
 python3 -m tests.init_test_data
 
 echo "Configuración completada!"
-echo "Iniciando aplicaciones..."
+echo ""
+echo "🚀 Iniciando aplicaciones..."
 echo "Backend corriendo en segundo plano..."
 echo "Frontend se iniciará en una nueva ventana..."
 
-# ejecutar backend en segundo plano
+# Ejecutar backend en segundo plano
 python3 backend/app.py &
 BACKEND_PID=$!
+
+# Esperar un momento para que el backend inicie
+sleep 2
+
+# Ejecutar frontend
+python3 frontend/app.py &
+FRONTEND_PID=$!
+
+echo ""
+echo "✅ ¡Proyecto iniciado!"
+echo "📍 Backend PID: $BACKEND_PID"
+echo "📍 Frontend PID: $FRONTEND_PID"
+echo ""
