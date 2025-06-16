@@ -1,4 +1,3 @@
-/* ===== VARIABLES CSS ===== */
 :root {
   --mostaza: #D4AF37;
   --vino: #800020;
@@ -8,7 +7,6 @@
   --transition: all 0.3s ease;
 }
 
-/* ===== ESTILOS GENERALES ===== */
 * {
   margin: 0;
   padding: 0;
@@ -67,12 +65,22 @@ body {
   margin-bottom: 30px;
 }
 
+/* ===== IMAGEN DEL COMERCIO - CENTRADA Y RESPONSIVA ===== */
+.main-profile .col-lg-4:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .main-profile img {
   width: 100%;
-  height: 250px;
+  max-width: 380px;
+  height: 320px;
   object-fit: cover;
   border-radius: 23px;
   box-shadow: var(--shadow);
+  margin: 0 auto;
+  display: block;
 }
 
 /* ===== INFORMACIÓN PRINCIPAL ===== */
@@ -96,11 +104,8 @@ body {
   gap: 5px;
   margin-bottom: 5px;
   padding: 10px 0;
-}
-
-.stars::before {
+  font-size: 1.7rem;
   color: #FFC107;
-  font-size: 1.8rem;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
@@ -144,11 +149,11 @@ body {
   display: inline-block;
   background: linear-gradient(135deg, var(--sgray), #2e2e2e);
   color: #ffffff;
-  padding: 15px 40px;
+  padding: 18px 50px;
   text-decoration: none;
   border-radius: 30px;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   transition: var(--transition);
   box-shadow: var(--shadow);
   border: 2px solid transparent;
@@ -157,29 +162,13 @@ body {
   overflow: hidden;
 }
 
-.main-border-button a::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
-}
-
-.main-border-button a:hover::before {
-  left: 100%;
-}
-
 .main-border-button a:hover {
   background: #1d1d1d;
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* ===== LISTA DE INFORMACIÓN ===== */
+/* Lista de informacion */
 .main-profile ul {
   list-style: none;
   padding: 0;
@@ -194,7 +183,7 @@ body {
   font-weight: 500;
 }
 
-/* ===== ESTILOS PARA HORARIOS - DÍAS HORIZONTALES ===== */
+/* Estilos para los horarios */
 .horarios-item {
   display: flex;
   flex-direction: column;
@@ -210,8 +199,11 @@ body {
 .dias-section {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
+  gap: 6px;
+  align-items: flex-start;
+  max-height: 120px; 
+  overflow-y: auto;
+  padding: 5px 0;
 }
 
 .dia-item {
@@ -228,11 +220,39 @@ body {
   cursor: default;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0; 
+  min-width: fit-content;
 }
 
 .dia-item:hover {
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: var(--sgray);
+}
+
+/* Estilo especial para horarios cuando hay muchos elementos */
+.horarios-item .dias-section {
+  max-width: 100%;
+  justify-content: flex-start;
+}
+
+.dias-section::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dias-section::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.dias-section::-webkit-scrollbar-thumb {
+  background: var(--mostaza);
+  border-radius: 3px;
+}
+
+.dias-section::-webkit-scrollbar-thumb:hover {
   background: var(--sgray);
 }
 
@@ -410,7 +430,8 @@ textarea.form-control {
   }
   
   .main-profile img {
-    height: 200px;
+    height: 250px;
+    max-width: 320px;
   }
   
   .main-info h4 {
@@ -436,12 +457,13 @@ textarea.form-control {
   }
   
   .main-border-button a {
-    padding: 12px 30px;
-    font-size: 1rem;
+    padding: 15px 35px;
+    font-size: 1.1rem;
   }
 
   .dias-section {
-    gap: 6px;
+    gap: 5px;
+    max-height: 100px;
   }
   
   .dia-item {
@@ -461,6 +483,11 @@ textarea.form-control {
   
   .main-profile {
     padding: 15px;
+  }
+  
+  .main-profile img {
+    max-width: 280px;
+    height: 220px;
   }
   
   .clips, .gaming-library {
@@ -483,6 +510,7 @@ textarea.form-control {
   
   .dias-section {
     gap: 4px;
+    max-height: 80px;
   }
   
   .dia-item {

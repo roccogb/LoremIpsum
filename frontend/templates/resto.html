@@ -27,14 +27,14 @@
                           <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
                           {{ comercios.nombre_comercio}}
                         </h3>
-                        <div class="stars">
-                          {% for i in range(comercios.calificacion) %}
-                            ⭐
-                          {% endfor %}
-                          {% for i in range(5 - comercios.calificacion) %}
-                            ☆
-                          {% endfor %}
-                        </div>
+                          <div class="stars">
+                            {% for i in range(comercios.calificacion) %}
+                              ★
+                            {% endfor %}
+                            {% for i in range(5 - comercios.calificacion) %}
+                              ☆
+                            {% endfor %}
+                          </div>
                         <br>
                         <div class="tags-section">
                           {% for tag in comercios.etiquetas %}
@@ -43,9 +43,9 @@
                         </div>
                         <div class="main-border-button">
                           {% if comercios.pdf_menu_link %}
-                            <a href="{{ comercios.pdf_menu_link }}" target="_blank">Ver Menú</a>
+                            <a href="{{ comercios.pdf_menu_link }}" target="_blank">Menú</a>
                           {% else %}
-                            <a href="#" onclick="alert('Menú no disponible'); return false;">Ver Menú</a>
+                            <a href="#" onclick="alert('Menú no disponible'); return false;">Menú</a>
                           {% endif %}
                         </div>
                       </div>
@@ -60,6 +60,14 @@
                           <div class="dias-section">
                             {% for dia in comercios.dias %}
                               <span class="dia-item">{{dia}}</span>
+                            {% endfor %}
+                          </div>
+                        </li>
+                        <li>
+                          <span class="horarios-label">Horarios:</span>
+                          <div class="dias-section">
+                            {% for horario in comercios.horarios %}
+                              <span class="dia-item">{{horario}}</span>
                             {% endfor %}
                           </div>
                         </li>
