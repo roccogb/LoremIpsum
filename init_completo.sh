@@ -28,7 +28,7 @@ python3 -m tests.init_test_data
 
 echo "Configuración completada!"
 echo ""
-echo "🚀 Iniciando aplicaciones..."
+echo " Iniciando aplicaciones..."
 echo "Backend corriendo en segundo plano..."
 echo "Frontend se iniciará en una nueva ventana..."
 
