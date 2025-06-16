@@ -105,11 +105,11 @@ def get_all_review_cons(id_usr):
         conn.close()
 
         if not all_reviews:
-            return abort(404, description="No hay reseñas para este usuario")
+            abort(404, description="No hay reseñas para este usuario")
 
         return jsonify(all_reviews)
     
     except Exception as e:
         cursor.close()
         conn.close()
-        return abort(500, description=str(e))
+        abort(500, description=str(e))
