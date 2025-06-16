@@ -54,7 +54,6 @@ CREATE TABLE resenias (
     id_usr INT,
     comentario TEXT,
     calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
-    tiempo_de_creacion DATETIME,
     tiempo_de_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     id_reserva INT NOT NULL UNIQUE,
     FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE,

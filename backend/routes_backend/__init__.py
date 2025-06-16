@@ -2,10 +2,11 @@
 from reservas import reservas_bp
 from comercios import comercios_bp
 from auth import auth_bp
+from resenias import review_bp
 
 # Esta funcion va a registrar cada blueprint en una aplicacion Flask con un prefijo
 def register_routes(app):
     app.register_blueprint(reservas_bp, url_prefix="/reserva")
     app.register_blueprint(comercios_bp, url_prefix="/comercio")
     app.register_blueprint(auth_bp, url_prefix="/auth")
-    app.register_blueprint(resenia-bp, url_prefix="/resenias")
+    app.register_blueprint(review_bp, url_prefix="/review")

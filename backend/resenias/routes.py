@@ -1,9 +1,9 @@
-from flask import request, jsonify, session
-from . import resenias_bp
+from flask import request, jsonify, session, abort
+from . import review_bp
 from database.db import get_connection
 
-@resenias_bp.route("/crear", methods=["POST"])
-def crear_resenia():
+@review_bp.route("/review/create", methods=["POST"])
+def create_review():
     if "id_usr" not in session:      # Corrobora que el usuario este logueado. 
         return jsonify({"msg": "Debe loguearse"}), 401
     
@@ -20,7 +20,7 @@ def crear_resenia():
     if not (1 <= int(calificacion) <= 5):
         return jsonify ({"msg": "Debe enviar una calificación"}), 400
     
-    conn = get_connection
+    conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
     try:
@@ -33,13 +33,7 @@ def crear_resenia():
 
         if not reserva_valida:
             return jsonify({"error": "Reserva no confirmada por asistencia"}), 403
-        
-        """
-        # Verificar que no exista otra reseña con la misma reserva
-        cursor.execute (" SELECT * FROM resenias WHERE id_reserva = %s ", (id_reserva))
-        if cursor.fetchone():
-            return jsonify({"error": "Ya existe una resenia para esta reseña."}), 409
-        """
+
         # Insertar reseña
 
         cursor.execute ("""
@@ -57,3 +51,110 @@ def crear_resenia():
     finally:
         cursor.close()
         conn.close()
+
+@review_bp.route("/review/<int:id_resenia>", methods=["GET"])
+def get_review(id_resenia):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        cursor.execute("""
+            SELECT 
+                r.comentario,
+                r.calificacion,
+                r.tiempo_de_creacion,
+                u.usuario,
+                c.nombre_comercio
+            FROM resenias r
+            JOIN usuario_consumidor u ON r.id_usr = u.id_usr
+            JOIN comercio c ON r.id_comercio = c.id_comercio
+            WHERE id_resenia = %s
+        """, (id_resenia,)) # La ',' despues de id_reserva es para que python lo reconozca como una tupla de un solo elemento.
+        review = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+        if not review:
+            abort(404, descripcion="Reseña no encontrada")
+
+        return jsonify({
+            "calificacion": review["calificacion"],
+            "comentario": review["comentario"],
+            "usuario": review["usuario"],
+            "tiempo_creacion": review["tiempo_creacion"]
+        })
+
+    except Exception as e:
+        
+        cursor.close()
+        conn.close()
+        abort(500, description=str(e))
+
+
+@review_bp.route("/review/<int:id_comercio>", methods=["GET"])
+def get_all_review_com(id_comercio):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        cursor.execute("""
+            SELECT
+                r.comentario,
+                r.calificacion,
+                r.tiempo_de_creacion,
+                u.usuario
+                c.nombre_comercio
+            FROM resenias r
+            JOIN usuario_consumidor u ON r.id_usr = u.id_usr
+            JOIN comercio c ON r.id_comercio = c.id_comercio
+            WHERE id_comercio = %s
+        """, (id_comercio,))
+        all_reviews = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
+        if not all_reviews:
+            abort(404, description="No hay reseñas para este comercio")
+
+        return jsonify(all_reviews)
+    
+    except Exception as e:
+
+        cursor.close()
+        conn.close()
+        abort(500, description=str(e))
+
+@review_bp.route("/review/<int:id_usr>", methods=["GET"])
+def get_all_review_cons(id_usr):
+    conn = get_connection()
+    cursor = conn.cursor(dictionario=True)
+
+    try:
+        cursor.execute("""
+            SELECT
+                r.id_comercio,
+                r.comentario,
+                r.calificacion,
+                r.tiempo_de_creacion,
+                u.nombre_comercio
+            FROM resenia r
+            JOIN usuario_comercio c ON r.id_comercio = c.id_comercio
+            WHERE id_usr = %s"""
+            , (id_usr,))
+        all_reviews = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
+        if not all_reviews:
+            abort(404, description="No hay reseñas para este usuario")
+
+        return jsonify(all_reviews)
+    
+    except Exception as e:
+
+        cursor.close()
+        conn.close()
+        abort(500, desciption=str(e))
