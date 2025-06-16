@@ -26,8 +26,7 @@
                           <button
                             class="heart-btn {% if session['datos_usuario'] and comercios['es_favorito'] %}active{% endif %}" 
                             id="icono-fav-{{comercios['id_comercio']}}"
-                            data-id="{{comercios['id_comercio']}}"
-                            data-usr="{{ session['datos_usuario']['id_usr'] if session['tipo_usuario']=='consumidor' else '' }}">
+                            data-id="{{comercios['id_comercio']}}">
                             {% if session['datos_usuario'] and comercios['es_favorito'] %}
                               &#9829;
                             {% else %}

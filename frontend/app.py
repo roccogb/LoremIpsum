@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 app.secret_key = "contra_ids"  # Necesario para usar session y flash
 
-API_BACK = "http://127.0.0.1:8100"                                        # Dirección local del backend
+API_BACK = "http://0.0.0.0:8100"                                        # Dirección local del backend
 UPLOAD_FOLDER = os.path.join(os.getcwd(),'static','media', 'img')       # Carpeta donde van a ir todas las imagenes
 
 # Pagina de inicio
@@ -293,6 +293,16 @@ def favoritos():
     response = requests.get(f"{API_BACK}/favoritos/detallado/{id_usr}")
     favoritos = response.json() if response.status_code == 200 else []
     return render_template("favoritos.html", favoritos=favoritos, id_usr=id_usr)
+
+@app.route("/dar_fav/<int:id_comercio>")
+def dar_favorito(id_comercio):
+    if "datos_usuario" not in session or session["tipo_usuario"] != "consumidor":
+        return redirect(url_for("login"))
+    else:
+        response = requests.post(f"{API_BACK}/favoritos/marcar", json={"id_comercio":id_comercio,"id_usr":session.get("datos_usuario")["usuario"]})
+        if response.status_code == 200:
+            return flash("Comercio agregado a favoritos", "message")
+    
 
 # Logout
 @app.route("/logout")
