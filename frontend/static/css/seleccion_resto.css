@@ -183,6 +183,7 @@ body {
   font-weight: 500;
 }
 
+
 /* Estilos para los horarios */
 .horarios-item {
   display: flex;
@@ -557,6 +558,7 @@ textarea.form-control {
 .clips,
 .gaming-library {
   animation: fadeIn 0.6s ease-out;
+
 }
 
 .tags-section p {
