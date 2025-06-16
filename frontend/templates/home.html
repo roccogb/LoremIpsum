@@ -27,8 +27,9 @@
 
         <!-- Seccion de restaurantes populares -->
         <div class="popular-section">
-            <a href="{{url_for('descubre', indice_pag=0, _external=True)}}" class="section-title">Restaurantes populares</a>
-            
+            <a href="{{url_for('routes_bp.descubre', indice_pag=0, _external=True)}}" class="section-title">
+                <h2>Restaurantes Populares</h2>
+            </a>
             <div class="restaurants-grid">
                 {% for comercio in comercios_destacados %}
                     <div class="restaurant-card" onclick="goToComercio('{{comercio[id_comercio]}}')">
@@ -46,7 +47,7 @@
             </div>
             
             <center>
-                <a href="{{url_for('descubre', indice_pag=0,_external=True)}}">
+                <a href="{{url_for('routes_bp.descubre', indice_pag=0, _external=True)}}">
                     <button class="discover-btn">Descubre más</button>
                 </a>
             </center>
