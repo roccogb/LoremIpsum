@@ -108,7 +108,7 @@ def resto(id_comercio):
 # Este endpoint le va a permitir al usuario, de tipo consumidor, realizar una reserva
 @app.route("/reservar", methods=["POST"])
 def reservar():
-    if "usuario" not in session:
+    if "email" not in session:
         flash("Debes iniciar sesión para reservar")
         return redirect(url_for("login"))
     else:
@@ -151,9 +151,7 @@ def ayuda():
 # Login de usuario
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "GET":
-        return render_template("login.html")
-    else:
+    if request.method == "POST":
         email = request.form["email"]
         pswd = request.form["password"]
 
@@ -213,6 +211,9 @@ def login():
         except Exception as e:
             flash("Error de conexión con el servidor", "error")
             return redirect(url_for("login"))
+        
+    return render_template("login.html")
+
 
 # Register usuario
 @app.route('/register', methods=['GET', 'POST'])
@@ -287,7 +288,8 @@ def register():
             flash("Se registro el usuario correctamente","message")
             return redirect('/login')
         flash(f"{response.json()["error"]}","warning")
-    return render_template("register.html")
+    else:
+        return render_template("register.html")
 
 # Logout
 @app.route("/logout")
@@ -297,6 +299,27 @@ def logout():
     session.pop("datos_usuario", None)
     return redirect(url_for("home"))
 
+# Este endpoint va a implementar las funcionalidades respectivas a dejar una reseña en un comercio
+@app.route("/realizar_review/<int:id_comercio>/<int:id_reserva>", methods=["GET","POST"])
+def realizar_review(id_comercio, id_reserva):
+    # if "email" in session and session.get("tipo_usuario") == "consumidor":
+        response_comercio=requests.get(f"{API_BACK}/comercio/{id_comercio}")
+        if response_comercio.status_code == 200:
+            data_comercio=response_comercio.json()
+            if request.method == "GET":
+                return render_template("review.html", comercio=data_comercio, identificador_reserva=id_reserva)
+            else:
+                text_comentario=request.form.get("comentario")
+                calificacion_resto=request.form.get("calificacion")
+
+                response=requests.post(f"{API_BACK}/review/crear", json={"id_usr":session.get("id_usr"),"id_reserva":id_reserva,
+                                                                         "id_comercio":data_comercio["id_comercio"], 
+                                                                         "calificacion":calificacion_resto, "comentario":text_comentario})
+                if response.status_code == 200:
+                    flash("Reseña realizada con éxito","message")
+                    return redirect(url_for("home"))
+        else:
+            return jsonify({"ERROR":"No se cargó la informacion del comercio"}),500
 
 if __name__ == "__main__":
     app.run(host="localhost", port=8200, debug=True)
