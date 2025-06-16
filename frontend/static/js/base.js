@@ -70,14 +70,10 @@ document.querySelectorAll('.heart-btn').forEach(function(btn) {
         }
         fetch('/favoritos/marcar', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                id_usr: id_usr,
-                id_comercio: id_comercio
-            })
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({ id_usr: id_usr, id_comercio: id_comercio })
         })
+        
         .then(response => response.json())
         .then(data => {
             const icon = document.getElementById('icono-fav-' + id_comercio);
