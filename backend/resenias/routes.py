@@ -1,20 +1,17 @@
-from flask import request, jsonify, session, abort
+from flask import request, jsonify, abort
 from . import review_bp
 from database.db import get_connection
 
-@review_bp.route("/review/create", methods=["POST"])
-def create_review():
-    if "id_usr" not in session:      # Corrobora que el usuario este logueado. 
-        return jsonify({"msg": "Debe loguearse"}), 401
-    
+@review_bp.route("/crear", methods=["POST"])
+def create_review():    
     data = request.get_json()
     id_comercio = data.get("id_comercio")
     calificacion = data.get("puntuacion")
     comentario = data.get("comentario")
     id_reserva = data.get("id_reserva")
-    id_usr = session["id_usr"]
+    id_usr = data.get("id_usr")
 
-    if not all([id_comercio, calificacion, comentario, id_reserva]):  # Corrobora que los campos se llenen.
+    if not all([id_comercio, calificacion, comentario, id_reserva, id_usr]):  # Corrobora que los campos se llenen.
         return jsonify({"msg": "Debe  completar todos los datos"}), 400
     
     if not (1 <= int(calificacion) <= 5):
@@ -35,7 +32,6 @@ def create_review():
             return jsonify({"error": "Reserva no confirmada por asistencia"}), 403
 
         # Insertar reseña
-
         cursor.execute ("""
             INSERT INTO resenias (id_comercio, id_usr, comentario, calificacion, tiempo_de_creacion, id_reserva)
             VALUES (%s, %s, %s, %s, NOW(), %s)
@@ -69,7 +65,7 @@ def get_review(id_resenia):
             JOIN usuario_consumidor u ON r.id_usr = u.id_usr
             JOIN comercio c ON r.id_comercio = c.id_comercio
             WHERE id_resenia = %s
-        """, (id_resenia,)) # La ',' despues de id_reserva es para que python lo reconozca como una tupla de un solo elemento.
+        """, (id_resenia,))
         review = cursor.fetchone()
 
         cursor.close()
@@ -78,21 +74,14 @@ def get_review(id_resenia):
         if not review:
             abort(404, descripcion="Reseña no encontrada")
 
-        return jsonify({
-            "calificacion": review["calificacion"],
-            "comentario": review["comentario"],
-            "usuario": review["usuario"],
-            "tiempo_creacion": review["tiempo_creacion"]
-        })
+        return jsonify(review),200
 
     except Exception as e:
-        
         cursor.close()
         conn.close()
         abort(500, description=str(e))
 
-
-@review_bp.route("/review/<int:id_comercio>", methods=["GET"])
+@review_bp.route("/<int:id_comercio>", methods=["GET"])
 def get_all_review_com(id_comercio):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
