@@ -186,3 +186,10 @@ main {
 @media (min-width: 577px) {
     .hamburger { display: none !important; }
 }
+
+.btn-login-header {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 15px;
+}
