@@ -373,7 +373,7 @@ textarea.form-control {
   padding: 15px; 
   margin-bottom: 15px; 
   border-radius: 8px; 
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .review-header{
@@ -386,7 +386,7 @@ textarea.form-control {
 .no-reviews{
   text-align: center; 
   padding: 40px; 
-  color: #666;
+  color: #ffffff;
 }
 
 /* Boton personalizado */

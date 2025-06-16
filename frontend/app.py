@@ -99,7 +99,13 @@ def resto(id_comercio):
         if type(comercio_bdd["calificacion"]) == float:
             comercio_bdd["calificacion"]=round(comercio_bdd["calificacion"])
 
-        return render_template("resto.html", comercios=comercio_bdd)
+        response_resenias=requests.get(f"{API_BACK}/review/com/{id_comercio}")
+
+        resenias_data=[]
+        if response_resenias.status_code == 200:
+            resenias_data=response_resenias.json()
+
+        return render_template("resto.html", comercios=comercio_bdd, resenias=resenias_data)
     else:
         # Redirigir al home. 
         flash("Comercio no encontrado")
@@ -137,11 +143,6 @@ def reservar():
 
         if response.status_code == 200:
             flash("Reserva creada exitosamente", "success")
-
-# Este endpoint le va a permitir al usuario, de tipo consumidor, realizar una reseña sobre un comercio al cual el mismo haya ido
-@app.route("/reseñar", methods=["POST"])
-def agregar_resena():
-    pass
 
 # Pagina de ayuda
 @app.route("/ayuda")
