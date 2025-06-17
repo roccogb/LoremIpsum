@@ -17,6 +17,8 @@ fi
 FRONT="frontend/app.py"
 BACK="backend/app.py"
 
+echo "Configurando el proyecto con tu direccion ip..."
+
 # Reemplazo con sed compatible con Git Bash (agregar backup .bak)
 sed -i.bak "s/0.0.0.0/$IP_LOCAL/g" "$FRONT" && echo "✅ IP $IP_LOCAL reemplazada en $FRONT"
 sed -i.bak "s/0.0.0.0/$IP_LOCAL/g" "$BACK" && echo "✅ IP $IP_LOCAL reemplazada en $BACK"
