@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# ¡¡¡¡¡ ATENCION !!!!! Para que el script funcione correctamente se debe tener instalado en el ordenador mysql, Python3, y pipenv.
+# Se debe inidicar su usuario y contraseña de mysql en el archivo init_db.py y db.py ubicados en la carpeta backend/database.
+
 
 # Extraer la IP de la línea "Dirección IPv4" que contiene "192.168"
 IP_LOCAL=$(ipconfig | grep -a -oE "192\.168\.[0-9]+\.[0-9]+" | head -1)
