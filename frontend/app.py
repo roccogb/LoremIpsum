@@ -353,7 +353,8 @@ def logout():
         session.clear()
         return redirect(url_for("home"))
     else:
-        return flash("Primero debe iniciar sesión","message")
+        flash("Primero debe iniciar sesión","message")
+        return redirect(url_for("home"))
 
 # Este endpoint va a implementar las funcionalidades respectivas a dejar una reseña en un comercio
 @app.route("/realizar_review/<int:id_comercio>/<int:id_reserva>", methods=["GET","POST"])
