@@ -38,7 +38,9 @@ CREATE TABLE comercios (
     longitud FLOAT,                     -- (UBICACIÓN)Coordenada Y
     tiempo_de_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     pdf_menu_link TEXT,
-    calificacion FLOAT DEFAULT 0.0,     -- Esto se va completar por un promedio
+    promedio_calificacion FLOAT DEFAULT 0.0, -- Esto se va completar por un promedio
+    cantidad_resenias INT DEFAULT 0,
+    ranking_ponderado FLOAT DEFAULT 0.0, -- Esto es para ordenar en rankins u ordenar en listas
     dias TEXT,                          -- El formato va a ser -> Ej='[lunes,miercoles,sabado,....]'
     horarios TEXT,                      -- El formato va a ser -> Ej='[7-11,12-15,...]'
     etiquetas TEXT,                     -- El formato va a ser -> Ej='[apto_mascotas,delivery,...]'
