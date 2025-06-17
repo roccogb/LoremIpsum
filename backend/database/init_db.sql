@@ -11,7 +11,8 @@ CREATE TABLE usuario_comercio (
     DNI BIGINT UNIQUE,                          
     CUIT BIGINT UNIQUE,
     email_usuario VARCHAR(100) UNIQUE,
-    contrasena VARCHAR(100)
+    contrasena VARCHAR(100),
+    fecha_creacion DATE
 );
 
 -- Tabla: usuario_consumidor
@@ -21,6 +22,7 @@ CREATE TABLE usuario_consumidor (
     usuario VARCHAR(100) UNIQUE,
     email_usuario VARCHAR(100) UNIQUE,
     contrasena VARCHAR(100),
+    fecha_creacion DATE,
     numero_telefono BIGINT UNIQUE,
     cant_reservas_canceladas INT DEFAULT 0
 );
