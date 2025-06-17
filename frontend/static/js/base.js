@@ -57,3 +57,34 @@ document.querySelector(".nav-user").addEventListener("keydown", function (e) {
         showUserMenu();
     }
 });
+
+// Función para manejar el clic en la carta del restaurante
+function handleCardClick(event, element) {
+    if (event.target.closest('.heart-btn')) {
+        return;
+    }
+    else if(event.target.closest('.nav-arrow left')){
+        return;
+    }
+    else if(event.target.closest('.nav-arrow right')){
+        return;
+    }
+    // Redirigir a la página del restaurante
+    window.location.href = element.dataset.url;
+}
+
+// Función para el botón del corazón
+function toggleHeart(event, button) {
+    // Prevenir la propagación del evento para que no se active handleCardClick
+    event.stopPropagation();
+    
+    // Toggle de la clase active
+    button.classList.toggle('active');
+    
+    // Cambiar el símbolo del corazón
+    if (button.classList.contains('active')) {
+        button.innerHTML = '♥';
+    } else {
+        button.innerHTML = '♡';
+    }
+}
