@@ -20,14 +20,21 @@ def get_comercios():
     return jsonify(comercios),200
 
 # Endpoint que va a retornar TODA la información de un comercio. La misma será retornada en formato JSON
-@comercios_bp.route("/<int:id_comercio>")
-def get_comercio(id_comercio):
+@comercios_bp.route("/get")
+def get_comercio():
+    body_request=request.get_json()
+
+    parametros_validos=["id_comercio","nombre_comercio"]
+    for parametro in parametros_validos:
+        if parametro not in parametros_validos:
+            return jsonify({"ERROR":"Parámetros de busqueda inválidos"}),400
+        
     conn=get_connection()
     cursor=conn.cursor(dictionary=True)
 
-    sql="SELECT * FROM comercios WHERE id_comercio=%s"      
-    cursor.execute(sql,(id_comercio,))                      
-
+    sql="SELECT * FROM comercios WHERE id_comercio=%s OR nombre_comercio=%s;"      
+    
+    cursor.execute(sql,(body_request["id_comercio"],body_request["nombre_comercio"]))                      
     comercio_encontrado=cursor.fetchone()                   
 
     cursor.close()

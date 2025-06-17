@@ -21,10 +21,18 @@
                     </div>
                     <div class="col-lg-4 align-self-center">
                       <div class="main-info header-text">
-                        <h3>
-                          <button class="heart-btn" onclick="toggleHeart(this)">♡</button>
-                          {{ comercios.nombre_comercio}}
-                        </h3>
+                          <h3>
+                            {{ comercios.nombre_comercio}}
+                            <button
+                              class="heart-btn {% if comercios['es_favorito'] %}active{% endif %}" 
+                              data-id="{{ comercios['id_comercio'] }}">
+                              {% if comercios['es_favorito'] %}
+                                ♥
+                              {% else %}
+                                ♡
+                              {% endif %}
+                            </button>            
+                          </h3>
                           <div class="stars">
                             {% set calificacion_entera = comercios.ranking_ponderado | round(0, 'floor') | int %} 
                             {% for i in range(calificacion_entera) %}
@@ -178,12 +186,12 @@
                 <div class="col-lg-12">
                   <div class="reviews-section">
                     <div class="reviews-list">
-                      {% if resenas %}
-                        {% for resena in resenas %}
+                      {% if resenias %}
+                        {% for resena in resenias %}
                         <div class="review-item">
                           <div class="review-header">
                             <div class="reviewer-info">
-                              <strong>{{ resena.nombre_usuario }}</strong>
+                              <strong>{{ resena.usuario }}</strong>
                               <div class="rating">
                                 {% for i in range(resena.calificacion) %}
                                   ⭐
@@ -193,7 +201,7 @@
                                 {% endfor %}
                               </div>
                             </div>
-                            <small class="text-muted">{{ resena.fecha_resena.strftime('%d/%m/%Y') if resena.fecha_resena else 'Fecha no disponible' }}</small>
+                            <small class="text-muted">{{ resena.tiempo_de_creacion}}</small>
                           </div>
                           <div class="review-content">
                             <p>{{ resena.comentario }}</p>

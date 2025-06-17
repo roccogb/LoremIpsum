@@ -11,7 +11,8 @@ CREATE TABLE usuario_comercio (
     DNI BIGINT UNIQUE,                          
     CUIT BIGINT UNIQUE,
     email_usuario VARCHAR(100) UNIQUE,
-    contrasena VARCHAR(100)
+    contrasena VARCHAR(100),
+    fecha_creacion DATE
 );
 
 -- Tabla: usuario_consumidor
@@ -21,6 +22,7 @@ CREATE TABLE usuario_consumidor (
     usuario VARCHAR(100) UNIQUE,
     email_usuario VARCHAR(100) UNIQUE,
     contrasena VARCHAR(100),
+    fecha_creacion DATE,
     numero_telefono BIGINT UNIQUE,
     cant_reservas_canceladas INT DEFAULT 0
 );
@@ -86,5 +88,5 @@ CREATE TABLE favoritos (
     id_favorito INT PRIMARY KEY AUTO_INCREMENT,
     FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE, 
     FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE
-);  --Si se elimina el usuario o el comercio, se eliminan también sus favoritos.
+);
 

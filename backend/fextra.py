@@ -10,4 +10,4 @@ def transform_dir_coords(str_dir):
             return [locacion.latitude, locacion.longitude]
     except Exception as e:
         print("Error: ",e)
-    return None
+    return 

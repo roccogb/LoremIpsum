@@ -19,14 +19,14 @@
 </head>
 
 <body id="register">
-    <a href="{{url_for('home', _external=True)}}" id="btn-home-corner" class="waves-effect">
-        <i class="material-icons">home</i>
+    <a href="{{ url_for('home', _external=True) }}" id="btn-home-corner" class="waves-effect">
+     <i class="material-icons">home</i>
         <span>Inicio</span>
     </a>
     <div class="container">
         <div class="row tm-register-row tm-bg-wine" id="block-insert-info">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-register-col-l">
-                <form action="{{url_for('register', _external=True)}}" method="post" enctype="multipart/form-data">
+                <form action="{{ url_for('register', _external=True) }}" method="post" enctype="multipart/form-data">
                     <div class="mb-2">
                         <label class="mr-4" id="check-usr-consumidor">
                             <input class="with-gap" id="check-usr-consumidor" name="tipo_usuario" type="radio" value="consumidor" checked/>
@@ -41,23 +41,23 @@
                     <div id="data-usr-consumidor">
                         <label class="sub-titulos">Ingrese sus datos</label>
                         <div class="input-field usr-consumidor">
-                            <input placeholder="Nombre" id="first_name" name="first_name" type="text" class="validate">
+                            <input placeholder="Nombre" id="first_name" name="nombre_consumidor" type="text" class="validate">
+                         </div>
+                        <div class="input-field usr-consumidor">
+                             <input placeholder="Apellido" id="last_name" name="apellido_consumidor" type="text" class="validate">
+                         </div>
+                         <div class="input-field usr-consumidor">
+                              <input placeholder="Usuario" id="usr" name="usuario_consumidor" type="text" class="validate">
+                         </div>
+                         <div class="input-field usr-consumidor">
+                             <input placeholder="Email" id="email" name="email_consumidor" type="text" class="validate">
                         </div>
                         <div class="input-field usr-consumidor">
-                            <input placeholder="Apellido" id="last_name" name="last_name" type="text" class="validate">
+                             <input placeholder="Numero de teléfono" id="mobile" name="telefono_consumidor" type="number" class="validate">
                         </div>
                         <div class="input-field usr-consumidor">
-                            <input placeholder="Usuario" id="usr" name="usr" type="text" class="validate">
-                        </div>
-                        <div class="input-field usr-consumidor">
-                            <input placeholder="Email" id="email" name="email" type="text" class="validate">
-                        </div>
-                        <div class="input-field usr-consumidor">
-                            <input placeholder="Numero de teléfono" id="mobile" name="mobile" type="number" class="validate">
-                        </div>
-                        <div class="input-field usr-consumidor">
-                            <input placeholder="Contraseña" id="password" name="password" type="password" class="validate">
-                        </div>
+                             <input placeholder="Contraseña" id="password" name="password_consumidor" type="password" class="validate">
+                         </div>
                     </div>
                     <!-- Si el usuario es del tipo comercio-->
                     <div id="data-usr-comercio">

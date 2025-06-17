@@ -2,12 +2,14 @@ from flask import jsonify, request
 from . import favoritos_bp
 from database.db import get_connection
 
-
-@favoritos_bp.route('/marcar', methods=['POST'])
-def agregar():
+# Este endpoint va a marcar o desmarcar un comercio
+@favoritos_bp.route('/alternar', methods=['POST'])
+def alternar_fav():
     data = request.get_json()
+
     id_usr = data.get('id_usr')
     id_comercio = data.get('id_comercio')
+
     if not id_usr or not id_comercio:
         return jsonify({"success": False, "msg": "Datos incompletos"}), 400
 
@@ -28,19 +30,19 @@ def agregar():
     cursor.close()
     conn.close()
    
-    return jsonify({"success": True, "favorito": favorito})
+    return jsonify({"marca": favorito})
 
+# Este endpoint va a listar los favoritos de un usuario
 @favoritos_bp.route('/detallado/<int:id_usr>', methods=['GET'])
 def listar_favoritos_con_detalle(id_usr):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
     query = """
-        SELECT c.nombre, c.imagen
+        SELECT c.nombre_comercio, c.ruta_imagen, c.calificacion
         FROM favoritos f
         LEFT JOIN comercios c ON f.id_comercio = c.id_comercio
         WHERE f.id_usr = %s 
-
     """
     cursor.execute(query, (id_usr,))
     resultados = cursor.fetchall()
