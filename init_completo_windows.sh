@@ -1,5 +1,34 @@
 #!/bin/bash
 
+# ¡¡¡¡¡ ATENCION !!!!! Para que el script funcione correctamente se debe tener instalado en el ordenador mysql, Python3, y pipenv.
+# Se debe inidicar su usuario y contraseña de mysql en el archivo init_db.py y db.py ubicados en la carpeta backend/database.
+
+
+# Extraer la IP de la línea "Dirección IPv4" que contiene "192.168"
+IP_LOCAL=$(ipconfig | grep -a -oE "192\.168\.[0-9]+\.[0-9]+" | head -1)
+
+# Mostrar IP
+echo "🖥️  IP detectada: $IP_LOCAL"
+
+# Validar que se obtuvo algo
+if [ -z "$IP_LOCAL" ]; then
+  echo "❌ No se pudo detectar la IP local. Abortando."
+  exit 1
+fi
+
+# Ruta a los archivos
+FRONT="frontend/app.py"
+BACK="backend/app.py"
+
+echo "Configurando el proyecto con tu direccion ip..."
+
+# Reemplazo con sed compatible con Git Bash (agregar backup .bak)
+sed -i.bak "s/0.0.0.0/$IP_LOCAL/g" "$FRONT" && echo "✅ IP $IP_LOCAL reemplazada en $FRONT"
+sed -i.bak "s/0.0.0.0/$IP_LOCAL/g" "$BACK" && echo "✅ IP $IP_LOCAL reemplazada en $BACK"
+
+
+
+
 echo "🔧 Configurando proyecto Flask con Pipenv..."
 
 # Crear entorno virtual con Pipenv e instalar Flask
