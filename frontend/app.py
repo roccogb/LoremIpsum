@@ -304,7 +304,7 @@ def logout():
 @app.route("/realizar_review/<int:id_comercio>/<int:id_reserva>", methods=["GET","POST"])
 def realizar_review(id_comercio, id_reserva):
     # if "email" in session and session.get("tipo_usuario") == "consumidor":
-        response_comercio=requests.get(f"{API_BACK}/comercio/{id_comercio}")
+        response_comercio=requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":id_comercio,"nombre_comercio":""})
         if response_comercio.status_code == 200:
             data_comercio=response_comercio.json()
             if request.method == "GET":
