@@ -62,13 +62,19 @@ cursor.execute("""INSERT INTO reservas
                   (10, 4, 15, 'Kevin Lomonaco','guarachita@hotmail.com',20335555, 2, '2025-06-08 21:30:50', 'Buena musica...', False),
                   (15, 1, 99, 'Matias Sapienza', 'matikpo2002@live.com', 22113030,4, '2025-06-01 20:30:50', 'Punto de coccion:La carne tiene que decir mu', True),
                   (21, 3, 1, 'Sasha Ferro', 'sashamiau@outlook.com',15150233, 1, '2025-06-05 18:25:50', 'El mejor cafe con leche posible', False),
-                  (22, 1, 99, 'Matias Sapienza', 'matikpo2002@live.com', 22113030, 1, '2025-06-06 11:15:20', 'El mejor chinchulin disponible', True);""")
+                  (22, 1, 99, 'Matias Sapienza', 'matikpo2002@live.com', 22113030, 1, '2025-06-06 11:15:20', 'El mejor chinchulin disponible', True),                                                      
+                  (34, 2, 95, 'Angela Leiva','negritacuartetera@gmail.com',11033030, 4, '2025-06-12 20:15:00', 'Con velitas románticas', True);
+               """)
 
 ############## REGISTROS DE PRUEBA PARA LA TABLA 'resenias'
 cursor.execute("""INSERT INTO resenias
                   (id_comercio,id_usr,comentario,calificacion,tiempo_de_creacion, id_reserva)
                   VALUES
-                  (32, 1, "Habia un enfermo en el baño que se estaba masturbando mientras gritaba extraordinario y nadie hizo nada. Por lo visto es un usuario habitual del establecimiento y estan acostumbrados",1,'2025-05-15 15:30:15',15 );
+                  (99, 1, 'La mejor parrilla que probé en mi vida. El mozo sabía mi nombre antes de que llegara, un 10.', 5, '2025-06-01 22:15:00', 15),
+                  (1, 3, 'El café estaba bien, pero la atención fue muy lenta. Volvería solo si mejoran eso.', 3, '2025-06-05 19:00:00', 21),
+                  (15, 4, 'Lugar limpio y ordenado, pero la comida demoró demasiado.', 3, '2025-06-08 22:15:00', 10),
+                  (99, 1, 'El chinchulín estaba espectacular. Vuelvo seguro.', 4, '2025-06-06 13:00:00', 22),
+                  (11, 6, 'Música en vivo genial, pero la comida algo salada.', 4, '2025-06-10 23:00:00', 33);
                 """)
 
 conn.commit()                           # Guardo los cambios realizados en la BDD

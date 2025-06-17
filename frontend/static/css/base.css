@@ -6,22 +6,25 @@
   --golf:#D4A574;
 }
 
-/* === Reset y estructura === */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 body, body.body-bg {
     font-family: 'Roboto', sans-serif;
     min-height: 100vh;
 }
+
 body.body-bg {
     background-color: var(--vino);
 }
+
 body {
     background-color: #f5f5f5;
 }
+
 /* === Navbar común === */
 .navbar {
     display: flex;
@@ -43,39 +46,59 @@ body {
     height: 45px;
     margin-right: 10px;
 }
-.search-box,
+
 .search-box-enhanced {
     display: flex;
-    align-items: center;
-    background-color: #2d2d2d;
-    border-radius: 20px;
-    padding: 6px 12px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-    width: 100%;
-    max-width: 320px;
-    margin: auto;
-}
-.search-box input,
-.search-box-enhanced input {
-    background: transparent;
-    text-align: center;
-    border: none;
-    color: white;
-    outline: none;
-    padding: 5px;
-    border-radius: 5px;
-    width: 250px;
-    font-size: 17px;
-}
-.search-box input::placeholder,
-.search-box-enhanced input::placeholder {
-    color: #ccc;
+    width: 75%;
+    align-content: center;
+    justify-content: center;
+    padding: 20px;
 }
 
-.search-box-enhanced .search-icon {
-    color: var(--mostaza);
-    font-size: 16px;
+.search-box-enhanced form {
+    display: flex;
+    width: 400px;
+    border: 2px solid --golf;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.search-box-enhanced input[type="text"] {
+    padding: 12px 16px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    flex: 1;
+    color: var(--sgray);
+}
+
+.search-box-enhanced input::placeholder {
+    color: #888;
+    text-align: center;
+}
+
+.search-button {
+    background-color: var(--vino);
+    color: #fff;
+    border: none;
+    padding: 0 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-button:hover {
+    background-color: var(--golf);
+}
+
+.search-icon {
+    font-size: 18px;
+}
+
 
 .nav-links {
     display: flex;
@@ -83,23 +106,27 @@ body {
     gap: 15px;
     flex-wrap: wrap;
 }
+
 .nav-links a {
     text-decoration: none;
     color: white;
     font-weight: bold;
     transition: color 0.3s ease;
-    margin-left: 20px;
+    margin-left: 10px;
     white-space: nowrap;
 }
+
 .nav-links a:hover,
 .nav-links a.active {
     color: #7a0019;
 }
+
 .nav-links a.active {
     background-color: transparent !important;
     color: #7a0019 !important;
     font-weight: bold;
 }
+
 .nav-user {
     font-size: 22px;
     background-color: #7a0019;
@@ -109,14 +136,17 @@ body {
     transition: background-color 0.3s ease;
     color: white;
 }
+
 .nav-user:hover {
     background-color: #5a0014;
 }
+
 .user-menu-wrapper {
     position: relative;
     display: inline-block;
     margin-left: 15px;
 }
+
 .user-dropdown {
     opacity: 0;
     transform: scale(0.9) translateY(-10px);
@@ -134,6 +164,7 @@ body {
     box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     z-index: 1000;
 }
+
 .user-dropdown a {
     display: block;
     color: white;
@@ -141,48 +172,126 @@ body {
     padding: 8px 12px;
     border-radius: 5px;
 }
+
 .user-dropdown a:hover {
     background-color: #5a0014;
 }
+
 .user-dropdown.show {
     opacity: 1;
     transform: scale(1) translateY(0);
     pointer-events: auto;
 }
+
 .logo-img {
     height: 28px;
     vertical-align: middle;
     margin-right: 8px;
 }
+
 main {
     padding: 30px;
     margin: 0 auto;
     background-color: var(--mostaza);
 }
+
 .page-container {
     background-color: var(--mostaza);
 }
 
-/* === Responsive === */
+
 @media (max-width: 768px) {
-    .navbar { font-size: 16px; padding: 8px 15px; }
-    .navbar .logo { font-size: 20px; }
-    .search-box { margin: 0 10px; min-width: 150px; order: 3; flex-basis: 100%; margin-top: 10px; }
-    .nav-links { gap: 10px; max-height: 0; overflow: hidden; flex-direction: column; position: absolute; top: 70px; right: 20px; width: 200px; border-radius: 10px; background-color: #800020; box-shadow: 0 8px 16px rgba(0,0,0,0.4); transition: max-height 0.4s ease-in-out; }
-    .nav-links.show { max-height: 300px; }
-    .nav-links a { margin: 5px 0; padding: 10px; text-align: center; border-radius: 5px; }
-    .hamburger { display: block; background: none; border: none; color: white; font-size: 24px; cursor: pointer; padding: 8px; transition: transform 0.3s ease; }
-    .hamburger.active { transform: rotate(90deg); }
+    .navbar { 
+        font-size: 16px;
+        padding: 8px 15px; 
+    }
+    .navbar .logo { 
+        font-size: 20px; 
+    }
+    .search-box { 
+        margin: 0 10px; 
+        min-width: 150px; 
+        order: 3; 
+        flex-basis: 
+        100%; 
+        margin-top: 10px; 
+    }
+
+    .nav-links { 
+        gap: 10px; 
+        max-height: 0; 
+        overflow: hidden; 
+        flex-direction: column; 
+        position: absolute; 
+        top: 70px; 
+        right: 20px; 
+        width: 200px; 
+        border-radius: 10px; 
+        background-color: #800020; 
+        box-shadow: 0 8px 16px rgba(0,0,0,0.4); 
+        transition: max-height 0.4s ease-in-out; 
+    }
+
+    .nav-links.show { 
+        max-height: 300px; 
+    }
+
+    .nav-links a { 
+        margin: 5px 0; 
+        padding: 10px; 
+        text-align: center; 
+        border-radius: 5px; 
+    }
+
+    .hamburger { 
+        display: block; 
+        background: none; 
+        border: none; color: 
+        white; 
+        font-size: 24px; 
+        cursor: pointer; 
+        padding: 8px; 
+        transition: 
+        transform 0.3s ease; 
+    }
+    
+
+    .hamburger.active { 
+        transform: rotate(90deg); 
+    }
+    
     main { padding: 20px 15px; }
 }
+
 @media (max-width: 480px) {
-    .navbar { font-size: 14px; padding: 8px 10px; }
-    .navbar .logo { font-size: 18px; }
-    .search-box { margin: 0 5px; min-width: 120px; }
-    .nav-links a { margin-left: 5px; font-size: 12px; padding: 3px 6px; }
-    .nav-user { margin-left: 5px; padding: 4px; font-size: 16px; }
+    .navbar { 
+        font-size: 14px; 
+        padding: 8px 10px; 
+    }
+
+    .navbar .logo { 
+        font-size: 18px; 
+    }
+
+    .search-box { 
+        margin: 0 5px; 
+        min-width: 120px; 
+    }
+
+    .nav-links a { 
+        margin-left: 5px; 
+        font-size: 12px; 
+        padding: 3px 6px; 
+    }
+
+    .nav-user { 
+        margin-left: 5px; 
+        padding: 4px; 
+        font-size: 16px; }
+
     main { padding: 15px 10px; }
 }
+
 @media (min-width: 577px) {
     .hamburger { display: none !important; }
 }

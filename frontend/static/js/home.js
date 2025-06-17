@@ -77,7 +77,6 @@ function toggleHeart(button) {
             button.style.transform = 'scale(1)';
         }, 150);
     }
-};
 
 // Esta funcion aplica una animación al hacer click en cualquier carta de restaurante. La misma no se activa si se clickea el botón de favoritos (heart-btn).
 document.querySelectorAll('.restaurant-card').forEach(card => {

@@ -150,6 +150,21 @@
     margin-bottom: 20px;
 }
 
+/* Contenedor que contiene el link el cual luego va a redirigir a la pagina del restaurante*/
+.restaurant-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.restaurant-link:hover,
+.restaurant-link:visited,
+.restaurant-link:focus,
+.restaurant-link:active {
+    text-decoration: none;
+    color: inherit;
+}
+
 .restaurant-card {
     background: linear-gradient(145deg, #D4A574 0%, #E6B885 100%);
     border-radius: 15px;
