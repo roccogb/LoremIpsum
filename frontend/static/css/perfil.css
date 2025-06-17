@@ -349,6 +349,11 @@ body::before {
     box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
 }
 
+.info-fav{
+    display: flex;
+    flex-direction: row;
+}
+
 /* Estados y calificaciones */
 .estado-activa {
     color: var(--verde-activo);

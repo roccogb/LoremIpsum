@@ -15,6 +15,21 @@ UPLOAD_FOLDER = os.path.join(os.getcwd(),'static','media', 'img')       # Carpet
 def home():
     response=requests.get(f"{API_BACK}/comercio/filtrar",json={"tipo_cocina":"null","categoria":"null","calificacion":"desc",
                                                                          "horarios":[],"etiquetas":[],"dias":[]})
+    
+    # Obtener favoritos del usuario si está logueado
+    id_favoritos = []
+    if "datos_usuario" in session and session["tipo_usuario"] == "consumidor":
+        id_usr = session.get("datos_usuario")["id_usr"]
+        try:
+            fav_response = requests.get(f"{API_BACK}/favs/detallado/{id_usr}")
+            if fav_response.status_code == 200:
+                favoritos_data = fav_response.json()
+                # Extraer solo los IDs de comercios favoritos
+                id_favoritos = [fav['id_comercio'] for fav in favoritos_data]
+        except requests.RequestException:
+            # Si hay error al obtener favoritos, continuar sin ellos
+            id_favoritos = []
+    
     if response.status_code == 200:
         comercios_rank_bdd=list(response.json())
         top_comercios=[]
@@ -27,7 +42,7 @@ def home():
             else:
                 comercios_destacados=comercios_rank_bdd[3:]
 
-        return render_template("home.html", comercios_destacados=comercios_destacados, rank_comercios=top_comercios)
+        return render_template("home.html", comercios_destacados=comercios_destacados, rank_comercios=top_comercios, id_favoritos=id_favoritos)
     else:
         return "Error al obtener los comercios desde el backend", 500
 
@@ -86,6 +101,20 @@ def resto(id_comercio):
     if id_comercio <= 0:
         return redirect(url_for("home"))
     
+    # Obtener favoritos del usuario si está logueado
+    id_favoritos = []
+    if "datos_usuario" in session and session["tipo_usuario"] == "consumidor":
+        id_usr = session.get("datos_usuario")["id_usr"]
+        try:
+            fav_response = requests.get(f"{API_BACK}/favs/detallado/{id_usr}")
+            if fav_response.status_code == 200:
+                favoritos_data = fav_response.json()
+                # Extraer solo los IDs de comercios favoritos
+                id_favoritos = [fav['id_comercio'] for fav in favoritos_data]
+        except requests.RequestException:
+            # Si hay error al obtener favoritos, continuar sin ellos
+            id_favoritos = []
+
     response = requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":id_comercio,"nombre_comercio":""})
     if response.status_code == 200:
         comercio_bdd = response.json()
@@ -106,10 +135,7 @@ def resto(id_comercio):
         if response_resenias.status_code == 200:
             resenias_data=response_resenias.json()
 
-        return render_template("resto.html", comercio=comercio_bdd, resenias=resenias_data,
-                                            dias=dias_abiertos, etiquetas=etiquetas_comercio,
-                                            categoria=categoria_comercio, tipo_cocina=tipo_cocina_comercio,
-                                            horarios=horarios_disponible)
+        return render_template("resto.html", comercios=comercio_bdd, resenias=resenias_data, id_favoritos=id_favoritos)
     else:
         # Redirigir al home. 
         flash("Comercio no encontrado")
@@ -132,10 +158,6 @@ def reservar():
         hora_reserva = request.form.get("hora_reserva")
         solicitud_especial = request.form.get("solicitud_especial", "")
 
-        return jsonify({"id_comercio":id_comercio,"nombre_bajo_reserva":nombre_bajo_reserva,
-                        "email":email,"telefono":telefono,"cant_personas":cant_personas,
-                        "hora_reserva":hora_reserva, "solicitud_especial":solicitud_especial,
-                        "fecha_reserva":fecha_reserva})
         # Envía los datos al backend para crear la reserva.
         response = requests.post(f"{API_BACK}/reserva/crear", json={
             "id_usr": session.get("id_usr"),
@@ -355,19 +377,29 @@ def register():
         return render_template("register.html")
 
 # Marcar un comercio como favorito.
-@app.route("/click_fav/<int:id_comercio>")
+@app.route("/click_fav/<int:id_comercio>", methods=["POST"])
 def click_fav(id_comercio):
     if "datos_usuario" not in session or session["tipo_usuario"] != "consumidor":
-        return redirect(url_for("login"))
+        return jsonify({"success": False, "error": "No autorizado"}), 401
 
     id_usr = session.get("datos_usuario")["id_usr"]
-    response = requests.post(f"{API_BACK}/favs/alternar", json={"id_comercio": id_comercio, "id_usr": id_usr})
     
-    if response.status_code == 200:
-        flash("Comercio agregado a favoritos")
-        return redirect(url_for("home"))
-    else:
-        flash("No se pudo agregar a favoritos")
+    try:
+        response = requests.post(f"{API_BACK}/favs/alternar", json={"id_comercio": id_comercio, "id_usr": id_usr})
+        
+        if response.status_code == 200:
+            data = response.json()
+            return jsonify({
+                "success": True, 
+                "favorito": data.get("marca", False),
+                "message": "Favorito actualizado correctamente"
+            })
+        else:
+            return jsonify({"success": False, "error": "Error del servidor backend"}), 500
+            
+    except requests.RequestException as e:
+        return jsonify({"success": False, "error": "Error de conexión con el backend"}), 500
+
     
 # Logout
 @app.route("/logout")
