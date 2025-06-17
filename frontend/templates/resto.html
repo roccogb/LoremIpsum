@@ -184,12 +184,12 @@
                 <div class="col-lg-12">
                   <div class="reviews-section">
                     <div class="reviews-list">
-                      {% if resenas %}
-                        {% for resena in resenas %}
+                      {% if resenias %}
+                        {% for resena in resenias %}
                         <div class="review-item">
                           <div class="review-header">
                             <div class="reviewer-info">
-                              <strong>{{ resena.nombre_usuario }}</strong>
+                              <strong>{{ resena.usuario }}</strong>
                               <div class="rating">
                                 {% for i in range(resena.calificacion) %}
                                   ⭐
@@ -199,7 +199,7 @@
                                 {% endfor %}
                               </div>
                             </div>
-                            <small class="text-muted">{{ resena.fecha_resena.strftime('%d/%m/%Y') if resena.fecha_resena else 'Fecha no disponible' }}</small>
+                            <small class="text-muted">{{ resena.tiempo_de_creacion}}</small>
                           </div>
                           <div class="review-content">
                             <p>{{ resena.comentario }}</p>

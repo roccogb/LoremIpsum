@@ -239,17 +239,19 @@
                 <div id="total_paginas" style="display:none;">{{ total_paginas }}</div>
                 <div id="pagina_actual" style="display:none;">{{ pagina_actual }}</div>
                  {% for comercio in comercios %}
-                    <div class="restaurant-card" data-id="{{comercio['id_comercio']}}" onclick="selectRestaurant(this)">
-                        <button class="favorite-btn" onclick="toggleFavorite(event, this)">
-                            <i class="far fa-heart"></i>
-                        </button>
-                        <div class="restaurant-img">
-                            <img src="{{url_for('static', filename= comercio['ruta_imagen'])}}" alt="Imagen-Restaurante">
-                        </div>
-                        <div class="restaurant-name">{{comercio["nombre_comercio"]}}</div>
-                        <div class="restaurant-rating">
-                            <div class="rating-stars">★</div>
-                            <div class="rating-number">{{comercio["calificacion"]}}</div>
+                    <div class="restaurant-link" data-url="{{url_for('resto', id_comercio=comercio['id_comercio'])}}" onclick="handleCardClick(event,this)">
+                        <div class="restaurant-card" onclick="selectRestaurant(this)">
+                            <button class="favorite-btn" onclick="toggleFavorite(event, this)">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <div class="restaurant-img">
+                                <img src="{{url_for('static', filename= comercio['ruta_imagen'])}}" alt="Imagen-Restaurante">
+                            </div>
+                            <div class="restaurant-name">{{comercio["nombre_comercio"]}}</div>
+                            <div class="restaurant-rating">
+                                <div class="rating-stars">★</div>
+                                <div class="rating-number">{{comercio["calificacion"]}}</div>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}

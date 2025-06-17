@@ -90,5 +90,20 @@ function toggleHeart(button, event) {
     }, 150);
 
     // Manda la petición de agregar o eliminar favorito.o.
-    window.location.href = `/marcar_fav/${id_comercio}`;
+    window.location.href = `/click_fav/${id_comercio}`;
+}
+
+// Función para manejar el clic en la carta del restaurante
+function handleCardClick(event, element) {
+    if (event.target.closest('.heart-btn')) {
+        return;
+    }
+    else if(event.target.closest('.nav-arrow left')){
+        return;
+    }
+    else if(event.target.closest('.nav-arrow right')){
+        return;
+    }
+    // Redirigir a la página del restaurante
+    window.location.href = element.dataset.url;
 }

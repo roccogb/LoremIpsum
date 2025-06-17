@@ -64,25 +64,6 @@ let total_pag=0;
         });
     };
 
-
-
-    // Función para alternar favoritos
-    function toggleFavorite(event, button) {
-        event.stopPropagation(); // Prevenir que se active el click del card
-        
-        const icon = button.querySelector('i');
-        if (icon.classList.contains('far')) {
-            icon.classList.remove('far');
-            icon.classList.add('fas');
-            button.classList.add('active');
-        } else {
-            icon.classList.remove('fas');
-            icon.classList.add('far');
-            button.classList.remove('active');
-        }
-    }
-
-
     // Función para seleccionar restaurante
     function selectRestaurant(card) {
         // Aquí puedes agregar la lógica para navegar a la página del restaurante

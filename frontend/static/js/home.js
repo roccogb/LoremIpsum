@@ -42,48 +42,6 @@ function prevRestauranteTop() {
     updateRestauranteDisplay();
 };
 
-// Esta funcion va a redirigir al usuario al menu que contiene el perfil del usuario.
-function showUserMenu()
-{
-    window.location.href='/ver_perfil'
-};
-
-// Esta funcion va a redirigir al usuario a la página de un restaurante específico. Va a recibir de parametro el id del mismo y luego va a modificar la URL llevandolo al endpoint en cuestión
-function goToComercio(id) {
-    // Cambia la URL actual para navegar a la página del restaurante
-    window.location.href = "/restaurante/" + id;
-};
-
-// Realiza una animación y cambia el estado del botón de "favorito" (corazón). Recibe de parametro el boton en cuestión
-// Nota: event.stopPropagation() evita que el evento se propague al contenedor padre.
-function toggleHeart(button) {
-    // Detiene la propagación del evento para que no active otros listeners (como el click de la carta)
-    event.stopPropagation();
-
-    // Alterna la clase 'active' en el botón (si la tiene, la quita; si no, la añade)
-    button.classList.toggle('active');
-
-    // Si el botón está activo (es favorito)
-    if (button.classList.contains('active')) {
-        button.innerHTML = '♥'; // Cambia a corazón lleno
-        button.style.transform = 'scale(1.2)'; // Efecto de escala (agrandar)
-
-        // Después de 150ms, reduce ligeramente el tamaño para efecto de "rebote"
-        setTimeout(() => {
-            button.style.transform = 'scale(1.1)';
-        }, 150);
-    } 
-    // Si el botón NO está activo
-    else {
-        button.innerHTML = '♡'; // Vuelve a corazón vacío
-        button.style.transform = 'scale(0.9)'; // Efecto de encogimiento
-
-        // Después de 150ms, vuelve al tamaño normal con efecto de "rebote"
-        setTimeout(() => {
-            button.style.transform = 'scale(1)';
-        }, 150);
-    }
-};
 
 // Esta funcion aplica una animación al hacer click en cualquier carta de restaurante. La misma no se activa si se clickea el botón de favoritos (heart-btn).
 document.querySelectorAll('.restaurant-card').forEach(card => {

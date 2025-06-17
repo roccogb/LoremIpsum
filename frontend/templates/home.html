@@ -27,34 +27,29 @@
 
         <!-- Seccion de restaurantes populares -->
         <div class="popular-section">
-            <a href="{{url_for('descubre', indice_pag=0, _external=True)}}" class="section-title">Restaurantes populares</a>
-            
+            <a href="{{url_for('descubre', indice_pag=0, _external=True)}}" class="section-title">
+                <h2>Restaurantes Populares</h2>
+            </a>
             <div class="restaurants-grid">
                 {% for comercio in comercios_destacados %}
-                    <div class="restaurant-card" onclick="goToComercio({{ comercio['id_comercio'] }})">
-                        <button
-                            class="heart-btn {% if comercio['es_favorito'] %}active{% endif %}" 
-                            data-id="{{ comercio['id_comercio'] }}">
-                            {% if comercio['es_favorito'] %}
-                                ♥
-                            {% else %}
-                                ♡
-                            {% endif %}
-                        </button>                         
-                        <div class="restaurant-icon">
-                            <img src="{{url_for('static', filename=comercio['ruta_imagen'])}}" alt="Comercio-Imagen">
+                    <div class="restaurant-link" data-url="{{url_for('resto', id_comercio=comercio['id_comercio'])}}" onclick="handleCardClick(event,this)">
+                        <div class="restaurant-card">
+                            <button class="heart-btn" data-id="{{comercio['id_comercio']}}" onclick="toggleHeart(event, this)">♡</button>
+                            <div class="restaurant-icon">
+                                <img src="{{url_for('static', filename=comercio['ruta_imagen'])}}" alt="Comercio-Imagen">
+                            </div>
+                            <div class="restaurant-rating">
+                                <span>{{comercio["calificacion"]}}</span>
+                                <span class="star">★</span>
+                            </div>
+                            <div class="restaurant-details">{{comercio["nombre_comercio"]}}</div>
                         </div>
-                        <div class="restaurant-rating">
-                            <span>{{comercio["calificacion"]}}</span>
-                            <span class="star">★</span>
-                        </div>
-                        <div class="restaurant-details">{{comercio["nombre_comercio"]}}</div>
                     </div>
                 {% endfor %}
             </div>
             
             <center>
-                <a href="{{url_for('descubre', indice_pag=0,_external=True)}}">
+                <a href="{{url_for('descubre', indice_pag=0, _external=True)}}">
                     <button class="discover-btn">Descubre más</button>
                 </a>
             </center>

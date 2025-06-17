@@ -1,5 +1,64 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Ayuda</h1>
-<p>¿Tenés dudas? Próximamente vas a poder contactarnos.</p>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ayuda.css') }}">
+
+<div class="help-container">
+    <!-- Sección Quiénes Somos -->
+    <div class="quienes-somos">
+        <h1>¿Quiénes somos?</h1>
+        <div class="quienes-somos-content">
+            <div class="icon-section">
+                <div class="utensils-icon"></div>
+                <div class="arrow">➤</div>
+            </div>
+            <div class="text-content">
+                <p>
+                    Somos FooodvBA, tu compañero gastronómico en Buenos Aires. Nuestra plataforma te permite 
+                    descubrir los mejores restaurantes de la ciudad de manera fácil e intuitiva. Ya sea que 
+                    busques una parrilla tradicional, sushi fresco, pizza artesanal o cocina internacional, 
+                    estamos aquí para ayudarte a encontrar exactamente lo que buscás. Nuestro objetivo es 
+                    conectar a los amantes de la buena comida con los mejores establecimientos gastronómicos, 
+                    facilitando la exploración culinaria y ayudando a descubrir nuevos sabores en cada rincón 
+                    de Buenos Aires. Podés explorar restaurantes por ubicación, categoría, tipo de comida y más, 
+                    además de agregar tus favoritos y dejar reseñas para ayudar a otros usuarios.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Qué Podés Hacer -->
+    <div class="que-podes-hacer">
+        <h2>¿Qué podés hacer en FooodvBA?</h2>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">👤</div>
+                <div class="feature-title">Cliente</div>
+                <div class="feature-description">
+                    Creá tu perfil personal para explorar restaurantes, guardar tus favoritos, 
+                    hacer reservas y dejar reseñas. Descubrí nuevos sabores y gestioná toda 
+                    tu experiencia gastronómica desde un solo lugar.
+                </div>
+            </div>
+
+            <div class="feature-card store-icon">
+                <div class="feature-icon">🏪</div>
+                <div class="feature-title">Establecimiento</div>
+                <div class="feature-description">
+                    ¿Tenés un restaurante? Registrá tu establecimiento en nuestra plataforma, 
+                    gestioná tu perfil, recibí reservas y conectá con nuevos clientes que 
+                    buscan experiencias gastronómicas únicas.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Contacto -->
+    <div class="contact-section">
+        <div class="contact-text">¿Tenés dudas o sugerencias?</div>
+        <div class="coming-soon">
+            📧 Próximamente vas a poder contactarnos
+        </div>
+    </div>
+</div>
 {% endblock %}

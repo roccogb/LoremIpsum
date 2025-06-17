@@ -9,10 +9,11 @@
         <div class="review-card">
             <!-- Sección del restaurante -->
             <div class="restaurant-section">
-                <h1 class="restaurant-title">Nombre restaurant</h1>
+                <h1 class="restaurant-title">{{comercio.nombre_comercio}}</h1>
                 <div class="restaurant-icon">
                     <div class="store-icon">
-                        <img src="../static/media/img/planetario.jpg" alt="temporal">
+                        <img src="{{url_for('static', filename=comercio.ruta_imagen)}}" alt="{{comercio.nombre_comercio}}">
+                        <div class="image-overlay"></div>
                     </div>
                 </div>
             </div>
@@ -24,21 +25,38 @@
             <div class="review-section">
                 <div class="review-header">
                     <h2 class="review-title">¡DEJANOS TU OPINIÓN!</h2>
-                    <div class="star-rating" id="starRating">
-                        <span class="star" data-rating="1">☆</span>
-                        <span class="star" data-rating="2">☆</span>
-                        <span class="star" data-rating="3">☆</span>
-                        <span class="star" data-rating="4">☆</span>
-                        <span class="star" data-rating="5">☆</span>
-                    </div>
+                    <p class="review-subtitle">Tu experiencia nos ayuda a mejorar</p>
                 </div>
 
-                <form class="review-form" id="reviewForm" onsubmit="submitReview(event)">
+                <form class="review-form" id="reviewForm" action="{{url_for('realizar_review', id_reserva=identificador_reserva, id_comercio=comercio.id_comercio)}}" method="POST">
+                    <!-- Sistema de estrellas como radio buttons -->
+                    <div class="form-group rating-group">
+                        <label class="rating-label">Calificación:</label>
+                        <div class="star-rating" id="starRating">
+                            <input type="radio" id="star5" name="calificacion" value="5" required>
+                            <label for="star5" class="star" data-rating="5">★</label>
+                            
+                            <input type="radio" id="star4" name="calificacion" value="4" required>
+                            <label for="star4" class="star" data-rating="4">★</label>
+                            
+                            <input type="radio" id="star3" name="calificacion" value="3" required>
+                            <label for="star3" class="star" data-rating="3">★</label>
+                            
+                            <input type="radio" id="star2" name="calificacion" value="2" required>
+                            <label for="star2" class="star" data-rating="2">★</label>
+                            
+                            <input type="radio" id="star1" name="calificacion" value="1" required>
+                            <label for="star1" class="star" data-rating="1">★</label>
+                        </div>
+                        <div class="rating-text" id="ratingText">Selecciona una calificación</div>
+                    </div>
+
                     <div class="form-group">
+                        <label for="reviewText" class="textarea-label">Tu reseña:</label>
                         <textarea 
                             id="reviewText" 
-                            name="review" 
-                            placeholder="Escribe tu reseña aquí..." 
+                            name="comentario" 
+                            placeholder="Cuéntanos sobre tu experiencia en este lugar..." 
                             maxlength="500"
                             required
                             aria-label="Escribe tu reseña"
@@ -47,10 +65,11 @@
                             <span id="charCount">0</span>/500
                         </div>
                     </div>
-
+                    
                     <div class="form-actions">
                         <button type="submit" class="submit-btn" id="submitBtn">
-                            ENVIAR
+                            <span class="btn-icon">📝</span>
+                            ENVIAR RESEÑA
                         </button>
                     </div>
                 </form>
@@ -60,7 +79,8 @@
         <!-- Botón de regreso -->
         <div class="back-section">
             <button class="back-btn" onclick="goBack()">
-                ← Volver al restaurante
+                <span class="back-icon">←</span>
+                Volver al restaurante
             </button>
         </div>
     </div>

@@ -11,7 +11,8 @@ CREATE TABLE usuario_comercio (
     DNI BIGINT UNIQUE,                          
     CUIT BIGINT UNIQUE,
     email_usuario VARCHAR(100) UNIQUE,
-    contrasena VARCHAR(100)
+    contrasena VARCHAR(100),
+    fecha_creacion DATE
 );
 
 -- Tabla: usuario_consumidor
@@ -21,6 +22,7 @@ CREATE TABLE usuario_consumidor (
     usuario VARCHAR(100) UNIQUE,
     email_usuario VARCHAR(100) UNIQUE,
     contrasena VARCHAR(100),
+    fecha_creacion DATE,
     numero_telefono BIGINT UNIQUE,
     cant_reservas_canceladas INT DEFAULT 0
 );
@@ -47,17 +49,6 @@ CREATE TABLE comercios (
     -- La caracteristica 'ON DELETE CASCADE' indica que si se borra el registro 'padre' los 'hijos' se eliminan automaticamente
 );
 
--- Tabla: reseñas
-CREATE TABLE resenias (
-    id_comercio INT,
-    id_usr INT,
-    comentario TEXT,
-    calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
-    tiempo_de_creacion DATETIME,
-    FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE,
-    FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE
-);
-
 -- Tabla: reservas
 CREATE TABLE reservas (
     id_reserva INT PRIMARY KEY AUTO_INCREMENT,
@@ -72,6 +63,20 @@ CREATE TABLE reservas (
     estado_reserva BOOLEAN,             -- El estado de esta columna va a depender si el consumidor escanea un QR brindado por el comercio
     FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE,
     FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE
+);
+
+-- Tabla: reseñas
+CREATE TABLE resenias (
+    id_resenia INT AUTO_INCREMENT PRIMARY KEY,
+    id_comercio INT,
+    id_usr INT,
+    comentario TEXT,
+    calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
+    tiempo_de_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id_reserva INT NOT NULL UNIQUE,
+    FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE,
+    FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE,
+    FOREIGN KEY (id_reserva) REFERENCES reservas(id_reserva) ON DELETE CASCADE
 );
 
 -- Tabla: favoritos
