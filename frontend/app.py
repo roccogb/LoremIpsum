@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 app.secret_key = "contra_ids"  # Necesario para usar session y flash
 
-API_BACK = "http://0.0.0.0:8100"                                        # Dirección local del backend
+API_BACK = "http://127.0.0.1:8100"                                        # Dirección local del backend
 UPLOAD_FOLDER = os.path.join(os.getcwd(),'static','media', 'img')       # Carpeta donde van a ir todas las imagenes
 
 # Pagina de inicio
@@ -283,27 +283,21 @@ def register():
         flash(f"{response.json()["error"]}","warning")
     return render_template("register.html")
 
-@app.route("/favoritos")
-def favoritos():
+# Marcar un comercio como favorito.
+@app.route("/marcar_fav/<int:id_comercio>")
+def marcar_favorito(id_comercio):
     if "datos_usuario" not in session or session["tipo_usuario"] != "consumidor":
-        flash("Debes iniciar sesión como consumidor para ver tus favoritos", "error")
         return redirect(url_for("login"))
-    
+
     id_usr = session["datos_usuario"]["id_usr"]
-    response = requests.get(f"{API_BACK}/favoritos/detallado/{id_usr}")
-    favoritos = response.json() if response.status_code == 200 else []
-    return render_template("favoritos.html", favoritos=favoritos, id_usr=id_usr)
-
-@app.route("/dar_fav/<int:id_comercio>")
-def dar_favorito(id_comercio):
-    if "datos_usuario" not in session or session["tipo_usuario"] != "consumidor":
-        return redirect(url_for("login"))
-    else:
-        response = requests.post(f"{API_BACK}/favoritos/marcar", json={"id_comercio":id_comercio,"id_usr":session.get("datos_usuario")["usuario"]})
-        if response.status_code == 200:
-            return flash("Comercio agregado a favoritos", "message")
+    response = requests.post(f"{API_BACK}/favoritos/marcar", json={"id_comercio": id_comercio, "id_usr": id_usr})
     
-
+    if response.status_code == 200:
+        flash("Comercio agregado a favoritos")
+        return redirect(url_for("home"))
+    else:
+        flash("No se pudo agregar a favoritos")
+    
 # Logout
 @app.route("/logout")
 def logout():
