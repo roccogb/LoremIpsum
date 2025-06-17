@@ -1,4 +1,4 @@
-from flask import request, jsonify, render_template, session, redirect, url_for
+from flask import request, jsonify, session
 from . import auth_bp
 from database.db import get_connection
 from fextra import transform_dir_coords
@@ -30,10 +30,6 @@ def auth_consumidor():
         if not user_data:
             return jsonify({"msg": "Usuario no encontrado"}), 404         
         
-        # Guardar sesión
-        session['usuario'] = user_data
-        session['tipo_usuario'] = 'consumidor'
-        
         return jsonify(user_data), 200
            
     except Exception as e:
@@ -56,7 +52,7 @@ def auth_comercio():
         query = """
         SELECT 
             uc.id_usr_comercio, uc.nombre_apellido, uc.DNI, uc.CUIT, 
-            uc.email_usuario, uc.contrasena,
+            uc.email_usuario, uc.contrasena, uc.fecha_creacion,
             c.id_comercio, c.ruta_imagen, c.nombre_comercio, c.categoria,
             c.tipo_cocina, c.telefono, c.latitud, c.longitud, 
             c.tiempo_de_creacion, c.pdf_menu_link, c.calificacion,
@@ -82,11 +78,10 @@ def auth_comercio():
         print(f"Error en auth_comercio: {e}")
         return jsonify({"msg": "Error interno del servidor auth_comercio"}), 500
 
-@auth_bp.route('/api/register', methods=['POST'])
+@auth_bp.route('/register', methods=['POST'])
 def register_user():
     try:
-        data = request.form.to_dict(flat=True)
-        print("[DEBUG] Datos recibidos en form-data:", data)
+        data = request.get_json()
 
         tipo_usuario = data.get('tipo_usuario')
         conn = get_connection()
@@ -134,8 +129,8 @@ def register_consumidor(data, cursor, conn):
     
     insert_query = """
         INSERT INTO usuario_consumidor 
-        (nombre_apellido, usuario, email_usuario, contrasena, numero_telefono) 
-        VALUES (%s, %s, %s, %s, %s)
+        (nombre_apellido, usuario, email_usuario, contrasena, numero_telefono, fecha_creacion) 
+        VALUES (%s, %s, %s, %s, %s, CURRENT_DATE)
     """
     cursor.execute(insert_query, (nombre_completo, usuario, email, password, telefono_int))
     conn.commit()
@@ -151,7 +146,8 @@ def register_comercio(data, cursor, conn):
     
     nombre_comercio = data.get('nombre_comercio', '').strip()
     tel_comercio = data.get('tel_comercio', '0').strip()
-    lat,lng = transform_dir_coords(data.get('dir_comercio', '').strip())
+    print("ERROR EN TRANSFOR COORDS")
+    lat,lng = transform_dir_coords(data.get('dir_comercio', '').strip())        # ERROR ACÁ
     lkmenu_comercio = data.get('lkmenu_comercio', '').strip()
     categoria = data.get('categoria', '').strip()
     tipo_cocina = data.get('tipo_cocina', '').strip()
@@ -187,8 +183,8 @@ def register_comercio(data, cursor, conn):
     
     insert_user_query = """
         INSERT INTO usuario_comercio 
-        (nombre_apellido, DNI, CUIT, email_usuario, contrasena) 
-        VALUES (%s, %s, %s, %s, %s)
+        (nombre_apellido, DNI, CUIT, email_usuario, contrasena, fecha_creacion) 
+        VALUES (%s, %s, %s, %s, %s, CURRENT_DATE)
     """
     cursor.execute(insert_user_query, (
         nombre_responsable, dni_int, cuit_int, email_responsable, contrasena
@@ -213,42 +209,4 @@ def register_comercio(data, cursor, conn):
     conn.commit()
     return jsonify({"message": "Comercio registrado exitosamente"}), 200
 
-@auth_bp.route('/perfilconsumidor')
-def perfil_consumidor():
-    if 'usuario' not in session:
-        return redirect(url_for('auth_bp.login_page'))
-    return render_template("perfil_consumidor.html", 
-        usuario=session['usuario'], 
-        reservas=[], 
-        resenias=[], 
-        favoritos=[]
-    )
 
-@auth_bp.route('/perfilcomerciante')
-def perfil_comerciante():
-    if 'usuario' not in session:
-        return redirect(url_for('auth_bp.login_page'))
-    return render_template("perfil_comerciante.html")
-
-@auth_bp.route('/login', methods=['GET'])
-def login_page():
-    if 'usuario' in session and 'tipo_usuario' in session:
-        if session['tipo_usuario'] == 'consumidor':
-            return redirect(url_for('auth_bp.perfil_consumidor'))
-        elif session['tipo_usuario'] == 'comercio':
-            return redirect(url_for('auth_bp.perfil_comerciante'))
-    return render_template('login.html')
-
-@auth_bp.route('/register', methods=['GET'])
-def register_page():
-    if 'usuario' in session and 'tipo_usuario' in session:
-        if session['tipo_usuario'] == 'consumidor':
-            return redirect(url_for('auth_bp.perfil_consumidor'))
-        elif session['tipo_usuario'] == 'comercio':
-            return redirect(url_for('auth_bp.perfil_comerciante'))
-    return render_template('register.html')
-
-@auth_bp.route('/logout')
-def logout():
-    session.clear()
-    return redirect(url_for('auth_bp.login_page'))

@@ -1,4 +1,5 @@
 from ast import literal_eval
+from geopy.geocoders import Nominatim
 
 # Funciones auxiliares que van a transformar los datos de la BDD para que sean visibles en el front
 def transformar_horarios_comercio(str_list_horarios):
@@ -24,3 +25,14 @@ def transformar_tp_comercio(tipo_cocina_comercio):
 
 def transformar_dias_comercio(str_list_dias):
     return literal_eval(str_list_dias)
+
+# Esta funcion va a transformar unas coordenadas en una direccion. Util mas que nada para la visibilidad de la direccion de un comercio
+def transform_coords_dir(coords):
+    try:
+        geolocalizador = Nominatim(user_agent="geo-FoodyBA")
+        locacion = geolocalizador.reverse(coords, exactly_one=True)
+        if locacion:
+            return locacion.address
+    except Exception as e:
+        print("Error:", e)
+    return "No disponible"

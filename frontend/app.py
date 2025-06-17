@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, session, url_for, flash, jsonify
 from werkzeug.utils import secure_filename
-from fextra import transformar_dias_comercio, transformar_horarios_comercio, transformar_tags_comercio, transformar_tp_comercio
+from fextra import transformar_dias_comercio, transformar_horarios_comercio, transformar_tags_comercio, transformar_tp_comercio, transform_coords_dir
 import requests
 import os
 
@@ -130,14 +130,61 @@ def reservar():
         if response.status_code == 200:
             flash("Reserva creada exitosamente", "success")
 
-@app.route("/reseñar", methods=["POST"])
-def agregar_resena():
-    pass
-
 # Pagina de ayuda
 @app.route("/ayuda")
 def ayuda():
     return render_template("ayuda.html")
+
+# Este endpoint va a manejar la carga de perfiles si el usuario esta logeado
+@app.route("/perfil")
+def manag_perfiles():
+    if "datos_usuario" not in session:
+        return redirect(url_for("login"))
+    else:
+        if session.get("tipo_usuario") == "consumidor":
+
+            response_reservas=requests.get(f"{API_BACK}/reserva/usr/{session.get("datos_usuario")["id_usr"]}")
+            response_resenias=requests.get(f"{API_BACK}/review/usr/{session.get("datos_usuario")["id_usr"]}")
+            response_favs=requests.get(f"{API_BACK}/favs/usr/{session.get("datos_usuario")["id_usr"]}")
+
+            data_reservas=[]
+            data_resenias=[]
+            data_fav=[]
+
+            if response_reservas.status_code == 200:
+                data_reservas=list(response_reservas.json())
+            
+            if response_resenias.status_code == 200:
+                data_resenias=list(response_resenias.json())
+
+            if response_favs.status_code == 200:
+                data_fav=list(response_favs.json())
+
+            return render_template("perfil_consumidor.html",
+                                    usuario=session.get("datos_usuario"),
+                                    reservas=data_reservas,
+                                    resenias=data_resenias,
+                                    favoritos=data_fav)
+        elif session.get("tipo_usuario") == "comercio":
+            response_reservas=requests.get(f"{API_BACK}/reserva/comercio/{session.get("datos_usuario")["id_usr_comercio"]}")
+            response_resenias=requests.get(f"{API_BACK}/review/com/{session.get("datos_comercio")["id_comercio"]}")
+
+            data_reservas=[]
+            data_resenias=[]
+            direccion=transform_coords_dir([session.get("datos_comercio")["latitud"], session.get("datos_comercio")["longitud"]])
+
+            if response_reservas.status_code == 200:
+                data_reservas=list(response_reservas.json())
+            
+            if response_resenias.status_code == 200:
+                data_resenias=list(response_resenias.json())
+
+            return render_template("perfil_comerciante.html",
+                                   usuario=session.get("datos_usuario"),
+                                   datos_comercio=session.get("datos_comercio"),
+                                   resenias=data_resenias,
+                                   reservas=data_reservas, 
+                                   ubicacion=direccion)
 
 # Login de usuario
 @app.route("/login", methods=["GET", "POST"])
@@ -153,14 +200,15 @@ def login():
             
             if response_consumidor.status_code == 200:
                 data_consumidor = response_consumidor.json()
-                    # Es un usuario consumidor, guardamos sus datos en la sesión
-                session["email"] = email
+                # Es un usuario consumidor, guardamos sus datos en la sesión
                 session["tipo_usuario"] = "consumidor"
                 session["datos_usuario"] = {
                     "id_usr": data_consumidor.get("id_usr"),
                     "nombre_apellido": data_consumidor.get("nombre_apellido"),
-                    "email_usuario": data_consumidor.get("email_usuario"),
+                    "usuario": data_consumidor.get("usuario"),
+                    "email_usuario":data_consumidor.get("email_usuario"),
                     "numero_telefono": data_consumidor.get("numero_telefono"),
+                    "fecha_creacion":data_consumidor.get("fecha_creacion"),
                     "cant_reservas_canceladas": data_consumidor.get("cant_reservas_canceladas", 0)
                 }
                 return redirect(url_for("home"))
@@ -172,14 +220,14 @@ def login():
             if response_comercio.status_code == 200:
                 data_comercio = response_comercio.json()
                     # Es un usuario comerciante, guardamos sus datos y los de su comercio
-                session["email"] = email
                 session["tipo_usuario"] = "comercio"
                 session["datos_usuario"] = {
                         "id_usr_comercio": data_comercio.get("id_usr_comercio"),
                         "nombre_apellido": data_comercio.get("nombre_apellido"),
                         "DNI": data_comercio.get("DNI"),
                         "CUIT": data_comercio.get("CUIT"),
-                        "email_usuario": data_comercio.get("email_usuario")
+                        "email_usuario": data_comercio.get("email_usuario"),
+                        "fecha_creacion": data_comercio.get("fecha_creacion")
                     }
                 session["datos_comercio"] = {
                         "id_comercio": data_comercio.get("id_comercio"),
@@ -190,9 +238,9 @@ def login():
                         "latitud": data_comercio.get("latitud"),
                         "longitud": data_comercio.get("longitud"),
                         "calificacion": data_comercio.get("calificacion", 0.0),
-                        "dias": data_comercio.get("dias"),
-                        "horarios": data_comercio.get("horarios"),
-                        "etiquetas": data_comercio.get("etiquetas"),
+                        "dias": transformar_dias_comercio(data_comercio.get("dias")),
+                        "horarios": transformar_horarios_comercio(data_comercio.get("horarios")),
+                        "etiquetas": transformar_tags_comercio(data_comercio.get("etiquetas")),
                         "ruta_imagen": data_comercio.get("ruta_imagen"),
                         "pdf_menu_link": data_comercio.get("pdf_menu_link")
                     }
@@ -204,24 +252,22 @@ def login():
             
         except Exception as e:
             flash("Error de conexión con el servidor", "error")
-            return redirect(url_for("login"))
-        
+            return redirect(url_for("login"))     
     return render_template("login.html")
 
-
-# Register usuario
+# Registrar usuario
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     """Endpoint para renderizar la página de registro"""
     if request.method == 'POST':
         form = request.form
         if form.get("tipo_usuario") == "consumidor":
-            nombre_consumidor = form.get("first_name")
-            apellido_consumidor = form.get("last_name")
-            usuario_consumidor = form.get("usr")
-            email_consumidor = form.get("email")
-            telefono_consumidor = form.get("mobile")
-            password_consumidor = form.get("password")
+            nombre_consumidor = form.get("nombre_consumidor")
+            apellido_consumidor = form.get("apellido_consumidor")
+            usuario_consumidor = form.get("usuario_consumidor")
+            email_consumidor = form.get("email_consumidor")
+            telefono_consumidor = form.get("telefono_consumidor")
+            password_consumidor = form.get("password_consumidor")
             response = requests.post(f"{API_BACK}/auth/register", 
                                             json={
                                                 "tipo_usuario":form.get("tipo_usuario"),
@@ -249,6 +295,7 @@ def register():
             contrasena_usr_comercio = form.get("p_r_bss")
 
             imagen=request.files.get("img_local")
+
             if not imagen or imagen.filename == "":
                 ruta_img="media/img/img_resto_defecto.jpg"
             else:            
@@ -288,8 +335,9 @@ def register():
 # Logout
 @app.route("/logout")
 def logout():
-    session.pop("usuario", None)
-    return redirect(url_for("home"))
+    if "datos_usuario" in session:
+        session.clear()
+        return redirect(url_for("home"))
 
 # Este endpoint va a implementar las funcionalidades respectivas a dejar una reseña en un comercio
 @app.route("/realizar_review/<int:id_comercio>/<int:id_reserva>", methods=["GET","POST"])

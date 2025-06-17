@@ -72,7 +72,7 @@ def get_all_review_com(id_comercio):
         conn.close()
 
         if not all_reviews:
-            abort(404, description="No hay reseñas para este comercio")
+            return jsonify({"msg":"No hay reseñas para este comercio"}),404
 
         return jsonify(all_reviews)
     
@@ -80,7 +80,7 @@ def get_all_review_com(id_comercio):
 
         cursor.close()
         conn.close()
-        abort(500, description=str(e))
+        return jsonify({"ERROR":f"{str(e)}"}),500
 
 @review_bp.route("/usr/<int:id_usr>", methods=["GET"])
 def get_all_review_cons(id_usr):
@@ -105,11 +105,11 @@ def get_all_review_cons(id_usr):
         conn.close()
 
         if not all_reviews:
-            abort(404, description="No hay reseñas para este usuario")
+            return jsonify({"msg":"No hay reseñas para este usuario"}),404
 
         return jsonify(all_reviews)
     
     except Exception as e:
         cursor.close()
         conn.close()
-        abort(500, description=str(e))
+        return jsonify({"ERROR":f"{str(e)}"}),500

@@ -155,16 +155,27 @@ body {
     font-weight: bold;
 }
 
-.stars {
-    display: flex;
-    gap: 5px;
+.stars{
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
     margin: 0;
+    font-size: 18px;
+}
+
+.stars ★ {
+    color: var(--dorado);
+}
+
+.stars ☆ {
+    color: #666;
 }
 
 .star {
     color: var(--dorado);
     font-size: 20px;
 }
+
 
 /* Estilos aplicados cuando se despliega el contenido */
 .collapsible-content {
@@ -210,14 +221,6 @@ body {
 .estado-cancelada {
     color: var(--rojo-cancelado);
     font-weight: bold;
-}
-
-.calificacion-alta {
-    color: var(--verde-activo);
-}
-
-.calificacion-baja {
-    color: var(--rojo-cancelado);
 }
 
 /* Sección de botón de retorno */

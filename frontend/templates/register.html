@@ -19,14 +19,14 @@
 </head>
 
 <body id="register">
-    <a href="{{ url_for('routes_bp.home', _external=True) }}" id="btn-home-corner" class="waves-effect">
+    <a href="{{ url_for('home', _external=True) }}" id="btn-home-corner" class="waves-effect">
      <i class="material-icons">home</i>
         <span>Inicio</span>
     </a>
     <div class="container">
         <div class="row tm-register-row tm-bg-wine" id="block-insert-info">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-register-col-l">
-                <form action="{{ url_for('auth_bp.register_user') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ url_for('register', _external=True) }}" method="post" enctype="multipart/form-data">
                     <div class="mb-2">
                         <label class="mr-4" id="check-usr-consumidor">
                             <input class="with-gap" id="check-usr-consumidor" name="tipo_usuario" type="radio" value="consumidor" checked/>

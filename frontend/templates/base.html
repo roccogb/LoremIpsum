@@ -31,15 +31,15 @@
     </div>
 
     <div class="user-menu-wrapper">
-        {% if session.usuario %}
-          <span class="nav-user" onclick="showUserMenu()" role="button" tabindex="0" aria-label="Menú de usuario">🏠</span>
-          <div id="userDropdown" class="user-dropdown">
-              <a href="/perfil">Mi Perfil</a>
-             <a href="/logout">Cerrar sesión</a>
-          </div>
-     {% else %}
-            <a href="/login" class="nav-links-login">Login</a>
-      {% endif %}
+        {% if session["datos_usuario"] %}
+            <span class="nav-user" onclick="showUserMenu()" role="button" tabindex="0" aria-label="Menú de usuario">🏠</span>
+            <div id="userDropdown" class="user-dropdown">
+                <a href="{{url_for('manag_perfiles',_external=True)}}">Mi Perfil</a>
+                <a href="{{url_for('logout', _external=True)}}">Cerrar sesión</a>
+            </div>
+        {% else %}
+            <a href="{{url_for('login', _external=True)}}" class="nav-links-login">Login</a>
+        {% endif %}
     </div>
 
 

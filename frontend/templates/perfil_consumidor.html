@@ -10,9 +10,11 @@
 
         <h1 class="section-title">🙋 Mi Perfil</h1>
         <div class="restaurant-card">
-            <p><strong>Usuario:</strong> {{ usuario["nombre_usuario"] }}</p>
+            <p><strong>Nombre y apelldio:</strong> {{ usuario["nombre_apellido"] }}</p>
+            <p><strong>Usuario:</strong> {{ usuario["usuario"] }}</p>
             <p><strong>Email:</strong> {{ usuario["email_usuario"] }}</p>
             <p><strong>Miembro desde:</strong> {{ usuario["fecha_creacion"] }}</p>
+            
         </div>
 
         <h2 class="section-title clickable collapsed" onclick="toggleSection('reservas')">📅 Mis Reservas</h2>
@@ -47,7 +49,7 @@
                             <p><strong>{{ resenia["nombre_restaurante"] }}</strong></p>
                             <p>{{ resenia["comentario"] }}</p>
                             <p>Puntaje:
-                                {% for i in range(resenia["puntaje"]) %}
+                                {% for i in range(1,resenia["calificacion"]) %}
                                     ★
                                 {% endfor %}
                             </p>
@@ -76,7 +78,7 @@
             </div>
         </div>
         <div class="back-section" style="text-align: center; margin-top: 30px;">
-            <a href="/home"></a>
+            <a href="{{ url_for('home', _external=True) }}"></a>
                 <button class="back-btn">← Volver al inicio</button>
             </a>
         </div>

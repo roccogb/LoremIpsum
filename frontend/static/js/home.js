@@ -42,12 +42,6 @@ function prevRestauranteTop() {
     updateRestauranteDisplay();
 };
 
-// Esta funcion va a redirigir al usuario al menu que contiene el perfil del usuario.
-function showUserMenu()
-{
-    window.location.href='/ver_perfil'
-};
-
 // Esta funcion va a redirigir al usuario a la página de un restaurante específico. Va a recibir de parametro el id del mismo y luego va a modificar la URL llevandolo al endpoint en cuestión
 function goToComercio(id) {
     // Cambia la URL actual para navegar a la página del restaurante
