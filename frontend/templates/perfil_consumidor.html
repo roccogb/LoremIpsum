@@ -23,13 +23,14 @@
                 <div class="list-reservas">
                     {% for reserva in reservas %}
                         <div class="info-reserva">
-                            <p>{{ reserva["nombre_restaurante"] }} - {{ reserva["fecha"] }}
-                                {% if reserva["estado"] %}
+                            <p>{{ reserva["nombre_comercio"] }} - {{ reserva["fecha_reserva"] }}
+                                {% if reserva["estado_reserva"] %}
                                     <span class="estado-activa">Activa</span>
                                 {% else %}
                                     <span class="estado-cancelada">Cancelada</span>
                                 {% endif %}
                             </p>
+                            <a href="{{url_for('realizar_review', id_comercio=reserva['id_comercio'], id_reserva=reserva['id_reserva'])}}">Dejar reseña</a>
                         </div>
                     {% endfor %}
                 </div>
@@ -46,13 +47,14 @@
                 {% if resenias %}
                     {% for resenia in resenias %}
                         <div class="info-resenia">
-                            <p><strong>{{ resenia["nombre_restaurante"] }}</strong></p>
+                            <p><strong>{{ resenia["nombre_comercio"] }}</strong></p>
                             <p>{{ resenia["comentario"] }}</p>
                             <p>Puntaje:
                                 {% for i in range(1,resenia["calificacion"]) %}
                                     ★
                                 {% endfor %}
                             </p>
+                            <p>{{resenia["tiempo_de_creacion"]}}</p>
                         </div>
                     {% endfor %}
                 {% else %}
@@ -78,7 +80,7 @@
             </div>
         </div>
         <div class="back-section" style="text-align: center; margin-top: 30px;">
-            <a href="{{ url_for('home', _external=True) }}"></a>
+            <a href="{{ url_for('home', _external=True) }}">
                 <button class="back-btn">← Volver al inicio</button>
             </a>
         </div>

@@ -11,7 +11,22 @@ def get_reservas_usr(id_usr):
     conn=get_connection()                                              
     cursor=conn.cursor(dictionary=True)                                                
 
-    qsql_reservas_usr="""SELECT * FROM reservas WHERE id_usr=%s"""
+    qsql_reservas_usr="""SELECT 
+                            r.id_reserva,
+                            r.id_usr,
+                            r.id_comercio,
+                            r.nombre_bajo_reserva,
+                            r.email,
+                            r.telefono,
+                            r.cant_personas, 
+                            r.fecha_reserva, 
+                            r.solicitud_especial,
+                            r.estado_reserva,
+                            c.nombre_comercio 
+                            FROM reservas r 
+                            JOIN comercios c ON c.id_comercio=r.id_comercio
+                            WHERE id_usr=%s"""
+    
     cursor.execute(qsql_reservas_usr,(id_usr,))
     reservas_usuario=cursor.fetchall()
 

@@ -73,8 +73,7 @@ cursor.execute("""INSERT INTO resenias
                   (99, 1, 'La mejor parrilla que probé en mi vida. El mozo sabía mi nombre antes de que llegara, un 10.', 5, '2025-06-01 22:15:00', 15),
                   (1, 3, 'El café estaba bien, pero la atención fue muy lenta. Volvería solo si mejoran eso.', 3, '2025-06-05 19:00:00', 21),
                   (15, 4, 'Lugar limpio y ordenado, pero la comida demoró demasiado.', 3, '2025-06-08 22:15:00', 10),
-                  (99, 1, 'El chinchulín estaba espectacular. Vuelvo seguro.', 4, '2025-06-06 13:00:00', 22),
-                  (11, 6, 'Música en vivo genial, pero la comida algo salada.', 4, '2025-06-10 23:00:00', 33);
+                  (99, 1, 'El chinchulín estaba espectacular. Vuelvo seguro.', 4, '2025-06-06 13:00:00', 22);
                 """)
 
 conn.commit()                           # Guardo los cambios realizados en la BDD

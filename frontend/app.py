@@ -180,7 +180,7 @@ def manag_perfiles():
                                     resenias=data_resenias,
                                     favoritos=data_fav)
         elif session.get("tipo_usuario") == "comercio":
-            response_reservas=requests.get(f"{API_BACK}/reserva/comercio/{session.get("datos_usuario")["id_usr_comercio"]}")
+            response_reservas=requests.get(f"{API_BACK}/reserva/comercio/{session.get("datos_comercio")["id_comercio"]}")
             response_resenias=requests.get(f"{API_BACK}/review/com/{session.get("datos_comercio")["id_comercio"]}")
 
             data_reservas=[]
@@ -295,6 +295,7 @@ def register():
             nombre_comercio = form.get("name_bss")
             tel_comercio = form.get("tel_bss")
             dir_comercio = form.get("dir_bss")
+            print(dir_comercio)
             lkmenu_comercio = form.get("lkm_bss")
             categoria = form.get("categoria")
             tipo_cocina = form.get("tipo_cocina")
@@ -351,11 +352,13 @@ def logout():
     if "datos_usuario" in session:
         session.clear()
         return redirect(url_for("home"))
+    else:
+        return flash("Primero debe iniciar sesión","message")
 
 # Este endpoint va a implementar las funcionalidades respectivas a dejar una reseña en un comercio
 @app.route("/realizar_review/<int:id_comercio>/<int:id_reserva>", methods=["GET","POST"])
 def realizar_review(id_comercio, id_reserva):
-    # if "email" in session and session.get("tipo_usuario") == "consumidor":
+    if "datos_usuario" in session and session.get("tipo_usuario") == "consumidor":
         response_comercio=requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":id_comercio,"nombre_comercio":""})
         if response_comercio.status_code == 200:
             data_comercio=response_comercio.json()

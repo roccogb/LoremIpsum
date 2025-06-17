@@ -146,8 +146,12 @@ def register_comercio(data, cursor, conn):
     
     nombre_comercio = data.get('nombre_comercio', '').strip()
     tel_comercio = data.get('tel_comercio', '0').strip()
-    print("ERROR EN TRANSFOR COORDS")
-    lat,lng = transform_dir_coords(data.get('dir_comercio', '').strip())        # ERROR ACÁ
+
+    try:
+        lat,lng =  transform_dir_coords(data.get('dir_comercio', '').strip())
+    except:
+        lat,lng=[0,0]
+        
     lkmenu_comercio = data.get('lkmenu_comercio', '').strip()
     categoria = data.get('categoria', '').strip()
     tipo_cocina = data.get('tipo_cocina', '').strip()

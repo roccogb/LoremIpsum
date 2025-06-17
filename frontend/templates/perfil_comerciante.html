@@ -66,12 +66,12 @@
                     {% if reservas %}
                         {% for reserva in reservas %}
                             <div class="info-reserva">
-                                <p><strong>Nombre bajo reserva:</strong> reserva["nombre_bajo_reserva"]</p>
-                                <p><strong>Email:</strong> reserva["email"]</p>
-                                <p><strong>Teléfono:</strong> reserva["telefono"]</p>
-                                <p><strong>Cantidad de personas:</strong> reserva["cant_personas"]</p>
-                                <p><strong>Solicitud especial:</strong> reserva["solicitud_especial"]</p>
-                                <p><strong>Fecha de la reserva:</strong> reserva["fecha_reserva"]</p>
+                                <p><strong>Nombre bajo reserva:</strong> {{reserva["nombre_bajo_reserva"]}}</p>
+                                <p><strong>Email:</strong> {{reserva["email"]}}</p>
+                                <p><strong>Teléfono:</strong> {{reserva["telefono"]}}</p>
+                                <p><strong>Cantidad de personas:</strong> {{reserva["cant_personas"]}}</p>
+                                <p><strong>Solicitud especial:</strong> {{reserva["solicitud_especial"]}}</p>
+                                <p><strong>Fecha de la reserva:</strong> {{reserva["fecha_reserva"]}}</p>
                                 <p><strong>Estado de la reserva:</strong> 
                                     {% if reserva["estado_reserva"] %}
                                         <span class="estado-cancelada">Cancelada</span>
@@ -95,8 +95,8 @@
                     {% if resenias %}
                         {% for resenia in resenias %}
                             <div class="info-resenia">
-                                <p><strong>Nombre:</strong> resenia["nombre_comercio"]</p>
-                                <p><strong>Comentario:</strong> resenia["comentario"]</p>
+                                <p><strong>Nombre:</strong> {{resenia["usuario"]}}</p>
+                                <p><strong>Comentario:</strong> {{resenia["comentario"]}}</p>
                                 <p><strong>Calificación:</strong> 
                                     <div class="stars">
                                         {% for i in range(resenia["calificacion"]) %}
@@ -107,7 +107,7 @@
                                         {% endfor %}
                                     </div>
                                 </p>
-                                <p><strong>Tiempo de creación:</strong> resenia["tiempo_de_creacion"]</p>
+                                <p><strong>Tiempo de creación:</strong> {{resenia["tiempo_de_creacion"]}}</p>
                             </div>
                         {% endfor %}
                     {% else %}
@@ -119,7 +119,9 @@
             </div>
 
             <div class="back-section">
-                <button class="back-btn" href="{{url_for('home', _external=True)}}">← Volver al inicio</button>
+                <a href="{{ url_for('home', _external=True) }}">
+                    <button class="back-btn">← Volver al inicio</button>
+                </a>
             </div>
 
         </div>
