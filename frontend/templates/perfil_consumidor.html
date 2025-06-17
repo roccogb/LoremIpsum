@@ -70,11 +70,14 @@
             <div class="list-favs">
                 {% if favoritos %}
                     {% for fav in favoritos %}
-                        <div class="info-fav"></div>
+                        <div class="info-fav">
+                            <img src="{{ url_for('static', filename=fav['ruta_imagen']) }}" width="50">
+                            <p>{{ fav["nombre_comercio"] }}</p>
+                        </div>
                     {% endfor %}
                 {% else %}
                     <div class="info-fav">
-                        <p>No seleccionaste nigun comercio favorito</p>
+                        <p>No seleccionaste ningún comercio favorito</p>
                     </div>
                 {% endif %}
             </div>

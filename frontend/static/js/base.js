@@ -58,6 +58,41 @@ document.querySelector(".nav-user").addEventListener("keydown", function (e) {
     }
 });
 
+document.querySelectorAll('.heart-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(event) {
+        toggleHeart(this, event);
+    });
+});
+
+// Realiza una animación y cambia el estado del botón de "favorito" (corazón).
+function toggleHeart(button, event) {
+    event.stopPropagation();
+
+    const id_comercio = button.getAttribute('data-id');
+
+    // Si ya es favorito, lo borra.
+    if (button.classList.contains('active')) {
+        button.classList.remove('active');
+        button.innerHTML = '♡';
+        button.style.transform = 'scale(1.2)';
+        setTimeout(() => button.style.transform = 'scale(1)', 150);
+    } else { 
+        // Sino lo marca como favorito.
+        button.classList.add('active');
+        button.innerHTML = '♥';
+        button.style.transform = 'scale(1.2)';
+        setTimeout(() => button.style.transform = 'scale(1.1)', 150);
+    }
+
+    // Después de 150ms, vuelve al tamaño normal con efecto de "rebote"
+    setTimeout(() => {
+        button.style.transform = 'scale(1.1)';
+    }, 150);
+
+    // Manda la petición de agregar o eliminar favorito.o.
+    window.location.href = `/click_fav/${id_comercio}`;
+}
+
 // Función para manejar el clic en la carta del restaurante
 function handleCardClick(event, element) {
     if (event.target.closest('.heart-btn')) {
@@ -71,20 +106,4 @@ function handleCardClick(event, element) {
     }
     // Redirigir a la página del restaurante
     window.location.href = element.dataset.url;
-}
-
-// Función para el botón del corazón
-function toggleHeart(event, button) {
-    // Prevenir la propagación del evento para que no se active handleCardClick
-    event.stopPropagation();
-    
-    // Toggle de la clase active
-    button.classList.toggle('active');
-    
-    // Cambiar el símbolo del corazón
-    if (button.classList.contains('active')) {
-        button.innerHTML = '♥';
-    } else {
-        button.innerHTML = '♡';
-    }
 }

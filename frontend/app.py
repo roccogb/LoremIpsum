@@ -159,7 +159,7 @@ def manag_perfiles():
 
             response_reservas=requests.get(f"{API_BACK}/reserva/usr/{session.get("datos_usuario")["id_usr"]}")
             response_resenias=requests.get(f"{API_BACK}/review/usr/{session.get("datos_usuario")["id_usr"]}")
-            response_favs=requests.get(f"{API_BACK}/favs/usr/{session.get("datos_usuario")["id_usr"]}")
+            response_favs=requests.get(f"{API_BACK}/favs/detallado/{session.get("datos_usuario")["id_usr"]}")
 
             data_reservas=[]
             data_resenias=[]
@@ -346,6 +346,21 @@ def register():
     else:
         return render_template("register.html")
 
+# Marcar un comercio como favorito.
+@app.route("/click_fav/<int:id_comercio>")
+def click_fav(id_comercio):
+    if "datos_usuario" not in session or session["tipo_usuario"] != "consumidor":
+        return redirect(url_for("login"))
+
+    id_usr = session.get("datos_usuario")["id_usr"]
+    response = requests.post(f"{API_BACK}/favs/alternar", json={"id_comercio": id_comercio, "id_usr": id_usr})
+    
+    if response.status_code == 200:
+        flash("Comercio agregado a favoritos")
+        return redirect(url_for("home"))
+    else:
+        flash("No se pudo agregar a favoritos")
+    
 # Logout
 @app.route("/logout")
 def logout():
