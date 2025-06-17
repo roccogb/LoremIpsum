@@ -26,12 +26,14 @@
                           {{ comercios.nombre_comercio}}
                         </h3>
                           <div class="stars">
-                            {% for i in range(comercios.calificacion) %}
+                            {% set calificacion_entera = comercios.ranking_ponderado | round(0, 'floor') | int %} 
+                            {% for i in range(calificacion_entera) %}
                               ★
                             {% endfor %}
-                            {% for i in range(5 - comercios.calificacion) %}
+                            {% for i in range(5 - calificacion_entera) %}
                               ☆
                             {% endfor %}
+                            <span>({{ comercio.ranking_ponderado | round(1) }})</span>
                           </div>
                         <br>
                         <div class="tags-section">

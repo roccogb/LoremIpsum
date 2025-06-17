@@ -89,8 +89,8 @@ def resto(id_comercio):
         comercio_bdd["tipo_cocina"]=transformar_tp_comercio(comercio_bdd["tipo_cocina"])
         comercio_bdd["horarios"]=transformar_horarios_comercio(comercio_bdd["horarios"])
 
-        if type(comercio_bdd["calificacion"]) == float:
-            comercio_bdd["calificacion"]=round(comercio_bdd["calificacion"])
+        if type(comercio_bdd["ranking_ponderado"]) == float:
+            comercio_bdd["ranking_ponderado"]=round(comercio_bdd["ranking_ponderado"], 1) # El '1' redondea el float a un decimal (ej:4.2)
 
         return render_template("resto.html", comercios=comercio_bdd)
     else:

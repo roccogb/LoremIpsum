@@ -45,39 +45,41 @@ def get_comercios_filter():
     body_request = request.get_json()
     
     condiciones_filtro = []
-    ordenar_calificacion = False
+    valores_parametros = []
+    ordenar_ranking = None      # Con esto podemos ordenar por 'Asc' o 'Desc'
 
     for clave, valor in body_request.items():
-        if clave == "dias":
-            if len(valor) > 0:
-                for tag in valor:
-                    condiciones_filtro.append(f"dias LIKE '%{tag}%'")
-        elif clave == "etiquetas":
-            if len(valor) > 0:
-                for tag in valor:
-                    condiciones_filtro.append(f"etiquetas LIKE '%{tag}%'")
-        elif clave == "horarios":
-            if len(valor) > 0:
-                for tag in valor:
-                    condiciones_filtro.append(f"horarios LIKE '%{tag}%'")
-        elif clave == "calificacion":
-            if valor != "null":
-                ordenar_calificacion = True
+        if clave == "dias" and valor:
+            for tag in valor:
+                condiciones_filtro.append("dias LIKE %s")
+                valores_parametros.append(f"%{tag}%")
+        elif clave == "etiquetas" and valor:
+            for tag in valor:
+                condiciones_filtro.append("etiquetas LIKE %s")
+                valores_parametros.append(f"%{tag}%")
+        elif clave == "horarios" and valor:
+            for tag in valor:
+                condiciones_filtro.append("horarios LIKE %s")
+                valores_parametros.append(f"%{tag}%")
+        elif clave == "ranking":
+            if valor in ["asc", "desc"]:
+                ordenar_ranking = valor.upper()
         else:
             if valor != "null":
-                condiciones_filtro.append(f"{clave}='{valor}'")
+                condiciones_filtro.append(f"{clave} = %s")
+                valores_parametros.append(valor)
 
     qsql_filtrar_comercio = "SELECT * FROM comercios"
     
     if condiciones_filtro:
         qsql_filtrar_comercio += " WHERE " + " AND ".join(condiciones_filtro)
     
-    if ordenar_calificacion:
-        qsql_filtrar_comercio += f" ORDER BY calificacion {body_request["calificacion"].upper()}"
+    if ordenar_ranking:
+        qsql_filtrar_comercio += f" ORDER BY ranking_ponderado {ordenar_ranking}"
 
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute(qsql_filtrar_comercio)
+    cursor.execute(qsql_filtrar_comercio, valores_parametros)
     comercios_filtrados = cursor.fetchall()
     cursor.close()
     conn.close()
