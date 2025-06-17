@@ -1,10 +1,14 @@
 # Este modulo va a crear la BDD bajo el nombre de 'foodyba_dbb'
 import mysql.connector                                                        # Libreria que me va a permitir acceder a BDD MySQL
+import os
+
+# Ruta al archivo SQL desde la misma carpeta que este script
+sql_path = os.path.join(os.path.dirname(__file__), "init_db.sql")
 
 # Abro el archivo que contiene todas las sentencias SQL para crear la BDD
-with open("init_db.sql") as f:
-  sql = f.read()
-
+with open(sql_path) as f:
+    sql = f.read()
+  
 # Me conecto con el servidor MySQL.
 conn = mysql.connector.connect(
   host="localhost",
