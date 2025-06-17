@@ -17,16 +17,16 @@
                 <div class="main-profile ">
                   <div class="row">
                     <div class="col-lg-4">
-                      <img src="{{ url_for('static', filename=comercios.ruta_imagen)}}" alt="Imagen-Comercio">
+                      <img src="{{ url_for('static', filename=comercio.ruta_imagen)}}" alt="Imagen-Comercio">
                     </div>
                     <div class="col-lg-4 align-self-center">
                       <div class="main-info header-text">
                           <h3>
-                            {{ comercios.nombre_comercio}}
+                            {{ comercio.nombre_comercio}}
                             <button
-                              class="heart-btn {% if comercios['es_favorito'] %}active{% endif %}" 
-                              data-id="{{ comercios['id_comercio'] }}">
-                              {% if comercios['es_favorito'] %}
+                              class="heart-btn {% if comercio['es_favorito'] %}active{% endif %}" 
+                              data-id="{{ comercio['id_comercio'] }}">
+                              {% if comercio['es_favorito'] %}
                                 ♥
                               {% else %}
                                 ♡
@@ -34,22 +34,22 @@
                             </button>            
                           </h3>
                           <div class="stars">
-                            {% for i in range(comercios.calificacion) %}
+                            {% for i in range(comercio.calificacion) %}
                               ★
                             {% endfor %}
-                            {% for i in range(5 - comercios.calificacion) %}
+                            {% for i in range(5 - comercio.calificacion) %}
                               ☆
                             {% endfor %}
                           </div>
                         <br>
                         <div class="tags-section">
-                          {% for tag in comercios.etiquetas %}
+                          {% for tag in etiquetas %}
                             <p>{{tag}}</p>
                           {% endfor %}
                         </div>
                         <div class="main-border-button">
-                          {% if comercios.pdf_menu_link %}
-                            <a href="{{ comercios.pdf_menu_link }}" target="_blank">Menú</a>
+                          {% if comercio.pdf_menu_link %}
+                            <a href="{{ comercio.pdf_menu_link }}" target="_blank">Menú</a>
                           {% else %}
                             <a href="#" onclick="alert('Menú no disponible'); return false;">Menú</a>
                           {% endif %}
@@ -58,13 +58,13 @@
                     </div>
                     <div class="col-lg-4 align-self-center">
                       <ul>
-                        <li>Categoría: {{ comercios.categoria if comercios else "No disponible" }}</li>
-                        <li>Tipo de cocina: {{ comercios.tipo_cocina if comercios else "No disponible" }}</li>
-                        <li>Teléfono: {{ comercios.telefono if comercios else "No disponible" }}</li>
+                        <li>Categoría: {{ comercio.categoria if comercio else "No disponible" }}</li>
+                        <li>Tipo de cocina: {{ comercio.tipo_cocina if comercio else "No disponible" }}</li>
+                        <li>Teléfono: {{ comercio.telefono if comercio else "No disponible" }}</li>
                         <li class="horarios-item">
                           <span class="horarios-label">Dias:</span>
                           <div class="dias-section">
-                            {% for dia in comercios.dias %}
+                            {% for dia in dias %}
                               <span class="dia-item">{{dia}}</span>
                             {% endfor %}
                           </div>
@@ -72,7 +72,7 @@
                         <li>
                           <span class="horarios-label">Horarios:</span>
                           <div class="dias-section">
-                            {% for horario in comercios.horarios %}
+                            {% for horario in horarios %}
                               <span class="dia-item">{{horario}}</span>
                             {% endfor %}
                           </div>
@@ -94,7 +94,7 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div id="map">
-                    <p id="coordenadas_comercio">{{comercios.latitud}};{{comercios.longitud}}</p>
+                    <p id="coordenadas_comercio">{{comercio.latitud}};{{comercio.longitud}}</p>
                   </div>
                 </div>
                 <div class="col-lg-6">
@@ -104,7 +104,7 @@
                         <div class="col-lg-12">
                           <div class="reserva-form">
                             <form id="form-reserva" method="POST" action="{{ url_for('reservar') }}">
-                              <input type="hidden" name="id_comercio" value="{{ comercios.id_comercio }}">
+                              <input type="hidden" name="id_comercio" value="{{ comercio.id_comercio }}">
                               <div class="control-group">
                                 <div class="input-group">
                                   <input name="nombre_bajo_reserva" type="text" class="form-control" placeholder="Titular de la reserva" required />

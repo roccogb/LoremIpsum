@@ -90,12 +90,13 @@ def resto(id_comercio):
     if response.status_code == 200:
         comercio_bdd = response.json()
 
-        comercio_bdd["dias"]=transformar_dias_comercio(comercio_bdd["dias"])
-        comercio_bdd["etiquetas"]=transformar_tags_comercio(comercio_bdd["etiquetas"])
-        comercio_bdd["categoria"]=comercio_bdd["categoria"].capitalize()
-        comercio_bdd["tipo_cocina"]=transformar_tp_comercio(comercio_bdd["tipo_cocina"])
-        comercio_bdd["horarios"]=transformar_horarios_comercio(comercio_bdd["horarios"])
+        dias_abiertos=transformar_dias_comercio(comercio_bdd["dias"])
+        etiquetas_comercio=transformar_tags_comercio(comercio_bdd["etiquetas"])
+        categoria_comercio=comercio_bdd["categoria"].capitalize()
+        tipo_cocina_comercio=transformar_tp_comercio(comercio_bdd["tipo_cocina"])
+        horarios_disponible=transformar_horarios_comercio(comercio_bdd["horarios"])
 
+        # Sacar
         if type(comercio_bdd["calificacion"]) == float:
             comercio_bdd["calificacion"]=round(comercio_bdd["calificacion"])
 
@@ -105,17 +106,20 @@ def resto(id_comercio):
         if response_resenias.status_code == 200:
             resenias_data=response_resenias.json()
 
-        return render_template("resto.html", comercios=comercio_bdd, resenias=resenias_data)
+        return render_template("resto.html", comercio=comercio_bdd, resenias=resenias_data,
+                                            dias=dias_abiertos, etiquetas=etiquetas_comercio,
+                                            categoria=categoria_comercio, tipo_cocina=tipo_cocina_comercio,
+                                            horarios=horarios_disponible)
     else:
         # Redirigir al home. 
         flash("Comercio no encontrado")
         return redirect(url_for("home"))
 
 # Este endpoint le va a permitir al usuario, de tipo consumidor, realizar una reserva
-@app.route("/reservar", methods=["POST"])
+@app.route("/realizar_reserva", methods=["POST"])
 def reservar():
-    if "email" not in session:
-        flash("Debes iniciar sesión para reservar")
+    if "datos_usuario" not in session or session.get("tipo_usuario") != "consumidor":
+        flash("Solo los usuarios registrados que sean consumidores pueden realizar reservas.")
         return redirect(url_for("login"))
     else:
         # Recibe los datos del formulario de reserva.
@@ -125,9 +129,13 @@ def reservar():
         telefono = request.form.get("telefono")
         cant_personas = request.form.get("cant_personas")
         fecha_reserva = request.form.get("fecha_reserva")
-        #hora_reserva = request.form.get("hora_reserva")
+        hora_reserva = request.form.get("hora_reserva")
         solicitud_especial = request.form.get("solicitud_especial", "")
 
+        return jsonify({"id_comercio":id_comercio,"nombre_bajo_reserva":nombre_bajo_reserva,
+                        "email":email,"telefono":telefono,"cant_personas":cant_personas,
+                        "hora_reserva":hora_reserva, "solicitud_especial":solicitud_especial,
+                        "fecha_reserva":fecha_reserva})
         # Envía los datos al backend para crear la reserva.
         response = requests.post(f"{API_BACK}/reserva/crear", json={
             "id_usr": session.get("id_usr"),
