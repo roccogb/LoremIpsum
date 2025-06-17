@@ -87,7 +87,8 @@ let total_pag=0;
     function selectRestaurant(card) {
         // Aquí puedes agregar la lógica para navegar a la página del restaurante
         const restaurantName = card.querySelector('.restaurant-name').textContent;
-        console.log('Restaurante seleccionado:', restaurantName);
-        // Ejemplo: window.location.href = '/restaurant/' + restaurantId;
+        const id = card.getAttribute('data-id');
+            if (id) {
+                window.location.href = '/restaurante/' + id;
+            }
     }
-    

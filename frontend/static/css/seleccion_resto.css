@@ -37,23 +37,33 @@ body {
 
 /* ===== BOTÓN DE CORAZÓN ===== */
 .heart-btn {
-  background: none;
+  top: 10px;
+  margin-left: 15px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
-  font-size: 2rem;
-  color: #ccc;
-  cursor: pointer;
-  transition: var(--transition);
-  padding: 5px;
+  color: #ffffff;
+  font-size: 18px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  z-index: 10;
 }
 
 .heart-btn:hover {
-  color: red;
+  color: #800020;
   transform: scale(1.1);
 }
 
 .heart-btn.active {
-  color: red;
+  color: #800020;
+  background: #ffffff;
 }
 
 /* ===== PERFIL PRINCIPAL ===== */

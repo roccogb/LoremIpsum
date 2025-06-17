@@ -239,7 +239,7 @@
                 <div id="total_paginas" style="display:none;">{{ total_paginas }}</div>
                 <div id="pagina_actual" style="display:none;">{{ pagina_actual }}</div>
                  {% for comercio in comercios %}
-                    <div class="restaurant-card" onclick="selectRestaurant(this)">
+                    <div class="restaurant-card" data-id="{{comercio['id_comercio']}}" onclick="selectRestaurant(this)">
                         <button class="favorite-btn" onclick="toggleFavorite(event, this)">
                             <i class="far fa-heart"></i>
                         </button>

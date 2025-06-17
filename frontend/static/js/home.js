@@ -51,7 +51,7 @@ function showUserMenu()
 // Esta funcion va a redirigir al usuario a la página de un restaurante específico. Va a recibir de parametro el id del mismo y luego va a modificar la URL llevandolo al endpoint en cuestión
 function goToComercio(id) {
     // Cambia la URL actual para navegar a la página del restaurante
-    window.location.href = `/ver_comercio/${id}`;
+    window.location.href = "/restaurante/" + id;
 };
 
 // Realiza una animación y cambia el estado del botón de "favorito" (corazón). Recibe de parametro el boton en cuestión
