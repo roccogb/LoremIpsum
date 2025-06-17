@@ -23,15 +23,9 @@
                       <div class="main-info header-text">
                           <h3>
                             {{ comercios.nombre_comercio}}
-                            <button
-                              class="heart-btn {% if comercios['es_favorito'] %}active{% endif %}" 
-                              data-id="{{ comercios['id_comercio'] }}">
-                              {% if comercios['es_favorito'] %}
-                                ♥
-                              {% else %}
-                                ♡
-                              {% endif %}
-                            </button>            
+                            <button type="button" class="heart-btn {% if comercios['id_comercio'] in id_favoritos %}active{% endif %}" data-id="{{ comercios['id_comercio'] }}">
+                                {% if comercios['id_comercio'] in id_favoritos %}♥{% else %}♡{% endif %}
+                            </button>
                           </h3>
                           <div class="stars">
                             {% for i in range(comercios.calificacion) %}

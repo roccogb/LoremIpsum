@@ -65,32 +65,47 @@ document.querySelectorAll('.heart-btn').forEach(function(btn) {
 });
 
 // Realiza una animación y cambia el estado del botón de "favorito" (corazón).
-function toggleHeart(button, event) {
+async function toggleHeart(button, event) {
     event.stopPropagation();
-
+    
     const id_comercio = button.getAttribute('data-id');
-
-    // Si ya es favorito, lo borra.
-    if (button.classList.contains('active')) {
+    const wasActive = button.classList.contains('active');
+    
+    // Cambia el estado visual inmediatamente
+    if (wasActive) {
         button.classList.remove('active');
         button.innerHTML = '♡';
-        button.style.transform = 'scale(1.2)';
-        setTimeout(() => button.style.transform = 'scale(1)', 150);
     } else { 
-        // Sino lo marca como favorito.
         button.classList.add('active');
         button.innerHTML = '♥';
-        button.style.transform = 'scale(1.2)';
-        setTimeout(() => button.style.transform = 'scale(1.1)', 150);
     }
-
-    // Después de 150ms, vuelve al tamaño normal con efecto de "rebote"
+    
+    // Animación
+    button.style.transform = 'scale(1.2)';
     setTimeout(() => {
-        button.style.transform = 'scale(1.1)';
+        button.style.transform = wasActive ? 'scale(1)' : 'scale(1.1)';
     }, 150);
-
-    // Manda la petición de agregar o eliminar favorito.o.
-    window.location.href = `/click_fav/${id_comercio}`;
+    
+    // Hacer la petición AJAX al backend
+    const response = await fetch(`/click_fav/${id_comercio}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+        // Si hubo error, revertir el estado visual
+        if (wasActive) {
+            button.classList.add('active');
+            button.innerHTML = '♥';
+        } else {
+            button.classList.remove('active');
+            button.innerHTML = '♡';
+        }
+    }
 }
 
 // Función para manejar el clic en la carta del restaurante
