@@ -348,16 +348,9 @@ def register():
 # Logout
 @app.route("/logout")
 def logout():
-<<<<<<< HEAD
     if "datos_usuario" in session:
         session.clear()
         return redirect(url_for("home"))
-=======
-    session.pop("email", None)
-    session.pop("tipo_usuario", None)
-    session.pop("datos_usuario", None)
-    return redirect(url_for("home"))
->>>>>>> origin/desarrollo
 
 # Este endpoint va a implementar las funcionalidades respectivas a dejar una reseña en un comercio
 @app.route("/realizar_review/<int:id_comercio>/<int:id_reserva>", methods=["GET","POST"])
