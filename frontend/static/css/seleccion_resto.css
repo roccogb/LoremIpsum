@@ -1,0 +1,626 @@
+:root {
+  --mostaza: #D4AF37;
+  --vino: #800020;
+  --sgray: #414141;
+  --golf: #D4A574;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #ffffff;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ===== HEADER DEL RESTAURANTE ===== */
+.page-content h3 {
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color:#ffffff;
+  text-align: center;
+}
+
+/* ===== BOTÓN DE CORAZÓN ===== */
+.heart-btn {
+  top: 10px;
+  margin-left: 15px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  z-index: 10;
+}
+
+.heart-btn:hover {
+  color: #800020;
+  transform: scale(1.1);
+}
+
+.heart-btn.active {
+  color: #800020;
+  background: #ffffff;
+}
+
+/* ===== PERFIL PRINCIPAL ===== */
+.main-profile {
+  background: var(--vino);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+  margin-bottom: 30px;
+}
+
+/* ===== IMAGEN DEL COMERCIO - CENTRADA Y RESPONSIVA ===== */
+.main-profile .col-lg-4:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-profile img {
+  width: 100%;
+  max-width: 380px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 23px;
+  box-shadow: var(--shadow);
+  margin: 0 auto;
+  display: block;
+}
+
+/* ===== INFORMACIÓN PRINCIPAL ===== */
+.main-info h4 {
+  color:#ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.main-info p {
+  color:#ffffff;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+/* ===== ESTRELLAS DE CALIFICACIÓN - CENTRADAS ===== */
+.stars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+  padding: 10px 0;
+  font-size: 1.7rem;
+  color: #FFC107;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== ETIQUETAS DEL RESTAURANTE - DESPLIEGUE LATERAL ===== */
+.tags-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.tags-section p {
+  background: #b8941f;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tags-section p:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  background: var(--sgray);
+}
+
+/* ===== BOTÓN PRINCIPAL - CENTRADO Y MEJORADO ===== */
+.main-border-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.main-border-button a {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--sgray), #2e2e2e);
+  color: #ffffff;
+  padding: 18px 50px;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  border: 2px solid transparent;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-border-button a:hover {
+  background: #1d1d1d;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Lista de informacion */
+.main-profile ul {
+  list-style: none;
+  padding: 0;
+}
+
+.main-profile ul li {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border-left: 4px solid var(--mostaza);
+  font-weight: 500;
+}
+
+
+/* Estilos para los horarios */
+.horarios-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.horarios-label {
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.dias-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: flex-start;
+  max-height: 120px; 
+  overflow-y: auto;
+  padding: 5px 0;
+}
+
+.dia-item {
+  background: #b8941f;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
+  cursor: default;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0; 
+  min-width: fit-content;
+}
+
+.dia-item:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: var(--sgray);
+}
+
+/* Estilo especial para horarios cuando hay muchos elementos */
+.horarios-item .dias-section {
+  max-width: 100%;
+  justify-content: flex-start;
+}
+
+.dias-section::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dias-section::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.dias-section::-webkit-scrollbar-thumb {
+  background: var(--mostaza);
+  border-radius: 3px;
+}
+
+.dias-section::-webkit-scrollbar-thumb:hover {
+  background: var(--sgray);
+}
+
+.clips {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 30px;
+  box-shadow: var(--shadow);
+}
+
+.heading-section h4 {
+  color: white;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  border-bottom: 3px solid var(--mostaza);
+  padding-bottom: 10px;
+}
+
+.down-content li {
+  list-style: none;
+  color: #666;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+/* Boton de menú */
+.main-button a {
+  display: flex;
+  margin: auto;
+  background: var(--vino);
+  color: #ffffff;
+  padding: 15px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: var(--transition);
+}
+
+.main-button a:hover {
+  background: var(--mostaza);
+  transform: translateY(-2px);
+}
+
+/*Seccion para realizar las reservas */
+.gaming-library {
+  background: var(--vino);
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 30px;
+  box-shadow: var(--shadow);
+}
+
+/* ===== MAPA ===== */
+#map {
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+#coordenadas_comercio {
+  display: none;
+}
+
+/* Estilos aplicados al formulario de reserva*/
+.booking-form {
+  background: var(--mostaza);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.control-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--mostaza);
+  box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+}
+
+.input-group-text {
+  background: var(--mostaza);
+  color: #ffffff;
+  border: none;
+  border-radius: 0 8px 8px 0;
+}
+
+.custom-select {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 12px 15px;
+}
+
+textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Estilos a los objetos de reseñas */
+.review-item{
+  border: 1px solid #e0e0e0; 
+  padding: 15px; 
+  margin-bottom: 15px; 
+  border-radius: 8px; 
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.review-header{
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 10px;
+}
+
+.no-reviews{
+  text-align: center; 
+  padding: 40px; 
+  color: #ffffff;
+}
+
+/* Boton personalizado */
+.custom-btn {
+  background-color: var(--sgray);
+  color: #ffffff;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+  margin-top: 20px;
+}
+
+.custom-btn:hover {
+  background-color: #2b2a2a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.footer {
+  background: var(--vino);
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .page-content h1 {
+    font-size: 2rem;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .main-profile {
+    padding: 20px;
+  }
+  
+  .main-profile img {
+    height: 250px;
+    max-width: 320px;
+  }
+  
+  .main-info h4 {
+    font-size: 1.3rem;
+  }
+  
+  .booking-form {
+    padding: 20px;
+  }
+  
+  .map {
+    height: 250px;
+    margin-bottom: 20px;
+  }
+  
+  .tags-section {
+    justify-content: center;
+  }
+  
+  .tags-section p {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+  
+  .main-border-button a {
+    padding: 15px 35px;
+    font-size: 1.1rem;
+  }
+
+  .dias-section {
+    gap: 5px;
+    max-height: 100px;
+  }
+  
+  .dia-item {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 15px;
+  }
+  
+  .page-content h1 {
+    font-size: 1.8rem;
+  }
+  
+  .main-profile {
+    padding: 15px;
+  }
+  
+  .main-profile img {
+    max-width: 280px;
+    height: 220px;
+  }
+  
+  .clips, .gaming-library {
+    padding: 20px;
+  }
+  
+  .tags-section {
+    gap: 6px;
+  }
+  
+  .tags-section p {
+    font-size: 0.70rem;
+    padding: 5px 10px;
+  }
+
+  /* Horarios en pantallas muy pequeñas */
+  .horarios-item {
+    gap: 8px;
+  }
+  
+  .dias-section {
+    gap: 4px;
+    max-height: 80px;
+  }
+  
+  .dia-item {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInTag {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideInDay {
+  from {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.main-profile,
+.clips,
+.gaming-library {
+  animation: fadeIn 0.6s ease-out;
+
+}
+
+.tags-section p {
+  animation: slideInTag 0.4s ease-out forwards;
+}
+
+.tags-section p:nth-child(n) {
+  animation-delay: calc(0.1s * var(--i, 1));
+}
+
+.dia-item {
+  animation: slideInDay 0.5s ease-out forwards;
+}
+
+.dia-item:nth-child(n) {
+  animation-delay: calc(0.1s * var(--i, 1));
+}
+
+/* ===== EFECTOS HOVER ADICIONALES ===== */
+.main-profile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.clips:hover,
+.gaming-library:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== ESTILOS PARA ELEMENTOS INTERACTIVOS ===== */
+.form-control:hover {
+  border-color: var(--mostaza);
+}
+
+.custom-select:hover {
+  border-color: var(--mostaza);
+}
+
+.main-profile ul li:hover {
+  transform: translateX(5px);
+}
+
+.input-group {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.input-group-append .input-group-text {
+  transition: var(--transition);
+}
+
+.input-group:hover .input-group-text {
+  background: var(--vino);
+}

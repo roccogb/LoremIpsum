@@ -1,0 +1,534 @@
+/* Defino variables globales que van a representar la paleta de colores de la página web. Las mismas van a poder ser llamadas desde cualquier lado*/
+:root{
+  --mostaza:#D4AF37;
+  --vino:#800020;
+  --sgray:#414141;
+  --golf:#D4A574;
+}
+
+/* === Container Principal === */
+.home-container {
+    background-color: var(--vino);
+    padding: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 20px;
+}
+
+/* Estilos aplicados a la seccion del top */
+.hero-section {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.hero-card {
+    background-size: cover; 
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: local; /* Mejor para celular */
+    border-radius: 20px;
+    padding: 30px;
+    color: white;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    /* Mejoras críticas para imágenes de fondo */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: optimize-quality;
+    transition: background-image 0.5s ease-in-out;
+    background-blend-mode: overlay;
+}
+
+.restaurant-info {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.restaurant-info .restaurant-name{
+    position: absolute;
+    top:25px;
+    left: 100px;
+}
+
+.restaurant-info .stars{
+    position: absolute;
+    left: 130px;
+    top: 65px;
+}
+
+.restaurant-info .star{
+    font-size: 25px;
+}
+
+.restaurant-name {
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin: 0;
+}
+
+.stars {
+    display: flex;
+    gap: 5px;
+    margin: 0;
+    justify-content: center;
+}
+
+.star {
+    color: #FFD700;
+    font-size: 20px;
+}
+
+/* Estilos aplicados para la navegación con flechas */
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    z-index: 3;
+}
+
+.nav-arrow:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.nav-arrow.left {
+    left: 20px;
+}
+
+.nav-arrow.right {
+    right: 20px;
+}
+
+/* Estilos aplicados a la seccion de restaurantes populares */
+.popular-section {
+    background-color: var(--mostaza);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.section-title {
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    display: block;
+}
+
+.section-title:hover {
+    color: #f0f0f0;
+    text-decoration: underline;
+}
+
+.restaurants-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* Contenedor que contiene el link el cual luego va a redirigir a la pagina del restaurante*/
+.restaurant-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.restaurant-link:hover,
+.restaurant-link:visited,
+.restaurant-link:focus,
+.restaurant-link:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+.restaurant-card {
+    background: linear-gradient(145deg, #D4A574 0%, #E6B885 100%);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    position: relative;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.restaurant-icon {
+    margin: 0 auto 15px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    width: 80%;
+    height: 150px;
+}
+
+.restaurant-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantiene proporción sin distorsión */
+    object-position: center; /* Centra la imagen */
+    border-radius: 8px;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: optimize-quality;
+    transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover .restaurant-icon {
+    background: rgba(255,255,255,0.2);
+}
+
+/* Cuando se pasa el mouse por encima de la carta del restaurante se realiza un zoom*/
+.restaurant-card:hover .restaurant-icon img {
+    transform: scale(1.05);
+}
+
+.restaurant-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.restaurant-rating .star {
+    font-size: 16px;
+    color: #FFD700;
+}
+
+.restaurant-details {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.heart-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    z-index: 10;
+}
+
+.heart-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.heart-btn.active {
+    background: #800020;
+    color: white;
+}
+
+.heart-btn.active:hover {
+    background: #800020;
+}
+
+.discover-btn {
+    background: var(--sgray);
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    margin-top: 20px;
+}
+
+.discover-btn:hover {
+    background: #2e2e2e;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* === Responsive Design === */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .home-container {
+        padding: 25px;
+        width: 95%;
+    }
+    
+    .restaurants-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+    }
+    
+    .restaurant-name {
+        font-size: 24px;
+    }
+    
+    .nav-arrow {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+    
+    .restaurant-icon {
+        height: 140px;
+    }
+}
+
+/* Tablets pequeñas */
+@media (max-width: 768px) {
+    .home-container {
+        padding: 20px;
+        width: 98%;
+        margin: 10px auto;
+    }
+    
+    .hero-card {
+        padding: 20px;
+        min-height: 280px; /* Mantener proporción en tablet */
+    }
+    
+    .restaurant-name {
+        font-size: 22px;
+    }
+    
+    .restaurants-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 10px;
+    }
+    
+    .restaurant-card {
+        padding: 15px;
+        min-height: 140px;
+    }
+    
+    .restaurant-icon {
+        height: 120px;
+        margin-bottom: 10px;
+    }
+    
+    .popular-section {
+        padding: 20px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .nav-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .nav-arrow.left {
+        left: 15px;
+    }
+    
+    .nav-arrow.right {
+        right: 15px;
+    }
+    
+    .heart-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        top: 8px;
+        right: 8px;
+    }
+    
+    .discover-btn {
+        padding: 12px 30px;
+        font-size: 15px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    .home-container {
+        padding: 15px;
+        width: 100%;
+        margin: 5px auto;
+        border-radius: 15px;
+    }
+    
+    .hero-card {
+        padding: 15px;
+        min-height: 220px; /* Altura optimizada para móvil */
+        border-radius: 15px;
+    }
+    
+    .restaurant-name {
+        font-size: 18px;
+    }
+    
+    .stars .star {
+        font-size: 16px;
+    }
+    
+    .restaurants-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .restaurant-card {
+        padding: 12px;
+        min-height: 120px;
+        border-radius: 12px;
+    }
+    
+    .restaurant-icon {
+        height: 100px;
+        margin-bottom: 8px;
+    }
+    
+    .restaurant-rating {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+    
+    .restaurant-details {
+        font-size: 11px;
+    }
+    
+    .popular-section {
+        padding: 15px;
+        border-radius: 15px;
+    }
+    
+    .section-title {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .nav-arrow {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+    
+    .nav-arrow.left {
+        left: 10px;
+    }
+    
+    .nav-arrow.right {
+        right: 10px;
+    }
+    
+    .heart-btn {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+        top: 6px;
+        right: 6px;
+    }
+    
+    .discover-btn {
+        padding: 10px 25px;
+        font-size: 14px;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 360px) {
+    .home-container {
+        padding: 10px;
+    }
+    
+    .restaurants-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .restaurant-card {
+        padding: 15px;
+        min-height: 130px;
+    }
+    
+    .restaurant-name {
+        font-size: 16px;
+    }
+    
+    .hero-card {
+        min-height: 200px; /* Altura mínima para pantallas muy pequeñas */
+    }
+    
+    .restaurant-icon {
+        height: 120px;
+    }
+    
+    .nav-arrow {
+        display: none; /* Ocultar flechas en pantallas muy pequeñas */
+    }
+}
+
+/* === Mejoras de accesibilidad === */
+@media (prefers-reduced-motion: reduce) {
+    .restaurant-card,
+    .nav-arrow,
+    .heart-btn,
+    .discover-btn,
+    .restaurant-icon,
+    .restaurant-icon img {
+        transition: none;
+    }
+    
+    .restaurant-card:hover,
+    .nav-arrow:hover,
+    .heart-btn:hover,
+    .discover-btn:hover,
+    .restaurant-card:hover .restaurant-icon img {
+        transform: none;
+    }
+}

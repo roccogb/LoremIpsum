@@ -1,0 +1,2 @@
+En el archivo 'zip' se encuentran los templates que podemos reutilizar para el front-end.
+El MOCKUP fue realizado usando de referencia los templates mencionados

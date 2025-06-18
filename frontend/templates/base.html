@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodyBA</title>
+    <link href="{{ url_for('static', filename='bootstrap/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='favicon_burdeos.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block styles %}{% endblock %}
+</head>
+<body class="body-bg">
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="/">
+            <img src="{{ url_for('static', filename='media/img/logo_foodyba.png') }}" alt="FoodyBA Logo" class="logo-img">
+        </a>
+    </div>
+
+    <div class="search-box-enhanced">
+        <form action="{{url_for('buscar_comercio', _external=True)}}" method="POST">
+            <input type="text" placeholder="Buscar local" aria-label="Buscar restaurante" name="buscador" required>
+            <button type="submit" class="search-button" aria-label="Buscar">
+                <span class="search-icon">🔍</span>
+            </button>
+        </form>
+    </div>
+
+    <div class="nav-links" id="navLinks">
+        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Inicio</a>
+        <a href="/descubre/0" class="{% if request.path == '/descubre' %}active{% endif %}">Descubre</a>
+        <a href="/ayuda" class="{% if request.path == '/ayuda' %}active{% endif %}">Ayuda</a>
+    </div>
+
+    <div class="user-menu-wrapper">
+        {% if session["datos_usuario"] %}
+            <span class="nav-user" onclick="showUserMenu()" role="button" tabindex="0" aria-label="Menú de usuario">🏠</span>
+            <div id="userDropdown" class="user-dropdown">
+                <a href="{{url_for('manag_perfiles',_external=True)}}">Mi Perfil</a>
+                <a href="{{url_for('logout', _external=True)}}">Cerrar sesión</a>
+            </div>
+        {% else %}
+            <a href="{{url_for('login', _external=True)}}" class="nav-links-login">Login</a>
+        {% endif %}
+    </div>
+
+
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menú móvil">☰</button>
+</nav>
+
+<div class="page-container">
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/base.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

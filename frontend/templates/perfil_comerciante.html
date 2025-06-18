@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
+{% endblock %}
+{% block content%}
+    <div class="container">
+        <div class="popular-section">
+
+            <h1 class="section-title">🙋 Datos del responsable</h1>
+            <div class="restaurant-card">
+                <p><strong>Nombre:</strong> {{usuario["nombre_apellido"]}}</p>
+                <p><strong>DNI:</strong> {{usuario["DNI"]}}</p>
+                <p><strong>CUIT:</strong> {{usuario["CUIT"]}}</p>
+                <p><strong>Email:</strong> {{usuario["email_usuario"]}}</p>
+            </div>
+
+            <h2 class="section-title">🏪 Mi comercio</h2>
+            <div class="restaurant-card">
+                <div class="perfil-resto-img">
+                    <img src="{{ url_for('static', filename=datos_comercio['ruta_imagen'])}}" alt="Image-Comercio">
+                    <div class="restaurant-name">{{datos_comercio["nombre_comercio"]}}</div>
+                    <div class="restaurant-rating">
+                        <div class="rating-stars">★★★★☆</div>
+                        <div class="rating-number">4.0</div>
+                    </div>
+                </div>
+                <div class="perfil-resto-info">
+                    <p><strong>Categoría:</strong> {{datos_comercio["categoria"]}}</p>
+                    <p><strong>Tipo de cocina:</strong> {{datos_comercio["tipo_cocina"]}}</p>
+                    <p><strong>Teléfono:</strong> {{datos_comercio["telefono"]}}</p>
+                    <p><strong>Ubicación:</strong> {{ubicacion}}</p>
+                    <p><strong>Días:</strong> 
+                        {% if datos_comercio.dias %}
+                            {% for dia in datos_comercio["dias"] %}
+                                {{ dia }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            No especificado
+                        {% endif %}
+                    </p>
+                    <p><strong>Horarios:</strong> 
+                        {% if datos_comercio["horarios"] %}
+                            {% for horario in datos_comercio["horarios"] %}
+                                {{ horario }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            No especificado
+                        {% endif %}
+                    </p>
+                    <p><strong>Etiquetas:</strong> 
+                        {% if datos_comercio["etiquetas"] %}
+                            {% for etiqueta in datos_comercio["etiquetas"] %}
+                                {{ etiqueta }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            Sin etiquetas
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <h2 class="section-title clickable collapsed" onclick="toggleSection('reservas')">📅 Reservas</h2>
+            <div id="reservas" class="collapsible-content">
+                <div class="list-reservas">
+                    {% if reservas %}
+                        {% for reserva in reservas %}
+                            <div class="info-reserva">
+                                <p><strong>Nombre bajo reserva:</strong> {{reserva["nombre_bajo_reserva"]}}</p>
+                                <p><strong>Email:</strong> {{reserva["email"]}}</p>
+                                <p><strong>Teléfono:</strong> {{reserva["telefono"]}}</p>
+                                <p><strong>Cantidad de personas:</strong> {{reserva["cant_personas"]}}</p>
+                                <p><strong>Solicitud especial:</strong> {{reserva["solicitud_especial"]}}</p>
+                                <p><strong>Fecha de la reserva:</strong> {{reserva["fecha_reserva"]}}</p>
+                                <p><strong>Estado de la reserva:</strong> 
+                                    {% if reserva["estado_reserva"] %}
+                                        <span class="estado-cancelada">Cancelada</span>
+                                    {% else %}
+                                        <span class="estado-activa">Activa</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="info-reserva">
+                            <p>No se realizaron reservas.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <h2 class="section-title clickable collapsed" onclick="toggleSection('resenias')">📝 Reseñas</h2>
+            <div id="resenias" class="collapsible-content">
+                <div class="list-resenias">
+                    {% if resenias %}
+                        {% for resenia in resenias %}
+                            <div class="info-resenia">
+                                <p><strong>Nombre:</strong> {{resenia["usuario"]}}</p>
+                                <p><strong>Comentario:</strong> {{resenia["comentario"]}}</p>
+                                <p><strong>Calificación:</strong> 
+                                    <div class="stars">
+                                        {% for i in range(resenia["calificacion"]) %}
+                                            ★
+                                        {% endfor %}
+                                        {% for i in range(5 - resenia["calificacion"]) %}
+                                            ☆
+                                        {% endfor %}
+                                    </div>
+                                </p>
+                                <p><strong>Tiempo de creación:</strong> {{resenia["tiempo_de_creacion"]}}</p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="info-resenia">
+                            <p>No se realizaron reseñas aún.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="back-section">
+                <a href="{{ url_for('home', _external=True) }}">
+                    <button class="back-btn">← Volver al inicio</button>
+                </a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
+{% endblock %}

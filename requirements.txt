@@ -1,0 +1,8 @@
+flask
+mysql-connector-python
+python-dotenv
+pillow
+pymupdf
+qrcode
+requests
+geopy

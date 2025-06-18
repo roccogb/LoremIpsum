@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />   <!-- Archivo CSS de Leaflet-->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>  <!-- Archivo JS de Leaflet-->
+    <link href="{{ url_for('static', filename='css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seleccion_resto.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="page-content">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="main-profile ">
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <img src="{{ url_for('static', filename=comercios.ruta_imagen)}}" alt="Imagen-Comercio">
+                    </div>
+                    <div class="col-lg-4 align-self-center">
+                      <div class="main-info header-text">
+                          <h3>
+                            {{ comercios.nombre_comercio}}
+                            <button type="button" class="heart-btn {% if comercios['id_comercio'] in id_favoritos %}active{% endif %}" data-id="{{ comercios['id_comercio'] }}">
+                                {% if comercios['id_comercio'] in id_favoritos %}♥{% else %}♡{% endif %}
+                            </button>
+                          </h3>
+                          <div class="stars">
+                            {% for i in range(comercios.calificacion) %}
+                              ★
+                            {% endfor %}
+                            {% for i in range(5 - comercios.calificacion) %}
+                              ☆
+                            {% endfor %}
+                          </div>
+                        <br>
+                        <div class="tags-section">
+                          {% for tag in comercios.etiquetas %}
+                            <p>{{tag}}</p>
+                          {% endfor %}
+                        </div>
+                        <div class="main-border-button">
+                          {% if comercios.pdf_menu_link %}
+                            <a href="{{ comercios.pdf_menu_link }}" target="_blank">Menú</a>
+                          {% else %}
+                            <a href="#" onclick="alert('Menú no disponible'); return false;">Menú</a>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 align-self-center">
+                      <ul>
+                        <li>Categoría: {{ comercios.categoria if comercios else "No disponible" }}</li>
+                        <li>Tipo de cocina: {{ comercios.tipo_cocina if comercios else "No disponible" }}</li>
+                        <li>Teléfono: {{ comercios.telefono if comercios else "No disponible" }}</li>
+                        <li class="horarios-item">
+                          <span class="horarios-label">Dias:</span>
+                          <div class="dias-section">
+                            {% for dia in comercios.dias %}
+                              <span class="dia-item">{{dia}}</span>
+                            {% endfor %}
+                          </div>
+                        </li>
+                        <li>
+                          <span class="horarios-label">Horarios:</span>
+                          <div class="dias-section">
+                            {% for horario in comercios.horarios %}
+                              <span class="dia-item">{{horario}}</span>
+                            {% endfor %}
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RESERVA Y MAPA -->
+            <div class="gaming-library profile-library">
+              <div class="col-lg-12">
+                <div class="heading-section">
+                  <h4><em>Reservas</em></h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div id="map">
+                    <p id="coordenadas_comercio">{{comercios.latitud}};{{comercios.longitud}}</p>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="reserva">
+                    <div class="container">
+                      <div class="row align-items-center">
+                        <div class="col-lg-12">
+                          <div class="reserva-form">
+                            <form id="form-reserva" method="POST" action="{{ url_for('reservar') }}">
+                              <input type="hidden" name="id_comercio" value="{{ comercios.id_comercio }}">
+                              <div class="control-group">
+                                <div class="input-group">
+                                  <input name="nombre_bajo_reserva" type="text" class="form-control" placeholder="Titular de la reserva" required />
+                                  <div class="input-group-append">
+                                    <div class="input-group-text"><i class="far fa-user"></i></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="control-group">
+                                <div class="input-group">
+                                  <input name="email" type="email" class="form-control" placeholder="Correo electrónico" required />
+                                  <div class="input-group-append">
+                                    <div class="input-group-text"><i class="far fa-envelope"></i></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="control-group">
+                                <div class="input-group">
+                                  <input name= "telefono" type="text" class="form-control" placeholder="Teléfono" required="required" />
+                                  <div class="input-group-append">
+                                    <div class="input-group-text"><i class="fa fa-mobile-alt"></i></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="control-group">
+                                <div class="input-group date" id="date" data-target-input="nearest">
+                                  <input name="fecha_reserva" type="text" class="form-control datetimepicker-input" placeholder="Fecha" data-target="#date" data-toggle="datetimepicker" />
+                                  <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="control-group">
+                                <div class="input-group time" id="time" data-target-input="nearest">
+                                  <input name="hora_reserva" type="text" class="form-control datetimepicker-input" placeholder="Horario" data-target="#time" data-toggle="datetimepicker" />
+                                  <div class="input-group-append" data-target="#time" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="control-group">
+                                <div class="input-group">
+                                  <select name="cant_personas" class="custom-select form-control" required>
+                                    <option disabled selected>Cantidad de personas</option>
+                                    {% for i in range(1, 11) %}
+                                      <option value="{{ i }}">{{ i }} Persona{{ 's' if i > 1 else '' }}</option>
+                                    {% endfor %}
+                                  </select>
+                                  <div class="input-group-append">
+                                    <div class="input-group-text"><i class="fa fa-chevron-down"></i></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="control-group">
+                                <textarea name="solicitud_especial" class="form-control" placeholder="Solicitud especial (opcional)"></textarea>
+                              </div>
+                              <div>
+                                <button class="btn custom-btn" type="submit">Reservar</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div> 
+                      </div> 
+                    </div> 
+                  </div>
+                </div> 
+              </div> 
+            </div> 
+            <!-- Sección que va a mostrar las reseñas del sitio -->
+            <div class="gaming-library profile-library" style="margin-top: 30px;">
+              <div class="col-lg-12">
+                <div class="heading-section">
+                  <h4><em>Reseñas de Clientes</em></h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="reviews-section">
+                    <div class="reviews-list">
+                      {% if resenias %}
+                        {% for resena in resenias %}
+                        <div class="review-item">
+                          <div class="review-header">
+                            <div class="reviewer-info">
+                              <strong>{{ resena.usuario }}</strong>
+                              <div class="rating">
+                                {% for i in range(resena.calificacion) %}
+                                  ⭐
+                                {% endfor %}
+                                {% for i in range(5 - resena.calificacion) %}
+                                  ☆
+                                {% endfor %}
+                              </div>
+                            </div>
+                            <small class="text-muted">{{ resena.tiempo_de_creacion}}</small>
+                          </div>
+                          <div class="review-content">
+                            <p>{{ resena.comentario }}</p>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      {% else %}
+                        <div class="no-reviews">
+                          <p>Aún no hay reseñas para este restaurante.</p>
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>  
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="footer">
+            <p>© 2025 FoodyBA. Todos los derechos reservados.</p>
+          </div>
+        </div>
+      </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/resto_bootstrap.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/isotope.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tabs.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popup.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/mapa.js') }}"></script>
+
+
+    <!-- Scripts de reserva -->
+    <script src="{{ url_for('static', filename='js/easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/moment-timezone.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tempusdominus-bootstrap-4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}
