@@ -275,7 +275,6 @@
     min-width: 0;
 }
 
-/* Contenedor que contiene el link el cual luego va a redirigir a la pagina del restaurante*/
 .restaurant-link {
     text-decoration: none;
     color: inherit;
