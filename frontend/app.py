@@ -1,14 +1,29 @@
-from flask import Flask, request, render_template, redirect, session, url_for, flash, jsonify
+from flask import Flask, request, render_template, redirect, session, url_for, flash, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from fextra import transformar_dias_comercio, transformar_horarios_comercio, transformar_tags_comercio, transformar_tp_comercio, transform_coords_dir
 import requests
 import os
 
 app = Flask(__name__)
+app.config["UPLOAD_FOLDER"]="../backend/resources/uploads/comercios/"
 app.secret_key = "contra_ids"  # Necesario para usar session y flash
 
 API_BACK = "http://0.0.0.0:8100"                                        # Dirección local del backend
-UPLOAD_FOLDER = os.path.join(os.getcwd(),'static','media', 'img')       # Carpeta donde van a ir todas las imagenes
+
+
+# Este endpoint va a retornar va a retornar una imagen almacenada en el backend.
+@app.route("/resources/uploads/comercios/<imagen>")
+def cargar_imagen(imagen):
+    nombre_imagen_seguro=secure_filename(imagen)
+    if os.path.exists( os.path.join(app.config["UPLOAD_FOLDER"], nombre_imagen_seguro)):
+        return send_from_directory(app.config["UPLOAD_FOLDER"],nombre_imagen_seguro)
+    else:
+        return send_from_directory("frontend/static/img", "img_resto_defecto.jpg")
+
+# Este endpoint va a guardar una imagen subida por el usuario
+@app.route("/upload/<nombre_archivo>", methods=["POST"])
+def subir_imagen():
+    pass
 
 # Pagina de inicio
 @app.route("/")
@@ -298,6 +313,9 @@ def login():
             return redirect(url_for("login"))     
     return render_template("login.html")
 
+
+# FALTA SOLUCIONAR COMO SUBIR LA IMAGEN QUE SELECCIONA EL USUARIO
+# Cuando el usuario pulse el boton 'Subir imagen' envie una peticion a otro endpoint diferente que va a guardar la imagen y que en este solamente se grabe la ruta de la imagen
 # Registrar usuario
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -325,7 +343,6 @@ def register():
             nombre_comercio = form.get("name_bss")
             tel_comercio = form.get("tel_bss")
             dir_comercio = form.get("dir_bss")
-            print(dir_comercio)
             lkmenu_comercio = form.get("lkm_bss")
             categoria = form.get("categoria")
             tipo_cocina = form.get("tipo_cocina")
@@ -338,14 +355,7 @@ def register():
             nombre_responsable = form.get("nr_bss")
             contrasena_usr_comercio = form.get("p_r_bss")
 
-            imagen=request.files.get("img_local")
-
-            if not imagen or imagen.filename == "":
-                ruta_img="media/img/img_resto_defecto.jpg"
-            else:            
-                nombre_archivo_seguro=secure_filename(imagen.filename)
-                imagen.save( os.path.join(UPLOAD_FOLDER,nombre_archivo_seguro) )
-                ruta_img=f"media/img/{nombre_archivo_seguro}"
+            # Falta agregar la implementacion de subir la imagen
 
             if "0-24" in horarios:
                 horarios=["0-24"]
@@ -366,8 +376,7 @@ def register():
                                                 "dni_responsable" : dni_responsable,
                                                 "cuit_responsable" : cuit_responsable,
                                                 "nombre_responsable" : nombre_responsable,
-                                                "contrasena_usr_comercio" : contrasena_usr_comercio,
-                                                "ruta_img" : ruta_img
+                                                "contrasena_usr_comercio" : contrasena_usr_comercio
                                                   })
         if response.status_code == 200:
             flash("Se registro el usuario correctamente","message")
@@ -399,8 +408,7 @@ def click_fav(id_comercio):
             
     except requests.RequestException as e:
         return jsonify({"success": False, "error": "Error de conexión con el backend"}), 500
-
-    
+ 
 # Logout
 @app.route("/logout")
 def logout():

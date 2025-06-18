@@ -23,11 +23,6 @@ def get_comercios():
 @comercios_bp.route("/get")
 def get_comercio():
     body_request=request.get_json()
-
-    parametros_validos=["id_comercio","nombre_comercio"]
-    for parametro in parametros_validos:
-        if parametro not in parametros_validos:
-            return jsonify({"ERROR":"Parámetros de busqueda inválidos"}),400
         
     conn=get_connection()
     cursor=conn.cursor(dictionary=True)
@@ -42,6 +37,9 @@ def get_comercio():
     if not comercio_encontrado:
         return jsonify({"ERROR":"Comercio no encontrado"}),404
     else:
+        ruta_relativa=comercio_encontrado["ruta_imagen"]
+        host=request.host_url.rstrip("/")
+        comercio_encontrado["ruta_imagen"]=host+ruta_relativa
         return jsonify(comercio_encontrado),200
 
 # De momento, se va a poder filtrar solamente por un parámetro. Implementación a futuro: que se pueda a filtrar por mas de un parámetro

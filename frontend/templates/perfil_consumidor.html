@@ -74,7 +74,7 @@
                     {% for fav in favoritos %}
                         <div class="restaurant-link" data-url="{{url_for('resto', id_comercio=fav['id_comercio'])}}" onclick="handleCardClick(event,this)">
                             <div class="info-fav">
-                                <img src="{{ url_for('static', filename=fav['ruta_imagen']) }}" width="60" alt="{{ fav['nombre_comercio'] }}">
+                                <img src="{{fav['ruta_imagen']}}" width="60" alt="{{ fav['nombre_comercio'] }}">
                                 <p class="restaurant-name-fav">{{ fav["nombre_comercio"] }}</p>
                                 <div class="rating-container">
                                     <p class="rating-number">{{ fav["calificacion"] }}</p>

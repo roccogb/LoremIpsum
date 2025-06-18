@@ -7,37 +7,29 @@ cursor = conn.cursor()
 
 ################# REGISTROS DE PRUEBA PARA LA TABLA 'usuario_comercio'
 cursor.execute("""INSERT INTO usuario_comercio 
-               (id_usr_comercio,nombre_apellido, DNI,CUIT,email_usuario, contrasena, fecha_creacion) 
+               (id_usr_comercio, nombre_apellido, DNI, CUIT, email_usuario, contrasena, fecha_creacion) 
                VALUES 
-               (2,'Walter White', 12305555, 20123055553,'heisenberg@hotmail.com',1234, '2025-04-03'),
-               (3,'Apu Nahasapeemapetilon', 45202333, 20442013668,'dandydelosprecios@outlook.com',5678, '2025-05-24'),
-               (4,'Sabrina Carpenter', 43102113, 20431021135,'sc_gamer2001@outlook.com','ABC123', '2025-06-08'),
-               (5,'OrsiGomez', 21444201, 15214442018,'platensequerido@gmail.com','EFG123', '2025-06-16'),
-               (6,'Moria Casan', 15202311, 21152023115,'divatotal@live.com','lacontramiamor1', '2025-06-10'),
-               (7,'Billie Eilish', 44641333, 20446413335,'bbgamer777@hotmail.com','Jk12la454', '2025-06-05'),
-               (8,'Ricky Blanco', 28714555, 19287145553,'rblanco@live.com','EH?33', '2025-06-04'),
-               (9,'Camila Fortunato', 35200121, 23352001218,'princesitacf@live.com','theprincessdestroyer233', '2025-03-18'),
-               (10,'Felipe Loyola', 42011211, 20420112115,'pipeguaton@hotmail.com','pipediablito22', '2025-06-02'),
-               (11,'Dua Lipa', 40444252, 15404442527,'dlgutierrez@gmail.com','ABC456', '2025-05-16'),
-               (12,'Comerciante12', 44121002, 16441210028,'mailgenerico@gmail.com','ABC456', '2025-06-20'),
-               (23, 'Comerciante23', 33245789, 20332457891, 'usuario23@hotmail.com', 'DEF789', '2025-06-11'),
-               (35, 'Comerciante35', 28967543, 27289675432, 'negocio35@outlook.com', 'GHI123', '2025-02-28'),
-               (47, 'Comerciante47', 41582096, 20415820963, 'empresa47@yahoo.com', 'JKL456', '2025-02-20'),
-               (58, 'Comerciante58', 36749821, 23367498214, 'comercio58@gmail.com', 'MNO789', '2025-03-15');""")
+               (59, 'Andrés Iniesta', 30111222, 20301112223, 'ainiesta@gmail.com', 'golazo123', '2025-06-12'),
+               (60, 'Lisa Simpson', 22334455, 27223344556, 'lisamusica@springfield.com', 'saxolove4', '2025-06-13'),
+               (61, 'Pedro Pascal', 35998221, 20359982213, 'mandolorian@hotmail.com', 'babyY0da!', '2025-06-14'),
+               (62, 'Sandra Bullock', 40112333, 23401123334, 'sandra.b@cine.com', 'speed1994', '2025-06-15'),
+               (63, 'Joaquín Sabina', 30011211, 25300112112, 'jsabina@poesia.net', 'y17picon', '2025-06-16');""")
 
 ################ REGISTROS DE PRUEBA PARA LA TABLA 'usuario_consumidor'
 cursor.execute("""INSERT INTO usuario_consumidor 
-                  (id_usr,nombre_apellido, usuario, email_usuario, contrasena, fecha_creacion,numero_telefono, cant_reservas_canceladas) 
+                  (id_usr, nombre_apellido, usuario, email_usuario, contrasena, fecha_creacion, numero_telefono, cant_reservas_canceladas) 
                   VALUES
-                  (1, 'Matias Sapienza', 'msspza', 'matikpo2002@live.com','contraseña', '2025-06-16' ,22113030, 0),
-                  (2, 'Angela Leiva', 'AL777', 'negritacuartetera@gmail.com', 'ABC333', '2025-06-10',11033030, 5),
-                  (3, 'Sasha Ferro', 'ruggeri_chupapija', 'sashamiau@outlook.com', 'DEF888', '2025-04-14',15150233, 20),
-                  (4, 'Kevin Lomonaco','SeñorDELanoche','guarachita@hotmail.com','1234', '2025-06-05',20335555, 15),
-                  (5, 'Andrés Ducatenzeiler','Duka','rojitocorazon@live.com','1234', '2025-06-01',69697777, 0);""")
+                  (6, 'Carla Peterson', 'CarlaP', 'cpeterson@gmail.com', 'telenovela123', '2025-06-17', 11554433, 2),
+                  (7, 'Tobías Merlo', 'tobix', 'tobimerlo@outlook.com', 'pass456', '2025-06-18', 11223344, 1),
+                  (8, 'Lucía Freitas', 'LuFree', 'lufree@hotmail.com', 'freedom!', '2025-06-15', 15400112, 0),
+                  (9, 'Ricardo Bochini', 'maestro_rojo', 'richard_el_diablo@gmail.com', 'rojox100pre', '2025-06-13', 11445566, 8),
+                  (10, 'German Beder', 'gbeder', 'gerchosports@gmail.com', 'oliviaquerida88', '2025-06-14', 15000999, 0);""")
+
 
 ################ REGISTROS DE PRUEBA PARA LA TABLA 'comercios'
 cursor.execute("""INSERT INTO comercios
                   (id_comercio,id_usr_comercio, ruta_imagen,nombre_comercio, categoria, tipo_cocina, telefono, latitud, longitud, tiempo_de_creacion, pdf_menu_link, promedio_calificacion, cantidad_resenias, ranking_ponderado, dias, horarios, etiquetas)
+                  (id_comercio, id_usr_comercio, ruta_imagen, nombre_comercio, categoria, tipo_cocina, telefono, latitud, longitud, tiempo_de_creacion, pdf_menu_link, calificacion, dias, horarios, etiquetas)
                   VALUES 
                   (1, 4,'media/img/cafe_expressosc.jpg','Cafe Expresso', 'especialidad', 'autor', 99991111, 20.8501, -51.9987, '2015-05-22 10:50:10', 'https://www.cafemartinez.com/?srsltid=AfmBOooWV1qsi0jC_PbWjnW7bbE3NRQQnn7ZKZfjLTSypqMci67UFitx', 0, 0, 0, "['lunes','martes','miercoles','viernes','sabado','domingo']", "['7-11','16-18']", "['apto_mascotas', 'wifi','sin_gluten', 'musica_vivo']"),
                   (99, 11,'media/img/la_parrilla_ddua.jpeg','La Parrilla de Dua', 'familiar', 'autor', 12123030, -34.88412, -58.35581, '2002-09-22 11:35:55', 'https://www.facebook.com/groups/580812462862561/posts/1657688688508261/', 0, 0, 0, "['jueves','viernes','sabado','domingo']", "['12-15','19-23']", "['accesible','delivery','para_llevar', 'zona_fumadores', 'musica_vivo']"),
@@ -54,26 +46,38 @@ cursor.execute("""INSERT INTO comercios
                   (8, 35, 'media/img/sushi_tokyo.jpg', 'Sushi Tokyo', 'tematico', 'autor', 23456789, -34.588765, -58.372456, '2025-06-09 12:15:45', 'aligoto', 0, 0, 0, "['lunes','jueves','viernes','sabado','domingo']", "['12-15','19-23']", "['sin_gluten','happy_hour','zona_fumadores']"),
                   (41, 47, 'media/img/parrilla_argentina.jpg', 'La Parrilla Criolla', 'familiar', 'vanguardia', 20567891, -34.592341, -58.395123, '2025-06-07 19:20:10', 'miratecomoaulla', 0, 0, 0, "['lunes','martes','sabado','domingo']", "['12-15','19-23']", "['wifi','zona_fumadores','happy_hour','musica_vivo']"),
                   (26, 58, 'media/img/cafe_literario.jpg', 'Café Literario', 'especialidad', 'autor', 30445566, -34.580123, -58.390987, '2025-06-11 08:45:25', 'shhh', 0, 0, 0, "['lunes','martes','miercoles','jueves']", "['7-11','16-18']", "['wifi','sin_gluten','apto_mascotas','vegetariano','vegano']");""")
+                  (1, 59, '/resources/uploads/comercios/don_cafe.jpg', 'Don Café', 'especialidad', 'autor', 22113344, -34.6037, -58.3816, '2025-06-15 09:00:00', 'https://doncafe.menu', 4.7, "['lunes','martes','miércoles','jueves','viernes']", "['7-11','16-19']", "['wifi','sin_gluten','apto_mascotas']"),
+                  
+                  (2, 60, '/resources/uploads/comercios/chimichurri_grill.jpg', 'Chimichurri Grill', 'familiar', 'clasica', 23004567, -34.6100, -58.4000, '2025-06-14 13:15:00', 'https://chimigrill.menu', 4.3, "['jueves','viernes','sábado','domingo']", "['12-15','19-23']", "['para_llevar','musica_vivo','zona_fumadores']"),
+                  
+                  (3, 61, '/resources/uploads/comercios/veggie_vida.jpg', 'Veggie Vida', 'tematico', 'vegano', 22119988, -34.5800, -58.3700, '2025-06-13 10:45:00', 'https://veggievida.menu', 4.9, "['lunes','miércoles','viernes']", "['12-15','18-21']", "['vegano','sin_gluten','accesible']"),
+                  
+                  (4, 62, '/resources/uploads/comercios/el_gourmet_oculto.jpg', 'El Gourmet Oculto', 'gourmet', 'alta_cocina', 23115678, -34.5933, -58.4100, '2025-06-12 20:00:00', 'https://gourmetoculto.link', 5.0, "['viernes','sábado']", "['20-00']", "['happy_hour','musica_vivo','wifi']"),
+                  
+                  (5, 63, '/resources/uploads/comercios/pollo_frito_king.jpg', 'Pollo Frito King', 'comida_rapida', 'vanguardia', 29998877, -34.5990, -58.3820, '2025-06-16 11:30:00', 'https://pollofrito.menu', 3.9, "['lunes','martes','miércoles','jueves','viernes','sábado']", "['11-15','18-22']", "['delivery','para_llevar','wifi']");
+""")
+
 
 ############### REGUSTROS DE PRUEBA PARA LA TABLA 'reservas'
 cursor.execute("""INSERT INTO reservas
                   (id_reserva,id_usr,id_comercio,nombre_bajo_reserva,email,telefono,cant_personas,fecha_reserva,solicitud_especial,estado_reserva)
                   VALUES
-                  (10, 4, 15, 'Kevin Lomonaco','guarachita@hotmail.com',20335555, 2, '2025-06-08 21:30:50', 'Buena musica...', False),
-                  (15, 1, 99, 'Matias Sapienza', 'matikpo2002@live.com', 22113030,4, '2025-06-01 20:30:50', 'Punto de coccion:La carne tiene que decir mu', True),
-                  (21, 3, 1, 'Sasha Ferro', 'sashamiau@outlook.com',15150233, 1, '2025-06-05 18:25:50', 'El mejor cafe con leche posible', False),
-                  (22, 1, 99, 'Matias Sapienza', 'matikpo2002@live.com', 22113030, 1, '2025-06-06 11:15:20', 'El mejor chinchulin disponible', True),                                                      
-                  (34, 2, 95, 'Angela Leiva','negritacuartetera@gmail.com',11033030, 4, '2025-06-12 20:15:00', 'Con velitas románticas', True);
+                  (10, 6, 1, 'Carla Peterson','cpeterson@gmail.com',11554433, 2, '2025-06-08 21:30:50', 'Quiero poder comer todo el menu Sin Gluten', True),
+                  (15, 10, 2, 'German Beder', 'gerchosports@gmail.com', 15000999,3, '2025-06-01 20:30:50', 'Mesa mas alejada de la gente con sillita para niños, por favor.', True),
+                  (21, 9, 2, 'Ricardo Bochini', 'richard_el_diablo@gmail.com',11445566, 1, '2025-06-05 18:25:50', 'Una milanesa napolitana con el escudo de independiente', True),
+                  (22, 8, 3, 'Lucia Freitas', 'lufree@hotmail.com', 15400112, 5, '2025-06-06 11:15:20', 'Una mesa bastante grande, voy con mis facuamigos!!!', True),                                                      
+                  (34, 10, 5, 'German Beder','gerchosports@gmail.com',15000999, 5, '2025-06-12 20:15:00', 'Una mesa grande, se probarán las alas del rey.', True);
                """)
 
 ############## REGISTROS DE PRUEBA PARA LA TABLA 'resenias'
 cursor.execute("""INSERT INTO resenias
                   (id_comercio,id_usr,comentario,calificacion,tiempo_de_creacion, id_reserva)
                   VALUES
-                  (99, 1, 'La mejor parrilla que probé en mi vida. El mozo sabía mi nombre antes de que llegara, un 10.', 5, '2025-06-01 22:15:00', 15),
-                  (1, 3, 'El café estaba bien, pero la atención fue muy lenta. Volvería solo si mejoran eso.', 3, '2025-06-05 19:00:00', 21),
-                  (15, 4, 'Lugar limpio y ordenado, pero la comida demoró demasiado.', 3, '2025-06-08 22:15:00', 10),
-                  (99, 1, 'El chinchulín estaba espectacular. Vuelvo seguro.', 4, '2025-06-06 13:00:00', 22);
+                  (1, 6, 'Un lugar tranquilo y con una buena carta. Excelente para una merienda con tu pareja', 4, '2025-06-01 22:15:00', 10),
+                  (5, 10, 'Espantoso el lugar, no me alcanzan los caracteres para describir mi experiencia. Una de las famosas alas del rey que le dieron a mi amigo lo tuvo en el baño 3 hs, con eso te digo todo.', 1, '2025-06-05 19:00:00', 34),
+                  (2, 9, 'Las mejores milanesas que probe en mi vida', 5, '2025-06-08 22:15:00', 21),
+                  (2, 10, 'Excelente. Mis felicitaciones al maestro de la parrilla', 5, '2025-06-06 13:00:00', 15),
+                  (3,8,'Buen lugar, mis amigos la pasaron bien aunque la comida no es bastante buena.',3, '2025-05-20 16:30:00', 22);
                 """)
 
 conn.commit()                           # Guardo los cambios realizados en la BDD
