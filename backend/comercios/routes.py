@@ -56,15 +56,15 @@ def get_comercios_filter():
     ordenar_ranking = None      # Con esto podemos ordenar por 'Asc' o 'Desc'
 
     for clave, valor in body_request.items():
-        if clave == "dias" and valor:
+        if clave == "dias" and len(valor) > 0:
             for tag in valor:
                 condiciones_filtro.append("dias LIKE %s")
                 valores_parametros.append(f"%{tag}%")
-        elif clave == "etiquetas" and valor:
+        elif clave == "etiquetas" and len(valor) > 0:
             for tag in valor:
                 condiciones_filtro.append("etiquetas LIKE %s")
                 valores_parametros.append(f"%{tag}%")
-        elif clave == "horarios" and valor:
+        elif clave == "horarios" and len(valor) > 0:
             for tag in valor:
                 condiciones_filtro.append("horarios LIKE %s")
                 valores_parametros.append(f"%{tag}%")

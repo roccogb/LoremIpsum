@@ -13,8 +13,7 @@ UPLOAD_FOLDER = os.path.join(os.getcwd(),'static','media', 'img')       # Carpet
 # Pagina de inicio
 @app.route("/")
 def home():
-    response=requests.get(f"{API_BACK}/comercio/filtrar",json={"tipo_cocina":"null","categoria":"null","calificacion":"desc",
-                                                                         "horarios":[],"etiquetas":[],"dias":[]})
+    response=requests.get(f"{API_BACK}/comercio/filtrar",json={"tipo_cocina":"null","categoria":"null","ranking":"desc"})
     if response.status_code == 200:
         comercios_rank_bdd=list(response.json())
         top_comercios=[]
