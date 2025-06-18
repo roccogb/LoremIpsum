@@ -31,7 +31,7 @@ CREATE TABLE usuario_consumidor (
 CREATE TABLE comercios (
     id_comercio INT PRIMARY KEY AUTO_INCREMENT,
     id_usr_comercio INT,
-    ruta_imagen VARCHAR(100), 
+    ruta_imagen VARCHAR(255), 
     nombre_comercio VARCHAR(100),
     categoria VARCHAR(50),
     tipo_cocina VARCHAR(100),

@@ -18,7 +18,7 @@
             <h2 class="section-title">🏪 Mi comercio</h2>
             <div class="restaurant-card">
                 <div class="perfil-resto-img">
-                    <img src="{{ url_for('static', filename=datos_comercio['ruta_imagen'])}}" alt="Image-Comercio">
+                    <img src="{{datos_comercio['ruta_imagen']}}" alt="Image-Comercio">
                     <div class="restaurant-name">{{datos_comercio["nombre_comercio"]}}</div>
                     <div class="restaurant-rating">
                         <div class="rating-stars">★★★★☆</div>

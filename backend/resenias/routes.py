@@ -28,10 +28,8 @@ def create_review():
             VALUES 
             (%s, %s, %s, %s, NOW(), %s);
             """, (id_comercio, id_usr, comentario, calificacion, id_reserva))
+        
         conn.commit()
-
-        return jsonify({"msg": "Reseña creada con éxito."}), 201
-    
     except Exception as e:
         print("Error al crear reseña:", e)
         return jsonify({"error": "Error interno del servidor."}), 500
@@ -39,6 +37,7 @@ def create_review():
     finally:
         cursor.close()
         conn.close()
+        return jsonify({"msg": "Reseña creada con éxito."}), 201
 
 @review_bp.route("/com/<int:id_comercio>", methods=["GET"])
 def get_all_review_com(id_comercio):
