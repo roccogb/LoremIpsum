@@ -21,16 +21,6 @@ def create_review():
     cursor = conn.cursor(dictionary=True)
 
     try:
-        # Verificar reserva válida y confirmada por asistencia.
-        cursor.execute (""" 
-            SELECT * FROM reservas WHERE id_reserva = %s 
-            AND id_usr = %s AND id_comercio = %s AND estado_reserva = 1 
-            """,(id_reserva, id_usr, id_comercio))
-        reserva_valida = cursor.fetchone()
-
-        if not reserva_valida:
-            return jsonify({"error": "Reserva no confirmada por asistencia"}), 403
-
         # Insertar reseña
         cursor.execute ("""
             INSERT INTO resenias 

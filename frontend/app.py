@@ -135,7 +135,9 @@ def resto(id_comercio):
         if response_resenias.status_code == 200:
             resenias_data=response_resenias.json()
 
-        return render_template("resto.html", comercios=comercio_bdd, resenias=resenias_data, id_favoritos=id_favoritos)
+        return render_template("resto.html", comercio=comercio_bdd, resenias=resenias_data, id_favoritos=id_favoritos,
+                                             dias=dias_abiertos, etiquetas=etiquetas_comercio,categoria=categoria_comercio,
+                                             tipo_cocina=tipo_cocina_comercio, horarios=horarios_disponible)
     else:
         # Redirigir al home. 
         flash("Comercio no encontrado")
@@ -416,22 +418,28 @@ def logout():
 def realizar_review(id_comercio, id_reserva):
     if "datos_usuario" in session and session.get("tipo_usuario") == "consumidor":
         response_comercio=requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":id_comercio,"nombre_comercio":""})
-        if response_comercio.status_code == 200:
+        response_reserva=requests.get(f"{API_BACK}/reserva/{id_reserva}")
+        if response_comercio.status_code == 200 and response_reserva.status_code == 200:
             data_comercio=response_comercio.json()
-            if request.method == "GET":
-                return render_template("review.html", comercio=data_comercio, identificador_reserva=id_reserva)
-            else:
-                text_comentario=request.form.get("comentario")
-                calificacion_resto=request.form.get("calificacion")
+            data_reserva=response_reserva.json()
+            if data_reserva["estado_reserva"]:
+                if request.method == "GET":
+                    return render_template("review.html", comercio=data_comercio, identificador_reserva=id_reserva)
+                else:
+                    text_comentario=request.form.get("comentario")
+                    calificacion_resto=request.form.get("calificacion")
 
-                response=requests.post(f"{API_BACK}/review/crear", json={"id_usr":session.get("id_usr"),"id_reserva":id_reserva,
-                                                                         "id_comercio":data_comercio["id_comercio"], 
-                                                                         "calificacion":calificacion_resto, "comentario":text_comentario})
-                if response.status_code == 200:
-                    flash("Reseña realizada con éxito","message")
-                    return redirect(url_for("home"))
+                    response=requests.post(f"{API_BACK}/review/crear", json={"id_usr":session.get("id_usr"),"id_reserva":id_reserva,
+                                                                            "id_comercio":data_comercio["id_comercio"], 
+                                                                            "calificacion":calificacion_resto, "comentario":text_comentario})
+                    if response.status_code == 200:
+                        flash("Reseña realizada con éxito","message")
+                        return redirect(url_for("resto", id_comercio=data_comercio["id_comercio"]))
+            else:
+                flash("No se puede realizar una reseña, estado de la reserva pendiente")
+                return redirect(url_for("manag_perfiles"))
         else:
-            return jsonify({"ERROR":"No se cargó la informacion del comercio"}),500
+            return jsonify({"ERROR":"Reserva o comercio inexistente"}),404
 
 if __name__ == "__main__":
     app.run(host="localhost", port=8200, debug=True)

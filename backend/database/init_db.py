@@ -13,7 +13,7 @@ with open(sql_path) as f:
 conn = mysql.connector.connect(
   host="localhost",
   user="root",
-  password="contraSQL1"
+  password="contraSQL"
 )
 
 cursor = conn.cursor()                    # Creo un cursor. Este mismo me va a permitir ejecutar comando SQL
