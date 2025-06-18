@@ -14,6 +14,21 @@ UPLOAD_FOLDER = os.path.join(os.getcwd(),'static','media', 'img')       # Carpet
 @app.route("/")
 def home():
     response=requests.get(f"{API_BACK}/comercio/filtrar",json={"tipo_cocina":"null","categoria":"null","ranking":"desc"})
+
+    # Obtener favoritos del usuario si está logueado
+    id_favoritos = []
+    if "datos_usuario" in session and session["tipo_usuario"] == "consumidor":
+        id_usr = session.get("datos_usuario")["id_usr"]
+        try:
+            fav_response = requests.get(f"{API_BACK}/favs/detallado/{id_usr}")
+            if fav_response.status_code == 200:
+                favoritos_data = fav_response.json()
+                # Extraer solo los IDs de comercios favoritos
+                id_favoritos = [fav['id_comercio'] for fav in favoritos_data]
+        except requests.RequestException:
+            # Si hay error al obtener favoritos, continuar sin ellos
+            id_favoritos = []
+    
     if response.status_code == 200:
         comercios_rank_bdd=list(response.json())
         top_comercios=[]
