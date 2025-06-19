@@ -181,12 +181,11 @@ def reservar():
         })
         if response.status_code == 201:
             flash("Reserva creada exitosamente", "success")
-            return redirect(url_for("manag_perfiles")),200
+            return redirect(url_for("manag_perfiles"))
         else:
             flash("Error al crear la reserva", "error")
             return redirect(url_for("home", id_comercio=id_comercio))
         
-
 # Pagina de ayuda
 @app.route("/ayuda")
 def ayuda():
@@ -382,7 +381,7 @@ def register():
                                                 "ruta_img":ruta_img
                                                   })
         if response.status_code == 200:
-            flash("Se registro el usuario correctamente","message")
+            flash("Se registro el usuario correctamente","success")
             return redirect(url_for('login'))
         flash(f"{response.json()["error"]}","warning")
     else:
@@ -447,7 +446,7 @@ def realizar_review(id_comercio, id_reserva):
                             "calificacion":calificacion_resto, 
                             "comentario":text_comentario
                                                         })
-                    if response.status_code == 200:
+                    if response.status_code == 201:
                         flash("Reseña realizada con éxito","message")
                         return redirect(url_for("resto", id_comercio=data_comercio["id_comercio"]))
                     else:
