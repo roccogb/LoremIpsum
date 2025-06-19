@@ -259,27 +259,10 @@
     </div>
     <!-- Datos para filtrar días y horarios -->
     <div id="datos-comercio" 
-        data-dias="{{ comercio.dias | join(',') | lower }}" 
-        data-horarios="{{ comercio.horarios | join(',') }}">
+        data-dias="{{ dias | join(',') | lower }}" 
+        data-horarios="{{ horarios | join(',') }}">
     </div>
-    <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const datos = document.getElementById('datos-comercio');
-  const diasRaw = datos.getAttribute('data-dias');
-  const horariosRaw = datos.getAttribute('data-horarios');
 
-  const diasPermitidos = diasRaw ? diasRaw.split(',') : [];
-  const horariosPermitidos = horariosRaw ? horariosRaw.split(',') : [];
-
-  // 🚀 Acá va tu console.log para inspección
-  console.log("Días permitidos (raw):", diasRaw);
-  console.log("Horarios permitidos (raw):", horariosRaw);
-  console.log("Días permitidos (array):", diasPermitidos);
-  console.log("Horarios permitidos (array):", horariosPermitidos);
-
-  // ... resto del código ...
-});
-</script>
 {% endblock %}
 
 {% block scripts %}

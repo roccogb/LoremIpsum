@@ -6,10 +6,8 @@ def transformar_horarios_comercio(str_list_horarios):
     horarios_visibles = {
         "7-11": "Desayuno(7:00-11:00)",
         "12-15": "Almuerzo(12:00-15:00)",
-        "12:00-15:00": "Almuerzo(12:00-15:00)",
         "16-18": "Merienda(16:00-18:00)",
         "19-23": "Cena(19:00-23:00)",
-        "19:00-23:00": "Cena(19:00-23:00)",
         "23-5": "Nocturno(23:00-05:00)",
         "0-24": "24h"
     }
