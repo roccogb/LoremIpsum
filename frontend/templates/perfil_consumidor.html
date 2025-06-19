@@ -30,8 +30,11 @@
                                     {% else %}
                                         <span class="estado-pendiente">Pendiente</span>
                                     {% endif %}
+                                
+                                    {% if reserva["resenia_pendiente"] %}
+                                        <a href="{{url_for('realizar_review', id_comercio=reserva['id_comercio'], id_reserva=reserva['id_reserva'])}}" class="link-resenia">Dejar reseña</a>
+                                    {% endif %}
                                 </p>
-                                <a href="{{url_for('realizar_review', id_comercio=reserva['id_comercio'], id_reserva=reserva['id_reserva'])}}" class="link-resenia">Dejar reseña</a>
                             </div>
                         </div>
                     {% endfor %}
