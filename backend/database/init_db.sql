@@ -63,8 +63,7 @@ CREATE TABLE reservas (
     fecha_reserva DATETIME,
     solicitud_especial TEXT,
     estado_reserva BOOLEAN,             -- El estado de esta columna va a depender si el consumidor escanea un QR brindado por el comercio
-    estado_reserva BOOLEAN,
-    resenia_pendiente BOOLEAN,
+    resenia_pendiente BOOLEAN DEFAULT TRUE,
     ruta_qr VARCHAR(100),
     FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE,
     FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE
