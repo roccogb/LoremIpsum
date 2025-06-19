@@ -22,6 +22,7 @@ def get_reservas_usr(id_usr):
                             r.fecha_reserva, 
                             r.solicitud_especial,
                             r.estado_reserva,
+                            r.resenia_pendiente,
                             c.nombre_comercio 
                             FROM reservas r 
                             JOIN comercios c ON c.id_comercio=r.id_comercio

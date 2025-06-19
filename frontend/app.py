@@ -22,9 +22,8 @@ def cargar_imagen(ruta_imagen):
 # Pagina de inicio
 @app.route("/")
 def home():
-    response=requests.get(f"{API_BACK}/comercio/filtrar",json={"tipo_cocina":"null","categoria":"null","calificacion":"desc",
-                                                                         "horarios":[],"etiquetas":[],"dias":[]})
-    
+    response=requests.get(f"{API_BACK}/comercio/filtrar",json={"tipo_cocina":"null","categoria":"null","calificacion":"desc"})
+
     # Obtener favoritos del usuario si está logueado
     id_favoritos = []
     if "datos_usuario" in session and session["tipo_usuario"] == "consumidor":
@@ -73,7 +72,7 @@ def descubre(indice_pag):
     if request.method == "POST":
         tipo_cocina=request.form.get("tipo_cocina","null")
         categoria=request.form.get("categoria","null")
-        calificacion=request.form.get("orden_calificacion","null")
+        calificacion=request.form.get("orden_ranking","null")
         horarios=request.form.getlist("horarios[]")
         etiquetas=request.form.getlist("etiquetas[]")            
         dias=request.form.getlist("dias[]")
@@ -134,9 +133,8 @@ def resto(id_comercio):
         tipo_cocina_comercio=transformar_tp_comercio(comercio_bdd["tipo_cocina"])
         horarios_disponible=transformar_horarios_comercio(comercio_bdd["horarios"])
 
-        # Sacar
-        if type(comercio_bdd["calificacion"]) == float:
-            comercio_bdd["calificacion"]=round(comercio_bdd["calificacion"])
+        if type(comercio_bdd["ranking_ponderado"]) == float:
+            comercio_bdd["ranking_ponderado"]=round(comercio_bdd["ranking_ponderado"], 1) # El '1' redondea el float a un decimal (ej:4.2)
 
         response_resenias=requests.get(f"{API_BACK}/review/com/{id_comercio}")
 
@@ -179,7 +177,8 @@ def reservar():
             "cant_personas": cant_personas,
             "fecha_reserva": fecha_reserva,
             "solicitud_especial": solicitud_especial,
-            "estado_reserva": False
+            "estado_reserva": False,
+            "resenia_pendiente": False
         })
 
         if response.status_code == 200:
@@ -427,9 +426,11 @@ def realizar_review(id_comercio, id_reserva):
     if "datos_usuario" in session and session.get("tipo_usuario") == "consumidor":
         response_comercio=requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":id_comercio,"nombre_comercio":""})
         response_reserva=requests.get(f"{API_BACK}/reserva/{id_reserva}")
+
         if response_comercio.status_code == 200 and response_reserva.status_code == 200:
             data_comercio=response_comercio.json()
             data_reserva=response_reserva.json()
+
             if data_reserva["estado_reserva"]:
                 if request.method == "GET":
                     return render_template("review.html", comercio=data_comercio, identificador_reserva=id_reserva)
@@ -437,11 +438,18 @@ def realizar_review(id_comercio, id_reserva):
                     text_comentario=request.form.get("comentario")
                     calificacion_resto=request.form.get("calificacion")
 
-                    response=requests.post(f"{API_BACK}/review/crear", json={"id_usr":session.get("id_usr"),"id_reserva":id_reserva,
-                                                                            "id_comercio":data_comercio["id_comercio"], 
-                                                                            "calificacion":calificacion_resto, "comentario":text_comentario})
+                    response=requests.post(f"{API_BACK}/review/crear", json={
+                            "id_usr":session["datos_usuario"]["id_usr"],
+                            "id_reserva":id_reserva,
+                            "id_comercio":data_comercio["id_comercio"], 
+                            "calificacion":calificacion_resto, 
+                            "comentario":text_comentario
+                                                        })
                     if response.status_code == 200:
                         flash("Reseña realizada con éxito","message")
+                        return redirect(url_for("resto", id_comercio=data_comercio["id_comercio"]))
+                    else:
+                        flash("Error al guardar la reseña", "error")
                         return redirect(url_for("resto", id_comercio=data_comercio["id_comercio"]))
             else:
                 flash("No se puede realizar una reseña, estado de la reserva pendiente")

@@ -44,7 +44,7 @@ def get_comercio():
 @comercios_bp.route("/filtrar")
 def get_comercios_filter():
     body_request = request.get_json()
-    
+
     condiciones_filtro = []
     ordenar_calificacion = False
 
@@ -69,12 +69,13 @@ def get_comercios_filter():
                 condiciones_filtro.append(f"{clave}='{valor}'")
 
     qsql_filtrar_comercio = "SELECT * FROM comercios"
-    
+
     if condiciones_filtro:
         qsql_filtrar_comercio += " WHERE " + " AND ".join(condiciones_filtro)
-    
+
     if ordenar_calificacion:
-        qsql_filtrar_comercio += f" ORDER BY calificacion {body_request["calificacion"].upper()}"
+        orden = body_request["calificacion"].upper() 
+        qsql_filtrar_comercio += f" ORDER BY ranking_ponderado {orden}"
 
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)

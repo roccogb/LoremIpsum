@@ -21,6 +21,7 @@ def create_review():
     cursor = conn.cursor(dictionary=True)
 
     try:
+
         # Insertar reseña
         cursor.execute ("""
             INSERT INTO resenias 
@@ -29,6 +30,44 @@ def create_review():
             (%s, %s, %s, %s, NOW(), %s);
             """, (id_comercio, id_usr, comentario, calificacion, id_reserva))
         
+        #Actualizar reseña pendiente
+        cursor.execute("""
+                UPDATE reservas
+                SET resenia_pendiente = %s
+                WHERE id_reserva = %s;""",
+                (False, id_reserva))
+        
+        
+        # Actualizar promedio
+        cursor.execute("""
+            SELECT AVG(calificacion) AS promedio, COUNT(*) AS cantidad
+            FROM resenias
+            WHERE id_comercio = %s;""",
+            (id_comercio,))
+        resultado = cursor.fetchone()
+        nuevo_promedio = resultado["promedio"]
+        nueva_cantidad = resultado["cantidad"]
+
+        # Obtener promedio general
+        cursor.execute("""SELECT AVG(calificacion) AS promedio_general FROM resenias;""")
+        promedio_general = cursor.fetchone()["promedio_general"]
+
+        m = 20  # Mínimo de reseñas para que se considere confiable la calificación
+        v = nueva_cantidad
+        r = float(nuevo_promedio)
+        c = float(promedio_general)
+        
+        # Calcular el ranking ponderado
+        ranking_ponderado = (v / (v + m)) * r + (m / (v + m)) * c
+
+        # Actualizar tabla comercios
+        cursor.execute("""
+            UPDATE comercios
+            SET promedio_calificacion = %s,
+                cantidad_resenias = %s,
+                ranking_ponderado = %s
+            WHERE id_comercio = %s;""",
+            (nuevo_promedio, nueva_cantidad, ranking_ponderado, id_comercio))
         conn.commit()
     except Exception as e:
         print("Error al crear reseña:", e)
@@ -53,7 +92,7 @@ def get_all_review_com(id_comercio):
                 u.usuario
             FROM resenias r
             JOIN usuario_consumidor u ON r.id_usr = u.id_usr
-            WHERE id_comercio = %s
+            WHERE id_comercio = %s;
         """, (id_comercio,))
         all_reviews = cursor.fetchall()
 
@@ -86,7 +125,7 @@ def get_all_review_cons(id_usr):
                 c.nombre_comercio
             FROM resenias r
             JOIN comercios c ON r.id_comercio = c.id_comercio
-            WHERE r.id_usr = %s"""
+            WHERE r.id_usr = %s;"""
             , (id_usr,))
         all_reviews = cursor.fetchall()
 
