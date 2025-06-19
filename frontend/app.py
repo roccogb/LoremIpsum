@@ -181,7 +181,7 @@ def reservar():
         })
         if response.status_code == 201:
             flash("Reserva creada exitosamente", "success")
-            return redirect(url_for("manag_profiles")),200
+            return redirect(url_for("manag_perfiles")),200
         else:
             flash("Error al crear la reserva", "error")
             return redirect(url_for("home", id_comercio=id_comercio))
@@ -383,7 +383,7 @@ def register():
                                                   })
         if response.status_code == 200:
             flash("Se registro el usuario correctamente","message")
-            return redirect('/login')
+            return redirect(url_for('login'))
         flash(f"{response.json()["error"]}","warning")
     else:
         return render_template("register.html")

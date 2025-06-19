@@ -106,7 +106,7 @@
             <div class="row">
               <div class="col-lg-12">
                 <div id="map" style="height: 400px;">
-                  <p id="coordenadas_comercio">{{ comercios.latitud }};{{ comercios.longitud }}</p>
+                  <p id="coordenadas_comercio">{{ comercio.latitud }};{{ comercio.longitud }}</p>
                 </div>
               </div>
             </div>
@@ -128,7 +128,7 @@
                         {% if session.get('datos_usuario') and session.get('tipo_usuario') == 'consumidor' %}
                         <div class="reserva-form">
                           <form id="form-reserva" method="POST" action="{{ url_for('reservar') }}">
-                            <input type="hidden" name="id_comercio" value="{{ comercios['id_comercio'] }}">
+                            <input type="hidden" name="id_comercio" value="{{ comercio['id_comercio'] }}">
                             <div class="control-group">
                               <div class="input-group">
                                 <input name="nombre_bajo_reserva" type="text" class="form-control" placeholder="Titular de la reserva" required />
