@@ -167,7 +167,7 @@ def reservar():
         solicitud_especial = request.form.get("solicitud_especial", "")
 
         # Envía los datos al backend para crear la reserva.
-        response = requests.post(f"{API_BACK}/reserva/crear", json={
+        response = requests.post(f"{API_BACK}/reserva/agregar", json={
             "id_usr": session["datos_usuario"].get("id_usr"),
             "id_comercio": id_comercio,
             "nombre_bajo_reserva": nombre_bajo_reserva,
