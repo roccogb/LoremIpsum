@@ -1,12 +1,12 @@
 /* Script de JS encargado de la animación del cambio de fondo del template del login*/
 const div_fade=document.getElementById("bg-fade");               // El objeto 'div_fade' va a representar el elemento 'div' que me va a permitir realizar la animacion del fondo
 const list_img=[ 
-                    "../static/media/img/planetario.jpg",
-                    "../static/media/img/puente_palermo.jpg",
-                    "../static/media/img/puente_mujer.jpg", 
-                    "../static/media/img/caminito_boca_essi.jpeg",
-                    "../static/media/img/santelmo.jpg",
-                    "../static/media/img/obelisco_recortado.jpeg"
+                    "../static/img/planetario.jpg",
+                    "../static/img/puente_palermo.jpg",
+                    "../static/img/puente_mujer.jpg", 
+                    "../static/img/caminito_boca_essi.jpeg",
+                    "../static/img/santelmo.jpg",
+                    "../static/img/obelisco_recortado.jpeg"
                 ];
 
 

@@ -20,14 +20,9 @@ def get_comercios():
     return jsonify(comercios),200
 
 # Endpoint que va a retornar TODA la información de un comercio. La misma será retornada en formato JSON
-@comercios_bp.route("/get")
+@comercios_bp.route("/get", methods=["POST","GET"])
 def get_comercio():
     body_request=request.get_json()
-
-    parametros_validos=["id_comercio","nombre_comercio"]
-    for parametro in parametros_validos:
-        if parametro not in parametros_validos:
-            return jsonify({"ERROR":"Parámetros de busqueda inválidos"}),400
         
     conn=get_connection()
     cursor=conn.cursor(dictionary=True)
@@ -44,13 +39,11 @@ def get_comercio():
     else:
         return jsonify(comercio_encontrado),200
 
-# De momento, se va a poder filtrar solamente por un parámetro. Implementación a futuro: que se pueda a filtrar por mas de un parámetro
 # Endpoint que va a retornar información de la BDD de los comercios que cumplan con cierto patrón. Ej: 'retornar toda la información de los comercios con tipo de cocina china'
 # Va a recibir un archivo JSON con la información necesaria para filtrar     
 @comercios_bp.route("/filtrar")
 def get_comercios_filter():
     body_request = request.get_json()
-    
     condiciones_filtro = []
     ordenar_calificacion = False
 
@@ -75,12 +68,13 @@ def get_comercios_filter():
                 condiciones_filtro.append(f"{clave}='{valor}'")
 
     qsql_filtrar_comercio = "SELECT * FROM comercios"
-    
+
     if condiciones_filtro:
         qsql_filtrar_comercio += " WHERE " + " AND ".join(condiciones_filtro)
-    
+
     if ordenar_calificacion:
-        qsql_filtrar_comercio += f" ORDER BY calificacion {body_request["calificacion"].upper()}"
+        orden = body_request["calificacion"].upper() 
+        qsql_filtrar_comercio += f" ORDER BY ranking_ponderado {orden}"
 
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)

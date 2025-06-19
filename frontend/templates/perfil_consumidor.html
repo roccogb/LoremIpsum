@@ -23,14 +23,18 @@
                 <div class="list-reservas">
                     {% for reserva in reservas %}
                         <div class="info-reserva">
-                            <p>{{ reserva["nombre_comercio"] }} - {{ reserva["fecha_reserva"] }}
-                                {% if reserva["estado_reserva"] %}
-                                    <span class="estado-activa">Activa</span>
-                                {% else %}
-                                    <span class="estado-cancelada">Pendiente</span>
-                                {% endif %}
-                            </p>
-                            <a href="{{url_for('realizar_review', id_comercio=reserva['id_comercio'], id_reserva=reserva['id_reserva'])}}">Dejar reseña</a>
+                            <div class="reserva-header">
+                                <p>{{ reserva["nombre_comercio"] }} - {{ reserva["fecha_reserva"] }}
+                                    {% if reserva["estado_reserva"] %}
+                                        <span class="estado-activa">Confirmada</span>
+                                        {% if reserva["resenia_pendiente"] %}
+                                            <a href="{{url_for('realizar_review', id_comercio=reserva['id_comercio'], id_reserva=reserva['id_reserva'])}}" class="link-resenia">Dejar reseña</a>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="estado-pendiente">Pendiente</span>
+                                    {% endif %}
+                                </p>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
@@ -70,9 +74,15 @@
             <div class="list-favs">
                 {% if favoritos %}
                     {% for fav in favoritos %}
-                        <div class="info-fav">
-                            <img src="{{ url_for('static', filename=fav['ruta_imagen']) }}" width="50">
-                            <p>{{ fav["nombre_comercio"] }}</p>
+                        <div class="restaurant-link" data-url="{{url_for('resto', id_comercio=fav['id_comercio'])}}" onclick="handleCardClick(event,this)">
+                            <div class="info-fav">
+                                <img src="{{fav['ruta_imagen']}}" width="60" alt="{{ fav['nombre_comercio'] }}">
+                                <p class="restaurant-name-fav">{{ fav["nombre_comercio"] }}</p>
+                                <div class="rating-container">
+                                    <p class="rating-number">{{ fav["calificacion"] }}</p>
+                                    <span class="star-icon">★</span>
+                                </div>
+                            </div>
                         </div>
                     {% endfor %}
                 {% else %}

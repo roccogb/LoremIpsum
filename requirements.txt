@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 flask
 mysql-connector-python
 python-dotenv
@@ -5,4 +6,13 @@ pillow
 pymupdf
 qrcode
 requests
+=======
+flask
+mysql-connector-python
+python-dotenv
+pillow
+pymupdf
+qrcode
+requests
+>>>>>>> origin/implementacion-reservas
 geopy

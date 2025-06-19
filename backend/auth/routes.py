@@ -55,7 +55,11 @@ def auth_comercio():
             uc.email_usuario, uc.contrasena, uc.fecha_creacion,
             c.id_comercio, c.ruta_imagen, c.nombre_comercio, c.categoria,
             c.tipo_cocina, c.telefono, c.latitud, c.longitud, 
+<<<<<<< HEAD
             c.tiempo_de_creacion, c.pdf_menu_link, c.calificacion,
+=======
+            c.tiempo_de_creacion, c.pdf_menu_link, c.ranking_ponderado,
+>>>>>>> origin/implementacion-reservas
             c.dias, c.horarios, c.etiquetas
         FROM usuario_comercio uc
         LEFT JOIN comercios c ON uc.id_usr_comercio = c.id_usr_comercio

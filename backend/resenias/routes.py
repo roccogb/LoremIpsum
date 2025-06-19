@@ -21,15 +21,6 @@ def create_review():
     cursor = conn.cursor(dictionary=True)
 
     try:
-        # Verificar reserva válida y confirmada por asistencia.
-        cursor.execute (""" 
-            SELECT * FROM reservas WHERE id_reserva = %s 
-            AND id_usr = %s AND id_comercio = %s AND estado_reserva = 1 
-            """,(id_reserva, id_usr, id_comercio))
-        reserva_valida = cursor.fetchone()
-
-        if not reserva_valida:
-            return jsonify({"error": "Reserva no confirmada por asistencia"}), 403
 
         # Insertar reseña
         cursor.execute ("""
@@ -38,10 +29,46 @@ def create_review():
             VALUES 
             (%s, %s, %s, %s, NOW(), %s);
             """, (id_comercio, id_usr, comentario, calificacion, id_reserva))
-        conn.commit()
+        
+        #Actualizar reseña pendiente
+        cursor.execute("""
+                UPDATE reservas
+                SET resenia_pendiente = %s
+                WHERE id_reserva = %s;""",
+                (False, id_reserva))
+        
+        
+        # Actualizar promedio
+        cursor.execute("""
+            SELECT AVG(calificacion) AS promedio, COUNT(*) AS cantidad
+            FROM resenias
+            WHERE id_comercio = %s;""",
+            (id_comercio,))
+        resultado = cursor.fetchone()
+        nuevo_promedio = resultado["promedio"]
+        nueva_cantidad = resultado["cantidad"]
 
-        return jsonify({"msg": "Reseña creada con éxito."}), 201
-    
+        # Obtener promedio general
+        cursor.execute("""SELECT AVG(calificacion) AS promedio_general FROM resenias;""")
+        promedio_general = cursor.fetchone()["promedio_general"]
+
+        m = 20  # Mínimo de reseñas para que se considere confiable la calificación
+        v = nueva_cantidad
+        r = float(nuevo_promedio)
+        c = float(promedio_general)
+        
+        # Calcular el ranking ponderado
+        ranking_ponderado = (v / (v + m)) * r + (m / (v + m)) * c
+
+        # Actualizar tabla comercios
+        cursor.execute("""
+            UPDATE comercios
+            SET promedio_calificacion = %s,
+                cantidad_resenias = %s,
+                ranking_ponderado = %s
+            WHERE id_comercio = %s;""",
+            (nuevo_promedio, nueva_cantidad, ranking_ponderado, id_comercio))
+        conn.commit()
     except Exception as e:
         print("Error al crear reseña:", e)
         return jsonify({"error": "Error interno del servidor."}), 500
@@ -49,6 +76,7 @@ def create_review():
     finally:
         cursor.close()
         conn.close()
+        return jsonify({"msg": "Reseña creada con éxito."}), 201
 
 @review_bp.route("/com/<int:id_comercio>", methods=["GET"])
 def get_all_review_com(id_comercio):
@@ -64,7 +92,7 @@ def get_all_review_com(id_comercio):
                 u.usuario
             FROM resenias r
             JOIN usuario_consumidor u ON r.id_usr = u.id_usr
-            WHERE id_comercio = %s
+            WHERE id_comercio = %s;
         """, (id_comercio,))
         all_reviews = cursor.fetchall()
 
@@ -97,7 +125,7 @@ def get_all_review_cons(id_usr):
                 c.nombre_comercio
             FROM resenias r
             JOIN comercios c ON r.id_comercio = c.id_comercio
-            WHERE r.id_usr = %s"""
+            WHERE r.id_usr = %s;"""
             , (id_usr,))
         all_reviews = cursor.fetchall()
 

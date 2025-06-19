@@ -18,7 +18,7 @@ function updateRestauranteDisplay() {
     
     // Actualizar nombre y imagen de fondo
     tituloElement.textContent = currentComercio.nombre_comercio;
-    heroCard.style.backgroundImage = `url('static/${currentComercio.ruta_imagen}')`;
+    heroCard.style.backgroundImage = `url('${currentComercio.ruta_imagen}')`;
     
     // También puedes actualizar la imagen del logo si es necesario
     const logoImg = document.querySelector(".restaurant-info img");

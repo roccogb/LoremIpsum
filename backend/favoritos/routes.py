@@ -39,7 +39,7 @@ def listar_favoritos_con_detalle(id_usr):
     cursor = conn.cursor(dictionary=True)
 
     query = """
-        SELECT c.id_comercio, c.nombre_comercio, c.ruta_imagen, c.calificacion
+        SELECT c.id_comercio, c.nombre_comercio, c.ruta_imagen, c.ranking_ponderado
         FROM favoritos f
         LEFT JOIN comercios c ON f.id_comercio = c.id_comercio
         WHERE f.id_usr = %s 

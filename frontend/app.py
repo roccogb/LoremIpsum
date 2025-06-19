@@ -1,21 +1,29 @@
-from flask import Flask, request, render_template, redirect, session, url_for, flash, jsonify
+from flask import Flask, request, render_template, redirect, session, url_for, flash, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from fextra import transformar_dias_comercio, transformar_horarios_comercio, transformar_tags_comercio, transformar_tp_comercio, transform_coords_dir
 import requests
 import os
 
 app = Flask(__name__)
+app.config["UPLOAD_FOLDER"]="../backend/resources/uploads"
 app.secret_key = "contra_ids"  # Necesario para usar session y flash
 
-API_BACK = "http://127.0.0.1:8100"                                        # Dirección local del backend
-UPLOAD_FOLDER = os.path.join(os.getcwd(),'static','media', 'img')       # Carpeta donde van a ir todas las imagenes
+API_BACK = "http://0.0.0.0:8100"                                        # Dirección local del backend
+
+
+# Endpoint proxy que va a actuar de intermediario entre el front-end y el back-end permitiendo cargar las imagenes almacenadas en el back
+@app.route("/resources/uploads/<path:ruta_imagen>")
+def cargar_imagen(ruta_imagen):
+    if os.path.exists( os.path.join(app.config["UPLOAD_FOLDER"], ruta_imagen)):
+        return send_from_directory(app.config["UPLOAD_FOLDER"],ruta_imagen)
+    else:
+        return send_from_directory("frontend/static/img", "img_resto_defecto.jpg")
 
 # Pagina de inicio
 @app.route("/")
 def home():
-    response=requests.get(f"{API_BACK}/comercio/filtrar",json={"tipo_cocina":"null","categoria":"null","calificacion":"desc",
-                                                                         "horarios":[],"etiquetas":[],"dias":[]})
-    
+    response=requests.get(f"{API_BACK}/comercio/filtrar",json={"tipo_cocina":"null","categoria":"null","calificacion":"desc"})
+
     # Obtener favoritos del usuario si está logueado
     id_favoritos = []
     if "datos_usuario" in session and session["tipo_usuario"] == "consumidor":
@@ -64,7 +72,7 @@ def descubre(indice_pag):
     if request.method == "POST":
         tipo_cocina=request.form.get("tipo_cocina","null")
         categoria=request.form.get("categoria","null")
-        calificacion=request.form.get("orden_calificacion","null")
+        calificacion=request.form.get("orden_ranking","null")
         horarios=request.form.getlist("horarios[]")
         etiquetas=request.form.getlist("etiquetas[]")            
         dias=request.form.getlist("dias[]")
@@ -119,47 +127,47 @@ def resto(id_comercio):
     if response.status_code == 200:
         comercio_bdd = response.json()
 
-        comercio_bdd["dias"]=transformar_dias_comercio(comercio_bdd["dias"])
-        comercio_bdd["etiquetas"]=transformar_tags_comercio(comercio_bdd["etiquetas"])
-        comercio_bdd["categoria"]=comercio_bdd["categoria"].capitalize()
-        comercio_bdd["tipo_cocina"]=transformar_tp_comercio(comercio_bdd["tipo_cocina"])
-        comercio_bdd["horarios"]=transformar_horarios_comercio(comercio_bdd["horarios"])
+        dias_abiertos=transformar_dias_comercio(comercio_bdd["dias"])
+        etiquetas_comercio=transformar_tags_comercio(comercio_bdd["etiquetas"])
+        categoria_comercio=comercio_bdd["categoria"].capitalize()
+        tipo_cocina_comercio=transformar_tp_comercio(comercio_bdd["tipo_cocina"])
+        horarios_disponible=transformar_horarios_comercio(comercio_bdd["horarios"])
 
-        if type(comercio_bdd["calificacion"]) == float:
-            comercio_bdd["calificacion"]=round(comercio_bdd["calificacion"])
+        if type(comercio_bdd["ranking_ponderado"]) == float:
+            comercio_bdd["ranking_ponderado"]=round(comercio_bdd["ranking_ponderado"], 1) # El '1' redondea el float a un decimal (ej:4.2)
 
         response_resenias=requests.get(f"{API_BACK}/review/com/{id_comercio}")
 
         resenias_data=[]
         if response_resenias.status_code == 200:
             resenias_data=response_resenias.json()
-
-        return render_template("resto.html", comercios=comercio_bdd, resenias=resenias_data, id_favoritos=id_favoritos)
+        return render_template("resto.html", comercio=comercio_bdd, resenias=resenias_data, id_favoritos=id_favoritos,
+                                             dias=dias_abiertos, etiquetas=etiquetas_comercio,categoria=categoria_comercio,
+                                             tipo_cocina=tipo_cocina_comercio, horarios=horarios_disponible)
     else:
         # Redirigir al home. 
         flash("Comercio no encontrado")
         return redirect(url_for("home"))
 
 # Este endpoint le va a permitir al usuario, de tipo consumidor, realizar una reserva
-@app.route("/reservar", methods=["POST"])
+@app.route("/realizar_reserva", methods=["POST"])
 def reservar():
-    if not session.get("datos_usuario") or not session["datos_usuario"].get("email_usuario"):
-        flash("Debes iniciar sesión para reservar", "danger")
+    if "datos_usuario" not in session or session.get("tipo_usuario") != "consumidor":
+        flash("Solo los usuarios registrados que sean consumidores pueden realizar reservas.")
         return redirect(url_for("login"))
-
     else:
         # Recibe los datos del formulario de reserva.
-        id_comercio = id_comercio = session.get('id_comercio')
+        id_comercio = request.form.get("id_comercio")
         nombre_bajo_reserva = request.form.get("nombre_bajo_reserva")
         email = request.form.get("email")
         telefono = request.form.get("telefono")
         cant_personas = request.form.get("cant_personas")
         fecha_reserva = request.form.get("fecha_reserva")
-        #hora_reserva = request.form.get("hora_reserva")
+        hora_reserva = request.form.get("hora_reserva")
         solicitud_especial = request.form.get("solicitud_especial", "")
 
         # Envía los datos al backend para crear la reserva.
-        response = requests.post(f"{API_BACK}/reserva/agregar", json={
+        response = requests.post(f"{API_BACK}/reserva/crear", json={
             "id_usr": session["datos_usuario"].get("id_usr"),
             "id_comercio": id_comercio,
             "nombre_bajo_reserva": nombre_bajo_reserva,
@@ -168,15 +176,16 @@ def reservar():
             "cant_personas": cant_personas,
             "fecha_reserva": fecha_reserva,
             "solicitud_especial": solicitud_especial,
-            "estado_reserva": "0"
+            "estado_reserva": False,
+            "resenia_pendiente": True
         })
-
-        if response.status_code == 200:
+        if response.status_code == 201:
             flash("Reserva creada exitosamente", "success")
-        else  :{
-            flash("no anda")
-        }
-        return redirect(url_for("home", id_comercio=id_comercio))
+            return redirect(url_for("manag_profiles")),200
+        else:
+            flash("Error al crear la reserva", "error")
+            return redirect(url_for("home", id_comercio=id_comercio))
+        
 
 # Pagina de ayuda
 @app.route("/ayuda")
@@ -329,7 +338,6 @@ def register():
             nombre_comercio = form.get("name_bss")
             tel_comercio = form.get("tel_bss")
             dir_comercio = form.get("dir_bss")
-            print(dir_comercio)
             lkmenu_comercio = form.get("lkm_bss")
             categoria = form.get("categoria")
             tipo_cocina = form.get("tipo_cocina")
@@ -344,12 +352,12 @@ def register():
 
             imagen=request.files.get("img_local")
 
-            if not imagen or imagen.filename == "":
-                ruta_img="media/img/img_resto_defecto.jpg"
-            else:            
+            if not imagen or imagen.filename=="":
+                ruta_img=" "
+            else:
                 nombre_archivo_seguro=secure_filename(imagen.filename)
-                imagen.save( os.path.join(UPLOAD_FOLDER,nombre_archivo_seguro) )
-                ruta_img=f"media/img/{nombre_archivo_seguro}"
+                imagen.save( os.path.join(app.config["UPLOAD_FOLDER"],nombre_archivo_seguro))
+                ruta_img=f"/resources/uploads/comercios/{nombre_archivo_seguro}"
 
             if "0-24" in horarios:
                 horarios=["0-24"]
@@ -371,7 +379,7 @@ def register():
                                                 "cuit_responsable" : cuit_responsable,
                                                 "nombre_responsable" : nombre_responsable,
                                                 "contrasena_usr_comercio" : contrasena_usr_comercio,
-                                                "ruta_img" : ruta_img
+                                                "ruta_img":ruta_img
                                                   })
         if response.status_code == 200:
             flash("Se registro el usuario correctamente","message")
@@ -403,8 +411,7 @@ def click_fav(id_comercio):
             
     except requests.RequestException as e:
         return jsonify({"success": False, "error": "Error de conexión con el backend"}), 500
-
-    
+ 
 # Logout
 @app.route("/logout")
 def logout():
@@ -420,22 +427,37 @@ def logout():
 def realizar_review(id_comercio, id_reserva):
     if "datos_usuario" in session and session.get("tipo_usuario") == "consumidor":
         response_comercio=requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":id_comercio,"nombre_comercio":""})
-        if response_comercio.status_code == 200:
-            data_comercio=response_comercio.json()
-            if request.method == "GET":
-                return render_template("review.html", comercio=data_comercio, identificador_reserva=id_reserva)
-            else:
-                text_comentario=request.form.get("comentario")
-                calificacion_resto=request.form.get("calificacion")
+        response_reserva=requests.get(f"{API_BACK}/reserva/{id_reserva}")
 
-                response=requests.post(f"{API_BACK}/review/crear", json={"id_usr":session.get("id_usr"),"id_reserva":id_reserva,
-                                                                         "id_comercio":data_comercio["id_comercio"], 
-                                                                         "calificacion":calificacion_resto, "comentario":text_comentario})
-                if response.status_code == 200:
-                    flash("Reseña realizada con éxito","message")
-                    return redirect(url_for("home"))
+        if response_comercio.status_code == 200 and response_reserva.status_code == 200:
+            data_comercio=response_comercio.json()
+            data_reserva=response_reserva.json()
+
+            if data_reserva["estado_reserva"]:
+                if request.method == "GET":
+                    return render_template("review.html", comercio=data_comercio, identificador_reserva=id_reserva)
+                else:
+                    text_comentario=request.form.get("comentario")
+                    calificacion_resto=request.form.get("calificacion")
+
+                    response=requests.post(f"{API_BACK}/review/crear", json={
+                            "id_usr":session["datos_usuario"]["id_usr"],
+                            "id_reserva":id_reserva,
+                            "id_comercio":data_comercio["id_comercio"], 
+                            "calificacion":calificacion_resto, 
+                            "comentario":text_comentario
+                                                        })
+                    if response.status_code == 200:
+                        flash("Reseña realizada con éxito","message")
+                        return redirect(url_for("resto", id_comercio=data_comercio["id_comercio"]))
+                    else:
+                        flash("Error al guardar la reseña", "error")
+                        return redirect(url_for("resto", id_comercio=data_comercio["id_comercio"]))
+            else:
+                flash("No se puede realizar una reseña, estado de la reserva pendiente")
+                return redirect(url_for("manag_perfiles"))
         else:
-            return jsonify({"ERROR":"No se cargó la informacion del comercio"}),500
+            return jsonify({"ERROR":"Reserva o comercio inexistente"}),404
 
 if __name__ == "__main__":
     app.run(host="localhost", port=8200, debug=True)
