@@ -37,20 +37,6 @@ cursor.execute("""INSERT INTO comercios
 """)
 
 
-# ############### REGUSTROS DE PRUEBA PARA LA TABLA 'reservas'
-# cursor.execute("""INSERT INTO reservas
-#                   (id_reserva,id_usr,id_comercio,nombre_bajo_reserva,email,telefono,cant_personas,fecha_reserva,solicitud_especial,estado_reserva, resenia_pendiente,ruta_qr)
-#                   VALUES
-#                   ();
-#                """)
-
-# ############## REGISTROS DE PRUEBA PARA LA TABLA 'resenias'
-# cursor.execute("""INSERT INTO resenias
-#                   (id_comercio,id_usr,comentario,calificacion,tiempo_de_creacion, id_reserva)
-#                   VALUES
-#                   ;
-#                 """)
-
 conn.commit()                           # Guardo los cambios realizados en la BDD
 cursor.close()
 conn.close()
