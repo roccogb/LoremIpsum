@@ -18,7 +18,7 @@
             <h2 class="section-title">🏪 Mi comercio</h2>
             <div class="restaurant-card">
                 <div class="perfil-resto-img">
-                    <img src="{{ url_for('static', filename=datos_comercio['ruta_imagen'])}}" alt="Image-Comercio">
+                    <img src="{{datos_comercio['ruta_imagen']}}" alt="Image-Comercio">
                     <div class="restaurant-name">{{datos_comercio["nombre_comercio"]}}</div>
                     <div class="restaurant-rating">
                         <div class="rating-stars">★★★★☆</div>
@@ -74,11 +74,22 @@
                                 <p><strong>Fecha de la reserva:</strong> {{reserva["fecha_reserva"]}}</p>
                                 <p><strong>Estado de la reserva:</strong> 
                                     {% if reserva["estado_reserva"] %}
-                                        <span class="estado-cancelada">Cancelada</span>
+                                        <span class="estado-activa">Confirmada</span>
                                     {% else %}
-                                        <span class="estado-activa">Activa</span>
+                                        <span class="estado-pendiente">Pendiente</span>
                                     {% endif %}
                                 </p>
+                                <button class="qr-btn" onclick="openQRPopup('qrPopup{{loop.index}}')">📱 Código QR</button>
+                            </div>
+                            
+                            <!-- Popup único para cada reserva -->
+                            <div id="qrPopup{{loop.index}}" class="qr-popup">
+                                <div class="qr-popup-content">
+                                    <button class="qr-close" onclick="closeQRPopup('qrPopup{{loop.index}}')">&times;</button>
+                                    <h3>Código QR de la Reserva</h3>
+                                    <img src="{{reserva['ruta_qr']}}" alt="Código QR" style="display: block !important;">
+                                    <p>Escanea este código para confirmar la reserva</p>
+                                </div>
                             </div>
                         {% endfor %}
                     {% else %}
@@ -126,7 +137,9 @@
 
         </div>
     </div>
+
 {% endblock %}
+
 {% block scripts %}
     <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
 {% endblock %}

@@ -55,7 +55,7 @@ def auth_comercio():
             uc.email_usuario, uc.contrasena, uc.fecha_creacion,
             c.id_comercio, c.ruta_imagen, c.nombre_comercio, c.categoria,
             c.tipo_cocina, c.telefono, c.latitud, c.longitud, 
-            c.tiempo_de_creacion, c.pdf_menu_link, c.calificacion,
+            c.tiempo_de_creacion, c.pdf_menu_link, c.ranking_ponderado,
             c.dias, c.horarios, c.etiquetas
         FROM usuario_comercio uc
         LEFT JOIN comercios c ON uc.id_usr_comercio = c.id_usr_comercio
@@ -148,9 +148,9 @@ def register_comercio(data, cursor, conn):
     tel_comercio = data.get('tel_comercio', '0').strip()
 
     try:
-        lat,lng =  transform_dir_coords(data.get('dir_comercio', '').strip())
+        lat, lng = transform_dir_coords(data.get('dir_comercio', '').strip())
     except:
-        lat,lng=[0,0]
+        lat, lng = [0, 0]
         
     lkmenu_comercio = data.get('lkmenu_comercio', '').strip()
     categoria = data.get('categoria', '').strip()
@@ -163,8 +163,8 @@ def register_comercio(data, cursor, conn):
     
     if not all([nombre_responsable, dni_responsable, cuit_responsable, 
                 email_responsable, contrasena, nombre_comercio,
-                tel_comercio,lat,lng,lkmenu_comercio,
-                categoria,tipo_cocina,dias,horarios]):
+                tel_comercio, lat, lng, lkmenu_comercio,
+                categoria, tipo_cocina, dias, horarios]):
         return jsonify({"error": "Ocurrió un error al ingresar los datos"}), 400
 
     dni_int = int(dni_responsable)
@@ -172,7 +172,7 @@ def register_comercio(data, cursor, conn):
     telefono_int = int(tel_comercio)
     
     dias_str = str(dias)
-    horarios_str= str(horarios)
+    horarios_str = str(horarios)
     etiquetas_str = str(etiquetas)
     
     conn.start_transaction()
@@ -200,14 +200,34 @@ def register_comercio(data, cursor, conn):
     if cursor.fetchone():
         return jsonify({"error": "id_usr_comercio del comercio ya registrado"}), 409
     
+    # CORRECCIÓN: Agregué %s para ranking_ponderado y reorganicé los parámetros
     insert_comercio_query = """
         INSERT INTO comercios 
-        (id_usr_comercio, ruta_imagen, nombre_comercio, categoria, tipo_cocina,telefono, latitud, longitud, tiempo_de_creacion,pdf_menu_link, calificacion, dias, horarios, etiquetas) 
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        (id_usr_comercio, ruta_imagen, nombre_comercio, categoria, tipo_cocina, 
+         telefono, latitud, longitud, tiempo_de_creacion, pdf_menu_link, 
+         promedio_calificacion, cantidad_resenias, ranking_ponderado, 
+         dias, horarios, etiquetas) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
+    
+    # CORRECCIÓN: Agregué los valores faltantes y reorganicé el orden
     cursor.execute(insert_comercio_query, (
-        id_usr_comercio, ruta_img, nombre_comercio, categoria, tipo_cocina,
-        telefono_int,lat,lng,datetime.datetime.now(),lkmenu_comercio,0,dias_str, horarios_str, etiquetas_str
+        id_usr_comercio,           # id_usr_comercio
+        ruta_img,                  # ruta_imagen
+        nombre_comercio,           # nombre_comercio
+        categoria,                 # categoria
+        tipo_cocina,              # tipo_cocina
+        telefono_int,             # telefono
+        lat,                      # latitud
+        lng,                      # longitud
+        datetime.datetime.now(),   # tiempo_de_creacion
+        lkmenu_comercio,          # pdf_menu_link
+        0.0,                      # promedio_calificacion (valor por defecto)
+        0,                        # cantidad_resenias (valor por defecto)
+        0.0,                      # ranking_ponderado (valor por defecto)
+        dias_str,                 # dias
+        horarios_str,             # horarios
+        etiquetas_str             # etiquetas
     ))
     
     conn.commit()
