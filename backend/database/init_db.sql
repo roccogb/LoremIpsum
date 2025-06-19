@@ -31,7 +31,7 @@ CREATE TABLE usuario_consumidor (
 CREATE TABLE comercios (
     id_comercio INT PRIMARY KEY AUTO_INCREMENT,
     id_usr_comercio INT,
-    ruta_imagen VARCHAR(255), 
+    ruta_imagen VARCHAR(100), 
     nombre_comercio VARCHAR(100),
     categoria VARCHAR(50),
     tipo_cocina VARCHAR(100),
@@ -61,6 +61,7 @@ CREATE TABLE reservas (
     fecha_reserva DATETIME,
     solicitud_especial TEXT,
     estado_reserva BOOLEAN,             -- El estado de esta columna va a depender si el consumidor escanea un QR brindado por el comercio
+    ruta_qr VARCHAR(100),
     FOREIGN KEY (id_usr) REFERENCES usuario_consumidor(id_usr) ON DELETE CASCADE,
     FOREIGN KEY (id_comercio) REFERENCES comercios(id_comercio) ON DELETE CASCADE
 );

@@ -20,7 +20,7 @@ def get_comercios():
     return jsonify(comercios),200
 
 # Endpoint que va a retornar TODA la información de un comercio. La misma será retornada en formato JSON
-@comercios_bp.route("/get")
+@comercios_bp.route("/get", methods=["POST","GET"])
 def get_comercio():
     body_request=request.get_json()
         
@@ -37,12 +37,8 @@ def get_comercio():
     if not comercio_encontrado:
         return jsonify({"ERROR":"Comercio no encontrado"}),404
     else:
-        ruta_relativa=comercio_encontrado["ruta_imagen"]
-        host=request.host_url.rstrip("/")
-        comercio_encontrado["ruta_imagen"]=host+ruta_relativa
         return jsonify(comercio_encontrado),200
 
-# De momento, se va a poder filtrar solamente por un parámetro. Implementación a futuro: que se pueda a filtrar por mas de un parámetro
 # Endpoint que va a retornar información de la BDD de los comercios que cumplan con cierto patrón. Ej: 'retornar toda la información de los comercios con tipo de cocina china'
 # Va a recibir un archivo JSON con la información necesaria para filtrar     
 @comercios_bp.route("/filtrar")

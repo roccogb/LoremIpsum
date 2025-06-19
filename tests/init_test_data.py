@@ -30,27 +30,27 @@ cursor.execute("""INSERT INTO usuario_consumidor
 cursor.execute("""INSERT INTO comercios
                   (id_comercio, id_usr_comercio, ruta_imagen, nombre_comercio, categoria, tipo_cocina, telefono, latitud, longitud, tiempo_de_creacion, pdf_menu_link, calificacion, dias, horarios, etiquetas)
                   VALUES 
-                  (1, 59, '/resources/uploads/comercios/don_cafe.jpg', 'Don Café', 'especialidad', 'autor', 22113344, -34.6037, -58.3816, '2025-06-15 09:00:00', 'https://doncafe.menu', 4.7, "['lunes','martes','miércoles','jueves','viernes']", "['7-11','16-19']", "['wifi','sin_gluten','apto_mascotas']"),
+                  (1, 59, '/resources/uploads/comercios/don_cafe.jpg', 'Don Café', 'especialidad', 'autor', 22113344, -34.6037, -58.3816, '2025-06-15 09:00:00', 'https://doncafe.menu', 4.7, "['lunes','martes','miércoles','jueves','viernes']", "['7-11','16-18']", "['wifi','sin_gluten','apto_mascotas']"),
                   
                   (2, 60, '/resources/uploads/comercios/chimichurri_grill.jpg', 'Chimichurri Grill', 'familiar', 'clasica', 23004567, -34.6100, -58.4000, '2025-06-14 13:15:00', 'https://chimigrill.menu', 4.3, "['jueves','viernes','sábado','domingo']", "['12-15','19-23']", "['para_llevar','musica_vivo','zona_fumadores']"),
                   
-                  (3, 61, '/resources/uploads/comercios/veggie_vida.jpg', 'Veggie Vida', 'tematico', 'vegano', 22119988, -34.5800, -58.3700, '2025-06-13 10:45:00', 'https://veggievida.menu', 4.9, "['lunes','miércoles','viernes']", "['12-15','18-21']", "['vegano','sin_gluten','accesible']"),
+                  (3, 61, '/resources/uploads/comercios/veggie_vida.jpg', 'Veggie Vida', 'tematico', 'vegano', 22119988, -34.5800, -58.3700, '2025-06-13 10:45:00', 'https://veggievida.menu', 4.9, "['lunes','miércoles','viernes']", "['12-15','19-23']", "['vegano','sin_gluten','accesible']"),
                   
-                  (4, 62, '/resources/uploads/comercios/el_gourmet_oculto.jpg', 'El Gourmet Oculto', 'gourmet', 'alta_cocina', 23115678, -34.5933, -58.4100, '2025-06-12 20:00:00', 'https://gourmetoculto.link', 5.0, "['viernes','sábado']", "['20-00']", "['happy_hour','musica_vivo','wifi']"),
+                  (4, 62, '/resources/uploads/comercios/el_gourmet_oculto.jpg', 'El Gourmet Oculto', 'gourmet', 'alta_cocina', 23115678, -34.5933, -58.4100, '2025-06-12 20:00:00', 'https://gourmetoculto.link', 5.0, "['viernes','sábado']", "['23-5']", "['happy_hour','musica_vivo','wifi']"),
                   
-                  (5, 63, '/resources/uploads/comercios/pollo_frito_king.jpg', 'Pollo Frito King', 'comida_rapida', 'vanguardia', 29998877, -34.5990, -58.3820, '2025-06-16 11:30:00', 'https://pollofrito.menu', 3.9, "['lunes','martes','miércoles','jueves','viernes','sábado']", "['11-15','18-22']", "['delivery','para_llevar','wifi']");
+                  (5, 63, '/resources/uploads/comercios/pollo_frito_king.jpg', 'Pollo Frito King', 'comida_rapida', 'vanguardia', 29998877, -34.5990, -58.3820, '2025-06-16 11:30:00', 'https://pollofrito.menu', 3.9, "['lunes','martes','miércoles','jueves','viernes','sábado']", "['0-24']", "['delivery','para_llevar','wifi']");
 """)
 
 
 ############### REGUSTROS DE PRUEBA PARA LA TABLA 'reservas'
 cursor.execute("""INSERT INTO reservas
-                  (id_reserva,id_usr,id_comercio,nombre_bajo_reserva,email,telefono,cant_personas,fecha_reserva,solicitud_especial,estado_reserva)
+                  (id_reserva,id_usr,id_comercio,nombre_bajo_reserva,email,telefono,cant_personas,fecha_reserva,solicitud_especial,estado_reserva, ruta_qr)
                   VALUES
-                  (10, 6, 1, 'Carla Peterson','cpeterson@gmail.com',11554433, 2, '2025-06-08 21:30:50', 'Quiero poder comer todo el menu Sin Gluten', True),
-                  (15, 10, 2, 'German Beder', 'gerchosports@gmail.com', 15000999,3, '2025-06-01 20:30:50', 'Mesa mas alejada de la gente con sillita para niños, por favor.', True),
-                  (21, 9, 2, 'Ricardo Bochini', 'richard_el_diablo@gmail.com',11445566, 1, '2025-06-05 18:25:50', 'Una milanesa napolitana con el escudo de independiente', True),
-                  (22, 8, 3, 'Lucia Freitas', 'lufree@hotmail.com', 15400112, 5, '2025-06-06 11:15:20', 'Una mesa bastante grande, voy con mis facuamigos!!!', True),                                                      
-                  (34, 10, 5, 'German Beder','gerchosports@gmail.com',15000999, 5, '2025-06-12 20:15:00', 'Una mesa grande, se probarán las alas del rey.', True);
+                  (10, 6, 1, 'Carla Peterson','cpeterson@gmail.com',11554433, 2, '2025-06-08 21:30:50', 'Quiero poder comer todo el menu Sin Gluten', True, '/resources/uploads/temp/qr10.png'),
+                  (15, 10, 2, 'German Beder', 'gerchosports@gmail.com', 15000999,3, '2025-06-01 20:30:50', 'Mesa mas alejada de la gente con sillita para niños, por favor.', True, '/resources/uploads/temp/qr15.png'),
+                  (21, 9, 2, 'Ricardo Bochini', 'richard_el_diablo@gmail.com',11445566, 1, '2025-06-05 18:25:50', 'Una milanesa napolitana con el escudo de independiente', True, '/resources/uploads/temp/qr21.png'),
+                  (22, 8, 3, 'Lucia Freitas', 'lufree@hotmail.com', 15400112, 5, '2025-06-06 11:15:20', 'Una mesa bastante grande, voy con mis facuamigos!!!', True, '/resources/uploads/temp/qr22.png'),                                                      
+                  (34, 10, 5, 'German Beder','gerchosports@gmail.com',15000999, 5, '2025-06-12 20:15:00', 'Una mesa grande, se probarán las alas del rey.', True, '/resources/uploads/temp/qr34.png');
                """)
 
 ############## REGISTROS DE PRUEBA PARA LA TABLA 'resenias'

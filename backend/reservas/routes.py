@@ -75,40 +75,53 @@ def get_reserva(id_reserva):
     else:
         return jsonify(reserva_encontrada),200
 
-# Este endpoint va a agregar una nueva reserva a la BDD. El mismo va a recibir un archivo JSON con toda la informacion requerida para realizar la operación
+# Este endpoint va a agregar una nueva reserva bajo el ID de un usuario
 @reservas_bp.route("/agregar", methods=["POST"])
 def agregar_reserva():
-    body_request=request.get_json()
+    body_request = request.get_json()
 
-    claves_validas=["id_usr","id_comercio","nombre_bajo_reserva",
-                      "email","telefono","cant_personas",
-                      "fecha_reserva","solicitud_especial"]
+    claves_validas = ["id_usr", "id_comercio", "nombre_bajo_reserva",
+                      "email", "telefono", "cant_personas",
+                      "fecha_reserva", "solicitud_especial"]
+    
     for clave in claves_validas:
         if clave not in body_request:
-            return jsonify({"ERROR":f"Falta la clave '{clave}' en la petición"}),400
+            return jsonify({"ERROR": f"Falta la clave '{clave}' en la petición"}), 400
 
-    conn=get_connection()
-    cursor=conn.cursor()
+    conn = get_connection()
+    cursor = conn.cursor()
 
-    qsql_nueva_reserva=f""" INSERT INTO reservas 
-                            (id_reserva,id_usr,id_comercio,nombre_bajo_reserva,email,telefono,cant_personas,fecha_reserva,solicitud_especial,estado_reserva) 
-                            VALUES 
-                            (default,%s,%s,%s,%s,%s,%s,%s,%s,default);"""
+    qsql_nueva_reserva = """
+        INSERT INTO reservas 
+        (id_reserva,id_usr, id_comercio, nombre_bajo_reserva, email, telefono, cant_personas, fecha_reserva, solicitud_especial, estado_reserva) 
+        VALUES (default,%s,%s,%s,%s,%s,%s,%s,%s, default);
+    """
+
+    cursor.execute(qsql_nueva_reserva, (
+        body_request["id_usr"], body_request["id_comercio"], body_request["nombre_bajo_reserva"],
+        body_request["email"], body_request["telefono"], body_request["cant_personas"],
+        body_request["fecha_reserva"], body_request["solicitud_especial"]
+    ))
+
     
-    cursor.execute(qsql_nueva_reserva,(body_request["id_usr"],body_request["id_comercio"],body_request["nombre_bajo_reserva"],
-                                       body_request["email"],body_request["telefono"],body_request["cant_personas"],
-                                       body_request["fecha_reserva"],body_request["solicitud_especial"]))
+    QR_FOLDER = os.path.abspath("resources/uploads/temp")
+    ruta_absoluta_qr = os.path.join(QR_FOLDER, f"qr{cursor.lastrowid}.png")
 
-    conn.commit()                                           # Guardo los nuevos cambios realizados
+    ruta_relativa_qr = f"/resources/uploads/temp/qr{cursor.lastrowid}.png"
 
-    # Creo un código QR vinculado a la reserva en cuestión
-    # Es necesario que en la URL este la IP local asi cualquier dispositivo de la misma red puede acceder al servidor Flask utilizando esa dirección. Permitiendo asi, a un telefono conectado a la misma red, escanear el QR para confirmar la reserva
-    qr_reserva=qrcode.make(f"http://192.168.0.8:8100/reserva/estado/{cursor.lastrowid}")
-    qr_reserva.save(f"../frontend/static/media/img/qr_reserva{cursor.lastrowid}.png")
+    qr_url = f"http://192.168.0.8:8100/reserva/estado/{cursor.lastrowid}"
+    qr_img = qrcode.make(qr_url)
+    qr_img.save(ruta_absoluta_qr)
+    
 
+    qsql_update_qr = "UPDATE reservas SET ruta_qr = %s WHERE id_reserva = %s"
+    cursor.execute(qsql_update_qr, (ruta_relativa_qr, cursor.lastrowid))
+
+    conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"msg":"Reserva realizada con éxito"}),201
+
+    return jsonify({"msg": "Reserva realizada con éxito", "ruta_qr": ruta_relativa_qr}), 201
 
 # Este endpoint eliminará de la BDD una reserva
 # Se recibirá, a traves de la URI, un 'id' el cual permitirá identificar cual será el registro a eliminar

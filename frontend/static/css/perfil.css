@@ -345,6 +345,62 @@ body::before {
     transform: translateY(-1px);
 }
 
+.qr-popup {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.qr-popup.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.qr-popup-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+}
+
+.qr-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.qr-popup img {
+    width: 200px !important;
+    height: 200px !important;
+    display: block !important;
+    margin: 10px auto !important;
+    visibility: visible !important;
+}
+
+.qr-btn {
+    background-color: var(--mostaza);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
 /* Estilos específicos para favoritos */
 .info-fav {
     display: flex;

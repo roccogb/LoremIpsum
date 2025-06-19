@@ -5,25 +5,19 @@ import requests
 import os
 
 app = Flask(__name__)
-app.config["UPLOAD_FOLDER"]="../backend/resources/uploads/comercios/"
+app.config["UPLOAD_FOLDER"]="../backend/resources/uploads"
 app.secret_key = "contra_ids"  # Necesario para usar session y flash
 
 API_BACK = "http://0.0.0.0:8100"                                        # Dirección local del backend
 
 
-# Este endpoint va a retornar va a retornar una imagen almacenada en el backend.
-@app.route("/resources/uploads/comercios/<imagen>")
-def cargar_imagen(imagen):
-    nombre_imagen_seguro=secure_filename(imagen)
-    if os.path.exists( os.path.join(app.config["UPLOAD_FOLDER"], nombre_imagen_seguro)):
-        return send_from_directory(app.config["UPLOAD_FOLDER"],nombre_imagen_seguro)
+# Endpoint proxy que va a actuar de intermediario entre el front-end y el back-end permitiendo cargar las imagenes almacenadas en el back
+@app.route("/resources/uploads/<path:ruta_imagen>")
+def cargar_imagen(ruta_imagen):
+    if os.path.exists( os.path.join(app.config["UPLOAD_FOLDER"], ruta_imagen)):
+        return send_from_directory(app.config["UPLOAD_FOLDER"],ruta_imagen)
     else:
         return send_from_directory("frontend/static/img", "img_resto_defecto.jpg")
-
-# Este endpoint va a guardar una imagen subida por el usuario
-@app.route("/upload/<nombre_archivo>", methods=["POST"])
-def subir_imagen():
-    pass
 
 # Pagina de inicio
 @app.route("/")
@@ -149,7 +143,7 @@ def resto(id_comercio):
         resenias_data=[]
         if response_resenias.status_code == 200:
             resenias_data=response_resenias.json()
-
+        print(comercio_bdd['ruta_imagen'])
         return render_template("resto.html", comercio=comercio_bdd, resenias=resenias_data, id_favoritos=id_favoritos,
                                              dias=dias_abiertos, etiquetas=etiquetas_comercio,categoria=categoria_comercio,
                                              tipo_cocina=tipo_cocina_comercio, horarios=horarios_disponible)
@@ -315,8 +309,6 @@ def login():
             return redirect(url_for("login"))     
     return render_template("login.html")
 
-
-# FALTA SOLUCIONAR COMO SUBIR LA IMAGEN QUE SELECCIONA EL USUARIO
 # Cuando el usuario pulse el boton 'Subir imagen' envie una peticion a otro endpoint diferente que va a guardar la imagen y que en este solamente se grabe la ruta de la imagen
 # Registrar usuario
 @app.route('/register', methods=['GET', 'POST'])
@@ -357,7 +349,14 @@ def register():
             nombre_responsable = form.get("nr_bss")
             contrasena_usr_comercio = form.get("p_r_bss")
 
-            # Falta agregar la implementacion de subir la imagen
+            imagen=request.files.get("img_local")
+
+            if not imagen or imagen.filename=="":
+                ruta_img=" "
+            else:
+                nombre_archivo_seguro=secure_filename(imagen.filename)
+                imagen.save( os.path.join(app.config["UPLOAD_FOLDER"],nombre_archivo_seguro))
+                ruta_img=f"/resources/uploads/comercios/{nombre_archivo_seguro}"
 
             if "0-24" in horarios:
                 horarios=["0-24"]
@@ -378,7 +377,8 @@ def register():
                                                 "dni_responsable" : dni_responsable,
                                                 "cuit_responsable" : cuit_responsable,
                                                 "nombre_responsable" : nombre_responsable,
-                                                "contrasena_usr_comercio" : contrasena_usr_comercio
+                                                "contrasena_usr_comercio" : contrasena_usr_comercio,
+                                                "ruta_img":ruta_img
                                                   })
         if response.status_code == 200:
             flash("Se registro el usuario correctamente","message")
