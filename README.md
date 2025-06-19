@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Restaurante Reviews – Trabajo Practico Final FIUBA
 
 ## Descripción del proyecto
@@ -44,3 +45,6 @@ Este proyecto se desarrolla como trabajo práctico integrador, siguiendo una met
 - Rocco Grassano Barbieri
 - Santiago del Monaco
 - Nicolás Tamhazian
+=======
+# prueba
+>>>>>>> 6222d039e438f5c8c1ca53c68ea156630622f9bb

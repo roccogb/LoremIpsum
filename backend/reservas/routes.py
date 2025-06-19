@@ -93,7 +93,7 @@ def agregar_reserva():
     qsql_nueva_reserva=f""" INSERT INTO reservas 
                             (id_reserva,id_usr,id_comercio,nombre_bajo_reserva,email,telefono,cant_personas,fecha_reserva,solicitud_especial,estado_reserva) 
                             VALUES 
-                            (default,%s,%s,%s,%s,%s,%s,%s,%s,default);"""
+                            (default,%s,%s,%s,%s,%s,%s,%s,%s,0);"""
     
     cursor.execute(qsql_nueva_reserva,(body_request["id_usr"],body_request["id_comercio"],body_request["nombre_bajo_reserva"],
                                        body_request["email"],body_request["telefono"],body_request["cant_personas"],

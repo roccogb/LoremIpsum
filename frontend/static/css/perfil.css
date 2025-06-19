@@ -363,12 +363,12 @@ body::before {
 }
 
 .estado-cancelada {
-    color: var(--rojo-cancelado);
+    color: var(--mostaza);
     font-weight: 700;
     background: rgba(244, 67, 54, 0.1);
     padding: 4px 12px;
     border-radius: 20px;
-    border: 1px solid var(--rojo-cancelado);
+    border: 1px solid var(--mostaza);
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;

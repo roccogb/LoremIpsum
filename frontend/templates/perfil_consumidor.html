@@ -27,7 +27,7 @@
                                 {% if reserva["estado_reserva"] %}
                                     <span class="estado-activa">Activa</span>
                                 {% else %}
-                                    <span class="estado-cancelada">Cancelada</span>
+                                    <span class="estado-cancelada">Pendiente</span>
                                 {% endif %}
                             </p>
                             <a href="{{url_for('realizar_review', id_comercio=reserva['id_comercio'], id_reserva=reserva['id_reserva'])}}">Dejar reseña</a>

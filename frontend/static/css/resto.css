@@ -1,0 +1,94 @@
+
+    .alert-container {
+        margin-bottom: 20px;
+    }
+    
+    .heart-btn {
+        background: none;
+        border: none;
+        font-size: 1.2em;
+        cursor: pointer;
+        color: #ccc;
+        transition: color 0.3s ease;
+    }
+    
+    .heart-btn.active {
+        color: #e74c3c;
+    }
+    
+    .heart-btn:hover {
+        color: #e74c3c;
+    }
+    
+    .tag {
+        display: inline-block;
+        background: #D4AF37;
+        border: 1px solid #dee2e6;
+        border-radius: 15px;
+        padding: 5px 10px;
+        margin: 2px;
+        font-size: 0.8em;
+    }
+    
+    .restaurant-info li {
+        margin-bottom: 8px;
+    }
+    
+    .dias-section, .horarios-section {
+        margin-top: 5px;
+    }
+    
+    .dia-item, .horario-item {
+        display: inline-block;
+        background: #D4AF37;
+        padding: 2px 8px;
+        margin: 2px;
+        border-radius: 10px;
+        font-size: 0.9em;
+    }
+    
+    .review-item {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        background: #800020;
+    }
+    
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .rating {
+        margin-top: 5px;
+    }
+    
+    .login-required {
+        text-align: center;
+        padding: 30px;
+    }
+    
+    .custom-btn {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+        padding: 10px 30px;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    
+    .custom-btn:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+        transform: translateY(-1px);
+    }
+    
+    .no-reviews {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+    }

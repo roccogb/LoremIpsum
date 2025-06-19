@@ -100,7 +100,7 @@ def resto(id_comercio):
     #Petición al backend para obtener los detalles del comercio.
     if id_comercio <= 0:
         return redirect(url_for("home"))
-    session['id_comercio'] = id_comercio
+    
     # Obtener favoritos del usuario si está logueado
     id_favoritos = []
     if "datos_usuario" in session and session["tipo_usuario"] == "consumidor":
@@ -143,13 +143,12 @@ def resto(id_comercio):
 # Este endpoint le va a permitir al usuario, de tipo consumidor, realizar una reserva
 @app.route("/reservar", methods=["POST"])
 def reservar():
-    if not session.get("datos_usuario") or not session["datos_usuario"].get("email_usuario"):
-        flash("Debes iniciar sesión para reservar", "danger")
+    if "email" not in session:
+        flash("Debes iniciar sesión para reservar")
         return redirect(url_for("login"))
-
     else:
         # Recibe los datos del formulario de reserva.
-        id_comercio = id_comercio = session.get('id_comercio')
+        id_comercio = request.form.get("id_comercio")
         nombre_bajo_reserva = request.form.get("nombre_bajo_reserva")
         email = request.form.get("email")
         telefono = request.form.get("telefono")
@@ -159,8 +158,8 @@ def reservar():
         solicitud_especial = request.form.get("solicitud_especial", "")
 
         # Envía los datos al backend para crear la reserva.
-        response = requests.post(f"{API_BACK}/reserva/agregar", json={
-            "id_usr": session["datos_usuario"].get("id_usr"),
+        response = requests.post(f"{API_BACK}/reserva/crear", json={
+            "id_usr": session.get("id_usr"),
             "id_comercio": id_comercio,
             "nombre_bajo_reserva": nombre_bajo_reserva,
             "email": email,
@@ -168,15 +167,11 @@ def reservar():
             "cant_personas": cant_personas,
             "fecha_reserva": fecha_reserva,
             "solicitud_especial": solicitud_especial,
-            "estado_reserva": "0"
+            "estado_reserva": False
         })
 
         if response.status_code == 200:
             flash("Reserva creada exitosamente", "success")
-        else  :{
-            flash("no anda")
-        }
-        return redirect(url_for("home", id_comercio=id_comercio))
 
 # Pagina de ayuda
 @app.route("/ayuda")
