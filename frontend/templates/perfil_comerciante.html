@@ -21,15 +21,15 @@
                     <img src="{{datos_comercio['ruta_imagen']}}" alt="Image-Comercio">
                     <div class="restaurant-name">{{datos_comercio["nombre_comercio"]}}</div>
                     <div class="restaurant-rating">
-                        <div class="rating-stars">★★★★☆</div>
-                        <div class="rating-number">4.0</div>
+                        <div class="rating-stars">★</div>
+                        <div class="rating-number">{{datos_comercio["ranking_ponderado"]}}</div>
                     </div>
                 </div>
                 <div class="perfil-resto-info">
                     <p><strong>Categoría:</strong> {{datos_comercio["categoria"]}}</p>
                     <p><strong>Tipo de cocina:</strong> {{datos_comercio["tipo_cocina"]}}</p>
                     <p><strong>Teléfono:</strong> {{datos_comercio["telefono"]}}</p>
-                    <p><strong>Ubicación:</strong> {{ubicacion}}</p>
+                    <p><strong>Ubicación:</strong> {{datos_comercio["direccion"]}}</p>
                     <p><strong>Días:</strong> 
                         {% if datos_comercio.dias %}
                             {% for dia in datos_comercio["dias"] %}

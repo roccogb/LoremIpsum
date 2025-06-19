@@ -110,7 +110,7 @@ def agregar_reserva():
 
     ruta_relativa_qr = f"/resources/uploads/temp/qr{cursor.lastrowid}.png"
 
-    qr_url = f"http://192.168.0.8:8100/reserva/estado/{cursor.lastrowid}"
+    qr_url = f"http://192.168.1.35:8200/qrproxy/{cursor.lastrowid}"         # Acá coloquen la segunda ip del front.
     qr_img = qrcode.make(qr_url)
     qr_img.save(ruta_absoluta_qr)
     
@@ -186,7 +186,7 @@ def editar_reserva():
 # Implementación a futuro.
 #   Luego de pasado un determinado tiempo, el estado de la reserva será 'False'
 #   Realizar algun tipo de animación con el front o algo por el estilo para mostrar que la reserva se confirmo
-@reservas_bp.route("/estado/<int:id_reserva>")
+@reservas_bp.route("/estado/<int:id_reserva>", methods=["PUT"])
 def modificar_estado(id_reserva):
     conn=get_connection()
     cursor=conn.cursor(dictionary=True)

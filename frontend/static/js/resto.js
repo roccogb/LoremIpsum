@@ -1,214 +1,83 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Obtener los datos de horarios del comercio desde el HTML
-    const diasElement = document.querySelector('.dias-section');
-    const horariosElement = document.querySelectorAll('.dias-section')[1]; // El segundo elemento con clase dias-section
-    
-    let diasFuncionamiento = [];
-    let horariosFuncionamiento = [];
-    
-    if (diasElement) {
-        const diasItems = diasElement.querySelectorAll('.dia-item');
-        diasFuncionamiento = Array.from(diasItems).map(item => item.textContent.trim().toLowerCase());
-    }
-    
-    if (horariosElement) {
-        const horariosItems = horariosElement.querySelectorAll('.dia-item');
-        horariosFuncionamiento = Array.from(horariosItems).map(item => item.textContent.trim());
-    }
-    
-    console.log('Días de funcionamiento:', diasFuncionamiento);
-    console.log('Horarios de funcionamiento:', horariosFuncionamiento);
-    
-    // Mapeo de días en español a números (0 = domingo, 1 = lunes, etc.)
-    const diasSemana = {
-        'domingo': 0,
-        'lunes': 1, 
-        'martes': 2,
-        'miércoles': 3,
-        'miercoles': 3, // Sin tilde también
-        'jueves': 4,
-        'viernes': 5,
-        'sábado': 6,
-        'sabado': 6 // Sin tilde también
-    };
-    
-    // Función para parsear horarios (ej: "12:00-15:00" o "12:00 - 15:00")
-    function parsearHorario(horarioStr) {
-        const horarioLimpio = horarioStr.replace(/\s/g, ''); // Quitar espacios
-        const partes = horarioLimpio.split('-');
-        if (partes.length !== 2) return null;
-        
-        const horaInicio = partes[0];
-        const horaFin = partes[1];
-        
-        return {
-            inicio: horaInicio,
-            fin: horaFin
-        };
-    }
-    
-    // Función para convertir hora string a minutos del día
-    function horaAMinutos(horaStr) {
-        const [horas, minutos] = horaStr.split(':').map(Number);
-        return horas * 60 + minutos;
-    }
-    
-    // Función para validar si una fecha/hora está dentro de los horarios de funcionamiento
-    function validarFechaHora(fechaHora) {
-        const fecha = new Date(fechaHora);
-        const diaSemana = fecha.getDay();
-        const horaMinutos = fecha.getHours() * 60 + fecha.getMinutes();
-        
-        // Verificar si el día está en los días de funcionamiento
-        const nombreDia = Object.keys(diasSemana).find(dia => diasSemana[dia] === diaSemana);
-        if (!diasFuncionamiento.includes(nombreDia)) {
-            return {
-                valido: false,
-                mensaje: `El comercio no atiende los ${nombreDia}s`
-            };
+        // Establecer fecha y hora mínima para el input datetime-local
+        const fechaHoraInput = document.querySelector('input[name="fecha_reserva"]');
+        if (fechaHoraInput) {
+            const ahora = new Date();
+            const fechaMinima = new Date(ahora.getTime() - ahora.getTimezoneOffset() * 60000);
+            fechaHoraInput.min = fechaMinima.toISOString().slice(0, 16);
         }
-        
-        // Verificar si la hora está dentro de los horarios de funcionamiento
-        let dentroDeHorario = false;
-        let mensajeHorario = '';
-        
-        for (let horario of horariosFuncionamiento) {
-            const horarioParsed = parsearHorario(horario);
-            if (horarioParsed) {
-                const inicioMinutos = horaAMinutos(horarioParsed.inicio);
-                const finMinutos = horaAMinutos(horarioParsed.fin);
-                
-                if (horaMinutos >= inicioMinutos && horaMinutos <= finMinutos) {
-                    dentroDeHorario = true;
-                    break;
-                }
-                
-                if (!mensajeHorario) {
-                    mensajeHorario = `Horarios disponibles: ${horariosFuncionamiento.join(', ')}`;
-                }
-            }
-        }
-        
-        if (!dentroDeHorario) {
-            return {
-                valido: false,
-                mensaje: `La hora seleccionada está fuera del horario de atención. ${mensajeHorario}`
-            };
-        }
-        
-        return { valido: true };
-    }
-    
-    // Establecer fecha y hora mínima para el input datetime-local
-    const fechaHoraInput = document.querySelector('input[name="fecha_reserva"]');
-    if (fechaHoraInput) {
-        const ahora = new Date();
-        const fechaMinima = new Date(ahora.getTime() - ahora.getTimezoneOffset() * 60000);
-        fechaHoraInput.min = fechaMinima.toISOString().slice(0, 16);
-        
-        // Agregar validación en tiempo real cuando el usuario selecciona fecha/hora
-        fechaHoraInput.addEventListener('change', function() {
-            const fechaSeleccionada = this.value;
-            if (fechaSeleccionada) {
-                const validacion = validarFechaHora(fechaSeleccionada);
-                
-                // Remover mensaje de error previo
-                const errorPrevio = document.querySelector('.horario-error');
-                if (errorPrevio) {
-                    errorPrevio.remove();
-                }
-                
-                if (!validacion.valido) {
-                    // Mostrar mensaje de error
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'horario-error alert alert-warning mt-2';
-                    errorDiv.textContent = validacion.mensaje;
-                    this.parentNode.parentNode.appendChild(errorDiv);
-                    
-                    // Limpiar el input
-                    this.value = '';
-                }
-            }
-        });
-    }
 
-    // Manejar botón de favoritos
-    const heartBtn = document.querySelector('.heart-btn');
-    if (heartBtn) {
-        heartBtn.addEventListener('click', function() {
-            const comercioId = this.getAttribute('data-id');
-            const isActive = this.classList.contains('active');
-            
-            // Hacer petición AJAX para agregar/quitar favorito
-            fetch('/toggle_favorito', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id_comercio: comercioId
+        // Manejar botón de favoritos
+        const heartBtn = document.querySelector('.heart-btn');
+        if (heartBtn) {
+            heartBtn.addEventListener('click', function() {
+                const comercioId = this.getAttribute('data-id');
+                const isActive = this.classList.contains('active');
+                
+                // Hacer petición AJAX para agregar/quitar favorito
+                fetch('/toggle_favorito', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id_comercio: comercioId
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Alternar clase active y símbolo
-                    if (isActive) {
-                        this.classList.remove('active');
-                        this.innerHTML = '♡';
-                    } else {
-                        this.classList.add('active');
-                        this.innerHTML = '♥';
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Alternar clase active y símbolo
+                        if (isActive) {
+                            this.classList.remove('active');
+                            this.innerHTML = '♡';
+                        } else {
+                            this.classList.add('active');
+                            this.innerHTML = '♥';
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        }
+
+        // Validación de formulario de reserva adaptada para datetime-local
+        const formReserva = document.getElementById('form-reserva');
+        if (formReserva) {
+            formReserva.addEventListener('submit', function(e) {
+                const fechaHoraInput = document.querySelector('input[name="fecha_reserva"]');
+                
+                if (fechaHoraInput) {
+                    const fechaHoraSeleccionada = new Date(fechaHoraInput.value);
+                    const ahora = new Date();
+                    
+                    if (fechaHoraSeleccionada <= ahora) {
+                        e.preventDefault();
+                        alert('La fecha y hora de la reserva debe ser futura.');
+                        return false;
                     }
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
             });
-        });
-    }
+        }
 
-    // Validación de formulario de reserva mejorada
-    const formReserva = document.getElementById('form-reserva');
-    if (formReserva) {
-        formReserva.addEventListener('submit', function(e) {
-            const fechaHoraInput = document.querySelector('input[name="fecha_reserva"]');
-            
-            if (fechaHoraInput && fechaHoraInput.value) {
-                const fechaHoraSeleccionada = new Date(fechaHoraInput.value);
-                const ahora = new Date();
-                
-                // Verificar que la fecha sea futura
-                if (fechaHoraSeleccionada <= ahora) {
-                    e.preventDefault();
-                    alert('La fecha y hora de la reserva debe ser futura.');
-                    return false;
+        // Auto-cerrar alertas después de 5 segundos
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                const closeButton = alert.querySelector('.close');
+                if (closeButton) {
+                    closeButton.click();
                 }
-                
-                // Verificar horarios de funcionamiento
-                const validacion = validarFechaHora(fechaHoraInput.value);
-                if (!validacion.valido) {
-                    e.preventDefault();
-                    alert(validacion.mensaje);
-                    return false;
-                }
-            }
-        });
-    }
+            });
+        }, 5000);
+    });
 
-    // Auto-cerrar alertas después de 5 segundos
-    setTimeout(function() {
-        const alerts = document.querySelectorAll('.alert');
-        alerts.forEach(function(alert) {
-            const closeButton = alert.querySelector('.close');
-            if (closeButton) {
-                closeButton.click();
-            }
-        });
-    }, 5000);
-});
 
-// Código del mapa (mantener separado para claridad)
+    
+
+
 document.addEventListener('DOMContentLoaded', function () {
     // Obtener las coordenadas del elemento HTML
     const coordElement = document.getElementById('coordenadas_comercio');
@@ -229,4 +98,87 @@ document.addEventListener('DOMContentLoaded', function () {
             .bindPopup('Ubicación del comercio')
             .openPopup();
     }
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Leer días y horarios desde data-attributes
+  const datos = document.getElementById('datos-comercio');
+  const diasRaw = datos.getAttribute('data-dias');         // ej: "jueves,viernes,sabado,domingo"
+  const horariosRaw = datos.getAttribute('data-horarios'); // ej: "Cena(19:00-23:00)"
+
+  const diasPermitidos = diasRaw ? diasRaw.split(',') : [];
+  const horariosPermitidos = horariosRaw ? horariosRaw.split(',') : [];
+
+  const fechaInput = document.getElementById('fecha_reserva');
+  const form = document.getElementById('form-reserva');
+
+  const diasSemana = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sabado'];
+
+  // Verifica si el día es permitido
+  function esDiaPermitido(fecha) {
+    const nombreDia = diasSemana[fecha.getDay()];
+    return diasPermitidos.includes(nombreDia);
+  }
+
+  // Verifica si la hora está dentro de alguno de los rangos permitidos
+  function esHoraPermitida(fecha) {
+    const hora = fecha.getHours();
+    const minutos = fecha.getMinutes();
+
+    for (const horario of horariosPermitidos) {
+      // Extraer rango hora en formato (HH:mm-HH:mm)
+      const match = horario.match(/\((\d{2}:\d{2})-(\d{2}:\d{2})\)/);
+      if (match) {
+        const [_, inicio, fin] = match;
+        const [hIni, mIni] = inicio.split(':').map(Number);
+        const [hFin, mFin] = fin.split(':').map(Number);
+
+        const minutosTotales = hora * 60 + minutos;
+        const inicioMin = hIni * 60 + mIni;
+        const finMin = hFin * 60 + mFin;
+
+        if (minutosTotales >= inicioMin && minutosTotales <= finMin) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  flatpickr(fechaInput, {
+  enableTime: true,
+  time_24hr: true,
+  dateFormat: "Y-m-d H:i",
+  minDate: "today",
+  disable: [
+    function(date) {
+      return !esDiaPermitido(date);
+    }
+  ],
+  onClose: function(selectedDates, dateStr, instance) {
+    if (!selectedDates.length) return;
+
+    const selected = selectedDates[0];
+    if (!esHoraPermitida(selected)) {
+      alert("Ese horario no está disponible. Por favor, elige otro.");
+      instance.clear();
+    }
+  }
+});
+
+  // Validación al enviar formulario
+  form.addEventListener('submit', function(e) {
+    const fecha = new Date(fechaInput.value);
+    if (!esDiaPermitido(fecha)) {
+      e.preventDefault();
+      alert('La fecha seleccionada no corresponde a un día habilitado.');
+      return;
+    }
+    if (!esHoraPermitida(fecha)) {
+      e.preventDefault();
+      alert('La hora seleccionada está fuera del horario permitido.');
+      return;
+    }
+  });
 });

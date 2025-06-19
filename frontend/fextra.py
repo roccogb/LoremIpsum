@@ -3,10 +3,15 @@ from geopy.geocoders import Nominatim
 
 # Funciones auxiliares que van a transformar los datos de la BDD para que sean visibles en el front
 def transformar_horarios_comercio(str_list_horarios):
-    horarios_visibles={"7-11":"Desayuno(7:00-11:00)","12-15":"Almuerzo(12:00-15:00)",
-            "16-18":"Merienda(16:00-18:00)","19-23":"Cena(19:00-23:00)",
-            "23-5":"Nocturno(23:00-05:00)","0-24":"24h"}
-    list_horarios=[ horarios_visibles[hor] for hor in literal_eval(str_list_horarios)]
+    horarios_visibles = {
+        "7-11": "Desayuno(7:00-11:00)",
+        "12-15": "Almuerzo(12:00-15:00)",
+        "16-18": "Merienda(16:00-18:00)",
+        "19-23": "Cena(19:00-23:00)",
+        "23-5": "Nocturno(23:00-05:00)",
+        "0-24": "24h"
+    }
+    list_horarios = [horarios_visibles.get(hor, hor) for hor in literal_eval(str_list_horarios)]
     return list_horarios
 
 def transformar_tags_comercio(str_list_tags):

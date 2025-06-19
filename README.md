@@ -1,46 +1,60 @@
-# Restaurante Reviews – Trabajo Practico Final FIUBA
+# FoodyBA – Trabajo Práctico Final FIUBA
 
 ## Descripción del proyecto
 
-**Restaurante Reviews** es una aplicación web donde los usuarios podran buscar restaurantes, consultar reseñas realizadas por otros y dejar sus propias opiniones y calificaciones. La plataforma está pensada para ser intuitiva y funcional, permitiendo a cualquier usuario encontrar lugares para comer segun criterios como tipo de comida, ubicacion o calificacion.
+**FoodyBA** es una aplicación web donde los usuarios podrán buscar restaurantes, consultar reseñas realizadas por otros y dejar sus propias opiniones y calificaciones. La plataforma está pensada para ser intuitiva y funcional, permitiendo a cualquier usuario encontrar lugares para comer según criterios como tipo de comida, ubicación o calificación.
 
-Este proyecto se desarrolla como trabajo práctico integrador, siguiendo una metodología ágil basada en tareas asignadas en un tablero Kanban, control de versiones con GitHub y entregas progresivas que generen valor funcional.
+Además, ofrece herramientas a los comerciantes para administrar su restaurante, recibir reservas y acceder a estadísticas útiles, mejorando su visibilidad y conexión con potenciales clientes.
+
+Este proyecto se desarrolla como trabajo práctico integrador de la materia **Introducción al Desarrollo de Software (FIUBA)**, siguiendo una metodología ágil basada en tareas asignadas en un tablero Kanban, control de versiones con GitHub y entregas progresivas que generen valor funcional.
 
 ---
 
 ## Objetivos del proyecto
 
-- Brindar a los usuarios una herramienta para descubrir y calificar restaurantes.
-- Fomentar la interaccion entre usuarios a traves de reseñas.
-- Aplicar conocimientos adquiridos en el curso (backend, frontend, base de datos, trabajo en equipo).
-- Presentar un proyecto funcional, organizado y bien documentado.
+* Brindar a los usuarios una herramienta para descubrir y calificar restaurantes.
+* Fomentar la interacción entre usuarios a través de reseñas y reservas.
+* Facilitar a los comercios la gestión online de su presencia gastronómica.
+* Aplicar conocimientos adquiridos en el curso (backend, frontend, base de datos, trabajo en equipo).
+* Presentar un proyecto funcional, organizado y bien documentado.
 
 ---
 
-## Progreso hasta el momento
+## Progreso final del proyecto
 
-- ✅ Proyecto definido: plataforma de reseñas de restaurantes
-- ✅ Mockup visual del sitio web (pantallas principales)
-- ✅ Backlog de producto completo, cargado en Trello con IDs y fechas
-- ✅ Repositorio creado y compartido con todos los integrantes
+* ✅ Proyecto definido y planificado
+* ✅ Mockup visual completo
+* ✅ Backlog en Trello con tareas divididas por integrante
+* ✅ Rutas de autenticación para consumidores y comercios
+* ✅ Sistema de reservas con validación por día y horario
+* ✅ Perfiles diferenciados para cada tipo de usuario
+* ✅ Reseñas con sistema de calificación y comentarios
+* ✅ Sistema de favoritos funcional
+* ✅ Filtros de búsqueda por cocina, etiquetas, días, horarios y calificación
+* ✅ Mapa integrado para visualizar ubicación de restaurantes
+* ✅ Documentación técnica completa
+* ✅ Testing y verificación de funcionalidades
 
 ---
 
-## Herramientas planificadas
+## Herramientas utilizadas
 
-- **Backend**: Flask (Python)
-- **Base de datos**: MySQL
-- **Frontend**: HTML/CSS, Jinja (a través de Flask)
-- **Control de versiones**: GitHub
-- **Organización del trabajo**: Trello (Kanban)
+* **Backend**: Flask (Python)
+* **Base de datos**: MySQL
+* **Frontend**: HTML, CSS, Jinja, JavaScript
+* **Mapas**: Leaflet.js
+* **Control de versiones**: GitHub
+* **Organización del trabajo**: Trello (Kanban)
 
 ---
 
 ## Integrantes del equipo
 
-- Lucio Osvaldo Frete 
-- Kennia Vázquez Gamarra  
-- Matias Ariel Sapienza
-- Rocco Grassano Barbieri
-- Santiago del Monaco
-- Nicolás Tamhazian
+* Lucio Osvaldo Frete
+* Kennia Vázquez Gamarra
+* Matías Ariel Sapienza
+* Rocco Grassano Barbieri
+* Santiago del Monaco
+* Nicolás Tamhazian
+
+---

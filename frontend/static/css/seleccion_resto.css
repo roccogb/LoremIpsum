@@ -33,6 +33,7 @@ body {
   font-weight: bold;
   color:#ffffff;
   text-align: center;
+  justify-content: center;
 }
 
 /* ===== BOTÓN DE CORAZÓN ===== */
@@ -58,7 +59,7 @@ body {
 
 .heart-btn:hover {
   color: #800020;
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
 .heart-btn.active {
@@ -153,6 +154,7 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .main-border-button a {

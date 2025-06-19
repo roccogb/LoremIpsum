@@ -19,6 +19,23 @@ def cargar_imagen(ruta_imagen):
     else:
         return send_from_directory("frontend/static/img", "img_resto_defecto.jpg")
 
+# Endpoint proxy que va a actuar de intermediario entre el usuario, al escanear el QR, y el endpoint del back que va a modificar el estado de la reserva
+@app.route("/qrproxy/<int:id_reserva>")
+def confirmar_reserva(id_reserva):
+    try:
+        response_estado=requests.put(f"{API_BACK}/reserva/estado/{id_reserva}")
+        response_reserva=requests.get(f"{API_BACK}/reserva/{id_reserva}")
+        if response_estado.status_code == 200 and response_reserva.status_code == 200:
+            reserva_data=response_reserva.json()
+            response_comercio=requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":reserva_data.get("id_comercio"),"nombre_comercio":""})
+            return render_template("reserva_confirmada.html", reserva_info=reserva_data, comercio_info=response_comercio.json())
+        else:
+            flash("Reserva no encontrada o ya cancelada.", "error")
+    except Exception as e:
+        flash("Error al escanear la reserva, porfavor vuelva a intentarlo nuevamente","error")
+
+    return redirect(url_for("manag_perfiles"))
+
 # Pagina de inicio
 @app.route("/")
 def home():
@@ -227,7 +244,6 @@ def manag_perfiles():
 
             data_reservas=[]
             data_resenias=[]
-            direccion=transform_coords_dir([session.get("datos_comercio")["latitud"], session.get("datos_comercio")["longitud"]])
 
             if response_reservas.status_code == 200:
                 data_reservas=list(response_reservas.json())
@@ -239,8 +255,7 @@ def manag_perfiles():
                                    usuario=session.get("datos_usuario"),
                                    datos_comercio=session.get("datos_comercio"),
                                    resenias=data_resenias,
-                                   reservas=data_reservas, 
-                                   ubicacion=direccion)
+                                   reservas=data_reservas)
 
 # Login de usuario
 @app.route("/login", methods=["GET", "POST"])
@@ -291,9 +306,11 @@ def login():
                         "categoria": data_comercio.get("categoria"),
                         "tipo_cocina": data_comercio.get("tipo_cocina"),
                         "telefono": data_comercio.get("telefono"),
+                        "tiempo_de_creacion":data_comercio.get("tiempo_de_creacion"),
                         "latitud": data_comercio.get("latitud"),
                         "longitud": data_comercio.get("longitud"),
-                        "calificacion": data_comercio.get("calificacion", 0.0),
+                        "direccion": transform_coords_dir([data_comercio.get("latitud"), data_comercio.get("longitud")]),
+                        "ranking_ponderado": data_comercio.get("ranking_ponderado", 0.0),
                         "dias": transformar_dias_comercio(data_comercio.get("dias")),
                         "horarios": transformar_horarios_comercio(data_comercio.get("horarios")),
                         "etiquetas": transformar_tags_comercio(data_comercio.get("etiquetas")),
@@ -459,4 +476,4 @@ def realizar_review(id_comercio, id_reserva):
             return jsonify({"ERROR":"Reserva o comercio inexistente"}),404
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=8200, debug=True)
+    app.run(host="0.0.0.0", port=8200, debug=True)

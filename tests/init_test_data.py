@@ -33,7 +33,7 @@ cursor.execute("""INSERT INTO comercios
                   (2, 60, '/resources/uploads/comercios/chimichurri_grill.jpg', 'Chimichurri Grill', 'familiar', 'clasica', 23004567, -34.6100, -58.4000, '2025-06-14 13:15:00', 'https://chimigrill.menu', 0.0, 0, 0.0, "['jueves','viernes','sábado','domingo']", "['12-15','19-23']", "['para_llevar','musica_vivo','zona_fumadores']"),                  
                   (3, 61, '/resources/uploads/comercios/veggie_vida.jpg', 'Veggie Vida', 'tematico', 'clasica', 22119988, -34.5800, -58.3700, '2025-06-13 10:45:00', 'https://veggievida.menu', 4.9, 5, 4.2, "['lunes','miércoles','viernes']", "['12-15','19-23']", "['vegano','sin_gluten','accesible']"),
                   (4, 62, '/resources/uploads/comercios/el_gourmet_oculto.jpg', 'El Gourmet Oculto', 'gourmet', 'alta_cocina', 23115678, -34.5933, -58.4100, '2025-06-12 20:00:00', 'https://gourmetoculto.link', 5.0, 1, 5.0, "['viernes','sábado']", "['19-23']", "['happy_hour','musica_vivo','wifi']"),
-                  (5, 63, '/resources/uploads/comercios/pollo_frito_king.jpg', 'Pollo Frito King', 'comida_rapida', 'vanguardia', 29998877, -34.5990, -58.3820, '2025-06-16 11:30:00', 'https://pollofrito.menu', 3.9, 80, 3.5, "['lunes','martes','miércoles','jueves','viernes','sábado']", "['12-15','19-23']", "['delivery','para_llevar','wifi']");
+                  (5, 63, '/resources/uploads/comercios/pollo_frito_king.jpg', 'Pollo Frito King', 'comida_rapida', 'vanguardia', 29998877, 36.72995945020064, -4.547759190890471, '2025-06-16 11:30:00', 'https://gaskins-fried-chicken.es/#men%C3%BA', 3.9, 80, 3.5, "['lunes','martes','miércoles','jueves','viernes','sábado']", "['12-15','19-23']", "['delivery','para_llevar','wifi']");
 """)
 
 

@@ -6,6 +6,7 @@
     <link href="{{ url_for('static', filename='css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/seleccion_resto.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/resto.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 {% endblock %}
 {% block content %}
     <div class="container">
@@ -152,8 +153,8 @@
                                 </div>
                               </div>
                               <div class="control-group">
-                                <div class="input-group date" id="date" data-target-input="nearest">
-                                  <input name="fecha_reserva" type="datetime-local" class="form-control" placeholder="Fecha y hora" required />
+                                <div class="input-group">
+                                  <input name="fecha_reserva" id="fecha_reserva" type="text" class="form-control" placeholder="Fecha y hora" autocomplete="off" required />
                                   <div class="input-group-append">
                                     <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                                   </div>
@@ -256,9 +257,15 @@
         </div>
       </div>
     </div>
+    <!-- Datos para filtrar días y horarios -->
+    <div id="datos-comercio" 
+        data-dias="{{ dias | join(',') | lower }}" 
+        data-horarios="{{ horarios | join(',') }}">
+    </div>
+
 {% endblock %}
 
 {% block scripts %}
     <script src="{{ url_for('static', filename='js/resto.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/mapa.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 {% endblock %}
