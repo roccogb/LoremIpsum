@@ -79,7 +79,9 @@
                                         <span class="estado-pendiente">Pendiente</span>
                                     {% endif %}
                                 </p>
-                                <button class="qr-btn" onclick="openQRPopup('qrPopup{{loop.index}}')">📱 Código QR</button>
+                                {% if not reserva["estado_reserva"] %}
+                                    <button class="qr-btn" onclick="openQRPopup('qrPopup{{loop.index}}')">📱 Código QR</button>
+                                {% endif %}
                             </div>
                             
                             <!-- Popup único para cada reserva -->

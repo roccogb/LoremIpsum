@@ -23,15 +23,17 @@
         <!-- Ranking de mejores restaurantes calificados -->
         <div class="hero-section">
             <div class="hero-card">
-                <div class="restaurant-info">
-                    <div id="comercios_data" style="display: none;">{{rank_comercios | tojson | safe}}</div>
-                    <h1 class="restaurant-name"></h1>
-                    <div class="stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
+                <div class="restaurant-link" data-url="" onclick="handleCardClick(event,this)">
+                    <div class="restaurant-info">
+                        <div id="comercios_data" style="display: none;">{{rank_comercios | tojson | safe}}</div>
+                        <h1 class="restaurant-name"></h1>
+                        <div class="stars">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
                     </div>
                 </div>
                 <button class="nav-arrow left" onclick="prevRestauranteTop()">‹</button>

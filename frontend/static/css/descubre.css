@@ -275,20 +275,6 @@
     min-width: 0;
 }
 
-.restaurant-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.restaurant-link:hover,
-.restaurant-link:visited,
-.restaurant-link:focus,
-.restaurant-link:active {
-    text-decoration: none;
-    color: inherit;
-}
-
 .restaurants-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
