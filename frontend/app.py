@@ -87,18 +87,27 @@ def buscar_comercio():
 def descubre(indice_pag):
     inicio = indice_pag * 9
     if request.method == "POST":
-        tipo_cocina=request.form.get("tipo_cocina","null")
-        categoria=request.form.get("categoria","null")
-        calificacion=request.form.get("orden_ranking","null")
-        horarios=request.form.getlist("horarios[]")
-        etiquetas=request.form.getlist("etiquetas[]")            
-        dias=request.form.getlist("dias[]")
+        filtros = {
+            "tipo_cocina": request.form.get("tipo_cocina","null"),
+            "categoria": request.form.get("categoria","null"),
+            "calificacion": request.form.get("orden_ranking","null"),
+            "horarios": request.form.getlist("horarios[]"),
+            "etiquetas": request.form.getlist("etiquetas[]"),            
+            "dias": request.form.getlist("dias[]")
+        }
+        
+        session["filtros"] = filtros
 
-        response=requests.get(f"{API_BACK}/comercio/filtrar", 
-                               json={"tipo_cocina":tipo_cocina,"categoria":categoria,"horarios":horarios,
-                                     "calificacion":calificacion,"etiquetas":etiquetas, "dias":dias})
+        response=requests.get(f"{API_BACK}/comercio/filtrar", json= filtros)
+
     elif request.method == "GET":
-        response=requests.get(f"{API_BACK}/comercio/")
+        filtros = session.get("filtros", None)
+
+        if filtros:
+            response=requests.post(f"{API_BACK}/comercio/filtrar", json= filtros)
+
+        else:
+            response=requests.get(f"{API_BACK}/comercio/")
 
     if response.status_code == 200:
         comercios_bdd = list(response.json())
@@ -118,6 +127,12 @@ def descubre(indice_pag):
                             total_paginas=total_paginas)
     else:
         return render_template("descubre.html",comercios=[])
+
+# Limpia los filtros del session y redirige a descubre pag 1.   
+@app.route("descubre/limpiar_filtros")
+def limpiar_filtros():
+    session.pop("filtros", None)
+    return redirect(url_for("descubre", indice_pag=0))
 
 # Página del restaurante seleccionado
 @app.route("/restaurante/<int:id_comercio>")
