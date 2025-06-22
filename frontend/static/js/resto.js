@@ -74,10 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 
-
-    
-
-
+// Funcion javascript que va a cargar el mapa 'Leaflet' con las capaz de Openstreetmap
 document.addEventListener('DOMContentLoaded', function () {
     // Obtener las coordenadas del elemento HTML
     const coordElement = document.getElementById('coordenadas_comercio');
@@ -85,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const [lat, lng] = coordElement.textContent.split(';').map(coord => parseFloat(coord.trim()));
 
         // Inicializar el mapa con Leaflet
-        const map = L.map('map').setView([lat, lng], 15);  // Zoom 15 es ideal para ciudad
+        const map = L.map('map').setView([lat, lng], 15);
 
         // Cargar y mostrar el mapa con tiles de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
