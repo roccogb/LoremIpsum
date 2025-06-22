@@ -129,7 +129,7 @@ def descubre(indice_pag):
         return render_template("descubre.html",comercios=[])
 
 # Limpia los filtros del session y redirige a descubre pag 1.   
-@app.route("descubre/limpiar_filtros")
+@app.route("/descubre/limpiar_filtros")
 def limpiar_filtros():
     session.pop("filtros", None)
     return redirect(url_for("descubre", indice_pag=0))
