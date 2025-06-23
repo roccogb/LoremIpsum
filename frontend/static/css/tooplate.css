@@ -246,7 +246,7 @@ li:last-child {
   overflow-y: auto;                         /* Solo scroll vertical */
   overflow-x: hidden;                       /* Oculta scroll horizontal */
   z-index: 1;                               /* Defino la profundidad del elemento. Este mismo se mostrará abajo de cualquiera  que tenga un nivel de profundidad mayor a 1*/
-  height: 580px;                            /* Altura fija para permitir scroll */
+  height: 550px;                            /* Altura fija para permitir scroll */
   padding-bottom: 80px;
 }
 

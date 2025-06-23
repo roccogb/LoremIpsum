@@ -26,7 +26,7 @@
     background-size: cover; 
     background-position: center center;
     background-repeat: no-repeat;
-    background-attachment: local; /* Mejor para celular */
+    background-attachment: local;
     border-radius: 20px;
     padding: 30px;
     color: white;

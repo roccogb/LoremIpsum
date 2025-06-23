@@ -18,3 +18,13 @@
             }
         });
     });
+
+    // Funcion utilizada en el template de reserva confirmar para redirigirte a la pagina de review
+    function darReview(element){
+        window.location.href=element.dataset.url;
+    }
+
+    // Funcion utilizada en el template de reseña para volver al restaurante en cuestión
+    function goBack(element){
+        window.location.href=element.dataset.url;
+    }

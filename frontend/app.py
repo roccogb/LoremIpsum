@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"]="../backend/resources/uploads"
-app.secret_key = "contra_ids"  # Necesario para usar session y flash
+app.secret_key = "contra_ids"  
 
 API_BACK = "http://0.0.0.0:8100"                                        # Dirección local del backend
 
@@ -23,25 +23,32 @@ def cargar_imagen(ruta_imagen):
 @app.route("/qrproxy/<int:id_reserva>")
 def confirmar_reserva(id_reserva):
     try:
-        response_estado=requests.put(f"{API_BACK}/reserva/estado/{id_reserva}")
-        response_reserva=requests.get(f"{API_BACK}/reserva/{id_reserva}")
-        if response_estado.status_code == 200 and response_reserva.status_code == 200:
-            reserva_data=response_reserva.json()
-            response_comercio=requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":reserva_data.get("id_comercio"),"nombre_comercio":""})
-            return render_template("reserva_confirmada.html", reserva_info=reserva_data, comercio_info=response_comercio.json())
+        if "datos_usuario" not in session and session.get("tipo_usuario") != "consumidor":
+            flash("Si desea confirmar la reserva debe iniciar sesión con la cuenta que realizo la misma","info")
+            session["next_url"]=url_for("confirmar_reserva", id_reserva=id_reserva)
+            return redirect(url_for("login"))
         else:
-            flash("Reserva no encontrada o ya cancelada.", "error")
-    except Exception as e:
-        flash("Error al escanear la reserva, porfavor vuelva a intentarlo nuevamente","error")
+            response_reserva=requests.get(f"{API_BACK}/reserva/{id_reserva}")
+            reserva_data=response_reserva.json()
 
-    return redirect(url_for("manag_perfiles"))
+            response_comercio=requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":reserva_data["id_comercio"],"nombre_comercio":""})
+            comercio_data=response_comercio.json()
+
+            if reserva_data["id_usr"] == session.get("datos_usuario")["id_usr"]:
+                response_estado=requests.put(f"{API_BACK}/reserva/estado/{id_reserva}")
+                if response_estado.status_code == 200 and response_reserva.status_code == 200 and response_comercio.status_code == 200:
+                    return render_template("reserva_confirmada.html", reserva_info=reserva_data, comercio_info=comercio_data)
+            else:
+                flash("La reserva no se encuentra vinculada a este usuario","error")
+    except Exception:
+        flash("Error al procesar la información de la reserva","error")
+    return redirect(url_for("login"))
 
 # Pagina de inicio
 @app.route("/")
 def home():
     response=requests.get(f"{API_BACK}/comercio/filtrar",json={"tipo_cocina":"null","categoria":"null","calificacion":"desc"})
 
-    # Obtener favoritos del usuario si está logueado
     id_favoritos = []
     if "datos_usuario" in session and session["tipo_usuario"] == "consumidor":
         id_usr = session.get("datos_usuario")["id_usr"]
@@ -49,10 +56,8 @@ def home():
             fav_response = requests.get(f"{API_BACK}/favs/detallado/{id_usr}")
             if fav_response.status_code == 200:
                 favoritos_data = fav_response.json()
-                # Extraer solo los IDs de comercios favoritos
                 id_favoritos = [fav['id_comercio'] for fav in favoritos_data]
         except requests.RequestException:
-            # Si hay error al obtener favoritos, continuar sin ellos
             id_favoritos = []
     
     if response.status_code == 200:
@@ -282,7 +287,6 @@ def login():
                     "fecha_creacion":data_consumidor.get("fecha_creacion"),
                     "cant_reservas_canceladas": data_consumidor.get("cant_reservas_canceladas", 0)
                 }
-                return redirect(url_for("home"))
             
             # Si no es consumidor, intentamos autenticar como comerciante
             response_comercio = requests.post(f"{API_BACK}/auth/comercio", 
@@ -317,16 +321,20 @@ def login():
                         "ruta_imagen": data_comercio.get("ruta_imagen"),
                         "pdf_menu_link": data_comercio.get("pdf_menu_link")
                     }
-                return redirect(url_for("home"))
             
-            flash("Credenciales inválidas", "error")
-            return redirect(url_for("login"))
-            
+            if response_comercio.status_code == 200 or response_consumidor.status_code == 200:
+                next_url=session.pop("next_url", None)
+                return redirect(next_url or url_for("home"))
+            else:
+                flash("Credenciales inválidas", "error")
+                return redirect(url_for("login"))
         except Exception as e:
             flash("Error de conexión con el servidor", "error")
             return redirect(url_for("login"))     
     return render_template("login.html")
 
+#INTENTAR OTRO METODO PARA GUARDAR LA IMAGEN. Se guarda fuera de la carpeta 'comercios'
+#  -> Intentar diseñar un nuevo endpoint proxy (En vez de un input que forme parte del form, una especie de boton)
 # Registrar usuario
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -334,22 +342,15 @@ def register():
     if request.method == 'POST':
         form = request.form
         if form.get("tipo_usuario") == "consumidor":
-            nombre_consumidor = form.get("nombre_consumidor")
-            apellido_consumidor = form.get("apellido_consumidor")
-            usuario_consumidor = form.get("usuario_consumidor")
-            email_consumidor = form.get("email_consumidor")
-            telefono_consumidor = form.get("telefono_consumidor")
-            password_consumidor = form.get("password_consumidor")
-            response = requests.post(f"{API_BACK}/auth/register", 
-                                            json={
-                                                "tipo_usuario":form.get("tipo_usuario"),
-                                                "nombre_consumidor" : nombre_consumidor,
-                                                "apellido_consumidor" : apellido_consumidor,
-                                                "usuario_consumidor" : usuario_consumidor,
-                                                "email_consumidor": email_consumidor,
-                                                "telefono_consumidor" : telefono_consumidor,
-                                                "password_consumidor": password_consumidor
-                                                  })
+            datos_ingresados_usr={"tipo_usuario":form.get("tipo_usuario"),
+                                  "nombre_consumidor":form.get("nombre_consumidor"),
+                                  "apellido_consumidor":form.get("apellido_consumidor"),
+                                  "usuario_consumidor":form.get("usuario_consumidor"),
+                                  "email_consumidor":form.get("email_consumidor"),
+                                  "telefono_consumidor":form.get("telefono_consumidor"),
+                                  "password_consumidor":form.get("password_consumidor")}
+            
+            response = requests.post(f"{API_BACK}/auth/register", json=datos_ingresados_usr)
         else:
             nombre_comercio = form.get("name_bss")
             tel_comercio = form.get("tel_bss")
@@ -366,6 +367,7 @@ def register():
             nombre_responsable = form.get("nr_bss")
             contrasena_usr_comercio = form.get("p_r_bss")
 
+            # NO ES SEGURO GUARDAR IMAGENES ASI, BUSCAR OTRO MÉTODO
             imagen=request.files.get("img_local")
 
             if not imagen or imagen.filename=="":
@@ -375,6 +377,7 @@ def register():
                 imagen.save( os.path.join(app.config["UPLOAD_FOLDER"],nombre_archivo_seguro))
                 ruta_img=f"/resources/uploads/comercios/{nombre_archivo_seguro}"
 
+            # Encontrar la forma de limitar el horario seleccionado desde el registro con JS
             if "0-24" in horarios:
                 horarios=["0-24"]
 
@@ -408,7 +411,8 @@ def register():
 @app.route("/click_fav/<int:id_comercio>", methods=["POST"])
 def click_fav(id_comercio):
     if "datos_usuario" not in session or session["tipo_usuario"] != "consumidor":
-        return jsonify({"success": False, "error": "No autorizado"}), 401
+        flash("Solo podés guardar favoritos si estas logeado o si sos un consumidor","info")
+        return redirect(url_for("login"))
 
     id_usr = session.get("datos_usuario")["id_usr"]
     
@@ -464,7 +468,7 @@ def realizar_review(id_comercio, id_reserva):
                             "comentario":text_comentario
                                                         })
                     if response.status_code == 201:
-                        flash("Reseña realizada con éxito","message")
+                        flash("Reseña realizada con éxito","success")
                         return redirect(url_for("resto", id_comercio=data_comercio["id_comercio"]))
                     else:
                         flash("Error al guardar la reseña", "error")
