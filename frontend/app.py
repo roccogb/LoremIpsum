@@ -255,7 +255,7 @@ def manag_perfiles():
             
             if response_resenias.status_code == 200:
                 data_resenias=list(response_resenias.json())
-
+            
             return render_template("perfil_comerciante.html",
                                    usuario=session.get("datos_usuario"),
                                    datos_comercio=session.get("datos_comercio"),
@@ -307,8 +307,8 @@ def login():
                 session["datos_comercio"] = {
                         "id_comercio": data_comercio.get("id_comercio"),
                         "nombre_comercio": data_comercio.get("nombre_comercio"),
-                        "categoria": data_comercio.get("categoria"),
-                        "tipo_cocina": data_comercio.get("tipo_cocina"),
+                        "categoria": data_comercio.get("categoria").capitalize(),
+                        "tipo_cocina": transformar_tp_comercio(data_comercio.get("tipo_cocina")),
                         "telefono": data_comercio.get("telefono"),
                         "tiempo_de_creacion":data_comercio.get("tiempo_de_creacion"),
                         "latitud": data_comercio.get("latitud"),
@@ -333,8 +333,6 @@ def login():
             return redirect(url_for("login"))     
     return render_template("login.html")
 
-#INTENTAR OTRO METODO PARA GUARDAR LA IMAGEN. Se guarda fuera de la carpeta 'comercios'
-#  -> Intentar diseñar un nuevo endpoint proxy (En vez de un input que forme parte del form, una especie de boton)
 # Registrar usuario
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -352,58 +350,39 @@ def register():
             
             response = requests.post(f"{API_BACK}/auth/register", json=datos_ingresados_usr)
         else:
-            nombre_comercio = form.get("name_bss")
-            tel_comercio = form.get("tel_bss")
-            dir_comercio = form.get("dir_bss")
-            lkmenu_comercio = form.get("lkm_bss")
-            categoria = form.get("categoria")
-            tipo_cocina = form.get("tipo_cocina")
-            email_responsable = form.get("email_bss")
-            dias = form.getlist("dias[]")
-            horarios = form.getlist("horarios[]")
-            etiquetas = form.getlist("etiquetas[]")
-            dni_responsable = form.get("dni_responsable_bss")
-            cuit_responsable = form.get("cuit_responsable_bss")
-            nombre_responsable = form.get("nr_bss")
-            contrasena_usr_comercio = form.get("p_r_bss")
-
-            # NO ES SEGURO GUARDAR IMAGENES ASI, BUSCAR OTRO MÉTODO
             imagen=request.files.get("img_local")
-
             if not imagen or imagen.filename=="":
-                ruta_img=" "
+                ruta_img="/resources/uploads/comercios/img_resto_defecto.jpg"
             else:
                 nombre_archivo_seguro=secure_filename(imagen.filename)
-                imagen.save( os.path.join(app.config["UPLOAD_FOLDER"],nombre_archivo_seguro))
+                imagen.save(os.path.join("../backend/resources/uploads/comercios",nombre_archivo_seguro ))
                 ruta_img=f"/resources/uploads/comercios/{nombre_archivo_seguro}"
 
-            # Encontrar la forma de limitar el horario seleccionado desde el registro con JS
-            if "0-24" in horarios:
-                horarios=["0-24"]
+            data_comercio={"tipo_usuario":form.get("tipo_usuario"),
+                           "nombre_responsable":form.get("nr_bss"),
+                           "cuit_responsable":form.get("cuit_responsable_bss"),
+                           "dni_responsable":form.get("dni_responsable_bss"),
+                           "email_responsable":form.get("email_bss"),
+                           "contrasena_usr_comercio":form.get("p_r_bss"),
+                           "nombre_comercio": form.get("name_bss"),
+                           "tel_comercio":form.get("tel_bss"),
+                           "dir_comercio":form.get("dir_bss"),
+                           "lkmenu_comercio":form.get("lkm_bss"),
+                           "categoria":form.get("categoria"),
+                           "tipo_cocina":form.get("tipo_cocina"),
+                           "ruta_img":ruta_img,
+                           "dias":form.getlist("dias[]"),
+                           "horarios":form.getlist("horarios[]"),
+                           "etiquetas":form.getlist("etiquetas[]"),
+                           }
 
-            response = requests.post(f"{API_BACK}/auth/register", 
-                                            json={
-                                                "tipo_usuario":form.get("tipo_usuario"),
-                                                "nombre_comercio" : nombre_comercio,
-                                                "tel_comercio" : tel_comercio,
-                                                "dir_comercio" : dir_comercio,
-                                                "lkmenu_comercio" : lkmenu_comercio,
-                                                "categoria" : categoria,
-                                                "tipo_cocina" : tipo_cocina,
-                                                "email_responsable" : email_responsable,
-                                                "dias" : dias,
-                                                "horarios" : horarios,
-                                                "etiquetas" : etiquetas,
-                                                "dni_responsable" : dni_responsable,
-                                                "cuit_responsable" : cuit_responsable,
-                                                "nombre_responsable" : nombre_responsable,
-                                                "contrasena_usr_comercio" : contrasena_usr_comercio,
-                                                "ruta_img":ruta_img
-                                                  })
+            response = requests.post(f"{API_BACK}/auth/register", json=data_comercio)
+
         if response.status_code == 200:
             flash("Se registro el usuario correctamente","success")
-            return redirect(url_for('login'))
-        flash(f"{response.json()["error"]}","warning")
+        else:
+            flash("Se produjo un error al registrar el usuario. Por favor, vuelva a intentarlo","error")
+        return redirect(url_for('login'))
     else:
         return render_template("register.html")
 
