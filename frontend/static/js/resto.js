@@ -7,42 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
             fechaHoraInput.min = fechaMinima.toISOString().slice(0, 16);
         }
 
-        // Manejar botón de favoritos
-        const heartBtn = document.querySelector('.heart-btn');
-        if (heartBtn) {
-            heartBtn.addEventListener('click', function() {
-                const comercioId = this.getAttribute('data-id');
-                const isActive = this.classList.contains('active');
-                
-                // Hacer petición AJAX para agregar/quitar favorito
-                fetch('/toggle_favorito', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        id_comercio: comercioId
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Alternar clase active y símbolo
-                        if (isActive) {
-                            this.classList.remove('active');
-                            this.innerHTML = '♡';
-                        } else {
-                            this.classList.add('active');
-                            this.innerHTML = '♥';
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            });
-        }
-
         // Validación de formulario de reserva adaptada para datetime-local
         const formReserva = document.getElementById('form-reserva');
         if (formReserva) {
@@ -74,10 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 
-
-    
-
-
+// Funcion javascript que va a cargar el mapa 'Leaflet' con las capaz de Openstreetmap
 document.addEventListener('DOMContentLoaded', function () {
     // Obtener las coordenadas del elemento HTML
     const coordElement = document.getElementById('coordenadas_comercio');
@@ -85,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const [lat, lng] = coordElement.textContent.split(';').map(coord => parseFloat(coord.trim()));
 
         // Inicializar el mapa con Leaflet
-        const map = L.map('map').setView([lat, lng], 15);  // Zoom 15 es ideal para ciudad
+        const map = L.map('map').setView([lat, lng], 15);
 
         // Cargar y mostrar el mapa con tiles de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -113,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const fechaInput = document.getElementById('fecha_reserva');
   const form = document.getElementById('form-reserva');
 
-  const diasSemana = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sabado'];
+  const diasSemana = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
 
   // Verifica si el día es permitido
   function esDiaPermitido(fecha) {

@@ -4,6 +4,8 @@ from . import reservas_bp
 import qrcode
 import os
 
+QR_FOLDER = os.path.abspath("resources/uploads/temp")
+
 # Este endpoint mostrará todas las reservas vinculadas a un usuario.
 # Se recibirá, a traves de la URI, un 'id' el cual servirá para identificar las reservas relacionadas al usuario
 @reservas_bp.route("/usr/<int:id_usr>")
@@ -104,13 +106,11 @@ def agregar_reserva():
         body_request["fecha_reserva"], body_request["solicitud_especial"]
     ))
 
-    
-    QR_FOLDER = os.path.abspath("resources/uploads/temp")
     ruta_absoluta_qr = os.path.join(QR_FOLDER, f"qr{cursor.lastrowid}.png")
 
     ruta_relativa_qr = f"/resources/uploads/temp/qr{cursor.lastrowid}.png"
 
-    qr_url = f"http://192.168.1.35:8200/qrproxy/{cursor.lastrowid}"         # Acá coloquen la segunda ip del front.
+    qr_url = f"http://192.168.0.8:8200/qrproxy/{cursor.lastrowid}"         # Acá coloquen la segunda ip del front.
     qr_img = qrcode.make(qr_url)
     qr_img.save(ruta_absoluta_qr)
     
@@ -198,7 +198,12 @@ def modificar_estado(id_reserva):
                          WHERE id_reserva=%s;"""
     cursor.execute(qsql_nuevo_estado,(id_reserva,))
 
+    
     conn.commit()                           # Guardo los cambios realizados
+
+    ruta_absoluta_qr=f"{QR_FOLDER}/qr{id_reserva}.png"
+    os.remove(ruta_absoluta_qr)
+
     cursor.close()
     conn.close()
     return jsonify({"msg":"Estado de reserva actualizado"}),200

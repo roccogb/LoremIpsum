@@ -14,11 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
 function updateRestauranteDisplay() {
     const tituloElement = document.querySelector(".restaurant-name");               // Selecciono los elementos que tienen los identificadores: '.restaurant-name' y '.hero-card'
     const heroCard = document.querySelector(".hero-card");                         
+    const restaurantLink=heroCard.querySelector(".restaurant-link")
     const currentComercio = comerciosData[currentIndex];                            // Llamo al comercio actual por el indice
     
     // Actualizar nombre y imagen de fondo
     tituloElement.textContent = currentComercio.nombre_comercio;
     heroCard.style.backgroundImage = `url('${currentComercio.ruta_imagen}')`;
+    restaurantLink.setAttribute("data-url",`/restaurante/${currentComercio.id_comercio}`)
     
     // También puedes actualizar la imagen del logo si es necesario
     const logoImg = document.querySelector(".restaurant-info img");

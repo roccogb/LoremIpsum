@@ -50,7 +50,13 @@
             </div>
         </div>
 
-        <!-- Pie de página -->
+        <div class="review-section">
+            <button class="review-btn" data-url="{{url_for('realizar_review', id_comercio=comercio_info.id_comercio, id_reserva=reserva_info.id_reserva)}}" onclick="darReview(this)">
+                <span class="review-icon">📝</span>
+                Dejar reseña
+            </button>
+        </div>
+
         <div class="footer-section">
             <p class="footer-message">
                 ¡Gracias por elegirnos! Te esperamos para brindarte el mejor servicio.
@@ -59,6 +65,8 @@
                 <p>{{ comercio_info.telefono }}</p>
             </div>
         </div>
+
     </div>
+    <script src="{{url_for('static', filename='js/review.js')}}"></script>
 </body>
 </html>

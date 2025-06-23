@@ -1,3 +1,4 @@
+/* ===== VARIABLES GLOBALES ===== */
 :root {
   --mostaza: #D4AF37;
   --vino: #800020;
@@ -7,6 +8,7 @@
   --transition: all 0.3s ease;
 }
 
+/* ===== RESET Y BASE ===== */
 * {
   margin: 0;
   padding: 0;
@@ -25,13 +27,18 @@ body {
   padding: 0 20px;
 }
 
+/* ===== ALERTAS Y MENSAJES ===== */
+.alert-container {
+  margin-bottom: 20px;
+}
+
 /* ===== HEADER DEL RESTAURANTE ===== */
 .page-content h3 {
   display: flex;
   align-items: center;
   font-size: 2.2rem;
   font-weight: bold;
-  color:#ffffff;
+  color: #ffffff;
   text-align: center;
   justify-content: center;
 }
@@ -76,7 +83,7 @@ body {
   margin-bottom: 30px;
 }
 
-/* ===== IMAGEN DEL COMERCIO - CENTRADA Y RESPONSIVA ===== */
+/* ===== IMAGEN DEL COMERCIO ===== */
 .main-profile .col-lg-4:first-child {
   display: flex;
   align-items: center;
@@ -96,18 +103,18 @@ body {
 
 /* ===== INFORMACIÓN PRINCIPAL ===== */
 .main-info h4 {
-  color:#ffffff;
+  color: #ffffff;
   font-size: 1.5rem;
   margin-bottom: 15px;
 }
 
 .main-info p {
-  color:#ffffff;
+  color: #ffffff;
   margin-bottom: 10px;
   font-size: 1.1rem;
 }
 
-/* ===== ESTRELLAS DE CALIFICACIÓN - CENTRADAS ===== */
+/* ===== ESTRELLAS DE CALIFICACIÓN ===== */
 .stars {
   display: flex;
   justify-content: center;
@@ -120,7 +127,7 @@ body {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* ===== ETIQUETAS DEL RESTAURANTE - DESPLIEGUE LATERAL ===== */
+/* ===== ETIQUETAS DEL RESTAURANTE ===== */
 .tags-section {
   display: flex;
   flex-wrap: wrap;
@@ -141,6 +148,7 @@ body {
   backdrop-filter: blur(5px);
   transition: var(--transition);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  animation: slideInTag 0.4s ease-out forwards;
 }
 
 .tags-section p:hover {
@@ -149,7 +157,22 @@ body {
   background: var(--sgray);
 }
 
-/* ===== BOTÓN PRINCIPAL - CENTRADO Y MEJORADO ===== */
+.tags-section p:nth-child(n) {
+  animation-delay: calc(0.1s * var(--i, 1));
+}
+
+/* Estilos alternativos para tags */
+.tag {
+  display: inline-block;
+  background: var(--mostaza);
+  border: 1px solid #dee2e6;
+  border-radius: 15px;
+  padding: 5px 10px;
+  margin: 2px;
+  font-size: 0.8em;
+}
+
+/* ===== BOTÓN PRINCIPAL ===== */
 .main-border-button {
   display: flex;
   justify-content: center;
@@ -180,7 +203,7 @@ body {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Lista de informacion */
+/* ===== LISTA DE INFORMACIÓN ===== */
 .main-profile ul {
   list-style: none;
   padding: 0;
@@ -195,8 +218,15 @@ body {
   font-weight: 500;
 }
 
+.main-profile ul li:hover {
+  transform: translateX(5px);
+}
 
-/* Estilos para los horarios */
+.restaurant-info li {
+  margin-bottom: 8px;
+}
+
+/* ===== HORARIOS ===== */
 .horarios-item {
   display: flex;
   flex-direction: column;
@@ -217,6 +247,9 @@ body {
   max-height: 120px; 
   overflow-y: auto;
   padding: 5px 0;
+  max-width: 100%;
+  justify-content: flex-start;
+  margin-top: 5px;
 }
 
 .dia-item {
@@ -236,6 +269,7 @@ body {
   white-space: nowrap;
   flex-shrink: 0; 
   min-width: fit-content;
+  animation: slideInDay 0.5s ease-out forwards;
 }
 
 .dia-item:hover {
@@ -244,10 +278,8 @@ body {
   background: var(--sgray);
 }
 
-/* Estilo especial para horarios cuando hay muchos elementos */
-.horarios-item .dias-section {
-  max-width: 100%;
-  justify-content: flex-start;
+.dia-item:nth-child(n) {
+  animation-delay: calc(0.1s * var(--i, 1));
 }
 
 .dias-section::-webkit-scrollbar {
@@ -269,12 +301,50 @@ body {
   background: var(--sgray);
 }
 
+/* ===== MENSAJES DE ERROR DE HORARIOS ===== */
+.horario-error {
+  font-size: 0.9em;
+  margin-top: 5px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border-left: 4px solid #ffc107;
+  background-color: #fff3cd;
+  color: #856404;
+  animation: slideIn 0.3s ease-out;
+}
+
+.horario-error::before {
+  content: "⚠️ ";
+  margin-right: 5px;
+}
+
+.datetime-error {
+  border-color: #ffc107 !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25) !important;
+}
+
 .clips {
   background: #ffffff;
   border-radius: 12px;
   padding: 30px;
   margin-top: 30px;
   box-shadow: var(--shadow);
+}
+
+.clips:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.gaming-library {
+  background: var(--vino);
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 30px;
+  box-shadow: var(--shadow);
+}
+
+.gaming-library:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .heading-section h4 {
@@ -292,34 +362,7 @@ body {
   font-size: 1.1rem;
 }
 
-/* Boton de menú */
-.main-button a {
-  display: flex;
-  margin: auto;
-  background: var(--vino);
-  color: #ffffff;
-  padding: 15px;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: var(--transition);
-}
-
-.main-button a:hover {
-  background: var(--mostaza);
-  transform: translateY(-2px);
-}
-
-/*Seccion para realizar las reservas */
-.gaming-library {
-  background: var(--vino);
-  border-radius: 12px;
-  padding: 30px;
-  margin-top: 30px;
-  box-shadow: var(--shadow);
-}
-
-/* ===== MAPA ===== */
+/* Mapa */
 #map {
   height: 100%;
   border-radius: 12px;
@@ -336,7 +379,7 @@ body {
   display: none;
 }
 
-/* Estilos aplicados al formulario de reserva*/
+/* Formulario de reserva*/
 .booking-form {
   background: var(--mostaza);
   padding: 30px;
@@ -361,11 +404,30 @@ body {
   box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
 }
 
+.form-control:hover {
+  border-color: var(--mostaza);
+}
+
+.input-group {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
 .input-group-text {
   background: var(--mostaza);
   color: #ffffff;
   border: none;
   border-radius: 0 8px 8px 0;
+  transition: var(--transition);
+}
+
+.input-group-append .input-group-text {
+  transition: var(--transition);
+}
+
+.input-group:hover .input-group-text {
+  background: var(--vino);
 }
 
 .custom-select {
@@ -374,34 +436,33 @@ body {
   padding: 12px 15px;
 }
 
+.custom-select:hover {
+  border-color: var(--mostaza);
+}
+
 textarea.form-control {
   min-height: 100px;
   resize: vertical;
 }
 
-/* Estilos a los objetos de reseñas */
-.review-item{
-  border: 1px solid #e0e0e0; 
-  padding: 15px; 
-  margin-bottom: 15px; 
-  border-radius: 8px; 
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.review-header{
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  margin-bottom: 10px;
-}
-
-.no-reviews{
-  text-align: center; 
-  padding: 40px; 
+/*  Botones */
+.main-button a {
+  display: flex;
+  margin: auto;
+  background: var(--vino);
   color: #ffffff;
+  padding: 15px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: var(--transition);
 }
 
-/* Boton personalizado */
+.main-button a:hover {
+  background: var(--mostaza);
+  transform: translateY(-2px);
+}
+
 .custom-btn {
   background-color: var(--sgray);
   color: #ffffff;
@@ -422,6 +483,54 @@ textarea.form-control {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+.btn.custom-btn {
+  background-color: var(--sgray);
+  border-color: #000000;
+  color: white;
+  padding: 10px 30px;
+  border-radius: 30px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn.custom-btn:hover {
+  background-color: var(--mostaza);
+  border-color: #63521a;
+  transform: translateY(-1px);
+}
+
+/* Reseñas */
+.review-item {
+  border: 1px solid #e0e0e0; 
+  padding: 15px; 
+  margin-bottom: 15px; 
+  border-radius: 8px; 
+  background-color: rgba(0, 0, 0, 0.5);
+  background: #800020;
+}
+
+.review-header {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 10px;
+}
+
+.rating {
+  margin-top: 5px;
+}
+
+.no-reviews {
+  text-align: center; 
+  padding: 40px; 
+  color: #ffffff;
+}
+
+.login-required {
+  text-align: center;
+  padding: 30px;
+}
+
 .footer {
   background: var(--vino);
   color: #ffffff;
@@ -429,6 +538,62 @@ textarea.form-control {
   padding: 20px;
   border-radius: 12px;
   margin-top: 40px;
+}
+
+/* ANIMACIONES  */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInTag {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideInDay {
+  from {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main-profile,
+.clips,
+.gaming-library {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.main-profile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 768px) {
@@ -531,98 +696,4 @@ textarea.form-control {
     padding: 4px 8px;
     border-radius: 12px;
   }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInTag {
-  from {
-    opacity: 0;
-    transform: scale(0.8) translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@keyframes slideInDay {
-  from {
-    opacity: 0;
-    transform: translateX(-20px) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-}
-
-.main-profile,
-.clips,
-.gaming-library {
-  animation: fadeIn 0.6s ease-out;
-
-}
-
-.tags-section p {
-  animation: slideInTag 0.4s ease-out forwards;
-}
-
-.tags-section p:nth-child(n) {
-  animation-delay: calc(0.1s * var(--i, 1));
-}
-
-.dia-item {
-  animation: slideInDay 0.5s ease-out forwards;
-}
-
-.dia-item:nth-child(n) {
-  animation-delay: calc(0.1s * var(--i, 1));
-}
-
-/* ===== EFECTOS HOVER ADICIONALES ===== */
-.main-profile:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.clips:hover,
-.gaming-library:hover {
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-/* ===== ESTILOS PARA ELEMENTOS INTERACTIVOS ===== */
-.form-control:hover {
-  border-color: var(--mostaza);
-}
-
-.custom-select:hover {
-  border-color: var(--mostaza);
-}
-
-.main-profile ul li:hover {
-  transform: translateX(5px);
-}
-
-.input-group {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.input-group-append .input-group-text {
-  transition: var(--transition);
-}
-
-.input-group:hover .input-group-text {
-  background: var(--vino);
 }

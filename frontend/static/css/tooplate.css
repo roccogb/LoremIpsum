@@ -246,7 +246,7 @@ li:last-child {
   overflow-y: auto;                         /* Solo scroll vertical */
   overflow-x: hidden;                       /* Oculta scroll horizontal */
   z-index: 1;                               /* Defino la profundidad del elemento. Este mismo se mostrará abajo de cualquiera  que tenga un nivel de profundidad mayor a 1*/
-  height: 580px;                            /* Altura fija para permitir scroll */
+  height: 550px;                            /* Altura fija para permitir scroll */
   padding-bottom: 80px;
 }
 
@@ -449,13 +449,17 @@ textarea:focus {
 
 /* Esta clase va a representar a los botones de color dorado. Este mismo se va a encontar en el template de registro*/
 .btn-large-gold{
-  position: absolute;
-  bottom: 20px;                        
-  left: 50%;                           
-  transform: translateX(-50%);         
+  position: static !important;
+  width: 100%;
+  max-width: 300px;
+  margin: 575px auto 0 auto;
+  left: auto;
+  transform: none;
+  bottom: auto;
+  display: block;
   background-color: var(--gold);
   color: white;
-  z-index: 10;                         
+  z-index: 10;
 }
 
 /* Esta clase va a representar a los botones de color vino*/
@@ -529,11 +533,19 @@ input[type="file"] {
 
 /* Responsive para el botón de inicio en esquina */
 @media (max-width: 480px) {
+  .container {
+    max-width: 100vw;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 10px !important;
+  }
+
   #btn-home-corner {
-    top: 15px;
-    left: 15px;
-    padding: 8px 12px;
+    top: 8px !important;
+    left: 8px !important;
+    padding: 6px 10px !important;
     font-size: 0.8rem;
+    z-index: 1001;
   }
   
   #btn-home-corner i {
@@ -541,57 +553,122 @@ input[type="file"] {
   }
   
   #btn-home-corner span {
-    font-size: 0.75rem;
+    font-size: 1rem;
   }
+  
+  #icon-img {
+    width: 30% !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    height: auto !important;
+    display: block;
+  }
+  
+  .tm-login-r header {
+    padding: 10px 0 !important;
+    margin-top: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tm-login-l form {
+    padding: 10px !important;
+    margin-bottom: 10px;
+  }
+
+  .tm-login-l .input-field {
+    margin-bottom: 10px;
+  }
+
+  .tm-flex-lr {
+    margin-bottom: 10px;
+  }
+
 }
 
-@media (max-width: 400px) {
 
-  .col-6 {
-    flex: 0 0 100%;
+@media (max-width: 767px) {
+  #register #block-insert-info{
+    padding-top: 0px;
+    height: 875px !important;
+  }
+
+  .tm-register-col-r{
+    order: 1;
+    width: 100%;
+    margin: 0 auto 5px auto;
     max-width: 100%;
   }
 
-  .tm-pr-xs-0 {
-    padding-right: 0;
+  .tm-register-col-l{
+    order: 2;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 100%;
   }
 
-  .tm-pl-xs-0 {
-    padding-left: 0;
+  .tm-register-col-r header{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 0;
   }
-}
 
-@media (max-width: 767px) {
-  #register {
-    padding-top: 80px;
-    padding-bottom: 80px;
+  .tm-register-col-l .mb-2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    margin-top: 10px;
   }
-  .tm-register-col-l,
-  .tm-register-col-r {
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+
+
+  #register .tm-register-row{
+    flex-direction: column;
   }
 
   .tm-register-row {
-    flex-direction: column-reverse;
+    display: flex;
+    flex-direction: column;
   }
 
   .tm-login-l {
-    margin-top: 35px;
+    order: 2;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 100;
+    margin-top: 0 !important;
   }
 
   .btn-large-gold {
     bottom: 10px;
     left: 50%;
-    transform: translateX(-50%);
+    text-align: center !important;
+    justify-content: center !important;
+    align-content: center !important;
+    padding: 5px !important;
+    margin-top: 565px ;
     width: 200px;
-    padding: 10px 20px;
   }
 
-  #data-usr-comercio {
-    height: 500px; 
-    padding-bottom: 70px;
+  #check-usr-consumidor,
+  #check-usr-comercio{
+    position: static !important;
+    margin: 0 !important;
+    left: auto !important;
+    top: auto !important;
+    display: flex;
+    align-items: center;
+  }
+
+  #data-usr-consumidor,
+  #data-usr-comercio{
+    margin-top: 5% !important;
+    height: 500px;
   }
 }
 
