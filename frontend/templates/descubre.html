@@ -20,7 +20,7 @@
                 <!-- Cada filter-section será un acordeón -->
                 <!-- Filtrar por tipo de cocina -->
                 <div class="filter-section">
-                    <input type="checkbox" id="toggle-cocina" class="accordion-toggle" checked>
+                    <input type="checkbox" id="toggle-cocina" class="accordion-toggle">
                     <label for="toggle-cocina" class="filter-title">
                         <i class="fas fa-chevron-down accordion-icon">-</i>
                         <i class="fas fa-chef-hat"></i> Tipos de cocina
@@ -50,7 +50,7 @@
                 </div>
                 <!-- Filtrar por categoria -->
                 <div class="filter-section">
-                    <input type="checkbox" id="toggle-categoria" class="accordion-toggle" checked>
+                    <input type="checkbox" id="toggle-categoria" class="accordion-toggle">
                     <label for="toggle-categoria" class="filter-title">
                         <i class="fas fa-chevron-down accordion-icon">-</i>
                         <i class="fas fa-utensils"></i> Categoría
@@ -84,7 +84,7 @@
                 </div>
                 <!-- Filtrar por horario -->
                 <div class="filter-section">
-                    <input type="checkbox" id="toggle-horario" class="accordion-toggle" checked>
+                    <input type="checkbox" id="toggle-horario" class="accordion-toggle">
                     <label for="toggle-horario" class="filter-title">
                         <i class="fas fa-chevron-down accordion-icon">-</i>
                         <i class="fas fa-utensils"></i> Horarios
@@ -114,7 +114,7 @@
                 </div>
                 <!-- Filtrar por dias-->
                 <div class="filter-section">
-                    <input type="checkbox" id="toggle-dias" class="accordion-toggle" checked>
+                    <input type="checkbox" id="toggle-dias" class="accordion-toggle">
                     <label for="toggle-dias" class="filter-title">
                         <i class="fas fa-chevron-down accordion-icon">-</i>
                         <i class="fas fa-utensils"></i> Dias
@@ -152,7 +152,7 @@
                 </div>
                 <!-- Filtrar por etiquetas ( Seleccion multiple ) -->
                 <div class="filter-section">
-                    <input type="checkbox" id="toggle-etiquetas" class="accordion-toggle" checked>
+                    <input type="checkbox" id="toggle-etiquetas" class="accordion-toggle">
                     <label for="toggle-etiquetas" class="filter-title">
                         <i class="fas fa-chevron-down accordion-icon">-</i>
                         <i class="fas fa-utensils"></i> Etiquetas
@@ -207,7 +207,7 @@
                 </div>
                 <!-- Filtrar por calificacion-->
                 <div class="filter-section">
-                    <input type="checkbox" id="toggle-calificaciones" class="accordion-toggle" checked>
+                    <input type="checkbox" id="toggle-calificaciones" class="accordion-toggle">
                     <label for="toggle-calificaciones" class="filter-title">
                         <i class="fas fa-chevron-down accordion-icon">-</i>
                         <i class="fas fa-utensils"></i> Calificacion
@@ -225,6 +225,9 @@
                 </div>
                 <!-- Boton que me va a permitir confirmar los filtros seleccionados-->
                 <input type="submit" value="Aplicar">
+                <form action="{{ url_for('limpiar_filtros') }}" method="get" style="display:inline;">
+                    <button type="submit" class="btn-limpiar">Limpiar filtros</button>
+                </form>
             </div>
         </form>
         

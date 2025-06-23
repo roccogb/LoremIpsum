@@ -41,7 +41,7 @@ def get_comercio():
 
 # Endpoint que va a retornar información de la BDD de los comercios que cumplan con cierto patrón. Ej: 'retornar toda la información de los comercios con tipo de cocina china'
 # Va a recibir un archivo JSON con la información necesaria para filtrar     
-@comercios_bp.route("/filtrar")
+@comercios_bp.route("/filtrar", methods = ['GET','POST'])
 def get_comercios_filter():
     body_request = request.get_json()
     condiciones_filtro = []

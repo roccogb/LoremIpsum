@@ -270,6 +270,39 @@
     background: linear-gradient(145deg, #E6B885 0%, #D4A574 100%);
 }
 
+/* NUEVO: Estilo personalizado para el botón "Limpiar filtros" */
+.btn-limpiar {
+    width: 100%;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    backdrop-filter: blur(5px);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-limpiar:hover {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-limpiar:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
 .restaurants-section {
     flex: 1;
     min-width: 0;
