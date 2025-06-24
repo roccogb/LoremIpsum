@@ -10,7 +10,6 @@ let total_pag=0;
         indice_pag = parseInt(document.getElementById("pagina_actual").textContent);
 
         actualizarBotonesPagina();
-        bloquearMultiplesCheckboxes('0-24', ['7-11', '12-15', '16-18', '19-23', '23-5']);
         
     });
 
@@ -49,22 +48,7 @@ let total_pag=0;
         };
     };
 
-    // Esta funcion va a deshabilitar el resto de los checkbox de horarios si el de las 24h es seleccionado
-    function bloquearMultiplesCheckboxes(principalId, idsABloquear) {
-        const principal = document.getElementById(principalId);
-        const checkboxesABloquear = idsABloquear.map(id => document.getElementById(id));
-
-        principal.addEventListener('change', function() {
-            checkboxesABloquear.forEach(cb => {
-                if (cb) {
-                    cb.disabled = this.checked;
-                    if (this.checked) cb.checked = false;
-                }
-            });
-        });
-    };
-
-    // Función para seleccionar restaurante
+    // Función para seleccionar restaurante REVISAR
     function selectRestaurant(card) {
         // Aquí puedes agregar la lógica para navegar a la página del restaurante
         const restaurantName = card.querySelector('.restaurant-name').textContent;
