@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config["UPLOAD_FOLDER"]="../backend/resources/uploads"
 app.secret_key = "contra_ids"  # Necesario para usar session y flash
 
-API_BACK = "http://0.0.0.0:8100"                                        # Dirección local del backend
+API_BACK = "http://127.0.0.1:8100"        # Dirección local del backend
 
 
 # Endpoint proxy que va a actuar de intermediario entre el front-end y el back-end permitiendo cargar las imagenes almacenadas en el back
@@ -491,4 +491,4 @@ def realizar_review(id_comercio, id_reserva):
             return jsonify({"ERROR":"Reserva o comercio inexistente"}),404
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8200, debug=True)
+    app.run(host="localhost", port=8200, debug=True)
