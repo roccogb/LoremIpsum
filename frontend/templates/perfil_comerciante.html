@@ -65,34 +65,44 @@
                 <div class="list-reservas">
                     {% if reservas %}
                         {% for reserva in reservas %}
-                            <div class="info-reserva">
-                                <p><strong>Nombre bajo reserva:</strong> {{reserva["nombre_bajo_reserva"]}}</p>
-                                <p><strong>Email:</strong> {{reserva["email"]}}</p>
-                                <p><strong>Teléfono:</strong> {{reserva["telefono"]}}</p>
-                                <p><strong>Cantidad de personas:</strong> {{reserva["cant_personas"]}}</p>
-                                <p><strong>Solicitud especial:</strong> {{reserva["solicitud_especial"]}}</p>
-                                <p><strong>Fecha de la reserva:</strong> {{reserva["fecha_reserva"]}}</p>
-                                <p><strong>Estado de la reserva:</strong> 
-                                    {% if reserva["estado_reserva"] %}
-                                        <span class="estado-activa">Confirmada</span>
-                                    {% else %}
-                                        <span class="estado-pendiente">Pendiente</span>
-                                    {% endif %}
-                                </p>
-                                {% if not reserva["estado_reserva"] %}
-                                    <button class="qr-btn" onclick="openQRPopup('qrPopup{{loop.index}}')">📱 Código QR</button>
-                                {% endif %}
-                            </div>
-                            
-                            <!-- Popup único para cada reserva -->
-                            <div id="qrPopup{{loop.index}}" class="qr-popup">
-                                <div class="qr-popup-content">
-                                    <button class="qr-close" onclick="closeQRPopup('qrPopup{{loop.index}}')">&times;</button>
-                                    <h3>Código QR de la Reserva</h3>
-                                    <img src="{{reserva['ruta_qr']}}" alt="Código QR" style="display: block !important;">
-                                    <p>Escanea este código para confirmar la reserva</p>
+                            {% if reserva["estado_reserva"] != 'Eliminada' %}
+                                <div class="info-reserva">
+                                    <div class="reserva-content">
+                                        <p><strong>Nombre bajo reserva:</strong> {{reserva["nombre_bajo_reserva"]}}</p>
+                                        <p><strong>Email:</strong> {{reserva["email"]}}</p>
+                                        <p><strong>Teléfono:</strong> {{reserva["telefono"]}}</p>
+                                        <p><strong>Cantidad de personas:</strong> {{reserva["cant_personas"]}}</p>
+                                        <p><strong>Solicitud especial:</strong> {{reserva["solicitud_especial"]}}</p>
+                                        <p><strong>Fecha de la reserva:</strong> {{reserva["fecha_reserva"]}}</p>
+                                        <p><strong>Estado de la reserva:</strong> 
+                                            {% if reserva["estado_reserva"] == 'Confirmada' %}
+                                                <span class="estado-activa">Confirmada</span>
+                                            {% elif reserva["estado_reserva"] == 'Pendiente' %}
+                                                <span class="estado-pendiente">Pendiente</span>
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="reserva-actions">
+                                        {% if reserva["estado_reserva"] == 'Pendiente' %}
+                                            <button class="qr-btn" onclick="openQRPopup('qrPopup{{loop.index}}')">📱 Código QR</button>
+                                        {% endif %}
+                                        <form method="POST" action="{{ url_for('eliminar_reserva', id_reserva=reserva['id_reserva']) }}" style="display: inline;">
+                                            <button type="submit" class="delete-btn" onclick="return confirm('¿Estás seguro de que deseas eliminar esta reserva?')">🗑️ Eliminar</button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                                
+                                <!-- Popup único para cada reserva -->
+                                <div id="qrPopup{{loop.index}}" class="qr-popup">
+                                    <div class="qr-popup-content">
+                                        <button class="qr-close" onclick="closeQRPopup('qrPopup{{loop.index}}')">&times;</button>
+                                        <h3>Código QR de la Reserva</h3>
+                                        <img src="{{reserva['ruta_qr']}}" alt="Código QR" style="display: block !important;">
+                                        <p>Escanea este código para confirmar la reserva</p>
+                                    </div>
+                                </div>
+                            {% endif %}
                         {% endfor %}
                     {% else %}
                         <div class="info-reserva">

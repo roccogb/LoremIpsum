@@ -83,13 +83,19 @@ def get_reserva(id_reserva):
 def agregar_reserva():
     body_request = request.get_json()
 
-    claves_validas = ["id_usr", "id_comercio", "nombre_bajo_reserva",
-                      "email", "telefono", "cant_personas",
-                      "fecha_reserva", "solicitud_especial"]
+    id_usr=body_request["id_usr"]
+    id_comercio=body_request["id_comercio"]
+    nombre_bajo_reserva=body_request["nombre_bajo_reserva"]
+    email=body_request["email"]
+    telefono=body_request["telefono"]
+    cant_personas=body_request["cant_personas"]
+    fecha_reserva=body_request["fecha_reserva"]
+    solicitud_especial=body_request["solicitud_especial"]
+
     
-    for clave in claves_validas:
-        if clave not in body_request:
-            return jsonify({"ERROR": f"Falta la clave '{clave}' en la petición"}), 400
+    if not all([id_usr, id_comercio, nombre_bajo_reserva, email, 
+                telefono, cant_personas,fecha_reserva,solicitud_especial]):
+        return jsonify({"ERROR": "Debe completar todos los datos"}), 400
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -97,13 +103,13 @@ def agregar_reserva():
     qsql_nueva_reserva = """
         INSERT INTO reservas 
         (id_reserva,id_usr, id_comercio, nombre_bajo_reserva, email, telefono, cant_personas, fecha_reserva, solicitud_especial, estado_reserva) 
-        VALUES (default,%s,%s,%s,%s,%s,%s,%s,%s, 0);
+        VALUES (default,%s,%s,%s,%s,%s,%s,%s,%s, default);
     """
 
     cursor.execute(qsql_nueva_reserva, (
-        body_request["id_usr"], body_request["id_comercio"], body_request["nombre_bajo_reserva"],
-        body_request["email"], body_request["telefono"], body_request["cant_personas"],
-        body_request["fecha_reserva"], body_request["solicitud_especial"]
+        id_usr, id_comercio, nombre_bajo_reserva,
+        email, telefono, cant_personas,
+        fecha_reserva, solicitud_especial
     ))
 
     ruta_absoluta_qr = os.path.join(QR_FOLDER, f"qr{cursor.lastrowid}.png")
@@ -124,63 +130,28 @@ def agregar_reserva():
 
     return jsonify({"msg": "Reserva realizada con éxito", "ruta_qr": ruta_relativa_qr}), 201
 
-# Este endpoint eliminará de la BDD una reserva
+# Este endpoint actualizará el estado de una reserva a 'Eliminada'
 # Se recibirá, a traves de la URI, un 'id' el cual permitirá identificar cual será el registro a eliminar
-@reservas_bp.route("/eliminar/<int:id_reserva>", methods=["DELETE"])
+@reservas_bp.route("/eliminar/<int:id_reserva>", methods=["PUT"])
 def eliminar_reserva(id_reserva):
     conn=get_connection()
     cursor=conn.cursor()
 
-    qsql_eliminar_reserva="""DELETE FROM reservas WHERE id_reserva=%s"""
+    qsql_eliminar_reserva="""UPDATE reservas
+                             SET
+                                estado_reserva='Eliminada'
+                             WHERE id_reserva=%s"""
     cursor.execute(qsql_eliminar_reserva,(id_reserva,))
 
     conn.commit()                           # Guardo los cambios realizados
 
-    ruta_img_qr=f"../frontend/static/media/img/qr_reserva{id_reserva}.png"
+    ruta_img_qr=f"{QR_FOLDER}/qr{id_reserva}.png"
     if os.path.exists(ruta_img_qr):
         os.remove(ruta_img_qr)
 
     cursor.close()
     conn.close()
     return jsonify({"msg":"Reserva eliminada con éxito"}),200
-
-# Este endpoit editará la información de una reserva almacenada en la BDD
-# Recibirá un archivo JSON el cual contedrá toda la información a editar
-@reservas_bp.route("/editar", methods=["PUT"])
-def editar_reserva():
-    body_request=request.get_json()
-
-    claves_validas=["id_reserva","id_usr","id_comercio","nombre_bajo_reserva","email",
-                    "telefono","cant_personas","fecha_reserva","solicitud_especial","estado_reserva"]
-    for clave in claves_validas:
-        if clave not in body_request:
-            return jsonify({"ERROR":f"Falta la clave {clave} en la petición"}),400
-    
-    conn=get_connection()
-    cursor=conn.cursor()
-
-    qsql_editar_reserva=f"""UPDATE reservas
-                            SET 
-                            {claves_validas[1]}=%s,
-                            {claves_validas[2]}=%s,
-                            {claves_validas[3]}=%s,
-                            {claves_validas[4]}=%s,
-                            {claves_validas[5]}=%s,
-                            {claves_validas[6]}=%s,
-                            {claves_validas[7]}=%s,
-                            {claves_validas[8]}=%s,
-                            {claves_validas[9]}=%s 
-                            WHERE {claves_validas[0]}=%s;"""
-    
-    cursor.execute(qsql_editar_reserva,(body_request["id_usr"],body_request["id_comercio"],body_request["nombre_bajo_reserva"],
-                                        body_request["email"], body_request["telefono"], body_request["cant_personas"], 
-                                        body_request["fecha_reserva"], body_request["solicitud_especial"], body_request["estado_reserva"], 
-                                        body_request["id_reserva"]))
-
-    conn.commit()                           # Guardo los cambios realizados
-    cursor.close()
-    conn.close()
-    return jsonify({"msg":"Reserva actualizada"}),200
     
 # Este endpoint modificará el estado de una reserva para asi poder confirmarla. Se recibirá a traves de un parametro dinamico de la URI el ID de la misma
 # Implementación a futuro.
@@ -194,7 +165,7 @@ def modificar_estado(id_reserva):
     # Actualizo el estado de la reserva
     qsql_nuevo_estado="""UPDATE reservas
                          SET
-                            estado_reserva=True
+                            estado_reserva='Confirmada'
                          WHERE id_reserva=%s;"""
     cursor.execute(qsql_nuevo_estado,(id_reserva,))
 

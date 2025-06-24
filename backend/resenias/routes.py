@@ -1,4 +1,4 @@
-from flask import request, jsonify, abort
+from flask import request, jsonify
 from . import review_bp
 from database.db import get_connection
 
@@ -11,7 +11,7 @@ def create_review():
     id_reserva = data.get("id_reserva")
     id_usr = data.get("id_usr")
 
-    if not all([id_comercio, calificacion, comentario, id_reserva, id_usr]):  # Corrobora que los campos se llenen.
+    if not all([id_comercio, calificacion, comentario, id_reserva, id_usr]):
         return jsonify({"msg": "Debe  completar todos los datos"}), 400
     
     if not (1 <= int(calificacion) <= 5):
@@ -21,8 +21,6 @@ def create_review():
     cursor = conn.cursor(dictionary=True)
 
     try:
-
-        # Insertar reseña
         cursor.execute ("""
             INSERT INTO resenias 
             (id_comercio, id_usr, comentario, calificacion, tiempo_de_creacion, id_reserva)
@@ -30,7 +28,6 @@ def create_review():
             (%s, %s, %s, %s, NOW(), %s);
             """, (id_comercio, id_usr, comentario, calificacion, id_reserva))
         
-        #Actualizar reseña pendiente
         cursor.execute("""
                 UPDATE reservas
                 SET resenia_pendiente = %s
@@ -60,7 +57,6 @@ def create_review():
         # Calcular el ranking ponderado
         ranking_ponderado = (v / (v + m)) * r + (m / (v + m)) * c
 
-        # Actualizar tabla comercios
         cursor.execute("""
             UPDATE comercios
             SET promedio_calificacion = %s,

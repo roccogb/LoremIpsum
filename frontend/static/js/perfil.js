@@ -26,3 +26,7 @@ function closeQRPopup(popupId) {
         popup.classList.remove('show');
     }
 }
+
+function msgCancelar(){
+    confirm('¿Estás seguro de que deseas eliminar esta reserva?')
+};

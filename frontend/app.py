@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, session, url_for, flash, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
-from fextra import transformar_dias_comercio, transformar_horarios_comercio, transformar_tags_comercio, transformar_tp_comercio, transform_coords_dir
+from fextra import transformar_dias_comercio, transformar_horarios_comercio, transformar_tags_comercio, transformar_tp_comercio, transform_coords_dir, archivo_permitido
 import requests
 import os
 
@@ -80,7 +80,7 @@ def home():
 @app.route("/buscar", methods=["POST"])
 def buscar_comercio():
     nombre_comercio=request.form.get("buscador")
-    response = requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":"null","nombre_comercio":nombre_comercio.title()})
+    response = requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":"null","nombre_comercio":nombre_comercio.strip().title()})
     if response.status_code == 200:
         comercio_encontrado=response.json()
         return redirect(url_for("resto", id_comercio=comercio_encontrado["id_comercio"]))
@@ -221,6 +221,17 @@ def reservar():
         else:
             flash("Error al crear la reserva", "error")
             return redirect(url_for("home", id_comercio=id_comercio))
+
+# Endpoint proxy que va a eliminar una reserva
+@app.route("/eliminar_r/<int:id_reserva>", methods=["POST"])
+def eliminar_reserva(id_reserva):
+    if id_reserva > 0:
+        response=requests.put(f"{API_BACK}/reserva/eliminar/{id_reserva}")
+        if response.status_code == 200:
+            flash("Reserva eliminada con éxito","success")
+        else:
+            flash("Ocurrió un error. Por favor, vuelva a intentarlo", "error")
+    return redirect(url_for("manag_perfiles"))
         
 # Pagina de ayuda
 @app.route("/ayuda")
@@ -365,7 +376,8 @@ def register():
             response = requests.post(f"{API_BACK}/auth/register", json=datos_ingresados_usr)
         else:
             imagen=request.files.get("img_local")
-            if not imagen or imagen.filename=="":
+            
+            if not archivo_permitido(imagen):
                 ruta_img="/resources/uploads/comercios/img_resto_defecto.jpg"
             else:
                 nombre_archivo_seguro=secure_filename(imagen.filename)
@@ -446,7 +458,7 @@ def realizar_review(id_comercio, id_reserva):
             data_comercio=response_comercio.json()
             data_reserva=response_reserva.json()
 
-            if data_reserva["estado_reserva"]:
+            if data_reserva["estado_reserva"] == "Confirmada":
                 if request.method == "GET":
                     return render_template("review.html", comercio=data_comercio, identificador_reserva=id_reserva)
                 else:

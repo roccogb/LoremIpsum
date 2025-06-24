@@ -87,6 +87,7 @@ def get_comercios_filter():
         return jsonify({"ERROR": "No se encontraron comercios que cumplan con esos filtros"}), 404
     return jsonify(comercios_filtrados), 200
 
+#IMPLEMENTACION FUTURA O SACAR
 # Este endpoint va a permitir editar la información de un comercio. El mismo va a recibir un archivo JSON con la nueva información ingresada
 @comercios_bp.route("/editar", methods=["PUT"])
 def edit_comercio():

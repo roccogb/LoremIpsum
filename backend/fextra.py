@@ -10,4 +10,7 @@ def transform_dir_coords(str_dir):
             return [locacion.latitude, locacion.longitude]
     except Exception as e:
         print("Error: ",e)
-    return 
+    return [0,0]
+
+if __name__ == "__main__":
+    print(transform_dir_coords("Pancheria FIUBA"))

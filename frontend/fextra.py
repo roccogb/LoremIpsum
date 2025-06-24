@@ -40,3 +40,20 @@ def transform_coords_dir(coords):
     except Exception as e:
         print("Error:", e)
     return "No disponible"
+
+# Esta funcion va a validar el archivo subido por el usuario
+def archivo_permitido(imagen):
+    extensiones_permitidas=["jpg","jpeg","png"]
+    valido=True
+    if not imagen:
+        return False
+    
+    nombre_archivo=imagen.filename
+    
+    if nombre_archivo=="":
+        valido=False
+
+    if not '.' in nombre_archivo or nombre_archivo.rsplit('.',1)[1].lower() not in extensiones_permitidas:
+        valido=False
+
+    return valido
