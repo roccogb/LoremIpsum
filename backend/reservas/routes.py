@@ -116,7 +116,7 @@ def agregar_reserva():
 
     ruta_relativa_qr = f"/resources/uploads/temp/qr{cursor.lastrowid}.png"
 
-    qr_url = f"http://192.168.0.8:8200/qrproxy/{cursor.lastrowid}"         # Acá coloquen la segunda ip del front.
+    qr_url = f"http://9.9.9.9:8200/qrproxy/{cursor.lastrowid}"         # Acá coloquen la segunda ip del front.
     qr_img = qrcode.make(qr_url)
     qr_img.save(ruta_absoluta_qr)
     
