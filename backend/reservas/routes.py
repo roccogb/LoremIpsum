@@ -1,10 +1,10 @@
 from flask import jsonify, request
-from database.db import get_connection
-from . import reservas_bp
+from backend.database import get_connection
+from backend.reservas import reservas_bp
 import qrcode
 import os
 
-QR_FOLDER = os.path.abspath("resources/uploads/temp")
+QR_FOLDER = os.path.abspath("backend/resources/uploads/temp")
 
 # Este endpoint mostrará todas las reservas vinculadas a un usuario.
 # Se recibirá, a traves de la URI, un 'id' el cual servirá para identificar las reservas relacionadas al usuario
@@ -112,7 +112,7 @@ def agregar_reserva():
         fecha_reserva, solicitud_especial
     ))
 
-    ruta_absoluta_qr = os.path.join(QR_FOLDER, f"qr{cursor.lastrowid}.png")
+    ruta_absoluta_qr=os.path.join(QR_FOLDER,f"qr{cursor.lastrowid}.png")
 
     ruta_relativa_qr = f"/resources/uploads/temp/qr{cursor.lastrowid}.png"
 
@@ -137,6 +137,13 @@ def eliminar_reserva(id_reserva):
     conn=get_connection()
     cursor=conn.cursor()
 
+    qsql_reserva_existente="""SELECT * FROM reservas WHERE id_reserva=%s;"""
+    cursor.execute(qsql_reserva_existente,(id_reserva,))
+    reserva_existente=cursor.fetchone()
+    
+    if not reserva_existente:
+        return jsonify({"ERROR":"No existe ninguna reserva bajo ese ID"}),404
+    
     qsql_eliminar_reserva="""UPDATE reservas
                              SET
                                 estado_reserva='Eliminada'
@@ -152,7 +159,7 @@ def eliminar_reserva(id_reserva):
     cursor.close()
     conn.close()
     return jsonify({"msg":"Reserva eliminada con éxito"}),200
-    
+
 # Este endpoint modificará el estado de una reserva para asi poder confirmarla. Se recibirá a traves de un parametro dinamico de la URI el ID de la misma
 # Implementación a futuro.
 #   Luego de pasado un determinado tiempo, el estado de la reserva será 'False'

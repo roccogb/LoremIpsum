@@ -1,15 +1,17 @@
 from flask import Flask, request, render_template, redirect, session, url_for, flash, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
-from fextra import transformar_dias_comercio, transformar_horarios_comercio, transformar_tags_comercio, transformar_tp_comercio, transform_coords_dir, archivo_permitido
+from frontend.faux import transformar_dias_comercio, transformar_horarios_comercio, transformar_tags_comercio, transformar_tp_comercio
+from backend.faux import archivo_permitido, transform_coords_dir
 import requests
 import os
 
+API_BACK="http://0.0.0.0:8100"                              # Dirección local del backend
+BASE_DIR=os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER=os.path.abspath(os.path.join(BASE_DIR,"../backend/resources/uploads"))
+
 app = Flask(__name__)
-app.config["UPLOAD_FOLDER"]="../backend/resources/uploads"
+app.config["UPLOAD_FOLDER"]=UPLOAD_FOLDER
 app.secret_key = "contra_ids"  
-
-API_BACK = "http://127.0.0.1:8100"        # Dirección local del backend
-
 
 # Endpoint proxy que va a actuar de intermediario entre el front-end y el back-end permitiendo cargar las imagenes almacenadas en el back
 @app.route("/resources/uploads/<path:ruta_imagen>")
@@ -485,4 +487,4 @@ def realizar_review(id_comercio, id_reserva):
             return jsonify({"ERROR":"Reserva o comercio inexistente"}),404
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=8200, debug=True)
+    app.run(host="0.0.0.0", port=8200, debug=True)

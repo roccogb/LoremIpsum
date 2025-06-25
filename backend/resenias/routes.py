@@ -1,6 +1,6 @@
 from flask import request, jsonify
-from . import review_bp
-from database.db import get_connection
+from backend.resenias import review_bp
+from backend.database import get_connection
 
 @review_bp.route("/crear", methods=["POST"])
 def create_review():    
@@ -98,7 +98,7 @@ def get_all_review_com(id_comercio):
         if not all_reviews:
             return jsonify({"msg":"No hay reseñas para este comercio"}),404
 
-        return jsonify(all_reviews)
+        return jsonify(all_reviews),200
     
     except Exception as e:
 

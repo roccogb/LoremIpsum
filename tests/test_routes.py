@@ -1,5 +1,6 @@
-from fextra import transform_dir_coords
-from app import app
+# Script que va a testear el funcionamiento de los endpoints del backend
+from backend.faux import transform_dir_coords
+from backend.app import app
 import unittest
 
 # Test unitarios de la funcion que transforma una direccion en coordenadas gracias a 'Geopy'
@@ -169,9 +170,53 @@ class TestROUTESReservas(unittest.TestCase):
         self.assertEqual(404, response.status_code)
     
     def test_get_reserva_correcto(self):
-        response=self.cliente.get("/reserva/1")
+        response=self.cliente.get("/reserva/2")
         self.assertEqual(200, response.status_code)
     
     def test_get_reserva_incorrecto_inexistente(self):
         response=self.cliente.get("/reserva/99")
         self.assertEqual(404, response.status_code)
+
+    def test_eliminar_reserva_correcto(self):
+        response=self.cliente.put("/reserva/eliminar/2")
+        self.assertEqual(200,response.status_code)
+    
+    def test_eliminar_reserva_incorrecto_inexistente(self):
+        response=self.cliente.put("/reserva/eliminar/99")
+        self.assertEqual(404,response.status_code)
+
+# Test de integración de los endpoints del modulo de reservas. 
+# Para realizar estos mismos es necesario tener una reserva previamente creada
+class TestROUTESReview(unittest.TestCase):
+    def setUp(self):
+        self.client=app.test_client()
+        print("=====Test ROUTES Review=====")
+    
+    def test_crear_review_correcto(self):
+        response=self.client.post("/review/crear", json={"id_comercio":6,"calificacion":5,
+                                                         "comentario":"Fascinante!!","id_reserva":1,
+                                                         "id_usr":10})
+        self.assertEqual(201,response.status_code)
+    
+    def test_crear_review_incorrecto_data_incompleta(self):
+        response=self.client.post("/review/crear", json={"id_comercio":0,"calificacion":0,
+                                                         "comentario":"","id_reserva":0,
+                                                         "id_usr":0})
+        self.assertEqual(400, response.status_code)
+    
+    def test_get_all_review_com_correcto(self):
+        response=self.client.get("/review/com/6")
+        self.assertEqual(200, response.status_code)
+    
+    def test_get_all_review_com_incorrecto_inexistente(self):
+        response=self.client.get("/review/com/99")
+        self.assertEqual(404, response.status_code)
+
+    def test_get_all_review_cons_correcto(self):
+        response=self.client.get("/review/usr/10")
+        self.assertEqual(200, response.status_code)
+    
+    def test_get_all_review_cons_incorrecto_inexistente(self):
+        response=self.client.get("/review/usr/99")
+        self.assertEqual(404, response.status_code)
+

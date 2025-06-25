@@ -1,6 +1,6 @@
 from flask import jsonify, request
-from . import favoritos_bp
-from database.db import get_connection
+from backend.favoritos import favoritos_bp
+from backend.database import get_connection
 
 # Este endpoint va a marcar o desmarcar un comercio
 @favoritos_bp.route('/alternar', methods=['POST'])

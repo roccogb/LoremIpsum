@@ -1,7 +1,7 @@
 from flask import request, jsonify
-from . import auth_bp
-from database.db import get_connection
-from fextra import transform_dir_coords
+from backend.auth import auth_bp
+from backend.database import get_connection
+from backend.faux import transform_dir_coords
 import datetime
 
 @auth_bp.route("/consumidor", methods=["POST"])
