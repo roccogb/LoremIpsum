@@ -5,12 +5,8 @@ from backend.faux import archivo_permitido, transform_coords_dir
 import requests
 import os
 
-API_BACK="http://0.0.0.0:8100"                              # Dirección local del backend
-BASE_DIR=os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER=os.path.abspath(os.path.join(BASE_DIR,"../backend/resources/uploads"))
-
 app = Flask(__name__)
-app.config["UPLOAD_FOLDER"]=UPLOAD_FOLDER
+app.config["UPLOAD_FOLDER"]=os.path.abspath(os.path.join( os.path.dirname(os.path.abspath(__file__)),"../backend/resources/uploads" ) )
 app.secret_key = "contra_ids"  
 
 # Endpoint proxy que va a actuar de intermediario entre el front-end y el back-end permitiendo cargar las imagenes almacenadas en el back
@@ -30,14 +26,14 @@ def confirmar_reserva(id_reserva):
             session["next_url"]=url_for("confirmar_reserva", id_reserva=id_reserva)
             return redirect(url_for("login"))
         else:
-            response_reserva=requests.get(f"{API_BACK}/reserva/{id_reserva}")
+            response_reserva=requests.get(f"http://0.0.0.0:8100/reserva/{id_reserva}")
             reserva_data=response_reserva.json()
 
-            response_comercio=requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":reserva_data["id_comercio"],"nombre_comercio":""})
+            response_comercio=requests.get("http://0.0.0.0:8100/comercio/get", json={"id_comercio":reserva_data["id_comercio"],"nombre_comercio":""})
             comercio_data=response_comercio.json()
 
             if reserva_data["id_usr"] == session.get("datos_usuario")["id_usr"]:
-                response_estado=requests.put(f"{API_BACK}/reserva/estado/{id_reserva}")
+                response_estado=requests.put(f"http://0.0.0.0:8100/reserva/estado/{id_reserva}")
                 if response_estado.status_code == 200 and response_reserva.status_code == 200 and response_comercio.status_code == 200:
                     return render_template("reserva_confirmada.html", reserva_info=reserva_data, comercio_info=comercio_data)
             else:
@@ -49,13 +45,13 @@ def confirmar_reserva(id_reserva):
 # Pagina de inicio
 @app.route("/")
 def home():
-    response=requests.get(f"{API_BACK}/comercio/filtrar",json={"tipo_cocina":"null","categoria":"null","calificacion":"desc"})
+    response=requests.get("http://0.0.0.0:8100/comercio/filtrar",json={"tipo_cocina":"null","categoria":"null","calificacion":"desc"})
 
     id_favoritos = []
     if "datos_usuario" in session and session["tipo_usuario"] == "consumidor":
         id_usr = session.get("datos_usuario")["id_usr"]
         try:
-            fav_response = requests.get(f"{API_BACK}/favs/detallado/{id_usr}")
+            fav_response = requests.get(f"http://0.0.0.0:8100/favs/detallado/{id_usr}")
             if fav_response.status_code == 200:
                 favoritos_data = fav_response.json()
                 id_favoritos = [fav['id_comercio'] for fav in favoritos_data]
@@ -82,7 +78,7 @@ def home():
 @app.route("/buscar", methods=["POST"])
 def buscar_comercio():
     nombre_comercio=request.form.get("buscador")
-    response = requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":"null","nombre_comercio":nombre_comercio.strip().title()})
+    response = requests.get("http://0.0.0.0:8100/comercio/get", json={"id_comercio":"null","nombre_comercio":nombre_comercio.strip().title()})
     if response.status_code == 200:
         comercio_encontrado=response.json()
         return redirect(url_for("resto", id_comercio=comercio_encontrado["id_comercio"]))
@@ -105,16 +101,16 @@ def descubre(indice_pag):
         
         session["filtros"] = filtros
 
-        response=requests.get(f"{API_BACK}/comercio/filtrar", json= filtros)
+        response=requests.get("http://0.0.0.0:8100/comercio/filtrar", json= filtros)
 
     elif request.method == "GET":
         filtros = session.get("filtros", None)
 
         if filtros:
-            response=requests.post(f"{API_BACK}/comercio/filtrar", json= filtros)
+            response=requests.post("http://0.0.0.0:8100/comercio/filtrar", json= filtros)
 
         else:
-            response=requests.get(f"{API_BACK}/comercio/")
+            response=requests.get("http://0.0.0.0:8100/comercio/")
 
     if response.status_code == 200:
         comercios_bdd = list(response.json())
@@ -153,7 +149,7 @@ def resto(id_comercio):
     if "datos_usuario" in session and session["tipo_usuario"] == "consumidor":
         id_usr = session.get("datos_usuario")["id_usr"]
         try:
-            fav_response = requests.get(f"{API_BACK}/favs/detallado/{id_usr}")
+            fav_response = requests.get(f"http://0.0.0.0:8100/favs/detallado/{id_usr}")
             if fav_response.status_code == 200:
                 favoritos_data = fav_response.json()
                 # Extraer solo los IDs de comercios favoritos
@@ -162,7 +158,7 @@ def resto(id_comercio):
             # Si hay error al obtener favoritos, continuar sin ellos
             id_favoritos = []
 
-    response = requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":id_comercio,"nombre_comercio":""})
+    response = requests.get("http://0.0.0.0:8100/comercio/get", json={"id_comercio":id_comercio,"nombre_comercio":""})
     if response.status_code == 200:
         comercio_bdd = response.json()
 
@@ -175,7 +171,7 @@ def resto(id_comercio):
         if type(comercio_bdd["ranking_ponderado"]) == float:
             comercio_bdd["ranking_ponderado"]=round(comercio_bdd["ranking_ponderado"], 1) # El '1' redondea el float a un decimal (ej:4.2)
 
-        response_resenias=requests.get(f"{API_BACK}/review/com/{id_comercio}")
+        response_resenias=requests.get(f"http://0.0.0.0:8100/review/com/{id_comercio}")
 
         resenias_data=[]
         if response_resenias.status_code == 200:
@@ -205,7 +201,7 @@ def reservar():
         solicitud_especial = request.form.get("solicitud_especial", "")
 
         # Envía los datos al backend para crear la reserva.
-        response = requests.post(f"{API_BACK}/reserva/agregar", json={
+        response = requests.post("http://0.0.0.0:8100/reserva/agregar", json={
             "id_usr": session["datos_usuario"].get("id_usr"),
             "id_comercio": id_comercio,
             "nombre_bajo_reserva": nombre_bajo_reserva,
@@ -228,7 +224,7 @@ def reservar():
 @app.route("/eliminar_r/<int:id_reserva>", methods=["POST"])
 def eliminar_reserva(id_reserva):
     if id_reserva > 0:
-        response=requests.put(f"{API_BACK}/reserva/eliminar/{id_reserva}")
+        response=requests.put(f"http://0.0.0.0:8100/reserva/eliminar/{id_reserva}")
         if response.status_code == 200:
             flash("Reserva eliminada con éxito","success")
         else:
@@ -248,9 +244,9 @@ def manag_perfiles():
     else:
         if session.get("tipo_usuario") == "consumidor":
 
-            response_reservas=requests.get(f"{API_BACK}/reserva/usr/{session.get("datos_usuario")["id_usr"]}")
-            response_resenias=requests.get(f"{API_BACK}/review/usr/{session.get("datos_usuario")["id_usr"]}")
-            response_favs=requests.get(f"{API_BACK}/favs/detallado/{session.get("datos_usuario")["id_usr"]}")
+            response_reservas=requests.get(f"http://0.0.0.0:8100/reserva/usr/{session.get('datos_usuario')['id_usr']}")
+            response_resenias=requests.get(f"http://0.0.0.0:8100/review/usr/{session.get('datos_usuario')['id_usr']}")
+            response_favs=requests.get(f"http://0.0.0.0:8100/favs/detallado/{session.get('datos_usuario')['id_usr']}")
 
             data_reservas=[]
             data_resenias=[]
@@ -271,8 +267,8 @@ def manag_perfiles():
                                     resenias=data_resenias,
                                     favoritos=data_fav)
         elif session.get("tipo_usuario") == "comercio":
-            response_reservas=requests.get(f"{API_BACK}/reserva/comercio/{session.get("datos_comercio")["id_comercio"]}")
-            response_resenias=requests.get(f"{API_BACK}/review/com/{session.get("datos_comercio")["id_comercio"]}")
+            response_reservas=requests.get(f"http://0.0.0.0:8100/reserva/comercio/{session.get('datos_comercio')['id_comercio']}")
+            response_resenias=requests.get(f"http://0.0.0.0:8100/review/com/{session.get('datos_comercio')['id_comercio']}")
 
             data_reservas=[]
             data_resenias=[]
@@ -298,7 +294,7 @@ def login():
 
         try:
             # Primero intentamos autenticar como usuario consumidor
-            response_consumidor = requests.post(f"{API_BACK}/auth/consumidor", 
+            response_consumidor = requests.post("http://0.0.0.0:8100/auth/consumidor", 
                                               json={"email": email, "pss": pswd})
             
             if response_consumidor.status_code == 200:
@@ -316,7 +312,7 @@ def login():
                 }
             
             # Si no es consumidor, intentamos autenticar como comerciante
-            response_comercio = requests.post(f"{API_BACK}/auth/comercio", 
+            response_comercio = requests.post("http://0.0.0.0:8100/auth/comercio", 
                                             json={"email": email, "pss": pswd})
             
             if response_comercio.status_code == 200:
@@ -375,7 +371,7 @@ def register():
                                   "telefono_consumidor":form.get("telefono_consumidor"),
                                   "password_consumidor":form.get("password_consumidor")}
             
-            response = requests.post(f"{API_BACK}/auth/register", json=datos_ingresados_usr)
+            response = requests.post("http://0.0.0.0:8100/auth/register", json=datos_ingresados_usr)
         else:
             imagen=request.files.get("img_local")
             
@@ -404,7 +400,7 @@ def register():
                            "etiquetas":form.getlist("etiquetas[]"),
                            }
 
-            response = requests.post(f"{API_BACK}/auth/register", json=data_comercio)
+            response = requests.post("http://0.0.0.0:8100/auth/register", json=data_comercio)
 
         if response.status_code == 200:
             flash("Se registro el usuario correctamente","success")
@@ -424,7 +420,7 @@ def click_fav(id_comercio):
     id_usr = session.get("datos_usuario")["id_usr"]
     
     try:
-        response = requests.post(f"{API_BACK}/favs/alternar", json={"id_comercio": id_comercio, "id_usr": id_usr})
+        response = requests.post("http://0.0.0.0:8100/favs/alternar", json={"id_comercio": id_comercio, "id_usr": id_usr})
         
         if response.status_code == 200:
             data = response.json()
@@ -453,8 +449,8 @@ def logout():
 @app.route("/realizar_review/<int:id_comercio>/<int:id_reserva>", methods=["GET","POST"])
 def realizar_review(id_comercio, id_reserva):
     if "datos_usuario" in session and session.get("tipo_usuario") == "consumidor":
-        response_comercio=requests.get(f"{API_BACK}/comercio/get", json={"id_comercio":id_comercio,"nombre_comercio":""})
-        response_reserva=requests.get(f"{API_BACK}/reserva/{id_reserva}")
+        response_comercio=requests.get("http://0.0.0.0:8100/comercio/get", json={"id_comercio":id_comercio,"nombre_comercio":""})
+        response_reserva=requests.get(f"http://0.0.0.0:8100/reserva/{id_reserva}")
 
         if response_comercio.status_code == 200 and response_reserva.status_code == 200:
             data_comercio=response_comercio.json()
@@ -467,7 +463,7 @@ def realizar_review(id_comercio, id_reserva):
                     text_comentario=request.form.get("comentario")
                     calificacion_resto=request.form.get("calificacion")
 
-                    response=requests.post(f"{API_BACK}/review/crear", json={
+                    response=requests.post("http://0.0.0.0:8100/review/crear", json={
                             "id_usr":session["datos_usuario"]["id_usr"],
                             "id_reserva":id_reserva,
                             "id_comercio":data_comercio["id_comercio"], 

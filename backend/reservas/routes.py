@@ -4,8 +4,6 @@ from backend.reservas import reservas_bp
 import qrcode
 import os
 
-QR_FOLDER = os.path.abspath("backend/resources/uploads/temp")
-
 # Este endpoint mostrará todas las reservas vinculadas a un usuario.
 # Se recibirá, a traves de la URI, un 'id' el cual servirá para identificar las reservas relacionadas al usuario
 @reservas_bp.route("/usr/<int:id_usr>")
@@ -112,7 +110,7 @@ def agregar_reserva():
         fecha_reserva, solicitud_especial
     ))
 
-    ruta_absoluta_qr=os.path.join(QR_FOLDER,f"qr{cursor.lastrowid}.png")
+    ruta_absoluta_qr=os.path.join(os.path.abspath("backend/resources/uploads/temp"),f"qr{cursor.lastrowid}.png")
 
     ruta_relativa_qr = f"/resources/uploads/temp/qr{cursor.lastrowid}.png"
 
@@ -152,7 +150,7 @@ def eliminar_reserva(id_reserva):
 
     conn.commit()                           # Guardo los cambios realizados
 
-    ruta_img_qr=f"{QR_FOLDER}/qr{id_reserva}.png"
+    ruta_img_qr=f"{os.path.abspath("backend/resources/uploads/temp")}/qr{id_reserva}.png"
     if os.path.exists(ruta_img_qr):
         os.remove(ruta_img_qr)
 
@@ -179,7 +177,7 @@ def modificar_estado(id_reserva):
     
     conn.commit()                           # Guardo los cambios realizados
 
-    ruta_absoluta_qr=f"{QR_FOLDER}/qr{id_reserva}.png"
+    ruta_absoluta_qr=f"{os.path.abspath("backend/resources/uploads/temp")}/qr{id_reserva}.png"
     os.remove(ruta_absoluta_qr)
 
     cursor.close()
