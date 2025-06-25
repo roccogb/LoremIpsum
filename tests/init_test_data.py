@@ -82,9 +82,7 @@ cursor.execute("""INSERT INTO comercios
                     
                     (23, 81, '/resources/uploads/comercios/tapas_y_vino.jpg', 'Tapas y Vino', 'gourmet', 'vanguardia', 22334472, -34.585185, -58.428887, '2025-06-20 21:00:00', 'https://www.instagram.com/calderatapas/', 4.9, 35, 4.8, "['viernes','sábado']", "['20-23']", "['musica_vivo','happy_hour']"),
                     
-                    (24, 82, '/resources/uploads/comercios/bio_natur.jpg', 'Bio Natur', 'tematico', 'autor', 22334473, -34.580982, -58.431215, '2025-06-20 11:00:00', 'https://biorestaurant.com.ar/', 4.5, 18, 4.1, "['lunes','miércoles','viernes']", "['12-15','20-23']", "['vegano','sin_gluten']"),
-                    
-                    (25, 83, '/resources/uploads/comercios/taco_box.jpg', 'Taco Box', 'comida_rapida', 'clasica', 22334474, -34.573807, -58.455156, '2025-06-20 13:00:00', 'http://www.tacobox.com.ar/', 4.0, 12, 3.7, "['jueves','viernes','sábado']", "['12-15','20-23']", "['para_llevar','zona_fumadores','estacionamiento']");""")
+                    (24, 82, '/resources/uploads/comercios/taco_box.jpg', 'Taco Box', 'comida_rapida', 'clasica', 22334474, -34.573807, -58.455156, '2025-06-20 13:00:00', 'http://www.tacobox.com.ar/', 4.0, 12, 3.7, "['jueves','viernes','sábado']", "['12-15','20-23']", "['para_llevar','zona_fumadores','estacionamiento']");""")
 
 
 
