@@ -1,9 +1,9 @@
 # Modulo que va a contener el conjunto de servicios vinculados al blueprint 'Comercios'
 # Este es un borrador, el endpoint 'agregar' con las funciones auxiliares que utilizan puede ser necesitadas en otro blueprint'
 from flask import jsonify, request
-from . import comercios_bp
-from database.db import get_connection
-from fextra import transform_dir_coords
+from backend.comercios import comercios_bp
+from backend.database import get_connection
+from backend.faux import transform_dir_coords
 
 # Endpoint que va a retornar TODA la información de los comercios. La misma será retornada en formato JSON
 @comercios_bp.route("/")
@@ -87,6 +87,7 @@ def get_comercios_filter():
         return jsonify({"ERROR": "No se encontraron comercios que cumplan con esos filtros"}), 404
     return jsonify(comercios_filtrados), 200
 
+#IMPLEMENTACION FUTURA O SACAR
 # Este endpoint va a permitir editar la información de un comercio. El mismo va a recibir un archivo JSON con la nueva información ingresada
 @comercios_bp.route("/editar", methods=["PUT"])
 def edit_comercio():

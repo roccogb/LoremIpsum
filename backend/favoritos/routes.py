@@ -1,6 +1,6 @@
 from flask import jsonify, request
-from . import favoritos_bp
-from database.db import get_connection
+from backend.favoritos import favoritos_bp
+from backend.database import get_connection
 
 # Este endpoint va a marcar o desmarcar un comercio
 @favoritos_bp.route('/alternar', methods=['POST'])
@@ -21,16 +21,16 @@ def alternar_fav():
     
     if existe: #si el favorito ya existe, lo borra.
         cursor.execute("DELETE FROM favoritos WHERE id_usr=%s AND id_comercio=%s", (id_usr, id_comercio))
-        conn.commit()
         favorito = False
-    else: #agrega el favortito nuevo
+    else: #agrega el favorito nuevo
         cursor.execute("INSERT INTO favoritos (id_usr, id_comercio) VALUES (%s, %s)", (id_usr, id_comercio))
-        conn.commit()
         favorito = True
+
+    conn.commit()
     cursor.close()
     conn.close()
    
-    return jsonify({"marca": favorito})
+    return jsonify({"marca": favorito}),200
 
 # Este endpoint va a listar los favoritos de un usuario
 @favoritos_bp.route('/detallado/<int:id_usr>', methods=['GET'])
@@ -50,4 +50,4 @@ def listar_favoritos_con_detalle(id_usr):
     cursor.close()
     conn.close()
 
-    return jsonify(resultados)
+    return jsonify(resultados),200

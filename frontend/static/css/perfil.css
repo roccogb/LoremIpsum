@@ -398,7 +398,6 @@ body::before {
     padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
 }
 
 /* Estilos específicos para favoritos */
@@ -467,6 +466,54 @@ body::before {
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+
+/* Estructura de la reserva con botones */
+.reserva-content {
+    flex: 1;
+    margin-bottom: 15px;
+}
+
+.reserva-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Botón de eliminar */
+.delete-btn {
+    background: linear-gradient(145deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.delete-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.delete-btn:hover::before {
+    opacity: 1;
 }
 
 /* Sección de botón de retorno */
@@ -586,5 +633,23 @@ body::before {
     .info-fav .restaurant-name-fav {
         margin: 0 10px;
         font-size: 14px;
+    }
+    
+    .reserva-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .delete-btn {
+        width: 100%;
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    .qr-btn {
+        width: 100%;
+        padding: 10px 16px;
+        font-size: 13px;
     }
 }

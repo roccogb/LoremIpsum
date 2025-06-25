@@ -1,7 +1,7 @@
-from flask import request, jsonify, session
-from . import auth_bp
-from database.db import get_connection
-from fextra import transform_dir_coords
+from flask import request, jsonify
+from backend.auth import auth_bp
+from backend.database import get_connection
+from backend.faux import transform_dir_coords
 import datetime
 
 @auth_bp.route("/consumidor", methods=["POST"])
@@ -29,7 +29,7 @@ def auth_consumidor():
         
         if not user_data:
             return jsonify({"msg": "Usuario no encontrado"}), 404         
-        
+
         return jsonify(user_data), 200
            
     except Exception as e:
@@ -58,7 +58,7 @@ def auth_comercio():
             c.tiempo_de_creacion, c.pdf_menu_link, c.ranking_ponderado,
             c.dias, c.horarios, c.etiquetas
         FROM usuario_comercio uc
-        LEFT JOIN comercios c ON uc.id_usr_comercio = c.id_usr_comercio
+        JOIN comercios c ON uc.id_usr_comercio = c.id_usr_comercio
         WHERE uc.email_usuario = %s AND uc.contrasena = %s
         """
         cursor.execute(query, (email, pswd))
@@ -67,10 +67,7 @@ def auth_comercio():
         conn.close()
         
         if not user_data:
-            return jsonify({"msg": "Usuario no encontrado"}), 404
-        
-        session['usuario'] = user_data
-        session['tipo_usuario'] = 'comercio'
+            return jsonify({"msg": "Usuario no encontrado"}), 404        
         
         return jsonify(user_data), 200
                     
@@ -102,7 +99,7 @@ def register_user():
         return result
 
     except Exception as e:
-        print(f"[ERROR] register_user: {str(e)}")  # Muestra el error real
+        print(f"[ERROR] register_user: {str(e)}")
         return jsonify({"error": "Error interno del servidor register user"}), 500
 
 def register_consumidor(data, cursor, conn):
@@ -143,28 +140,21 @@ def register_comercio(data, cursor, conn):
     cuit_responsable = data.get('cuit_responsable', '0').strip()
     email_responsable = data.get('email_responsable', '').strip()
     contrasena = data.get('contrasena_usr_comercio', '').strip()
-    
-    nombre_comercio = data.get('nombre_comercio', '').strip()
+    nombre_comercio = data.get('nombre_comercio', '').strip().title()
     tel_comercio = data.get('tel_comercio', '0').strip()
-
-    try:
-        lat, lng = transform_dir_coords(data.get('dir_comercio', '').strip())
-    except:
-        lat, lng = [0, 0]
-        
+    lat, lng = transform_dir_coords(data.get('dir_comercio', '').strip())
     lkmenu_comercio = data.get('lkmenu_comercio', '').strip()
     categoria = data.get('categoria', '').strip()
     tipo_cocina = data.get('tipo_cocina', '').strip()
-    ruta_img = data.get('ruta_img')
-    
+    ruta_img = data.get('ruta_img')    
     dias = data.get('dias', [])
     horarios = data.get('horarios', [])
     etiquetas = data.get('etiquetas', [])
     
     if not all([nombre_responsable, dni_responsable, cuit_responsable, 
                 email_responsable, contrasena, nombre_comercio,
-                tel_comercio, lat, lng, lkmenu_comercio,
-                categoria, tipo_cocina, dias, horarios]):
+                tel_comercio, lkmenu_comercio,
+                categoria, tipo_cocina, dias, horarios]) or lat is None or lng is None:
         return jsonify({"error": "Ocurrió un error al ingresar los datos"}), 400
 
     dni_int = int(dni_responsable)
@@ -196,11 +186,6 @@ def register_comercio(data, cursor, conn):
     
     id_usr_comercio = cursor.lastrowid
     
-    cursor.execute("SELECT * FROM comercios WHERE id_usr_comercio = %s", (id_usr_comercio,))
-    if cursor.fetchone():
-        return jsonify({"error": "id_usr_comercio del comercio ya registrado"}), 409
-    
-    # CORRECCIÓN: Agregué %s para ranking_ponderado y reorganicé los parámetros
     insert_comercio_query = """
         INSERT INTO comercios 
         (id_usr_comercio, ruta_imagen, nombre_comercio, categoria, tipo_cocina, 
@@ -210,24 +195,23 @@ def register_comercio(data, cursor, conn):
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
     
-    # CORRECCIÓN: Agregué los valores faltantes y reorganicé el orden
     cursor.execute(insert_comercio_query, (
-        id_usr_comercio,           # id_usr_comercio
-        ruta_img,                  # ruta_imagen
-        nombre_comercio,           # nombre_comercio
-        categoria,                 # categoria
-        tipo_cocina,              # tipo_cocina
-        telefono_int,             # telefono
-        lat,                      # latitud
-        lng,                      # longitud
-        datetime.datetime.now(),   # tiempo_de_creacion
-        lkmenu_comercio,          # pdf_menu_link
+        id_usr_comercio,           
+        ruta_img,                  
+        nombre_comercio,           
+        categoria,                 
+        tipo_cocina,              
+        telefono_int,             
+        lat,                      
+        lng,                      
+        datetime.datetime.now(),  
+        lkmenu_comercio,          
         0.0,                      # promedio_calificacion (valor por defecto)
         0,                        # cantidad_resenias (valor por defecto)
         0.0,                      # ranking_ponderado (valor por defecto)
-        dias_str,                 # dias
-        horarios_str,             # horarios
-        etiquetas_str             # etiquetas
+        dias_str,                 
+        horarios_str,             
+        etiquetas_str             
     ))
     
     conn.commit()

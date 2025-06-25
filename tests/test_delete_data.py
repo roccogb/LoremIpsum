@@ -1,5 +1,5 @@
 # Script para eliminar las tablas de la BDD. No tiene mucha utilidad, es para hacer pruebas mas que nada(se elimina)
-from backend.database.db import get_connection
+from backend.database import get_connection
 
 conn=get_connection()
 cursor=conn.cursor()

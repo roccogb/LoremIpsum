@@ -35,20 +35,22 @@
             {% if reservas %}
                 <div class="list-reservas">
                     {% for reserva in reservas %}
-                        <div class="info-reserva">
-                            <div class="reserva-header">
-                                <p>{{ reserva["nombre_comercio"] }} - {{ reserva["fecha_reserva"] }}
-                                    {% if reserva["estado_reserva"] %}
-                                        <span class="estado-activa">Confirmada</span>
-                                        {% if reserva["resenia_pendiente"] %}
-                                            <a href="{{url_for('realizar_review', id_comercio=reserva['id_comercio'], id_reserva=reserva['id_reserva'])}}" class="link-resenia">Dejar reseña</a>
+                        {% if reserva["estado_reserva"] != 'Eliminada' %}
+                            <div class="info-reserva">
+                                <div class="reserva-header">
+                                    <p>{{ reserva["nombre_comercio"] }} - {{ reserva["fecha_reserva"] }}
+                                        {% if reserva["estado_reserva"] == 'Confirmada' %}
+                                            <span class="estado-activa">Confirmada</span>
+                                            {% if reserva["resenia_pendiente"] %}
+                                                <a href="{{url_for('realizar_review', id_comercio=reserva['id_comercio'], id_reserva=reserva['id_reserva'])}}" class="link-resenia">Dejar reseña</a>
+                                            {% endif %}
+                                        {% elif reserva["estado_reserva"] == 'Pendiente' %}
+                                            <span class="estado-pendiente">Pendiente</span>
                                         {% endif %}
-                                    {% else %}
-                                        <span class="estado-pendiente">Pendiente</span>
-                                    {% endif %}
-                                </p>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             {% else %}
