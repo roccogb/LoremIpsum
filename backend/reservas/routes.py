@@ -150,7 +150,7 @@ def eliminar_reserva(id_reserva):
 
     conn.commit()                           # Guardo los cambios realizados
 
-    ruta_img_qr=f"{os.path.abspath("backend/resources/uploads/temp")}/qr{id_reserva}.png"
+    ruta_img_qr=f"{os.path.abspath('backend/resources/uploads/temp')}/qr{id_reserva}.png"
     if os.path.exists(ruta_img_qr):
         os.remove(ruta_img_qr)
 
@@ -177,7 +177,7 @@ def modificar_estado(id_reserva):
     
     conn.commit()                           # Guardo los cambios realizados
 
-    ruta_absoluta_qr=f"{os.path.abspath("backend/resources/uploads/temp")}/qr{id_reserva}.png"
+    ruta_absoluta_qr=f"{os.path.abspath('backend/resources/uploads/temp')}/qr{id_reserva}.png"
     os.remove(ruta_absoluta_qr)
 
     cursor.close()
