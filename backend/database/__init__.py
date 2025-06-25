@@ -6,6 +6,6 @@ def get_connection():
   return mysql.connector.connect(
     host="localhost",
     user="root",
-    password="contraSQL",             # La contraseña de la base de datos varía según la configuración de cada uno. ¿Se puede hacer algo mas general?
+    password="CONTRASQL",             # La contraseña de la base de datos varía según la configuración de cada uno. ¿Se puede hacer algo mas general?
     database="foodyba_dbb"
   )
