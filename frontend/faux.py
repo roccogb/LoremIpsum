@@ -3,11 +3,11 @@ from ast import literal_eval
 # Funciones auxiliares que van a transformar los datos de la BDD para que sean visibles en el front
 def transformar_horarios_comercio(str_list_horarios):
     horarios_visibles = {
-        "7-10": "Desayuno(7:00-10:00)",
+        "07-10": "Desayuno(07:00-10:00)",
         "12-15": "Almuerzo(12:00-15:00)",
         "16-18": "Merienda(16:00-18:00)",
         "20-23": "Cena(20:00-23:00)",
-        "00-05": "Nocturno(23:00-05:00)"
+        "00-05": "Nocturno(00:00-05:00)"
     }
     list_horarios = [horarios_visibles.get(hor, hor) for hor in literal_eval(str_list_horarios)]
     return list_horarios

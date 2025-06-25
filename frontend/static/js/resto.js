@@ -40,20 +40,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Funcion javascript que va a cargar el mapa 'Leaflet' con las capaz de Openstreetmap
 document.addEventListener('DOMContentLoaded', function () {
-    // Obtener las coordenadas del elemento HTML
     const coordElement = document.getElementById('coordenadas_comercio');
     if (coordElement) {
         const [lat, lng] = coordElement.textContent.split(';').map(coord => parseFloat(coord.trim()));
 
-        // Inicializar el mapa con Leaflet
         const map = L.map('map').setView([lat, lng], 15);
 
-        // Cargar y mostrar el mapa con tiles de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Agregar marcador
         L.marker([lat, lng])
             .addTo(map)
             .bindPopup('Ubicación del comercio')
@@ -65,8 +61,8 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
   // Leer días y horarios desde data-attributes
   const datos = document.getElementById('datos-comercio');
-  const diasRaw = datos.getAttribute('data-dias');         // ej: "jueves,viernes,sabado,domingo"
-  const horariosRaw = datos.getAttribute('data-horarios'); // ej: "Cena(19:00-23:00)"
+  const diasRaw = datos.getAttribute('data-dias');        
+  const horariosRaw = datos.getAttribute('data-horarios');
 
   const diasPermitidos = diasRaw ? diasRaw.split(',') : [];
   const horariosPermitidos = horariosRaw ? horariosRaw.split(',') : [];
@@ -88,21 +84,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const minutos = fecha.getMinutes();
 
     for (const horario of horariosPermitidos) {
-      // Extraer rango hora en formato (HH:mm-HH:mm)
-      const match = horario.match(/\((\d{2}:\d{2})-(\d{2}:\d{2})\)/);
-      if (match) {
-        const [_, inicio, fin] = match;
-        const [hIni, mIni] = inicio.split(':').map(Number);
-        const [hFin, mFin] = fin.split(':').map(Number);
+        const match = horario.match(/\((\d{2}):(\d{2})-(\d{2}):(\d{2})\)/);
+        if (match) {
+            const hIni = parseInt(match[1]);
+            const mIni = parseInt(match[2]);
+            const hFin = parseInt(match[3]);
+            const mFin = parseInt(match[4]);
 
-        const minutosTotales = hora * 60 + minutos;
-        const inicioMin = hIni * 60 + mIni;
-        const finMin = hFin * 60 + mFin;
+            const minutosTotales = hora * 60 + minutos;
+            const inicioMin = hIni * 60 + mIni;
+            const finMin = hFin * 60 + mFin;
 
-        if (minutosTotales >= inicioMin && minutosTotales <= finMin) {
-          return true;
+            if (inicioMin <= finMin) {
+                // Rango normal
+                if (minutosTotales >= inicioMin && minutosTotales <= finMin) {
+                    return true;
+                }
+            } else {
+                // Rango que cruza medianoche
+                if (minutosTotales >= inicioMin || minutosTotales <= finMin) {
+                    return true;
+                }
+            }
         }
-      }
     }
     return false;
   }
