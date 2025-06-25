@@ -1,0 +1,705 @@
+/*
+
+Template 2105 Input
+
+http://www.tooplate.com/view/2105-input
+	
+*/
+
+/* Defino variables globales que van a representar la paleta de colores de la página web. Las mismas van a poder ser llamadas desde cualquier lado*/
+:root{
+  --gold:#D4AF37;
+  --wine:#800020;
+  --sgray:#333333
+}
+
+html {
+  font-size: 17px;
+}
+
+body {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  color: white;
+  overflow-x: hidden;
+  background-color: #000;
+}
+
+a {
+  color: #FFF;
+  transition: all 0.3s ease;
+}
+a:hover,
+a:focus {
+  color: #9CF;
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+}
+
+.row,
+ul,
+li:last-child {
+  margin-bottom: 0;
+}
+
+.tm-mb-35 {
+  margin-bottom: 35px;
+}
+
+.tm-mb-50 {
+  margin-bottom: 50px;
+}
+
+.tm-container-max-800 {
+  max-width: 800px;
+}
+
+.tm-mb-35 {
+  margin-bottom: 35px;
+}
+
+/* Actualizo la imagen de fondo en el template de registro*/
+#register {
+  padding-top: 180px;
+  background-image: url("../img/obelisco_recortado.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 30%;
+  color: black;
+}
+
+#login {
+  overflow: hidden;                             /*Oculta los elementos que se desborden de los limites del elemento*/
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 0;                                   /* Defino la profundidad del elemento. Este mismo se mostrará abajo de cualquiera  que tenga un nivel de profundidad mayor a 0*/
+}
+
+/* Este elemento será aquel al cual JS le aplicará todas las modificaciones para asi realizar la animación*/
+#bg-fade {
+  position: absolute;
+  top: 0;left: 0;right: 0;bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  z-index: 1;                                   /* Defino la profundidad del elemento. Este mismo se mostrará abajo de cualquiera  que tenga un nivel de profundidad mayor a 1*/
+  transition: opacity 1s;                       /* Me va a permitir agregar un efecto de transicion de 1s cuando la propiedad opacidad sufra un cambio*/
+}
+
+/* Boton para volver al inicio en esquina superior izquierda */
+#btn-home-corner {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: var(--wine);
+  color: white;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+#btn-home-corner:hover,
+#btn-home-corner:focus {
+  background-color: var(--sgray);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  text-decoration: none;
+}
+
+#btn-home-corner:active {
+  transform: translateY(0px);
+}
+
+#btn-home-corner i {
+  font-size: 18px;
+}
+
+#btn-home-corner span {
+  font-size: 0.85rem;
+}
+
+#register .container {
+  max-width: 900px;
+  padding: 5px;
+}
+
+/*Personalizo el bloque(div) que permite al usuario ingresar información*/
+#block-insert-info{
+  height: 750px;
+  position: relative; /* Añadido para el posicionamiento del botón */
+}
+
+/* Configuro la columna, utilizando 'Flexbox', para que el icono y el texto se encuentren centrados*/
+#register header{
+  display: flex;                /* Convierto el header en un contenedor flex para asi poder alinear y distribuir mejor los elementos en el*/
+  flex-direction: column;       /* Hago que los elementos en el se coloquen verticalmente, uno abajo de otro*/
+  margin-right: 3%;
+  align-items: center;          /* Centro horizontalmente los items*/
+  text-align: center;
+}
+
+/* Estilo del icono de la página a utilizar en el template que contenga un elemento con el id 'register'*/
+#register #icon-img{
+  width: 300px;
+  margin-top: 40%;
+}
+
+/* Texto introducción de registro*/
+#register h4{
+  display: block;
+  margin: auto;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/*Personalizo las entradas de texto que perteneces al registro y tienen el fondo de color vino*/
+/*Registro*/
+#register .input-field{
+  display: block;
+  border: none;
+}
+
+#login .container {
+  position: relative;
+  max-width: 1000px;
+  margin-top: 238px;
+  z-index: 2;                                 /* Defino la profundidad del elemento. Este mismo se mostrará abajo de cualquiera  que tenga un nivel de profundidad mayor a 2*/
+}
+
+/* Estilo del icono de la página*/
+#icon-img{
+  width: 250px;
+  height: auto;
+  display: block;
+  margin: auto;
+}
+
+/* Columna izquierda del registro donde se van a ver las entradas de texto utilizadas para ingresar la información del usuario*/
+.tm-register-col-l {
+  position: relative;
+  display: flex;                      /*Convierto el div que esta vinculado a la clase '.tm-register-col-l' en un contenedor flex para asi poder alinear y distribuir mejor los elementos en el*/
+  flex-direction: column;             /*Hago que los elementos en el se coloquen verticalmente, uno abajo de otro*/
+  justify-content: space-evenly;      /*Muestra los elementos con el mismo espacio entre ellos*/
+  align-content: space-evenly;        /*Acomoda los elementos a traves de lineas y estas mismas se van a distribuir dejando el mismo espacio entre la parte superior, inferior y entre*/
+  margin-top: 3%;
+  margin-left: 3%;
+  margin-bottom: 3%;
+}
+
+/*Checkbox que te permiten decidir que usuario vas a querer registrar*/
+#check-usr-comercio,
+#check-usr-consumidor{
+  position: absolute;
+  top: 10px;
+}
+
+#check-usr-comercio{
+  left: 250px;
+}
+
+#check-usr-consumidor{
+  left: 75px;
+}
+
+/*Le aplico estilos a los titulos que indican que tipo de dato ingresar*/
+.sub-titulos{
+  font-size: large;
+  font-style: italic;
+}
+
+/*Personalizo que ambos bloques tengan la misma posicion, el mismo efecto de transicion y el mismo ancho*/
+#data-usr-consumidor,
+#data-usr-comercio{
+  position: absolute;
+  transition: transform 0.5s;         /*Cuando se le aplique una transformación a cualquiera de los bloques, tendra una transicion de 500ms*/
+  top: 50px;
+  left: 10px;
+  width: 90%;
+}
+
+/*Personalizo especificamente el bloque que va a ingresar la información del consumidor*/
+#data-usr-consumidor{
+  top: 75px;
+  transform: translateX(0px);                           /* Aplico una transformación dejandolo en la posicion inicial*/
+  z-index: 2;                                           /* Defino la profundidad del elemento. Este mismo se mostrará abajo de cualquiera  que tenga un nivel de profundidad mayor a 2*/
+}
+
+/*Personalizo especificamente el bloque que va a ingresar la información del comerciante*/
+#data-usr-comercio{
+  transform: translateX(2000px);            /* Valor inicial del bloque*/
+  overflow-y: auto;                         /* Solo scroll vertical */
+  overflow-x: hidden;                       /* Oculta scroll horizontal */
+  z-index: 1;                               /* Defino la profundidad del elemento. Este mismo se mostrará abajo de cualquiera  que tenga un nivel de profundidad mayor a 1*/
+  height: 550px;                            /* Altura fija para permitir scroll */
+  padding-bottom: 80px;
+}
+
+/* Estilos para la scrollbar del bloque comercio */
+#data-usr-comercio::-webkit-scrollbar {
+  width: 8px;
+}
+
+#data-usr-comercio::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+#data-usr-comercio::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 4px;
+}
+
+#data-usr-comercio::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.8);
+}
+
+.tm-register-col-r {
+  max-width: 400px;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+/* Creo una nueva clase que va a representar un fondo de color vino(#800020)*/
+.tm-bg-wine{
+  background-color: rgba(128, 0, 32, 0.9);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /*Se aplica doble sombra*/
+}
+/* Creo una nueva clase que va a representar un fondo de color dorado(#D4AF37)*/
+.tm-bg-gold{
+  background-color: rgba(212, 175, 55,0.9);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /*Se aplica doble sombra */
+}
+
+/*Modifico los colores de los checkbox que le permitirán al usuario elegir que tipo de cuenta desea*/
+[type="radio"]:not(:checked) + span:before,
+[type="radio"]:not(:checked) + span:after {
+  border: 2px solid white;
+}
+
+/* Borde del checkbox al ser tildado*/
+[type="radio"]:checked + span:after,
+[type="radio"].with-gap:checked + span:before,
+[type="radio"].with-gap:checked + span:after {
+  border: 2px solid var(--gold);
+}
+
+/*Color del checkbox luego de ser tildado*/
+[type="radio"]:checked + span:after,
+[type="radio"].with-gap:checked + span:after {
+  background-color: var(--gold);
+}
+[type="radio"]:not(:checked) + span,
+[type="radio"]:checked + span {
+  padding-left: 40px;
+}
+
+label {
+  color: white;
+}
+
+[type="radio"]:not(:checked) + span,
+[type="radio"]:checked + span {
+  font-size: 1rem;
+}
+
+[type="radio"] + span:before,
+[type="radio"] + span:after {
+  width: 20px;
+  height: 20px;
+}
+
+textarea,
+input {
+  color: white;
+}
+
+textarea {
+  border-color: white;
+  height: 8rem;
+}
+
+textarea:focus {
+  outline-color: #ccc;
+}
+
+[type="checkbox"].filled-in:checked + span:not(.lever):after {
+  border-color: white;
+  background-color: transparent;
+}
+
+[type="checkbox"].filled-in:not(:checked) + span:not(.lever):after {
+  border-color: white;
+}
+
+[type="checkbox"].filled-in:checked + span:not(.lever):after,
+[type="checkbox"].filled-in:not(:checked) + span:not(.lever):after {
+  width: 25px;
+  height: 25px;
+}
+
+[type="checkbox"].filled-in:checked + span:not(.lever):before {
+  width: 10px;
+  height: 17px;
+  border-right: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+}
+
+/* Personalizo los select ubicados en el apartado de usuario comercio. La mayoría utilizan configuraciones de 'Materalize'*/
+.select-wrapper input.select-dropdown,
+.dropdown-content li > a,
+.dropdown-content li > span {
+  text-align: center;
+  color: white;
+  width: 350px;
+}
+
+/* Escondo la flechita de los select*/
+.select-wrapper .caret{
+  display: none !important;         /*Necesito utilizar el 'important' ya que los estilos aplicados en los 'select' son realizados con materalize*/
+}
+
+/*Cuando se abre el menu*/
+.dropdown-content {
+  text-align: center !important;
+  background-color: rgba(212, 175, 55,0.9);
+}
+
+/*TABLA DE HORARIOS Y DIAS DEL REGISTRO USUARIO COMERCIO*/
+
+/*Personalizo los elementos 'td-dia' que contienen un select de clase 'select-wrapper', es decir los select.*/
+/*.select-dropdown -> Clase de materalize utilizada para simular el efecto de un select*/
+/*.dropdown-content -> Menu desplegable cuando el usuario hace click en el select*/
+.td-dia-horario .select-wrapper input.select-dropdown,
+.dropdown-content li > a,
+.dropdown-content li > span {
+  text-align: center !important;
+  color: white;
+  margin: auto;
+  width: 85%;                           /* Fuerzo el cambio de ancho. El mismo va a ser igual a todo el ancho del bloque*/
+  display: flex !important;             /* Convierto el 'select' en una flexbox para poder trabajar mejor con los elementos*/
+  align-items: center !important;       /* Alineo los items en el centro verticalmente*/
+  justify-content: center !important;   /* Si no uso todo el espacio del contenedor, lo alineo en el centro. Sirve para alinear horizontalmente*/
+  height: 40px !important;
+  padding: 0 !important;
+}
+
+.ltc{
+  color: white;
+}
+
+/*Personalizo aquellos las entradas de texto que comparten las clases '.tm-bg-gold' y '.input-field'*/
+/*Login*/
+.tm-bg-gold .input-field input{
+  text-align: center;
+  margin-top: 0;
+  color: white;
+  background-color: var(--wine);
+  border: none;
+}
+
+/*Los efectos aplicados, utilizando pseudoclases, se verán en las entradas de texto de Login como tambien de registro*/
+.input-field input::placeholder{
+  color: white;
+}
+
+/* Personalizo la pseudoclase 'focus' de los 'input' utilizados. Cuando una entrada de texto este activa se va a colocar un subrayado de 2px color dorado*/
+.input-field input:focus{
+  border-bottom: 2px solid var(--gold) !important;            /*Utilizo el !important en este atributo asi pisa cualquier tipo de cambio que se realice en cualquier otro archivo css, como por ejemplo en "materalize"*/
+  box-shadow: none !important;                                /*"               "*/
+}
+
+/*Estilos aplicados de una clase general que es usada por la mayoria de los botones*/
+.btn-large {
+  display: block;
+  margin: auto;
+  padding: 0 77px;
+  border-radius: 5px;
+  text-transform: capitalize;
+  font-size: 1rem;
+}
+
+.btn-large:hover,
+.btn-large:focus {
+  background-color: var(--sgray);
+  color: white;
+  font-weight: bold;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)        /*Doble sombra*/
+}
+
+.btn-large:active{
+  transform: translateY(3px);
+}
+
+/* Esta clase va a representar a los botones de color dorado. Este mismo se va a encontar en el template de registro*/
+.btn-large-gold{
+  position: static !important;
+  width: 100%;
+  max-width: 300px;
+  margin: 575px auto 0 auto;
+  left: auto;
+  transform: none;
+  bottom: auto;
+  display: block;
+  background-color: var(--gold);
+  color: white;
+  z-index: 10;
+}
+
+/* Esta clase va a representar a los botones de color vino*/
+.btn-large-wine{
+  background-color:  var(--wine);
+  color: white;
+  font-size: 1.1rem;
+}
+
+input[type="text"]:not(.browser-default).tm-input-white-bg,
+input[type="email"]:not(.browser-default).tm-input-white-bg {
+  border: none;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  padding: 6px 15px;
+  box-sizing: border-box;
+}
+
+/*Personalizo el input que va a permitir subir un PDF con la declaracion jurada. Esto es en el apartado de usuario comercio*/
+/*El mismo va a estar oculto, va a seguir funcionando de la misma forma, pero voy a vincular una etiqueta a la cual le voy a aplicar todos los estilos suficientes para hacerlo parecer un boton*/
+input[type="file"] {
+  display: none;
+}
+
+/*Etiqueta customizada de tal forma que va a parecer un boton*/
+.upload-file-label {
+  display: flex;
+  margin:auto;
+  padding: 10px 20px;
+  width: 80%;
+  height: 10%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--gold);
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: medium;
+  cursor: pointer;
+}
+
+.upload-file-label:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
+
+.upload-file-label:active{
+  transform: translateY(3px);
+}
+
+.tm-px-5 {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.tm-mt-big {
+  margin-top: 220px;
+}
+
+.tm-footer-text-small {
+  font-size: 1.2rem;
+}
+
+.tm-flex-lr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Responsive para el botón de inicio en esquina */
+@media (max-width: 480px) {
+  .container {
+    max-width: 100vw;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 10px !important;
+  }
+
+  #btn-home-corner {
+    top: 8px !important;
+    left: 8px !important;
+    padding: 6px 10px !important;
+    font-size: 0.8rem;
+    z-index: 1001;
+  }
+  
+  #btn-home-corner i {
+    font-size: 16px;
+  }
+  
+  #btn-home-corner span {
+    font-size: 1rem;
+  }
+  
+  #icon-img {
+    width: 30% !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    height: auto !important;
+    display: block;
+  }
+  
+  .tm-login-r header {
+    padding: 10px 0 !important;
+    margin-top: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tm-login-l form {
+    padding: 10px !important;
+    margin-bottom: 10px;
+  }
+
+  .tm-login-l .input-field {
+    margin-bottom: 10px;
+  }
+
+  .tm-flex-lr {
+    margin-bottom: 10px;
+  }
+
+}
+
+
+@media (max-width: 767px) {
+  #register #block-insert-info{
+    padding-top: 0px;
+    height: 875px !important;
+  }
+
+  .tm-register-col-r{
+    order: 1;
+    width: 100%;
+    margin: 0 auto 5px auto;
+    max-width: 100%;
+  }
+
+  .tm-register-col-l{
+    order: 2;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .tm-register-col-r header{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .tm-register-col-l .mb-2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    margin-top: 10px;
+  }
+
+
+  #register .tm-register-row{
+    flex-direction: column;
+  }
+
+  .tm-register-row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tm-login-l {
+    order: 2;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 100;
+    margin-top: 0 !important;
+  }
+
+  .btn-large-gold {
+    bottom: 10px;
+    left: 50%;
+    text-align: center !important;
+    justify-content: center !important;
+    align-content: center !important;
+    padding: 5px !important;
+    margin-top: 565px ;
+    width: 200px;
+  }
+
+  #check-usr-consumidor,
+  #check-usr-comercio{
+    position: static !important;
+    margin: 0 !important;
+    left: auto !important;
+    top: auto !important;
+    display: flex;
+    align-items: center;
+  }
+
+  #data-usr-consumidor,
+  #data-usr-comercio{
+    margin-top: 5% !important;
+    height: 500px;
+  }
+}
+
+@media (max-width: 400px) {
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .tm-px-5 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .tm-flex-lr {
+    flex-direction: column-reverse;
+    min-height: 100px;
+  }
+
+  #login .container {
+    margin-top: 50px;
+  }
+
+  .tm-mt-big {
+    margin-top: 80px;
+  }
+
+  /* Más ajustes del botón para pantallas muy pequeñas */
+  .btn-large-gold {
+    bottom: 5px;
+    width: 180px;
+    font-size: 0.9rem;
+  }
+}

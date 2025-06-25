@@ -1,0 +1,655 @@
+/* Variables globales de colores */
+:root {
+  --mostaza: #D4AF37;
+  --vino: #800020;
+  --sgray: #414141;
+  --golf: #D4A574;
+  --dorado: #FFD700;
+  --verde-confirmada: #4CAF50;
+  --naranja-pendiente: #FF8C00;
+  --blanco-suave: #fafafa;
+  --sombra-suave: rgba(0, 0, 0, 0.1);
+  --sombra-intensa: rgba(0, 0, 0, 0.3);
+}
+
+/* Reset y configuración base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--vino) 0%, #5a0015 100%);
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(212, 165, 116, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(128, 0, 32, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.hero-section {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.hero-card {
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('');
+    background-size: cover;
+    background-position: center;
+    border-radius: 25px;
+    padding: 30px;
+    color: white;
+    position: relative;
+    min-height: 300px;
+    display: flex;
+    align-items: flex-start;
+    backdrop-filter: blur(10px);
+}
+
+.restaurant-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Sección principal */
+.popular-section {
+    background: linear-gradient(145deg, var(--mostaza) 0%, #c49b2a 100%);
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 20px 40px var(--sombra-intensa);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Títulos de sección */
+.section-title {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    position: relative;
+    padding: 15px 40px 15px 20px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    letter-spacing: 0.5px;
+}
+
+.section-title:hover {
+    color: #ffffff;
+    transform: translateX(5px);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo aplicado a la etiqueta del menu desplegable*/
+.section-title.clickable::after {
+    content: '▼';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.section-title.clickable.collapsed::after {
+    transform: translateY(-50%) rotate(-90deg);
+}
+
+/* Tarjetas del restaurante reutilizadas para mostrar la info*/
+.restaurant-card {
+    background: linear-gradient(145deg, var(--vino) 0%, #6b001b 100%);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    color: white;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.restaurant-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.restaurant-card:hover::before {
+    opacity: 1;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+}
+
+.restaurant-card p {
+    margin-bottom: 12px;
+    text-align: left;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.restaurant-card p strong {
+    color: var(--dorado);
+    font-weight: 600;
+}
+
+/* Imagen y información del restaurante */
+.perfil-resto-img {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.perfil-resto-img img {
+    max-width: 220px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.perfil-resto-img img:hover {
+    transform: scale(1.05);
+}
+
+.restaurant-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.restaurant-name {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.6);
+    background: linear-gradient(135deg, #ffffff 0%, var(--dorado) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.restaurant-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.rating-stars {
+    color: var(--dorado);
+    font-size: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.rating-number {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.stars{
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin: 0;
+    font-size: 20px;
+}
+
+.stars ★ {
+    color: var(--dorado);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.stars ★:hover {
+    transform: scale(1.2);
+}
+
+.stars ☆ {
+    color: #666;
+}
+
+.star {
+    color: var(--dorado);
+    font-size: 22px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos aplicados cuando se despliega el contenido */
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collapsible-content.expanded {
+    max-height: 2000px;
+}
+
+/* Listas de reservas y reseñas */
+.list-reservas, 
+.list-resenias,
+.list-favs {
+    margin-top: 20px;
+}
+
+.info-reserva, 
+.info-resenia,
+.info-fav {
+    background: linear-gradient(145deg, var(--vino) 0%, #6b001b 100%);
+    border-radius: 18px;
+    padding: 25px;
+    color: white;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.info-reserva::before,
+.info-resenia::before,
+.info-fav::before {
+    display: none;
+}
+
+.info-reserva:hover,
+.info-resenia:hover,
+.info-fav:hover {
+    transform: translateX(3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.info-reserva p, 
+.info-resenia p,
+.info-fav p {
+    margin-bottom: 10px;
+    text-align: left;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* Contenedor para organizar la reserva */
+.reserva-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.reserva-header p {
+    flex: 1;
+    margin: 0;
+}
+
+.link-resenia {
+    color: var(--dorado);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 6px 12px;
+    border-radius: 15px;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--dorado);
+    font-size: 14px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.link-resenia:hover {
+    background: var(--dorado);
+    color: var(--vino);
+    transform: translateY(-1px);
+}
+
+.qr-popup {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.qr-popup.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.qr-popup-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+}
+
+.qr-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.qr-popup img {
+    width: 200px !important;
+    height: 200px !important;
+    display: block !important;
+    margin: 10px auto !important;
+    visibility: visible !important;
+}
+
+.qr-btn {
+    background-color: var(--mostaza);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilos específicos para favoritos */
+.info-fav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+}
+
+.info-fav img {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.info-fav .restaurant-name-fav {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    margin: 0 15px;
+    flex: 1;
+}
+
+.info-fav .rating-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.info-fav .rating-number {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dorado);
+}
+
+.info-fav .star-icon {
+    color: var(--dorado);
+    font-size: 25px;
+}
+
+/* Estados y calificaciones */
+.estado-activa {
+    color: var(--verde-confirmada);
+    font-weight: 700;
+    background: rgba(76, 175, 80, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--verde-confirmada);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.estado-pendiente {
+    color: var(--naranja-pendiente);
+    font-weight: 700;
+    background: rgba(244, 67, 54, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--naranja-pendiente);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Estructura de la reserva con botones */
+.reserva-content {
+    flex: 1;
+    margin-bottom: 15px;
+}
+
+.reserva-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Botón de eliminar */
+.delete-btn {
+    background: linear-gradient(145deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.delete-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.delete-btn:hover::before {
+    opacity: 1;
+}
+
+/* Sección de botón de retorno */
+.back-section {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.back-btn {
+    background-color: var(--sgray);
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.back-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    transition: left 0.5s ease;
+}
+
+.back-btn:hover::before {
+    left: 100%;
+}
+
+.back-btn:hover {
+    background-color: #2a2a2a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.back-btn:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .popular-section {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .section-title {
+        font-size: 20px;
+        text-align: left;
+        padding: 12px 35px 12px 15px;
+    }
+
+    .restaurant-card {
+        padding: 20px;
+        font-size: 14px;
+        border-radius: 15px;
+    }
+
+    .back-btn {
+        width: 100%;
+        padding: 12px 20px;
+    }
+
+    .restaurant-name {
+        font-size: 24px;
+    }
+
+    .hero-card {
+        padding: 20px;
+        min-height: 200px;
+        border-radius: 20px;
+    }
+
+    .restaurant-info {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .info-reserva,
+    .info-resenia {
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .reserva-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .link-resenia {
+        align-self: flex-end;
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+
+    .info-fav {
+        flex-direction: row;
+        text-align: left;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .info-fav .restaurant-name-fav {
+        margin: 0 10px;
+        font-size: 14px;
+    }
+    
+    .reserva-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .delete-btn {
+        width: 100%;
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    .qr-btn {
+        width: 100%;
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+}

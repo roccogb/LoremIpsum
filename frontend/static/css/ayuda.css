@@ -1,0 +1,207 @@
+:root {
+    --mostaza: #D4AF37;
+    --vino: #800020;
+    --sgray: #414141;
+    --golf: #D4A574;
+}
+
+.help-container {
+    min-height: 100vh;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Sección Quiénes Somos */
+.quienes-somos {
+    background-color: var(--vino);
+    padding: 4rem 2rem;
+    border-radius: 20px;
+    margin: 2rem;
+    border: 3px solid var(--mostaza);
+}
+
+.quienes-somos h1 {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 3rem;
+    text-decoration: underline;
+    text-decoration-color: var(--mostaza);
+    text-underline-offset: 10px;
+    text-decoration-thickness: 3px;
+}
+
+.quienes-somos-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 4rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.icon-section {
+    flex: 0 0 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.utensils-icon {
+    width: 80px;
+    height: 120px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mostaza);
+    font-size: 4rem;
+    position: relative;
+}
+
+.utensils-icon::before {
+    content: "🍴";
+    position: absolute;
+    left: -10px;
+}
+
+.utensils-icon::after {
+    content: "🥄";
+    position: absolute;
+    right: -10px;
+}
+
+.arrow {
+    color: var(--mostaza);
+    font-size: 2rem;
+    margin-top: 1rem;
+}
+
+.text-content {
+    flex: 1;
+    color: white;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* Sección Qué Podés Hacer */
+.que-podes-hacer {
+    background-color: var(--vino);
+    padding: 4rem 2rem;
+    border-radius: 20px;
+    margin: 2rem;
+    border: 3px solid var(--mostaza);
+}
+
+.que-podes-hacer h2 {
+    color: white;
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 3rem;
+    text-decoration: underline;
+    text-decoration-color: var(--mostaza);
+    text-underline-offset: 10px;
+    text-decoration-thickness: 3px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background-color: var(--mostaza);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background-color: black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+}
+
+.feature-title {
+    color: black;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.feature-description {
+    color: var(--sgray);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    text-align: justify;
+}
+
+/* Sección de Contacto */
+.contact-section {
+    background-color: var(--vino);
+    padding: 2rem;
+    text-align: center;
+    margin: 2rem;
+}
+
+.contact-text {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.coming-soon {
+    background-color: var(--golf);
+    color: var(--vino);
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Media Queries para Responsive Design */
+@media (max-width: 768px) {
+    .quienes-somos-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .quienes-somos, .que-podes-hacer {
+        margin: 1rem;
+        padding: 2rem 1rem;
+    }
+    
+    .quienes-somos h1 {
+        font-size: 2rem;
+    }
+    
+    .que-podes-hacer h2 {
+        font-size: 1.8rem;
+    }
+}

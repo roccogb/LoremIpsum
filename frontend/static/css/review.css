@@ -1,0 +1,626 @@
+/* Defino variables globales que van a representar la paleta de colores de la página web. Las mismas van a poder ser llamadas desde cualquier lado*/
+:root{
+  --mostaza:#D4AF37;
+  --vino:#800020;
+  --sgray:#414141;
+  --golf:#D4A574;
+}
+
+.review-container {
+    background: linear-gradient(135deg, #800020, #660019);
+    padding: 30px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-radius: 20px;
+    min-height: 500px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.review-card {
+    background: linear-gradient(135deg, #d4af37, #b8941f);
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    gap: 30px;
+    min-height: 400px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    position: relative;
+    border: 2px solid rgba(255,255,255,0.1);
+}
+
+/* Sección del Restaurante */
+.restaurant-section {
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+.restaurant-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #2c1810;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+}
+
+.restaurant-icon {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.store-icon {
+    width: 200px;
+    height: 200px;
+    border: 3px solid #8b7355;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.store-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.store-icon:hover img {
+    transform: scale(1.05);
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(212,175,55,0.1) 70%);
+    pointer-events: none;
+}
+
+.restaurant-badge {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(45deg, #2F4F2F, #1C3A1C);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.2);
+}
+
+.badge-text {
+    letter-spacing: 1px;
+}
+
+.divider {
+    width: 3px;
+    background: linear-gradient(to bottom, #654321, #4a321a);
+    border-radius: 2px;
+    margin: 0 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* === Sección de Reseña === */
+.review-section {
+    flex: 1.2;
+    background: linear-gradient(135deg, #8B7355, #6d5940);
+    border-radius: 15px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border: 2px solid rgba(255,255,255,0.1);
+}
+
+.review-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.review-title {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+}
+
+.review-subtitle {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+/* === Labels === */
+.rating-label,
+.textarea-label {
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: block;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Sistema de Estrellas como Radio Buttons */
+.rating-group {
+    margin-bottom: 25px;
+}
+
+.star-rating {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-direction: row-reverse;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star {
+    font-size: 28px;
+    color: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+    position: relative;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.star:hover,
+.star.highlighted {
+    color: #FFD700;
+    transform: scale(1.2);
+    text-shadow: 0 0 15px rgba(255,215,0,0.6);
+    filter: drop-shadow(0 0 8px rgba(255,215,0,0.4));
+}
+
+.star:hover,
+.star:hover ~ .star {
+    color: #FFD700;
+    transform: scale(1.1);
+    text-shadow: 0 0 15px rgba(255,215,0,0.6);
+    filter: drop-shadow(0 0 8px rgba(255,215,0,0.4));
+}
+
+/* Estrellas seleccionadas: ilumina la seleccionada y todas las anteriores */
+.star-rating input[type="radio"]:checked + label,
+.star-rating input[type="radio"]:checked + label ~ .star {
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255,215,0,0.5);
+}
+
+.star-rating input[type="radio"]:checked + label {
+    transform: scale(1.1);
+}
+
+.rating-text {
+    text-align: center;
+    color: rgba(255,255,255,0.9);
+    font-size: 14px;
+    font-weight: bold;
+    min-height: 20px;
+    transition: all 0.3s ease;
+}
+
+/* === Formulario === */
+.review-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-group textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 15px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    resize: vertical;
+    background: rgba(255,255,255,0.95);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.form-group textarea:focus {
+    outline: none;
+    border-color: #FFD700;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2), 0 0 0 2px rgba(255,215,0,0.3);
+    background: white;
+}
+
+.form-group textarea::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* === Botón de Envío === */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #2F4F2F, #1C3A1C);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    letter-spacing: 0.5px;
+    min-width: 140px;
+    border: 2px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(135deg, #1C3A1C, #0f2b0f);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    border-color: rgba(255,255,255,0.2);
+}
+
+.submit-btn:active {
+    transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-icon {
+    font-size: 16px;
+}
+
+/* === Sección de Regreso === */
+.back-section {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.back-btn {
+    background-color: var(--sgray);
+    color: white;
+    border: 2px solid transparent;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.back-btn:hover {
+    background-color: #302f2f;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.back-icon {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.back-btn:hover .back-icon {
+    transform: translateX(-3px);
+}
+
+/* === Responsive Design === */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .review-container {
+        padding: 25px;
+        width: 95%;
+    }
+    
+    .review-card {
+        padding: 30px;
+        gap: 25px;
+    }
+    
+    .restaurant-title {
+        font-size: 22px;
+    }
+    
+    .review-title {
+        font-size: 18px;
+    }
+    
+    .star {
+        font-size: 26px;
+    }
+}
+
+/* Tablets pequeñas */
+@media (max-width: 768px) {
+    .review-container {
+        padding: 20px;
+        width: 98%;
+    }
+    
+    .review-card {
+        flex-direction: column;
+        padding: 25px;
+        gap: 20px;
+        min-height: auto;
+    }
+    
+    .restaurant-section {
+        padding: 15px;
+    }
+    
+    .restaurant-title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .store-icon {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .restaurant-badge {
+        font-size: 11px;
+        padding: 6px 14px;
+    }
+    
+    .divider {
+        width: 100%;
+        height: 3px;
+        margin: 15px 0;
+    }
+    
+    .review-section {
+        padding: 25px;
+    }
+    
+    .review-title {
+        font-size: 17px;
+    }
+    
+    .star {
+        font-size: 24px;
+    }
+    
+    .star-rating {
+        gap: 6px;
+    }
+    
+    .form-group textarea {
+        min-height: 100px;
+        font-size: 14px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    .review-container {
+        padding: 15px;
+        width: 100%;
+        border-radius: 15px;
+    }
+    
+    .review-card {
+        padding: 20px;
+        border-radius: 15px;
+        gap: 15px;
+    }
+    
+    .restaurant-section {
+        padding: 10px;
+    }
+    
+    .restaurant-title {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .store-icon {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .restaurant-badge {
+        font-size: 10px;
+        padding: 5px 12px;
+    }
+    
+    .review-section {
+        padding: 20px;
+        border-radius: 12px;
+    }
+    
+    .review-title {
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+    
+    .review-subtitle {
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+    
+    .star-rating {
+        gap: 5px;
+        margin-bottom: 15px;
+    }
+    
+    .star {
+        font-size: 22px;
+    }
+    
+    .form-group textarea {
+        min-height: 90px;
+        padding: 12px;
+        font-size: 13px;
+    }
+    
+    .char-counter {
+        font-size: 11px;
+        bottom: -20px;
+    }
+    
+    .submit-btn {
+        padding: 12px 28px;
+        font-size: 13px;
+        min-width: 120px;
+    }
+    
+    .back-btn {
+        font-size: 13px;
+        padding: 10px 20px;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 360px) {
+    .review-container {
+        padding: 10px;
+    }
+    
+    .review-card {
+        padding: 15px;
+    }
+    
+    .restaurant-title {
+        font-size: 16px;
+    }
+    
+    .review-title {
+        font-size: 15px;
+    }
+    
+    .star {
+        font-size: 20px;
+    }
+    
+    .review-section {
+        padding: 15px;
+    }
+    
+    .form-group textarea {
+        min-height: 80px;
+        padding: 10px;
+        font-size: 12px;
+    }
+    
+    .submit-btn {
+        padding: 10px 24px;
+        font-size: 12px;
+        min-width: 100px;
+    }
+}
+
+/* === Animaciones y efectos === */
+@keyframes starPulse {
+    0% { 
+        text-shadow: 0 0 5px rgba(255,215,0,0.5);
+        transform: scale(1);
+    }
+    50% { 
+        text-shadow: 0 0 20px rgba(255,215,0,0.8), 0 0 30px rgba(255,215,0,0.4);
+        transform: scale(1.1);
+    }
+    100% { 
+        text-shadow: 0 0 5px rgba(255,215,0,0.5);
+        transform: scale(1);
+    }
+}
+
+.star-rating input[type="radio"]:checked + label {
+    animation: starPulse 2s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.review-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .star,
+    .submit-btn,
+    .back-btn,
+    .form-group textarea,
+    .store-icon img {
+        transition: none;
+    }
+    
+    .star-rating input[type="radio"]:checked ~ label {
+        animation: none;
+    }
+    
+    .star:hover,
+    .submit-btn:hover,
+    .back-btn:hover {
+        transform: none;
+    }
+    
+    .review-card {
+        animation: none;
+    }
+}
+
+/* === Focus states para accesibilidad === */
+.star:focus-visible {
+    outline: 2px solid #FFD700;
+    outline-offset: 3px;
+    border-radius: 50%;
+}
+
+.submit-btn:focus-visible,
+.back-btn:focus-visible {
+    outline: 2px solid rgba(255,255,255,0.8);
+    outline-offset: 2px;
+}
+
+.form-group textarea:focus-visible {
+    outline: 2px solid #FFD700;
+    outline-offset: 2px;
+}

@@ -1,0 +1,583 @@
+/* Defino variables globales que van a representar la paleta de colores de la página web. Las mismas van a poder ser llamadas desde cualquier lado*/
+:root{
+  --mostaza:#D4AF37;
+  --vino:#800020;
+  --sgray:#414141;
+  --golf:#D4A574;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, body.body-bg {
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+}
+
+body.body-bg {
+    background-color: var(--vino);
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+/* === Navbar común === */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: white;
+    background-color: var(--mostaza);
+    gap: 10px;
+    position: relative;
+    z-index: 1000;
+}
+
+.navbar .logo {
+    font-size: 22px;
+    font-weight: bold;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.navbar .logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar .logo img {
+    height: 45px;
+    margin-right: 10px;
+}
+
+/* Contenedor que contiene el link el cual luego va a redirigir a la pagina del restaurante*/
+.restaurant-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.restaurant-link:hover,
+.restaurant-link:visited,
+.restaurant-link:focus,
+.restaurant-link:active {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.search-box-enhanced {
+    display: flex;
+    width: 62%;
+    align-content: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.search-box-enhanced form {
+    display: flex;
+    width: 400px;
+    max-width: 100%;
+    border: 2px solid var(--golf);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-box-enhanced input[type="text"] {
+    padding: 12px 16px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    flex: 1;
+    color: var(--sgray);
+    min-width: 0;
+}
+
+.search-box-enhanced input::placeholder {
+    color: #888;
+    text-align: center;
+}
+
+.search-button {
+    background-color: var(--vino);
+    color: #fff;
+    border: none;
+    padding: 0 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.search-button:hover {
+    background-color: var(--golf);
+}
+
+.search-icon {
+    font-size: 18px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #7a0019;
+}
+
+.nav-links a.active {
+    background-color: transparent !important;
+    color: #7a0019 !important;
+    font-weight: bold;
+}
+
+.nav-user {
+    font-size: 22px;
+    background-color: #7a0019;
+    border-radius: 50%;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: white;
+    border: none;
+    outline: none;
+}
+
+.nav-user:hover {
+    background-color: #5a0014;
+}
+
+.user-menu-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.user-dropdown {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    transform-origin: top right;
+    background-color: var(--vino);
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    top: 45px;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+.user-dropdown a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.user-dropdown a:hover {
+    background-color: #5a0014;
+}
+
+.user-dropdown.show {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+.logo-img {
+    height: 28px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.nav-links-login {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    margin-left: 25px;
+    white-space: nowrap;
+}
+
+.nav-links-login:hover {
+    color: #7a0019;
+}
+
+main {
+    padding: 30px;
+    margin: 0 auto;
+    background-color: var(--mostaza);
+}
+
+.page-container {
+    background-color: var(--mostaza);
+}
+
+/* Diseño responsive para celulares,tables, etc.*/
+
+/* Tablets grandes */
+@media (max-width: 1024px) {
+    .search-box-enhanced {
+        width: 50%;
+        padding: 15px;
+    }
+    
+    .search-box-enhanced form {
+        width: 350px;
+    }
+    
+    .nav-links {
+        gap: 12px;
+    }
+    
+    .nav-links a {
+        margin-left: 8px;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .navbar {
+        font-size: 16px;
+        padding: 12px 15px;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+    
+    .navbar .logo {
+        font-size: 20px;
+        order: 1;
+    }
+    
+    .navbar .logo img {
+        height: 40px;
+        margin-right: 8px;
+    }
+    
+    .search-box-enhanced {
+        order: 2;
+        width: 100%;
+        padding: 10px 0;
+        margin-top: 10px;
+        flex-basis: 100%;
+    }
+    
+    .search-box-enhanced form {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .search-box-enhanced input[type="text"] {
+        padding: 10px 14px;
+        font-size: 15px;
+    }
+    
+    .search-button {
+        padding: 0 14px;
+    }
+    
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        right: 15px;
+        background-color: var(--vino);
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        flex-direction: column;
+        gap: 0;
+        width: 200px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out, opacity 0.3s ease;
+        opacity: 0;
+    }
+    
+    .nav-links.show {
+        max-height: 300px;
+        opacity: 1;
+    }
+    
+    .nav-links a {
+        margin: 0;
+        padding: 12px 15px;
+        text-align: center;
+        border-radius: 5px;
+        display: block;
+        width: 100%;
+    }
+    
+    .nav-links a:hover {
+        background-color: #5a0014;
+        color: white;
+    }
+    
+    .user-menu-wrapper {
+        order: 3;
+        margin-left: 12px;
+    }
+    
+    main {
+        padding: 20px 15px;
+    }
+}
+
+/* Celulares grandes */
+@media (max-width: 480px) {
+    .navbar {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+    
+    .navbar .logo {
+        font-size: 18px;
+    }
+    
+    .navbar .logo img {
+        height: 35px;
+        margin-right: 6px;
+    }
+    
+    .search-box-enhanced {
+        padding: 8px 0;
+        margin-top: 1%;
+    }
+    
+    .search-box-enhanced form {
+        border-radius: 6px;
+    }
+    
+    .search-box-enhanced input[type="text"] {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    .search-box-enhanced input::placeholder {
+        font-size: 13px;
+    }
+    
+    .search-button {
+        padding: 0 12px;
+    }
+    
+    .search-icon {
+        font-size: 16px;
+    }
+    
+    .nav-links {
+        right: 12px;
+        width: 180px;
+    }
+    
+    .nav-links a {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    
+    .nav-user {
+        font-size: 18px;
+        padding: 6px 8px;
+    }
+    
+    .nav-links-login {
+        font-size: 13px;
+        margin-left: 10px;
+    }
+    
+    .user-dropdown {
+        right: 0;
+        min-width: 140px;
+        top: 40px;
+    }
+    
+    .user-dropdown a {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+    
+    main {
+        padding: 15px 10px;
+    }
+}
+
+/* Celulares pequeños */
+@media (max-width: 375px) {
+    .navbar {
+        padding: 8px 10px;
+    }
+    
+    .navbar .logo {
+        font-size: 16px;
+    }
+    
+    .navbar .logo img {
+        height: 30px;
+        margin-right: 4px;
+    }
+    
+    .search-box-enhanced input[type="text"] {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+    
+    .search-box-enhanced input::placeholder {
+        font-size: 12px;
+    }
+    
+    .search-button {
+        padding: 0 10px;
+    }
+    
+    .search-icon {
+        font-size: 14px;
+    }
+   
+    .nav-links {
+        right: 10px;
+        width: 160px;
+    }
+    
+    .nav-links a {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+    
+    .nav-user {
+        font-size: 16px;
+        padding: 4px 6px;
+    }
+    
+    .nav-links-login {
+        font-size: 12px;
+        margin-left: 8px;
+    }
+    
+    .user-dropdown {
+        min-width: 120px;
+        top: 35px;
+    }
+    
+    .user-dropdown a {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+    
+    main {
+        padding: 12px 8px;
+    }
+}
+
+/* Mejoras para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+    .nav-links a:hover {
+        background-color: transparent;
+        color: white;
+    }
+    
+    .nav-links a:active {
+        background-color: #5a0014;
+    }
+    
+    .nav-user:hover {
+        background-color: #7a0019;
+    }
+    
+    .nav-user:active {
+        background-color: #5a0014;
+    }
+    
+    .search-button:hover {
+        background-color: var(--vino);
+    }
+    
+    .search-button:active {
+        background-color: var(--golf);
+    }
+    
+    .hamburger:active {
+        transform: scale(0.95);
+    }
+}
+
+/* Mejoras de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    .nav-links,
+    .user-dropdown,
+    .nav-user,
+    .search-button {
+        transition: none;
+    }
+    
+    .hamburger.active {
+        transform: none;
+    }
+}
+
+/* Celulares en modo paisaje */
+@media (max-width: 768px) and (orientation: landscape) {
+    .navbar {
+        padding: 8px 15px;
+    }
+    
+    .search-box-enhanced {
+        padding: 5px 0;
+        margin-top: 5px;
+    }
+    
+    .search-box-enhanced input[type="text"] {
+        padding: 6px 10px;
+    }
+    
+    main {
+        padding: 15px;
+    }
+}
+
+/* Celulares muy pequeños */
+@media (max-width: 320px) {
+    .navbar .logo {
+        font-size: 14px;
+    }
+    
+    .navbar .logo img {
+        height: 25px;
+        margin-right: 3px;
+    }
+    
+    .search-box-enhanced input::placeholder {
+        text-align: left;
+        padding-left: 5px;
+    }
+    
+    .nav-links {
+        width: 140px;
+    }
+}

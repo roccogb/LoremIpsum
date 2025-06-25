@@ -1,0 +1,501 @@
+/* Defino variables globales que van a representar la paleta de colores de la página web. Las mismas van a poder ser llamadas desde cualquier lado*/
+:root{
+  --mostaza:#D4AF37;
+  --vino:#800020;
+  --sgray:#414141;
+  --golf:#D4A574;
+}
+
+.discover-container {
+    background-color: var(--vino);
+    min-height: calc(100vh - 80px);
+    padding: 40px 0;
+    border-radius: 20px;
+}
+
+.discover-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.discover-title {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.main-content-wrapper {
+    display: flex;
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Estilos optimizados para la sidebar que filtra la busqueda */
+.form-filter {
+    width: 280px; /* Reducido de 500px a 280px */
+    flex-shrink: 0; /* Evita que se comprima */
+}
+
+.filters-sidebar {
+    width: 100%; /* Toma el ancho completo del form */
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, 0.2); /* Corregido border-color */
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    min-height: 0;
+    max-height: 85vh; /* Limitamos la altura máxima */
+    align-self: flex-start;
+    overflow-y: auto;
+    position: sticky; /* Hace que la sidebar sea sticky */
+    top: 20px; /* Distancia desde el top cuando hace scroll */
+}
+
+.filter-section {
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.filter-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.accordion-toggle {
+    display: none;
+}
+
+.filter-title {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+    user-select: none;
+    position: relative;
+}
+
+.filter-title:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.accordion-icon {
+    position: absolute;
+    left: 10px; 
+    font-size: 16px; 
+    transition: transform 0.3s ease;
+}
+
+.accordion-toggle:checked + .filter-title .accordion-icon {
+    transform: rotate(180deg);
+}
+
+.filter-options {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    padding: 0 10px;
+}
+
+.accordion-toggle:checked ~ .filter-options {
+    max-height: 500px;
+    padding: 15px 10px 10px 10px;
+}
+
+.filter-option {
+    margin-bottom: 10px; /* Reducido de 12px */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Reducido de 12px */
+}
+
+.filter-option:last-child {
+    margin-bottom: 0;
+}
+
+/* Escondo tanto checkbox como radio para personalizar la label */
+.filter-option input[type="checkbox"],
+.filter-option input[type="radio"] {
+    display: none;
+}
+
+/* Estilo unificado para labels de checkbox y radio */
+.filter-option label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-size: 13px;
+    position: relative;
+    width: 100%;
+    user-select: none;
+}
+
+/* Crear el indicador visual para checkbox */
+.filter-option input[type="checkbox"] + label::before {
+    content: '';
+    width: 16px; /* Reducido de 18px */
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Crear el indicador visual para radio (circular) */
+.filter-option input[type="radio"] + label::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Checkmark para checkbox */
+.filter-option input[type="checkbox"] + label::after {
+    content: '✓';
+    position: absolute;
+    left: 15px; 
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s ease;
+}
+
+.filter-option input[type="radio"] + label::after {
+    content: '✓';
+    position: absolute;
+    left: 15px; 
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s ease;
+}
+
+.filter-option label:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.filter-option label:hover::before {
+    border-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos cuando el input del tipo 'checkbox' este checked */
+.filter-option input[type="checkbox"]:checked + label::before {
+    background-color: var(--golf);
+    border-color: var(--golf);
+    box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
+}
+
+.filter-option input[type="checkbox"]:checked + label::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Estilos cuando el input del tipo 'radio' este checked */
+.filter-option input[type="radio"]:checked + label::before {
+    background-color: var(--golf);
+    border-color: var(--golf);
+    box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
+}
+
+.filter-option input[type="radio"]:checked + label::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* El estilo que tendran las casillas cuando sean seleccionadas */
+.filter-option input[type="checkbox"]:checked + label,
+.filter-option input[type="radio"]:checked + label {
+    background-color: rgba(212, 165, 116, 0.1);
+    color: var(--golf);
+    font-weight: 500;
+}
+
+/* Animación de pulso al hacer click */
+.filter-option label:active::before {
+    transform: scale(0.95);
+}
+
+/* Personalizacion que permite aplicar los filtros */
+.form-filter input[type="submit"] {
+    width: 100%;
+    background: linear-gradient(145deg, #D4A574 0%, #E6B885 100%);
+    color: var(--vino);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.form-filter input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(145deg, #E6B885 0%, #D4A574 100%);
+}
+
+/* NUEVO: Estilo personalizado para el botón "Limpiar filtros" */
+.btn-limpiar {
+    width: 100%;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    backdrop-filter: blur(5px);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-limpiar:hover {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-limpiar:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+.restaurants-section {
+    flex: 1;
+    min-width: 0;
+}
+
+.restaurants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    width: 100%;
+}
+
+.restaurant-card {
+    background: linear-gradient(145deg, #D4A574 0%, #E6B885 100%);
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+}
+
+/* Animación para las imágenes dentro de las tarjetas */
+.restaurant-img {
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.restaurant-img img {
+    display: block;
+    padding: 10px;
+    margin: auto;
+    width: 200px;
+    height: 100%;
+    transition: transform 0.3s ease;
+    /* Atributos para lograr que la imagen se renderice con mayor calidad*/
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: optimize-quality;
+}
+
+.restaurant-card:hover .restaurant-img img {
+    transform: scale(1.05);
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--vino);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.favorite-btn:hover {
+    transform: scale(1.2);
+}
+
+.favorite-btn.active {
+    color: #e74c3c;
+}
+
+
+.restaurant-name {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--vino);
+    margin-bottom: 10px;
+}
+
+.restaurant-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.rating-stars {
+    color: #ffc107;
+    font-size: 1.1rem;
+}
+
+.rating-number {
+    color: var(--vino);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.restaurant-category {
+    text-align: center;
+    color: var(--vino);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.pagination-container {
+    position: fixed;
+    bottom: 40px; 
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    z-index: 1000;
+    width: auto;      
+    padding: 10px 20px;
+    border-radius: 35px;
+}
+
+.pagination-btn {
+    background-color: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    border-radius: 35px;
+    width: 125px;
+    height: 45px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+}
+
+.pagination-btn:hover {
+    background-color: var(--golf);
+    transform: scale(1.1);
+}
+
+.pagination-btn.active {
+    background-color: var(--golf);
+    box-shadow: 0 0 15px rgba(212, 165, 116, 0.5);
+}
+
+@media (max-width: 1200px) {
+    .form-filter {
+        width: 250px; /* Más compacto en pantallas medianas */
+    }
+    
+    .main-content-wrapper {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content-wrapper {
+        flex-direction: column;
+        padding: 0 15px;
+    }
+    
+    .form-filter {
+        width: 100%;
+    }
+    
+    .filters-sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+        max-height: none;
+        position: relative;
+        top: auto;
+    }
+    
+    .discover-title {
+        font-size: 2rem;
+    }
+    
+    .restaurants-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .restaurant-card {
+        padding: 15px;
+    }
+
+    .filter-option input[type="checkbox"] + label::before,
+    .filter-option input[type="radio"] + label::before {
+        width: 14px;
+        height: 14px;
+    }
+
+    .filter-option input[type="checkbox"] + label::after,
+    .filter-option input[type="radio"] + label::after {
+        left: 12px;
+        font-size: 10px;
+    }
+}

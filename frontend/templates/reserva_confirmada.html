@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/reserva_confirmada.css')}}">
+    <title>Reserva Confirmada - {{ comercio_info.nombre_comercio }}</title>
+</head>
+<body>
+    <div class="confirmation-card">
+        <!-- Sección de encabezado con confirmación -->
+        <div class="header-section">
+            <div class="success-icon"></div>
+            <h1 class="header-title">¡Reserva Confirmada!</h1>
+            <p class="header-subtitle">Tu mesa está asegurada</p>
+        </div>
+
+        <!-- Sección del restaurante -->
+        <div class="restaurant-section">
+            <div class="restaurant-image">
+                <img src="{{ comercio_info.ruta_imagen }}" alt="{{ comercio_info.nombre_comercio }}">
+            </div>
+            
+            <h2 class="restaurant-name">{{ comercio_info.nombre_comercio }}</h2>
+            
+            <div class="rating-section">
+                <span class="rating-value">{{ comercio_info.ranking_ponderado }}</span>
+                <span class="star">★</span>
+            </div>
+
+            <div class="welcome-message">
+                <strong>¡Te damos la bienvenida!</strong><br>
+                Estamos emocionados de recibirte en nuestro restaurante. Hemos preparado todo para que tengas una experiencia gastronómica inolvidable.
+            </div>
+
+            <!-- Detalles de la reserva -->
+            <div class="detail-item">
+                <span class="detail-label">Nombre bajo reserva</span>
+                <span class="detail-value">{{ reserva_info.nombre_bajo_reserva }}</span>
+            </div>
+            <div class="details-section">
+                <div class="detail-item">
+                    <span class="detail-label">Fecha y horario</span>
+                    <span class="detail-value">{{ reserva_info.fecha_reserva }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Personas</span>
+                    <span class="detail-value">{{ reserva_info.cant_personas }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="review-section">
+            <button class="review-btn" data-url="{{url_for('realizar_review', id_comercio=comercio_info.id_comercio, id_reserva=reserva_info.id_reserva)}}" onclick="darReview(this)">
+                <span class="review-icon">📝</span>
+                Dejar reseña
+            </button>
+        </div>
+
+        <div class="footer-section">
+            <p class="footer-message">
+                ¡Gracias por elegirnos! Te esperamos para brindarte el mejor servicio.
+            </p>
+            <div class="contact-info">
+                <p>{{ comercio_info.telefono }}</p>
+            </div>
+        </div>
+
+    </div>
+    <script src="{{url_for('static', filename='js/review.js')}}"></script>
+</body>
+</html>

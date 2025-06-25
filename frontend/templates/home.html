@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="home-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="alert-container">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+        <!-- Ranking de mejores restaurantes calificados -->
+        <div class="hero-section">
+            <div class="hero-card">
+                <div class="restaurant-link" data-url="" onclick="handleCardClick(event,this)">
+                    <div class="restaurant-info">
+                        <div id="comercios_data" style="display: none;">{{rank_comercios | tojson | safe}}</div>
+                        <h1 class="restaurant-name"></h1>
+                        <div class="stars">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="nav-arrow left" onclick="prevRestauranteTop()">‹</button>
+                <button class="nav-arrow right" onclick="nextRestauranteTop()">›</button>
+            </div>
+        </div>
+
+        <!-- Seccion de restaurantes populares -->
+        <div class="popular-section">
+            <a href="{{url_for('descubre', indice_pag=0, _external=True)}}" class="section-title">
+                <h2>Restaurantes Populares</h2>
+            </a>
+            <div class="restaurants-grid">
+                {% for comercio in comercios_destacados %}
+                    <div class="restaurant-link" data-url="{{url_for('resto', id_comercio=comercio['id_comercio'])}}" onclick="handleCardClick(event,this)">
+                        <div class="restaurant-card">
+                            <button type="button" class="heart-btn {% if comercio['id_comercio'] in id_favoritos %}active{% endif %}" data-id="{{ comercio['id_comercio'] }}">
+                                {% if comercio['id_comercio'] in id_favoritos %}♥{% else %}♡{% endif %}
+                            </button>
+                            <div class="restaurant-icon">
+                                <img src="{{comercio['ruta_imagen']}}" alt="Comercio-Imagen">
+                            </div>
+                            <div class="restaurant-rating">
+                                <span>{{comercio["ranking_ponderado"]}}</span>
+                                <span class="star">★</span>
+                            </div>
+                            <div class="restaurant-details">{{comercio["nombre_comercio"]}}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <center>
+                <a href="{{url_for('descubre', indice_pag=0, _external=True)}}">
+                    <button class="discover-btn">Descubre más</button>
+                </a>
+            </center>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}
