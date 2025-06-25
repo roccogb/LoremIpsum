@@ -1,5 +1,4 @@
-#!/bin/bash
-
+!/bin/bash
 
 #  Detecta IP local
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -22,13 +21,13 @@ FRONT="frontend/app.py"
 BACK="backend/app.py"
 
 # Pedir contraseña de MySQL
-read -s -p " Ingresá la nueva contraseña de MySQL: " CONTRA_MYSQL
+read -s -p " Ingresá la nueva contraseña de MySQL: " CONTRA_MYSQL   
 echo ""
 echo "  Reemplazando contraseña en archivos de base de datos..."
 
-for FILE in backend/database/db.py backend/database/init_db.py; do
+for FILE in backend/database/__init__.py backend/database/init_db.py; do
   if [ -f "$FILE" ]; then
-    sed -i.bak "s/DB_PASSWORD = \".*\"/DB_PASSWORD = \"$CONTRA_MYSQL\"/" "$FILE"
+    sed -i.bak "s/CONTRASQL/$CONTRA_MYSQL/g" "$FILE"
     echo " Contraseña actualizada en $FILE"
   fi
 done
@@ -39,6 +38,10 @@ echo " Reemplazando IP en archivos app.py..."
 sed -i.bak "s/0.0.0.0/$IP_LOCAL/g" "$FRONT" && echo " IP reemplazada en $FRONT"
 sed -i.bak "s/0.0.0.0/$IP_LOCAL/g" "$BACK" && echo " IP reemplazada en $BACK"
 
+# Reemplazar IP en el link del QR
+echo ""
+echo "Reemplazando IP en el link del QR"
+sed -i.bak "s/9.9.9.9/$IP_LOCAL/g" "backend/reservas/routes.py" && echo " IP reemplazada en el QR"
 
 echo ""
 echo " Instalando entorno virtual..."
@@ -48,7 +51,7 @@ pipenv run pip install -r requirements.txt
 
 echo ""
 echo " Inicializando base de datos..."
-pipenv run python backend/database/init_db.py
+pipenv run python -m backend.database.init_db
 
 echo " Cargando datos de prueba..."
 pipenv run python -m tests.init_test_data
@@ -57,12 +60,12 @@ echo ""
 echo " Iniciando servidores..."
 
 echo " Backend (8100)..."
-pipenv run python backend/app.py &
+pipenv run python -m backend.app &
 BACKEND_PID=$!
 sleep 2
 
 echo "  Frontend (8200)..."
-pipenv run python frontend/app.py &
+pipenv run python -m frontend.app &
 FRONTEND_PID=$!
 
 echo ""
