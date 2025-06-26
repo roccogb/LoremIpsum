@@ -378,9 +378,9 @@ def register():
             if not archivo_permitido(imagen):
                 ruta_img="/resources/uploads/comercios/img_resto_defecto.jpg"
             else:
-                nombre_archivo_seguro=secure_filename(imagen.filename)
-                imagen.save(os.path.join("../backend/resources/uploads/comercios",nombre_archivo_seguro ))
-                ruta_img=f"/resources/uploads/comercios/{nombre_archivo_seguro}"
+                nombre_archivo_seguro="comercios/" + secure_filename(imagen.filename)
+                imagen.save(os.path.join(app.config["UPLOAD_FOLDER"],nombre_archivo_seguro ))
+                ruta_img=f"/resources/uploads/{nombre_archivo_seguro}"
 
             data_comercio={"tipo_usuario":form.get("tipo_usuario"),
                            "nombre_responsable":form.get("nr_bss"),

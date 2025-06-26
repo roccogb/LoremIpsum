@@ -273,6 +273,9 @@ body::before {
 .list-resenias,
 .list-favs {
     margin-top: 20px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 600px;
 }
 
 .info-reserva, 

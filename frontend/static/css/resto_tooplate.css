@@ -63,7 +63,7 @@ li:last-child {
 /* Actualizo la imagen de fondo en el template de registro*/
 #register {
   padding-top: 180px;
-  background-image: url("../../static/media/img/obelisco_recortado.jpeg");
+  background-image: url("../../static/img/obelisco_recortado.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 30%;

@@ -42,9 +42,30 @@ Este proyecto se desarrolla como trabajo práctico integrador de la materia **In
 * **Backend**: Flask (Python)
 * **Base de datos**: MySQL
 * **Frontend**: HTML, CSS, Jinja, JavaScript
-* **Mapas**: Leaflet.js
+* **Mapas**: Leaflet/OpenStreetMap
+* **Calendario para reservar**: Flatpickr
 * **Control de versiones**: GitHub
 * **Organización del trabajo**: Trello (Kanban)
+
+---
+## Solución propuesta
+
+Para satisfacer la necesidad de los usuarios de encontrar y calificar restaurantes de una manera simple, desarrollamo FoodyBA como una plataforma que conecta consumidor y comercios. Nuestra solución permite a los usuarios buscar restaurantes mediante filtros avanzados, consultar reseñas, dejar opiniones y gestionar reservas en tiempo real. Desde el aspecto de los comercios pusimos el foco en diseñar una plataforma que permita a cualquier comerciante, desde el pequeño hasta el más grande, administrar su presencia, tanto como recibir reservas y acceder a estadísticas útiles para potenciar su negocio. Se integraron mapas y la capacidad de diferenciar perfiles para enriquecer la experiencia.
+
+* Diferenciación de tipos de usuario
+
+  Se implementó la diferenciación de perfiles utilizando el objeto **session** de Flask. Esto permite que el backend identifique el tipo de usuario y brinde acceso únicamente a las funcionalidades correspondientes.
+
+  **Funcionalidades según el tipo de usuario:**
+  
+  - _Usuario consumidor_:
+    - Administrar comercios favoritos.
+    - Realizar reservas y dejar reseñas.
+
+  - _Usuario comercio_:
+    - Visualizar reseñas y reservas sobre su establecimiento.
+    - Eliminar reservas.
+    - Acceder al QR para que los usuarios consumidores confirmen su reserva.
 
 ---
 

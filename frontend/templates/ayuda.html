@@ -1,7 +1,10 @@
 {% extends "base.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ayuda.css') }}">
+{% endblock %}
+{% block flash %}
+{% endblock %}
 {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/ayuda.css') }}">
-
 <div class="help-container">
     <!-- Sección Quiénes Somos -->
     <div class="quienes-somos">
