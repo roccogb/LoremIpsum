@@ -50,7 +50,13 @@ Este proyecto se desarrolla como trabajo práctico integrador de la materia **In
 ---
 ## Solución propuesta
 
-Para satisfacer la necesidad de los usuarios de encontrar y calificar restaurantes de una manera simple, desarrollamo FoodyBA como una plataforma que conecta consumidor y comercios. Nuestra solución permite a los usuarios buscar restaurantes mediante filtros avanzados, consultar reseñas, dejar opiniones y gestionar reservas en tiempo real. Desde el aspecto de los comercois pusimos el foco en diseñar una plataforma que permita a cualquier comerciante, desde el pequeño hasta el más grande, administrar su presencia, tanto como recibir reservas y acceder a estadísticas útiles para potenciar su negocio. Se integraron mapas y la capacidad de diferenciar perfiles para enriquecer la experiencia.
+Para satisfacer la necesidad de los usuarios de encontrar y calificar restaurantes de una manera simple, desarrollamo FoodyBA como una plataforma que conecta consumidor y comercios. Nuestra solución permite a los usuarios buscar restaurantes mediante filtros avanzados, consultar reseñas, dejar opiniones y gestionar reservas en tiempo real. Desde el aspecto de los comercios pusimos el foco en diseñar una plataforma que permita a cualquier comerciante, desde el pequeño hasta el más grande, administrar su presencia, tanto como recibir reservas y acceder a estadísticas útiles para potenciar su negocio. Se integraron mapas y la capacidad de diferenciar perfiles para enriquecer la experiencia.
+
+* Diferenciacion de tipos de usuario
+  Se pudo realizar esta implementacion gracias al objeto **session** el cual es brindado por el framework Flask. Al utilizar el mismo el backend puede identificar el tipo de usuario que realiza cada accion y responde acorde a los permisos y funcionalidad asignadas a cada usuario.
+  <u>Funcionalidades asignadas a cada tipo de usuario</u>
+  _Usuario consumidor_:Capacidad de tener comercios favoritos, realizar reservas y reseñas.
+  _Usuario comercio_: Visualizar las reseñas y las reservas realizadas a su establecimiento. El mismo tambien puede elminar las reservas que quiera, como tambien acceder al QR que le permite a un usuario consumidor confirmar su reserva
 
 ---
 
