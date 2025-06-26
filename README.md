@@ -67,6 +67,22 @@ Para satisfacer la necesidad de los usuarios de encontrar y calificar restaurant
     - Eliminar reservas.
     - Acceder al QR para que los usuarios consumidores confirmen su reserva.
 
+* Integración de mapas
+
+  Se logró integrar un mapa interactivo que muestra las coordenadas de cada comercio, permitiendo una mayor interacción del usuario con el sitio web. Para esto, utilizamos la librería de JavaScript de código abierto **Leaflet**, que facilita la incorporación de mapas dinámicos y ligeros en aplicaciones web.
+
+  La visualización de los mapas se realizó mediante una capa de mosaicos proporcionada por **OpenStreetMap**, lo que nos brinda flexibilidad, acceso gratuito y la posibilidad de personalizar la apariencia del mapa según las necesidades del proyecto.
+
+  Implementamos Leaflet a través de una **CDN**, lo cual permite incluir la librería rápidamente mediante un pequeño script de JavaScript, sin necesidad de descargar ni alojar los archivos en nuestro propio servidor.
+
+  ![Script de ejemplo](img_readme/script_mapa.png)
+
+  Además, empleamos la librería **Geopy** en el backend para realizar la conversión entre coordenadas geográficas y direcciones físicas (geocodificación y reverse geocoding). Esto nos permitió almacenar y mostrar tanto las ubicaciones precisas en el mapa como las direcciones comprensibles para los usuarios.
+
+  ![Mapa de ejemplo](img_readme/Mapa_ejemplo.png)
+
+> **¿Qué es una CDN?**  
+> Una CDN (Content Delivery Network) es una red de servidores distribuidos que entrega contenido (como archivos JavaScript, CSS o imágenes) de forma rápida y eficiente a los usuarios, permitiendo que los recursos se carguen desde el servidor más cercano a cada usuario. Esto mejora los tiempos de carga y reduce el consumo de ancho de banda de tu propio servidor.
 ---
 
 ## Integrantes del equipo
