@@ -55,6 +55,11 @@ Este proyecto se desarrolla como trabajo práctico integrador de la materia **In
 * Matías Ariel Sapienza
 * Rocco Grassano Barbieri
 * Santiago del Monaco
-* Nicolás Tamhazian
+
+---
+
+## Conclusion final
+
+FoodyBA no solo fue una oportunidad para aplicar lo aprendido, sino también una experiencia que nos acercó al trabajo real en equipo dentro del desarrollo de software. A lo largo del proyecto enfrentamos desafíos técnicos y de organización que pudimos superar colaborando, escuchándonos y adaptándonos constantemente. Ver la plataforma funcionando, con todas sus funcionalidades integradas, fue una gran satisfacción que nos mostró cuánto crecimos desde el primer día. Este trabajo no solo consolidó nuestros conocimientos técnicos, sino también nuestras habilidades para trabajar juntos con responsabilidad, compromiso y creatividad. Nos llevamos no solo un proyecto completo, sino también un aprendizaje que va más allá del código.
 
 ---
