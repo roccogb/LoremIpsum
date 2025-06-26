@@ -42,7 +42,8 @@ Este proyecto se desarrolla como trabajo práctico integrador de la materia **In
 * **Backend**: Flask (Python)
 * **Base de datos**: MySQL
 * **Frontend**: HTML, CSS, Jinja, JavaScript
-* **Mapas**: Leaflet.js
+* **Mapas**: Leaflet/OpenStreetMap
+* **Calendario reservas**: Flatpickr
 * **Control de versiones**: GitHub
 * **Organización del trabajo**: Trello (Kanban)
 
