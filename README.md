@@ -90,8 +90,6 @@ Para satisfacer la necesidad de los usuarios de encontrar y calificar restaurant
 
   Implementamos Leaflet a través de una **CDN**, lo cual permite incluir la librería rápidamente mediante un pequeño script de JavaScript, sin necesidad de descargar ni alojar los archivos en nuestro propio servidor.
 
-  ![Script de ejemplo](img_readme/script_mapa.png)
-
   Además, empleamos la librería **Geopy** en el backend para realizar la conversión entre coordenadas geográficas y direcciones físicas (geocodificación y reverse geocoding). Esto nos permitió almacenar y mostrar tanto las ubicaciones precisas en el mapa como las direcciones comprensibles para los usuarios.
 
   ![Mapa de ejemplo](img_readme/Mapa_ejemplo.png)
