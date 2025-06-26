@@ -43,10 +43,12 @@ Este proyecto se desarrolla como trabajo práctico integrador de la materia **In
 * **Base de datos**: MySQL
 * **Frontend**: HTML, CSS, Jinja, JavaScript
 * **Mapas**: Leaflet/OpenStreetMap
-* **Calendario reservas**: Flatpickr
+* **Calendario para reservar**: Flatpickr
 * **Control de versiones**: GitHub
 * **Organización del trabajo**: Trello (Kanban)
 
+---
+## Solución propuesta
 ---
 
 ## Integrantes del equipo
