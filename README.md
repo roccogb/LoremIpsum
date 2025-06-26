@@ -50,7 +50,7 @@ Este proyecto se desarrolla como trabajo práctico integrador de la materia **In
 ---
 ## Solución propuesta
 
-Para satisfacer la necesidad de los usuarios de encontrar y calificar restaurantes de una manera simple, desarrollamo FoodyBA como una plataforma que conecta consumidor y comercios. Nuestra solución permite a los usuarios buscar restaurantes mediante filtros avanzados, consultar reseñas, dejar opiniones y gestionar reservas en tiempo real. Desde el aspecto de los comercios pusimos el foco en diseñar una plataforma que permita a cualquier comerciante, desde el pequeño hasta el más grande, administrar su presencia, tanto como recibir reservas y acceder a estadísticas útiles para potenciar su negocio. Se integraron mapas y la capacidad de diferenciar perfiles para enriquecer la experiencia.
+Para satisfacer la necesidad de los usuarios de encontrar y calificar restaurantes de una manera simple, desarrollamos FoodyBA como una plataforma que conecta consumidor y comercios. Nuestra solución permite a los usuarios buscar restaurantes mediante filtros avanzados, consultar reseñas, dejar opiniones y gestionar reservas en tiempo real. Desde el aspecto de los comercios pusimos el foco en diseñar una plataforma que permita a cualquier comerciante, desde el pequeño hasta el más grande, administrar su presencia, tanto como recibir reservas y acceder a estadísticas útiles para potenciar su negocio. Se integraron mapas y la capacidad de diferenciar perfiles para enriquecer la experiencia.
 
 * Diferenciación de tipos de usuario
 
@@ -66,6 +66,21 @@ Para satisfacer la necesidad de los usuarios de encontrar y calificar restaurant
     - Visualizar reseñas y reservas sobre su establecimiento.
     - Eliminar reservas.
     - Acceder al QR para que los usuarios consumidores confirmen su reserva.
+
+* Herramientas para facilitar la navegación
+
+  Como nuestro objetivo era garantizarle al usuario una experiencia simple, implementamos diferentes herramientas para facilitar su navegación por el sitio.
+
+  - **Filtros de búsqueda**  
+    Los usuarios pueden seleccionar distintas categorías y características para ver únicamente los comercios que se ajustan a sus preferencias. Esto es posible gracias a que el sistema realiza búsquedas dinámicas en la base de datos, mostrando solo los resultados relevantes.  
+    ![Imagen de filtros](img_readme/descubre_filtros.png)
+
+  - **Buscador**  
+    Además, incorporamos un buscador que permite a los usuarios encontrar comercios específicos de manera rápida y eficiente, agilizando el acceso a la información deseada.  
+    ![Imagen de buscador](img_readme/buscador.png)
+
+  - **Sistema de calificación confiable**  
+    Cada comercio cuenta con un sistema de calificación basado en las reseñas de los usuarios. Para garantizar una valoración justa y representativa, utilizamos un algoritmo de ranking ponderado, similar al empleado por IMDB. Este algoritmo combina el promedio de calificaciones del comercio con el promedio general de todos los comercios y toma en cuenta la cantidad de reseñas recibidas, de modo que las valoraciones con pocas reseñas no distorsionen el ranking general. Así, se ofrece a los usuarios una referencia confiable al elegir dónde reservar.
 
 * Integración de mapas
 
