@@ -98,6 +98,13 @@ Para satisfacer la necesidad de los usuarios de encontrar y calificar restaurant
 
 > **¿Qué es una CDN?**  
 > Una CDN (Content Delivery Network) es una red de servidores distribuidos que entrega contenido (como archivos JavaScript, CSS o imágenes) de forma rápida y eficiente a los usuarios, permitiendo que los recursos se carguen desde el servidor más cercano a cada usuario. Esto mejora los tiempos de carga y reduce el consumo de ancho de banda de tu propio servidor.
+
+* Menu de reservas
+
+  Para facilitar la selección de fecha y hora al momento de realizar una reserva, implementamos un menú interactivo utilizando **Flatpickr**. Esta herramienta nos permitió incorporar un calendario moderno y fácil de usar, que muestra solo los días y horarios habilitados según la disponibilidad de cada comercio. De esta manera, el usuario puede elegir rápidamente el turno que más le convenga de forma intuitiva y sin errores.
+
+  ![Calendario de ejemplo](img_readme/calendario_ejemplo.png)
+
 ---
 
 ## Integrantes del equipo
