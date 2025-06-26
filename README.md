@@ -49,6 +49,9 @@ Este proyecto se desarrolla como trabajo práctico integrador de la materia **In
 
 ---
 ## Solución propuesta
+
+Para satisfacer la necesidad de los usuarios de encontrar y calificar restaurantes de una manera simple, desarrollamo FoodyBA como una plataforma que conecta consumidor y comercios. Nuestra solución permite a los usuarios buscar restaurantes mediante filtros avanzados, consultar reseñas, dejar opiniones y gestionar reservas en tiempo real. Desde el aspecto de los comercois pusimos el foco en diseñar una plataforma que permita a cualquier comerciante, desde el pequeño hasta el más grande, administrar su presencia, tanto como recibir reservas y acceder a estadísticas útiles para potenciar su negocio. Se integraron mapas y la capacidad de diferenciar perfiles para enriquecer la experiencia.
+
 ---
 
 ## Integrantes del equipo
