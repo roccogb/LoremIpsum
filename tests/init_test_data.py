@@ -64,7 +64,7 @@ cursor.execute("""INSERT INTO comercios
                
                     (14, 72, '/resources/uploads/comercios/las_violetas.jpg', 'Las Violetas', 'familiar', 'autor', 22334463, -34.5991, -58.3755, '2025-06-19 12:00:00', 'https://www.lasvioletas.com/restaurant/', 3.9, 5, 3.6, "['lunes','martes','miercoles','jueves','viernes','sábado','domingo']", "['07-10','12-15','16-18','20-23','00-05']", "['vegetariano', 'accesible', 'wifi']"),
                
-                    (15, 73, '/resources/uploads/comercios/filo.jpg', 'Filo Ristorante', 'comida_rapida', 'clasica', 60488805, -34.6022, -58.3801, '2025-06-19 11:30:00', 'https://drive.google.com/file/d/1LcArW3NubG5469HZ_KPJlT3PRiUz3eUZ/view?fbclid=PAZXh0bgNhZW0CMTEAAaaeOa_MibHY-21e1ZgMTmJ9rLUTNuEqHkNY_kV7bsSvzRzr7Jnx5uNSm8Q_aem_f_85Joc6x0_t81iSDYpghQ', 4.2, 20, 3.9, "['lunes','martes','miercoles','jueves','viernes','sábado','domingo']", "['07-10','12-15','16-18','20-23','00-05']", "['delivery','wifi']"),
+                    (15, 73, '/resources/uploads/comercios/filo.png', 'Filo Ristorante', 'comida_rapida', 'clasica', 60488805, -34.6022, -58.3801, '2025-06-19 11:30:00', 'https://drive.google.com/file/d/1LcArW3NubG5469HZ_KPJlT3PRiUz3eUZ/view?fbclid=PAZXh0bgNhZW0CMTEAAaaeOa_MibHY-21e1ZgMTmJ9rLUTNuEqHkNY_kV7bsSvzRzr7Jnx5uNSm8Q_aem_f_85Joc6x0_t81iSDYpghQ', 4.2, 20, 3.9, "['lunes','martes','miercoles','jueves','viernes','sábado','domingo']", "['07-10','12-15','16-18','20-23','00-05']", "['delivery','wifi']"),
                
                     (16, 74, '/resources/uploads/comercios/celta_bar.jpg', 'Celta Bar', 'tematico', 'alta_cocina', 22334465, -34.6078, -58.4002, '2025-06-19 19:00:00', 'https://www.losnotables.com.ar/platos-y-copas/', 4.7, 28, 4.4, "['jueves','viernes','sábado']", "['20-23']", "['vegetariano','wifi']"),
                
@@ -82,9 +82,7 @@ cursor.execute("""INSERT INTO comercios
                     
                     (23, 81, '/resources/uploads/comercios/tapas_y_vino.jpg', 'Tapas y Vino', 'gourmet', 'vanguardia', 22334472, -34.585185, -58.428887, '2025-06-20 21:00:00', 'https://www.instagram.com/calderatapas/', 4.9, 35, 4.8, "['viernes','sábado']", "['20-23']", "['musica_vivo','happy_hour']"),
                     
-                    (24, 82, '/resources/uploads/comercios/bio_natur.jpg', 'Bio Natur', 'tematico', 'autor', 22334473, -34.580982, -58.431215, '2025-06-20 11:00:00', 'https://biorestaurant.com.ar/', 4.5, 18, 4.1, "['lunes','miércoles','viernes']", "['12-15','20-23']", "['vegano','sin_gluten']"),
-                    
-                    (25, 83, '/resources/uploads/comercios/taco_box.jpg', 'Taco Box', 'comida_rapida', 'clasica', 22334474, -34.573807, -58.455156, '2025-06-20 13:00:00', 'http://www.tacobox.com.ar/', 4.0, 12, 3.7, "['jueves','viernes','sábado']", "['12-15','20-23']", "['para_llevar','zona_fumadores','estacionamiento']");""")
+                    (24, 82, '/resources/uploads/comercios/taco_box.jpg', 'Taco Box', 'comida_rapida', 'clasica', 22334474, -34.573807, -58.455156, '2025-06-20 13:00:00', 'http://www.tacobox.com.ar/', 4.0, 12, 3.7, "['jueves','viernes','sábado']", "['12-15','20-23']", "['para_llevar','zona_fumadores','estacionamiento']");""")
 
 
 
